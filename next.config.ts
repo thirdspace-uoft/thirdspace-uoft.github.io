@@ -5,7 +5,7 @@ const repoName = "";
 
 const nextConfig: NextConfig = {
   output: "export",
-  basePath: isProd ? `/${repoName}` : "",
+  basePath: (isProd && repoName) ? `/${repoName}` : "",
   images: {
     unoptimized: true,
   },
