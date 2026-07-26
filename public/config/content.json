@@ -1,0 +1,479 @@
+{
+  "layout": {
+    "pageTitle": "Thirdspace — University of Toronto",
+    "pageDescription": "Thirdspace at the University of Toronto. A research group studying human-computer interaction, AI ethics, and communities at the margins.",
+    "homeAriaLabelSuffix": "— University of Toronto home"
+  },
+  "navbar": {
+    "brandName": "Thirdspace",
+    "brandTagline": "UofT",
+    "brandLogoAlt": "University of Toronto",
+    "mobileFooterLine": "Thirdspace · est. 2018",
+    "mobileDrawerUniversity": "University of Toronto",
+    "menuOpenLabel": "Menu",
+    "menuCloseLabel": "Close",
+    "links": [
+      { "label": "Home", "href": "/" },
+      { "label": "Team", "href": "/team" },
+      { "label": "Publications", "href": "/publications" },
+      { "label": "About", "href": "/about" },
+      { "label": "Contact", "href": "/contact" }
+    ]
+  },
+  "hero": {
+    "badge": "Welcome to ThirdSpace!",
+    "locationChip": "University of Toronto",
+    "headlineLine1": "Utilizing human values,",
+    "headlineLine2": "situated knowledge,",
+    "headlineLine3": "and lived experiences.",
+    "subParagraph": "Building socio-technical systems for responsible, participatory, and context-aware AI with communities too often left outside the room where technology is designed.",
+    "title": "Utilizing human values, situated knowledge, and experiences for developing impactful solutions.",
+    "description": "The Third Space research group, led by Prof. Ishtiaque Ahmed at the University of Toronto, studies the social, ethical, and political dimensions of computing and artificial intelligence.",
+    "primaryActionText": "Learn More",
+    "secondaryActionText": "Research Group",
+    "researchPostureLabel": "Research posture",
+    "researchPostureBody": "Technology is never neutral; we study who it serves, who it misses, and how it can be remade.",
+    "methodsLabel": "Methods",
+    "methodsValue": "Empirical + design-oriented inquiry",
+    "focusLabel": "Focus",
+    "focusValue": "Margins, agency, and global development",
+    "groupPhotoPath": "/group-photos/group_photo_crp.PNG",
+    "groupPhotoAlt": "Third Space research group photo",
+    "figPrefix": "Fig.",
+    "figGroupAlt": "Group portrait"
+  },
+  "home": {
+    "metaVolPrefix": "Vol.",
+    "metaVolNumber": "01",
+    "metaVolYear": "2026",
+    "figGroupPrefix": "Group portrait",
+    "groupOverviewFigLabel": "Principal Investigator"
+  },
+  "marquee": {
+    "keywords": [
+      "AI Ethics",
+      "HCI",
+      "Critical Computing",
+      "Marginalized Communities",
+      "Global Development",
+      "Socio-Technical Systems",
+      "Participatory Design",
+      "Context-Aware AI",
+      "Human Values",
+      "Situated Knowledge"
+    ]
+  },
+  "groupOverview": {
+    "eyebrow": "Third Space Research Group",
+    "headline": "Computing research from the social edge inward.",
+    "locationChip": "Toronto / HCI / AI",
+    "body": "The Third Space research group, led by Prof. Ishtiaque Ahmed at the University of Toronto, studies the social, ethical, and political dimensions of computing and artificial intelligence. The group works at the intersection of human-computer interaction (HCI), AI, and critical computing to understand how technologies shape—and are shaped by—everyday life practices, particularly in contexts of marginalization and global development, centering communities that are often overlooked in mainstream computing research.",
+    "glanceLabel": "Glance",
+    "focusCards": [
+      {
+        "title": "Human-Computer Interaction",
+        "label": "HCI",
+        "description": "Designing with people, practices, and lived contexts.",
+        "icon": "HeartHandshake"
+      },
+      {
+        "title": "AI + Critical Computing",
+        "label": "AI",
+        "description": "Questioning power, ethics, and automated systems.",
+        "icon": "Brain"
+      },
+      {
+        "title": "Communities at the margins",
+        "label": "CARE",
+        "description": "Centering voices mainstream computing often overlooks.",
+        "icon": "Globe"
+      }
+    ]
+  },
+  "professor": {
+    "name": "Prof. Ishtiaque Ahmed",
+    "title": "Associate Professor",
+    "department": "Department of Computer Science",
+    "institution": "University of Toronto",
+    "role": "National AI Consultant, UNDP Bangladesh",
+    "website": "https://www.ishtiaque.net/",
+    "imagePath": "/headshots/ishtique-ahmed.png",
+    "bio": "Ishtiaque Ahmed is an Associate Professor of Computer Science at the University of Toronto and serves as Associate Director of the Knowledge Media Design Institute (KMDI). He is also affiliated with the University of Toronto's iSchool, Data Sciences Institute, School of the Environment, School of Cities, Institute of Health Emergencies and Pandemics, Acceleration Consortium, and Schwartz Reisman Institute for Technology and Society. In addition, he serves on the University of Toronto's Research Ethics Board (REB) and AI Task Force. Beyond the University of Toronto, he has served as the National AI Consultant for Bangladesh with the United Nations Development Programme (UNDP) and is a member of the MIT Global Humanities Initiative.",
+    "areasOfInterest": [
+      "AI Safety",
+      "AI Governance",
+      "AI Policy",
+      "Human-AI Interaction",
+      "Responsible AI"
+    ],
+    "researchInterests": "Ishtiaque's current research focuses on AI safety, AI governance, AI policy, ethical and responsible AI design, and human–AI interaction. He designs AI tools and services aimed at addressing global challenges in health, sustainability, and peace in a responsible and accountable manner. His work critically examines the ethical foundations of AI systems and explores community-based, participatory approaches to AI development. His research is primarily published in HCI venues such as CHI, CSCW, FAccT, ICTD, DIS, and COMPASS, as well as AI venues including ACL, EACL, ECIR, AAAI, and WWW.",
+    "venueWord": "Website",
+    "profileDetailEyebrow": "Profile"
+  },
+  "researchDomains": {
+    "sectionLabel": "Research Domains",
+    "statusLabel": "Active",
+    "items": [
+      {
+        "title": "AI & Machine Learning",
+        "description": "Social, ethical, and political dimensions of computing and AI.",
+        "icon": "Brain",
+        "colSpan": "md:col-span-2 md:row-span-2",
+        "accent": "primary"
+      },
+      {
+        "title": "Human-Computer Interaction",
+        "description": "Design-oriented research at the intersection of HCI and AI.",
+        "icon": "HeartHandshake",
+        "colSpan": "md:col-span-2",
+        "accent": "accent"
+      },
+      {
+        "title": "Critical Computing",
+        "description": "Centering communities overlooked in mainstream computing.",
+        "icon": "Globe",
+        "colSpan": "md:col-span-1",
+        "accent": "primary"
+      },
+      {
+        "title": "Empirical Research",
+        "description": "Socio-technical systems for responsible AI.",
+        "icon": "Microscope",
+        "colSpan": "md:col-span-1",
+        "accent": "accent"
+      },
+      {
+        "title": "Ethics & Policy",
+        "description": "How technologies shape everyday life practices.",
+        "icon": "Scale",
+        "colSpan": "md:col-span-2",
+        "accent": "primary"
+      }
+    ]
+  },
+  "about": {
+    "title": "About the Group",
+    "body": "Through empirical and design-oriented research, the group develops and studies socio-technical systems that support more responsible, participatory, and context-aware forms of AI and digital technologies. Their work is grounded in collaboration with communities and draws on interdisciplinary perspectives to reimagine how computing systems can better serve diverse human values and needs.",
+    "ctaLabel": "Read full story",
+    "ctaHref": "/about"
+  },
+  "homePillars": {
+    "eyebrow": "Three pillars"
+  },
+  "team": {
+    "pageTitle": "Team — Thirdspace | University of Toronto",
+    "pageEyebrow": "Our people",
+    "pageHeadline": "Researchers, students, and collaborators.",
+    "pageBody": "The Thirdspace group brings together faculty, postdocs, graduate students, and undergraduates who study the social, ethical, and political dimensions of computing and AI.",
+    "sections": [
+      {
+        "role": "Postdoctoral Fellow",
+        "members": []
+      },
+      {
+        "role": "PhD Students",
+        "members": [
+          {
+            "name": "Ramaravind K M",
+            "title": "PhD Candidate",
+            "focus": "Faculty of Information · University of Toronto",
+            "imagePath": "/headshots/ramaravind-scaled.jpg",
+            "links": [
+              { "label": "Personal site", "url": "https://ramaravind.com" }
+            ],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Ramaravind is a Ph.D. candidate in the Faculty of Information, a graduate fellow of the Data Sciences Institute (DSI), and a graduate affiliate of the Schwartz Reisman Institute for Technology and Society (SRI) at the University of Toronto. He is co-advised by Prof. Ishtiaque Ahmed and Prof. Shion Guha. He is a member of the Department of Computer Science's Third Space research group, the Dynamics Graphics Project lab, and the iSchool's Human-Centered Data Science Lab.",
+            "areasOfInterest": ["AI Safety and Responsible AI"],
+            "researchInterests": "Ramaravind's research centers on the dual reasoning challenge in AI safety: focusing on both how AI practitioners reason about their own assumptions and decisions, and how LLMs exhibit reasoning-like behaviors in safety-critical contexts. He develops reflective frameworks to surface implicit practitioner assumptions and designs theoretically grounded methods to evaluate LLM reasoning with greater depth than existing benchmarks allow. Situated at the intersection of HCI and NLP, his research combines user studies with insights from sociopolitical and philosophical theories to examine the normative and ambiguous dimensions of AI safety.",
+            "website": "https://ramaravind.com"
+          }
+        ]
+      },
+      {
+        "role": "MSc Students",
+        "members": []
+      },
+      {
+        "role": "Undergraduate Students",
+        "members": []
+      },
+      {
+        "role": "Collaborators",
+        "members": []
+      },
+      {
+        "role": "Research Staff",
+        "members": []
+      }
+    ],
+    "alumni": {
+      "title": "Lab Alumni",
+      "members": []
+    },
+    "principalInvestigatorRole": "Principal Investigator",
+    "heroRosterWord": "Roster",
+    "activeMembersWordSingular": "active member",
+    "activeMembersWordPlural": "active members",
+    "sectionsCountSingular": "section",
+    "sectionsCountPlural": "sections",
+    "membersCountSingular": "member",
+    "membersCountPlural": "members",
+    "membersDash": "—",
+    "alumniCountSingular": "alumnus",
+    "alumniCountPlural": "alumni",
+    "emptyRoleMessage": "Open positions · announcements coming soon",
+    "emptyAlumniMessage": "List will be updated as graduates move on",
+    "homepageLinkLabel": "Homepage",
+    "profileDetailNameLabel": "Name",
+    "profileDetailBioLabel": "Bio",
+    "profileDetailAreasLabel": "Areas of interest",
+    "profileDetailResearchLabel": "Research interests",
+    "profileDetailWebsiteLabel": "Website",
+    "profileCloseLabel": "Close",
+    "profileOpenLabel": "View full profile",
+    "piRowBioGlance": "Associate Professor of Computer Science · National AI Consultant, UNDP Bangladesh · Director, KMDI"
+  },
+  "pillars": [
+    {
+      "id": "pillar-community",
+      "icon": "Users",
+      "title": "Empirical Research",
+      "body": "Through empirical and design-oriented research, we develop and study socio-technical systems that support more responsible, participatory, and context-aware forms of AI and digital technologies."
+    },
+    {
+      "id": "pillar-events",
+      "icon": "Calendar",
+      "title": "Community Grounding",
+      "body": "Our work is grounded in collaboration with communities and draws on interdisciplinary perspectives to reimagine how computing systems can better serve diverse human values."
+    },
+    {
+      "id": "pillar-resources",
+      "icon": "Sparkles",
+      "title": "Responsible Tech",
+      "body": "Developing impactful systems that prioritize marginalization contexts and centering communities often overlooked in mainstream computing."
+    }
+  ],
+  "researchLabs": {
+    "title": "Research & Labs",
+    "items": [
+      {
+        "name": "Dynamic Graphics Project (DGP)",
+        "url": "https://www.dgp.toronto.edu/",
+        "isExternal": true
+      },
+      {
+        "name": "HCI Research Group",
+        "url": "https://ischool.utoronto.ca/research/research-areas/human-computer-interaction/",
+        "isExternal": true
+      },
+      {
+        "name": "ICT4D Research Group",
+        "url": "",
+        "isExternal": false
+      },
+      {
+        "name": "Department of Computer Science",
+        "url": "https://web.cs.toronto.edu/",
+        "isExternal": true
+      }
+    ]
+  },
+  "campuses": {
+    "title": "Campuses",
+    "items": [
+      { "name": "St. George (UTSG)", "url": "https://www.utoronto.ca/" },
+      { "name": "Mississauga (UTM)", "url": "https://www.utm.utoronto.ca/" },
+      { "name": "Scarborough (UTSC)", "url": "https://www.utsc.utoronto.ca/" }
+    ]
+  },
+  "location": {
+    "title": "Bahen Centre",
+    "coordinates": "43.6601° N, 79.3970° W",
+    "institution": "Bahen Centre for Information Technology",
+    "street": "40 St. George Street",
+    "cityCountry": "Toronto, ON M5S 2E4, Canada",
+    "mapsQuery": "Bahen+Centre+for+Information+Technology+40+St.+George+St+Toronto+ON+M5S+2E4+Canada",
+    "footerMapLabel": "Google Maps",
+    "locationHeading": "Location"
+  },
+  "socials": {
+    "xUrl": "https://x.com/SpaceUoft",
+    "xHandle": "@SpaceUoft",
+    "email": "thirdspace@dgp.toronto.edu"
+  },
+  "brand": {
+    "name": "Thirdspace",
+    "tagline": "UofT",
+    "copyrightSuffix": "— University of Toronto.",
+    "footerDescription": "Through empirical and design-oriented research, the group develops and studies socio-technical systems that support more responsible, participatory, and context-aware forms of AI and digital technologies. Led by Prof. Ishtiaque Ahmed at the University of Toronto.",
+    "creditLabel": "Developer",
+    "creditLinkAriaLabel": "View developer profile on GitHub",
+    "creditAuthorUrl": "https://github.com/Raiyan007-gb"
+  },
+  "publications": {
+    "pageTitle": "Publications — Thirdspace | University of Toronto",
+    "pageEyebrow": "Publications",
+    "pageHeadline": "Books, journal articles, and conference proceedings.",
+    "pageSubhead": "Books, journal articles, conference proceedings, and research artifacts from the Thirdspace group, indexed by year.",
+    "books": [],
+    "years": {
+      "2026": {
+        "label": "2026",
+        "journalArticles": [],
+        "conferenceProceedings": [
+          {
+            "id": "2026-acl-long-1565",
+            "authors": "Md Arid Hasan, Firoj Alam, Md Fahad Hossain, Usman Naseem, Syed Ishtiaque Ahmed",
+            "title": "LLM-Based Multi-Task Bangla Hate Speech Detection: Type, Severity, and Target",
+            "venue": "ACL 2026 (Main)",
+            "url": "https://aclanthology.org/2026.acl-long.1565/"
+          },
+          {
+            "id": "2026-findings-acl-1433",
+            "authors": "Usman Naseem, Robert Geislinger, Juan Ren, Sarah Kohail, Rudy Alexandro Garrido Veliz, P Sam Sahil, Yiran Zhang, Idris Abdulmumin, Marco Antonio Stranisci, Özge Alacam, Cengiz Acarturk, Aisha Jabr, Saba Anwar, Abinew Ali Ayele, Simona Frenda, Alessandra Teresa Cignarella, Elena Tutubalina, Oleg Rogov, Aung Kyaw Htet, Xintong Wang, Surendrabikram Thapa, Kritesh Rauniyar, Tanmoy Chakraborty, MD Arfeen Zeeshan, Dheeraj Kodati, Satya Keerthi, Sahar Moradizeyveh, Firoj Alam, Md Arid Hasan, Syed Ishtiaque Ahmed, Ye Kyaw Thu, Shantipriya Parida, Ihsan Ayyub Qazi, Lilian Diana Awuor Wanzare, Nelson Odhiambo Onyango, Clemencia Siro, Jane Wanjiru Kimani, Ibrahim Said Ahmad, Adem Chanie Ali, Martin Semmann, Chris Biemann, Shamsuddeen Hassan Muhammad, Seid Muhie Yimam",
+            "title": "POLAR: A Benchmark for Multilingual, Multicultural, and Multi-Event Online Polarization",
+            "venue": "ACL 2026 (Findings)",
+            "url": "https://aclanthology.org/2026.findings-acl.1433/"
+          },
+          {
+            "id": "2026-chi-3790605",
+            "authors": "Yasaman Rohanifar, Rachel FJ Levine, Sharifa Sultana, Syed Ishtiaque Ahmed",
+            "title": "Data Migration in HCI: The Politics of Invisible Borders, Informal Networks, and Immigrants' Data",
+            "venue": "CHI 2026",
+            "url": "https://doi.org/10.1145/3772318.3790605",
+            "doi": "10.1145/3772318.3790605"
+          },
+          {
+            "id": "2026-chi-3791553",
+            "authors": "Hellina Hailu Nigatu, Farhana Shahid, Vishal Sharma, Abigail Oppong, Michaelanne Thomas, Syed Ishtiaque Ahmed",
+            "title": "UnWEIRDing Peer Review in Human-Computer Interaction",
+            "venue": "CHI 2026",
+            "url": "https://doi.org/10.1145/3772318.3791553",
+            "doi": "10.1145/3772318.3791553"
+          },
+          {
+            "id": "2026-chi-3791792",
+            "authors": "Dipto Das, Afrin Prio, Pritu Saha, Shion Guha, Syed Ishtiaque Ahmed",
+            "title": "How do the Global South Diasporas Mobilize for Transnational Political Change?",
+            "venue": "CHI 2026",
+            "url": "https://doi.org/10.1145/3772318.3791792",
+            "doi": "10.1145/3772318.3791792",
+            "award": "Best Paper Honorable Mention Award"
+          }
+        ],
+        "extendedAbstracts": [],
+        "researchArtifacts": []
+      }
+    },
+    "sectionLabel": "Books",
+    "sectionMonographTitle": "Monographs",
+    "sectionTitleTemplate": "Year",
+    "subsectionTitles": {
+      "journalArticles": "Journal Articles",
+      "conferenceProceedings": "Conference Proceedings",
+      "extendedAbstracts": "Extended Abstracts",
+      "researchArtifacts": "Research Artifacts"
+    },
+    "rowTypeLabel": "Paper",
+    "doiPrefix": "doi:",
+    "entriesCountSingular": "entry",
+    "entriesCountPlural": "entries",
+    "titlesCountSingular": "title",
+    "titlesCountPlural": "titles",
+    "indexWord": "Index",
+    "yearSingular": "year",
+    "yearPlural": "years",
+    "bookCoverPlaceholder": "Book",
+    "articlePrefix": "Article",
+    "emptyMessage": "No publications indexed yet — check back soon.",
+    "awardBadgeLabel": "Award",
+    "venuesLabel": "Venues",
+    "viewPaperLabel": "View paper"
+  },
+  "aboutPage": {
+    "pageTitle": "About — Thirdspace | University of Toronto",
+    "eyebrow": "About the group",
+    "headline": "Studying computing from the margins inward.",
+    "subhead": "Founded and led by Prof. Ishtiaque Ahmed at the University of Toronto, Thirdspace is a research group that studies the social, ethical, and political dimensions of computing and artificial intelligence.",
+    "metaVolLine": "Vol. 01 · University of Toronto",
+    "fieldNotesLabel": "Field notes",
+    "getInTouchLabel": "Get in touch",
+    "affiliationsEyebrow": "Affiliations",
+    "heroBadge": "Who we are",
+    "heroLocationChip": "Toronto / HCI / AI",
+    "heroHeadlineLine1": "Listening to the people",
+    "heroHeadlineLine2": "computing often overlooks,",
+    "heroHeadlineLine3": "then building with them.",
+    "heroSubParagraph": "Thirdspace is a research collective at the University of Toronto reimagining how AI and digital systems can be designed alongside — not for — communities shaped by marginalization, displacement, and grassroots care.",
+    "heroPrimaryActionText": "Read the mission",
+    "heroResearchPostureLabel": "Our posture",
+    "heroResearchPostureBody": "Critical, empirical, and participatory — we treat every technology as a question of power, and every design as an act of accountability.",
+    "heroMethodsLabel": "Methods",
+    "heroMethodsValue": "Ethnography, co-design, and system building",
+    "heroFocusLabel": "Focus",
+    "heroFocusValue": "Margins, migration, and everyday infrastructure",
+    "heroGroupPhotoPath": "/group-photos/group_photo_crp.PNG",
+    "heroGroupPhotoAlt": "Third Space research group photo",
+    "methodsCountSingular": "method",
+    "methodsCountPlural": "methods",
+    "missionTitle": "Our mission",
+    "missionBody": "Through empirical and design-oriented research, we develop and study socio-technical systems that support more responsible, participatory, and context-aware forms of AI and digital technologies — particularly with communities too often left outside the room where technology is designed.",
+    "approachTitle": "How we work",
+    "approachBody": "We blend long-term fieldwork with iterative system design, partnering with community organizations, public institutions, and grassroots groups in the Global South and at the Canadian margins. Our methods combine ethnography, interviews, co-design workshops, and the building of working prototypes.",
+    "approachItems": [
+      {
+        "title": "Empirical inquiry",
+        "body": "Ethnography, interviews, and field studies grounded in everyday life practices."
+      },
+      {
+        "title": "Participatory design",
+        "body": "Co-design with communities as collaborators — not subjects — of the technologies we build."
+      },
+      {
+        "title": "Critical computing",
+        "body": "Questioning the political, ethical, and social stakes of AI and digital infrastructure."
+      }
+    ],
+    "storyTitle": "Our story",
+    "storyBody": "Thirdspace sits at the intersection of human-computer interaction, AI, and critical computing. The group is housed in the Department of Computer Science at the University of Toronto and is affiliated with several cross-disciplinary labs and initiatives across the university. Our work has been supported by the Social Sciences and Humanities Research Council of Canada (SSHRC), the National Sciences and Engineering Research Council of Canada (NSERC), the Canadian Institute for Advanced Research (CIFAR), and partner organizations across the Global South."
+  },
+  "contact": {
+    "pageTitle": "Contact — Thirdspace | University of Toronto",
+    "eyebrow": "Get in touch",
+    "headline": "We'd love to hear from you.",
+    "body": "Whether you're a prospective student, collaborator, journalist, or community partner — please reach out. We aim to respond within a few working days.",
+    "emailLabel": "General inquiries",
+    "connectTitle": "Working with us",
+    "connectBody": "We welcome inquiries from prospective graduate students, visiting researchers, and community partners. Due to the volume of requests, we may not be able to reply to every message, but we read each one. For graduate admissions, please apply through the University of Toronto's Department of Computer Science and mention Prof. Ahmed's group in your statement of interest.",
+    "responseTime": "Response time · 3–5 working days",
+    "sections": {
+      "directChannels": "Direct channels",
+      "findUsOnline": "Find us online",
+      "workingWithUs": "Working with us"
+    },
+    "rows": {
+      "email": {
+        "icon": "Mail",
+        "label": "General inquiries"
+      },
+      "office": {
+        "icon": "MapPin",
+        "label": "Office"
+      },
+      "principalInvestigator": {
+        "icon": "User",
+        "label": "Principal Investigator"
+      }
+    },
+    "personalSiteLabel": "Personal site",
+    "onlineChannels": {
+      "twitter": "Twitter / X",
+      "email": "Email"
+    },
+    "audienceTags": {
+      "prospectiveStudents": "Prospective students",
+      "visitingResearchers": "Visiting researchers",
+      "communityPartners": "Community partners"
+    }
+  }
+}
