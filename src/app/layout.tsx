@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { SectionObserver } from "@/components/section-observer";
+import { ScrollProgress } from "@/components/scroll-progress";
 import contentData from "../../public/config/content.json";
 import "./globals.css";
 
@@ -22,9 +24,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <Navbar />
-        <div className="flex-1">{children}</div>
-        <Footer />
+        <SectionObserver>
+          <Navbar />
+          <ScrollProgress />
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </SectionObserver>
       </body>
     </html>
   );

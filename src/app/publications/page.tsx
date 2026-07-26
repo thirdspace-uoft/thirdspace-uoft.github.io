@@ -309,7 +309,7 @@ export default function PublicationsPage() {
   return (
     <main className="bg-background">
       {/* ── Hero ── */}
-      <section className="border-b border-border">
+      <section data-section="publications" data-section-label="Publications" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 pt-16 pb-20 sm:px-8 sm:pt-24 sm:pb-24">
           {/* Meta strip */}
           <div className="mb-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-4 sm:mb-16">
@@ -369,7 +369,7 @@ export default function PublicationsPage() {
 
       {/* ── Books ── */}
       {books.length > 0 && (
-        <section className="border-b border-border">
+        <section data-section="publications-books" data-section-label="Books" className="border-b border-border">
           <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
             <div className="mb-6 flex items-baseline justify-between gap-6 border-b border-border pb-4">
               <div className="flex items-baseline gap-4">
@@ -413,7 +413,7 @@ export default function PublicationsPage() {
         const artifactStart = runIdx;
 
         return (
-          <section key={year} className="border-b border-border last:border-b-0">
+          <section key={year} data-section={`pub-${year}`} data-section-label={year} className="border-b border-border last:border-b-0">
             <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
               {/* Year header — big year number, count pill */}
               <div className="mb-12 flex items-end justify-between gap-6 border-b border-border pb-6">

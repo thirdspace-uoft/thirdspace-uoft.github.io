@@ -17,7 +17,7 @@ export default function AboutPage() {
   return (
     <main className="bg-background">
       {/* Approach */}
-      <section className="border-b border-border">
+      <section data-section="about" data-section-label="About" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
           <div className="mb-6 flex items-baseline justify-between gap-6 border-b border-border pb-4">
             <h2 className="type-subhead text-foreground">
@@ -55,7 +55,7 @@ export default function AboutPage() {
       </section>
 
       {/* Related links — two parallel index columns, hairline rows */}
-      <section>
+      <section data-section="affiliations" data-section-label="Affiliations">
         <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
           <div className="mb-10 border-b border-border pb-4">
             <h2 className="type-subhead text-foreground">

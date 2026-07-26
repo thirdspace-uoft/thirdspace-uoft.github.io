@@ -58,7 +58,7 @@ export default function Home() {
   return (
     <main className="bg-background">
       {/* HERO — editorial split, mono meta strip, generous whitespace */}
-      <section className="border-b border-border">
+      <section data-section="hero" data-section-label="Home" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 pt-16 pb-20 sm:px-8 sm:pt-24 sm:pb-28">
           {/* Meta strip */}
           <div className="mb-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-4 sm:mb-16">
@@ -173,7 +173,7 @@ export default function Home() {
         </div>
       </section>
       {/* GROUP OVERVIEW — body + PI side by side, then focus cards */}
-      <section id="about-group" className="border-b border-border">
+      <section id="about-group" data-section="people" data-section-label="People" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
           <div className="mb-10 border-b border-border/80 pb-5">
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
@@ -331,7 +331,7 @@ export default function Home() {
         }
 
         return (
-          <section className="border-b border-border">
+          <section data-section="research" data-section-label="Research" className="border-b border-border">
             <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
               <div className="mb-10 flex items-end justify-between gap-6 border-b border-border pb-4">
                 <div className="flex items-center gap-3">
@@ -657,7 +657,7 @@ export default function Home() {
 
       {/* ABOUT THE GROUP — quote, hairline-left accent */}
       {about && (
-        <section className="border-b border-border bg-muted/30">
+        <section data-section="about" data-section-label="About" className="border-b border-border bg-muted/30">
           <div className="mx-auto w-full max-w-5xl px-5 py-20 sm:px-8 sm:py-28">
             <div className="flex items-center gap-3 border-b border-border pb-4">
               <Quote className="size-4 text-primary" />
@@ -682,7 +682,7 @@ export default function Home() {
       )}
 
       {/* RESEARCH DOMAINS — clean 2-col index, hairline rules, no bento */}
-      <section className="border-b border-border">
+      <section data-section="domains" data-section-label="Domains" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
           <div className="mb-10 flex items-baseline justify-between gap-6 border-b border-border pb-4">
             <div className="flex items-center gap-2">
@@ -727,7 +727,7 @@ export default function Home() {
       </section>
 
       {/* PILLARS — three columns, hairline borders, no shadows */}
-      <section>
+      <section data-section="approach" data-section-label="Approach">
         <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
           <div className="mb-12 border-b border-border pb-4">
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">

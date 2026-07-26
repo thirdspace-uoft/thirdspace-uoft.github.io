@@ -145,6 +145,8 @@ function RoleSection({
   copy,
   profileLabels,
   defaultProfileEyebrow,
+  sectionId,
+  sectionLabel,
 }: {
   index: number;
   role: string;
@@ -152,9 +154,11 @@ function RoleSection({
   copy: RoleSectionCopy;
   profileLabels: ProfileLabels;
   defaultProfileEyebrow: string;
+  sectionId: string;
+  sectionLabel: string;
 }) {
   return (
-    <section className="border-t border-border">
+    <section data-section={sectionId} data-section-label={sectionLabel} className="border-t border-border">
       <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
         <div className="mb-6 flex items-baseline justify-between gap-6 border-b border-border pb-4">
           <h2 className="type-subhead text-foreground">
@@ -221,6 +225,8 @@ export default function TeamPage() {
       : [],
   };
 
+  const sectionId = (role: string) => role.toLowerCase().replace(/[\s/]+/g, "-").replace(/[^a-z0-9-]/g, "");
+
   const totalMembers = 1 + team.sections.reduce((acc, s) => {
     const list = (s.members ?? []) as Member[];
     return acc + list.length;
@@ -229,7 +235,7 @@ export default function TeamPage() {
   return (
     <main className="bg-background">
       {/* Hero — meta strip + headline */}
-      <section className="border-b border-border">
+      <section data-section="team" data-section-label="Team" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-20">
           <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-4">
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
@@ -257,7 +263,7 @@ export default function TeamPage() {
       </section>
 
       {/* Principal Investigator — opens detail dialog on click */}
-      <section className="border-t border-border">
+      <section data-section="team-pi" data-section-label="PI" className="border-t border-border">
         <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
           <div className="mb-6 flex items-baseline justify-between gap-6 border-b border-border pb-4">
             <h2 className="type-subhead text-foreground">
@@ -319,11 +325,13 @@ export default function TeamPage() {
             close: team.profileCloseLabel,
           }}
           defaultProfileEyebrow={professor.profileDetailEyebrow}
+          sectionId={sectionId(section.role)}
+          sectionLabel={section.role}
         />
       ))}
 
       {/* Alumni */}
-      <section className="border-t border-border">
+      <section data-section="team-alumni" data-section-label="Alumni" className="border-t border-border">
         <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
           <div className="mb-6 flex items-baseline justify-between gap-6 border-b border-border pb-4">
             <h2 className="type-subhead text-foreground">
