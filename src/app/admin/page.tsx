@@ -320,7 +320,7 @@ function SignedInView({
   // GitHub integration settings stored locally
   const [pat, setPat] = useState("");
   const [repoOwner, setRepoOwner] = useState("critical-nlp");
-  const [repoName, setRepoName] = useState("thirdspace.github.io");
+  const [repoName, setRepoName] = useState("thirdspace-uoft.github.io");
   const [branch, setBranch] = useState("main");
   const [showConfig, setShowConfig] = useState(false);
 
@@ -332,7 +332,7 @@ function SignedInView({
     // Load config from localStorage if available
     setPat(localStorage.getItem("ts_gh_pat") ?? "");
     setRepoOwner(localStorage.getItem("ts_gh_owner") ?? "critical-nlp");
-    setRepoName(localStorage.getItem("ts_gh_name") ?? "thirdspace.github.io");
+    setRepoName(localStorage.getItem("ts_gh_name") ?? "thirdspace-uoft.github.io");
     setBranch(localStorage.getItem("ts_gh_branch") ?? "main");
 
     // Fetch initial JSON from public asset folder
@@ -1033,7 +1033,7 @@ function SignedInView({
                       <Input
                         id="name"
                         type="text"
-                        placeholder="thirdspace.github.io"
+                        placeholder="thirdspace-uoft.github.io"
                         value={repoName}
                         onChange={(e) => setRepoName(e.target.value)}
                         className="h-9 text-xs font-mono"

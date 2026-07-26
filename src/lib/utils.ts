@@ -10,7 +10,7 @@ export function cn(...inputs: ClassValue[]) {
  */
 export function getAssetPath(path: string): string {
   const isProd = process.env.NODE_ENV === "production";
-  const repoName = "thirdspace.github.io";
+  const repoName = "thirdspace-uoft.github.io";
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   return isProd ? `/${repoName}${normalizedPath}` : normalizedPath;
 }
