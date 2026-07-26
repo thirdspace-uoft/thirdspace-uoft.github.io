@@ -12,5 +12,8 @@ export function getAssetPath(path: string): string {
   const isProd = process.env.NODE_ENV === "production";
   const repoName = "";
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  return isProd ? `/${repoName}${normalizedPath}` : normalizedPath;
+  if (isProd && repoName) {
+    return `/${repoName}${normalizedPath}`;
+  }
+  return normalizedPath;
 }
