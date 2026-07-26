@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const isProd = process.env.NODE_ENV === "production";
-const repoName = "thirdspace.toronto.edu";
+const repoName = "thirdspace.github.io";
 
 const nextConfig: NextConfig = {
   output: "export",
