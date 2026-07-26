@@ -46,8 +46,8 @@ function MemberRow({ index, member }: { index: number; member: Member }) {
 
   return (
     <article className="grid grid-cols-12 items-start gap-x-6 gap-y-3 border-t border-border py-7 sm:py-8">
-      {hasImage && (
-        <div className="col-span-12 sm:col-span-2">
+      <div className="col-span-12 sm:col-span-2">
+        {hasImage ? (
           <div className="relative aspect-square w-20 overflow-hidden bg-muted sm:w-24">
             <Image
               src={getAssetPath(member.imagePath!)}
@@ -57,14 +57,16 @@ function MemberRow({ index, member }: { index: number; member: Member }) {
               className="object-cover"
             />
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="flex aspect-square w-20 items-center justify-center rounded-full border border-border bg-muted sm:w-24">
+            <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+              {member.name.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0]).join("")}
+            </span>
+          </div>
+        )}
+      </div>
 
-      <div
-        className={
-          "col-span-12 " + (hasImage ? "sm:col-span-7" : "sm:col-span-8")
-        }
-      >
+      <div className="col-span-12 sm:col-span-7">
         {homepage ? (
           <Link
             href={homepage.url}

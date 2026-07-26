@@ -318,13 +318,15 @@ export default function Home() {
         const latest = all.slice(0, maxShow);
 
         const { professor, team } = contentData;
-        const allMembers: { name: string; role: string; imagePath?: string }[] = [];
-        if (professor?.name) {
-          allMembers.push({ name: professor.name, role: professor.title, imagePath: professor.imagePath });
-        }
+        const piMember: { name: string; role: string; imagePath?: string } | null =
+          professor?.name ? { name: professor.name, role: professor.title ?? "Principal Investigator", imagePath: professor.imagePath } : null;
+        const piName = piMember?.name ?? "";
+        const researchers: { name: string; role: string; imagePath?: string }[] = [];
         for (const section of team?.sections ?? []) {
           for (const m of section.members ?? []) {
-            allMembers.push({ name: m.name, role: section.role, imagePath: m.imagePath });
+            if (m.name !== piName) {
+              researchers.push({ name: m.name, role: section.role, imagePath: m.imagePath });
+            }
           }
         }
 
@@ -409,52 +411,245 @@ export default function Home() {
                 {/* Team sidebar — 1/3 */}
                 <aside className="lg:col-span-4">
                   <div className="rounded-2xl border border-border bg-background p-6">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                      {contentData.team?.principalInvestigatorRole ?? "Researchers"}
-                    </span>
 
-                    <div className="mt-5 space-y-4">
-                      {allMembers.slice(0, 5).map((m, i) => (
-                        <div key={i} className="flex items-center gap-3">
-                          {m.imagePath ? (
-                            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-border">
+                    {/* Principal Investigator */}
+                    {piMember && (
+                      <div>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                          Principal Investigator
+                        </span>
+                        <div className="mt-4 flex items-center gap-3">
+                          {piMember.imagePath ? (
+                            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-border">
                               <Image
-                                src={getAssetPath(m.imagePath)}
-                                alt={m.name}
+                                src={getAssetPath(piMember.imagePath)}
+                                alt={piMember.name}
                                 fill
-                                sizes="40px"
+                                sizes="64px"
                                 className="object-cover"
                               />
                             </div>
                           ) : (
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted">
-                              <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground">
-                                {m.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
+                            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-muted">
+                              <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
+                                {piMember.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
                               </span>
                             </div>
                           )}
                           <div className="min-w-0">
-                            <p className="text-[13px] font-medium leading-snug text-foreground truncate">
-                              {m.name}
+                            <p className="text-[14px] font-medium leading-snug text-foreground">
+                              {piMember.name}
                             </p>
-                            <p className="text-[11px] leading-snug text-muted-foreground truncate">
-                              {m.role}
+                            <p className="text-[12px] leading-snug text-muted-foreground">
+                              {piMember.role}
                             </p>
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    )}
+
+                    {/* Researchers */}
+                    {researchers.length > 0 && (
+                      <div className="mt-6 border-t border-border pt-5">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                          Researchers
+                        </span>
+                        <div className="mt-4 space-y-3">
+                          {researchers.slice(0, 5).map((m, i) => (
+                            <div key={i} className="flex items-center gap-3">
+                              {m.imagePath ? (
+                                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-border">
+                                  <Image
+                                    src={getAssetPath(m.imagePath)}
+                                    alt={m.name}
+                                    fill
+                                    sizes="56px"
+                                    className="object-cover"
+                                  />
+                                </div>
+                              ) : (
+                                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-muted">
+                                  <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground">
+                                    {m.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
+                                  </span>
+                                </div>
+                              )}
+                              <div className="min-w-0">
+                                <p className="text-[13px] font-medium leading-snug text-foreground truncate">
+                                  {m.name}
+                                </p>
+                                <p className="text-[11px] leading-snug text-muted-foreground truncate">
+                                  {m.role}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     <Link
                       href="/team"
-                      className="mt-5 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-primary transition-colors hover:text-primary/70"
+                      className="mt-6 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-primary transition-colors hover:text-primary/70"
                     >
-                      {contentData.team?.principalInvestigatorRole?.replace("Principal Investigator", "All members") ?? "All members"}
+                      All members
                       <ArrowRight className="size-3" />
                     </Link>
                   </div>
                 </aside>
               </div>
+
+              {/* Featured researchers — full width below */}
+              {(() => {
+                const allSectionsMembers = (contentData.team?.sections ?? []).flatMap((s: any) => s.members ?? []);
+                const featured: any[] = [];
+                const sheza = allSectionsMembers.find((m: any) => m.name.toLowerCase().includes("sheza"));
+                const rama = allSectionsMembers.find((m: any) => m.name.toLowerCase().includes("ramaravind"));
+                if (sheza) featured.push(sheza);
+                if (rama) featured.push(rama);
+                if (featured.length === 0) return null;
+                return (
+                  <div className="mt-10">
+                    <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+                      Featured researcher
+                    </span>
+                    <div className="mt-4 grid gap-6 md:grid-cols-2">
+                      {featured.map((fullData, fIdx) => (
+                        <div key={fIdx} className="rounded-2xl border border-border bg-background p-7">
+                          <div className="flex items-center gap-4">
+                            {fullData.imagePath ? (
+                              <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-border">
+                                <Image
+                                  src={getAssetPath(fullData.imagePath)}
+                                  alt={fullData.name}
+                                  fill
+                                  sizes="64px"
+                                  className="object-cover"
+                                />
+                              </div>
+                            ) : (
+                              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-primary">
+                                  {fullData.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
+                                </span>
+                              </div>
+                            )}
+                            <div>
+                              <p className="text-[15px] font-medium text-foreground">{fullData.name}</p>
+                              <p className="text-[12px] text-muted-foreground">{fullData.focus}</p>
+                            </div>
+                          </div>
+                          {fullData.bio && (
+                            <p className="mt-4 text-[13px] leading-relaxed text-foreground/80 line-clamp-3">
+                              {fullData.bio}
+                            </p>
+                          )}
+                          {fullData.areasOfInterest && fullData.areasOfInterest.length > 0 && (
+                            <div className="mt-3 flex flex-wrap gap-1.5">
+                              {fullData.areasOfInterest.slice(0, 4).map((a: string, i: number) => (
+                                <span
+                                  key={i}
+                                  className="rounded-full border border-border bg-muted/40 px-2.5 py-0.5 font-mono text-[8px] uppercase tracking-[0.12em] text-muted-foreground"
+                                >
+                                  {a}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                          {fullData.awards && fullData.awards.length > 0 && (
+                            <div className="mt-4">
+                              <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                                Awards
+                              </span>
+                              <div className="mt-2 space-y-1.5">
+                                {fullData.awards.map((aw: string, ai: number) => (
+                                  <div
+                                    key={ai}
+                                    className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/8 px-3 py-1 font-mono text-[8px] uppercase tracking-[0.12em] text-accent-foreground"
+                                  >
+                                    <svg viewBox="0 0 24 24" className="size-2.5 fill-accent" aria-hidden>
+                                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                    </svg>
+                                    {aw}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          {fullData.links && fullData.links[0] && (
+                            <Link
+                              href={fullData.links[0].url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="mt-3 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.16em] text-primary transition-colors hover:text-primary/70"
+                            >
+                              {fullData.links[0].label}
+                              <ArrowRight className="size-2.5" />
+                            </Link>
+                          )}
+
+                          {/* Contributed publications */}
+                          {(() => {
+                            const nameParts = fullData.name.toLowerCase().split(" ");
+                            const nameKey = nameParts[0];
+                            const pubs: any[] = [];
+                            for (const [y, bucket] of Object.entries(contentData.publications.years ?? {})) {
+                              for (const items of Object.values(bucket as any)) {
+                                if (!Array.isArray(items)) continue;
+                                for (const p of items) {
+                                  if (p.authors && p.authors.toLowerCase().includes(nameKey)) {
+                                    pubs.push({ year: y, ...p });
+                                  }
+                                }
+                              }
+                            }
+                            const top = pubs.sort((a, b) => (a.year < b.year ? 1 : -1)).slice(0, 3);
+                            if (top.length === 0) return null;
+                            return (
+                              <div className="mt-5 border-t border-border pt-4">
+                                <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                                  Recent publications
+                                </span>
+                                <ul className="mt-3 space-y-2.5">
+                                  {top.map((p, pi) => (
+                                    <li key={pi}>
+                                      {p.award && (
+                                        <span className="mb-1 inline-flex items-center gap-1 rounded-full border border-accent/30 bg-accent/8 px-2 py-0.5 font-mono text-[7px] uppercase tracking-[0.12em] text-accent-foreground">
+                                          <svg viewBox="0 0 24 24" className="size-2 fill-accent" aria-hidden>
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                          </svg>
+                                          {p.award}
+                                        </span>
+                                      )}
+                                      <p className="text-[12px] leading-snug text-foreground">
+                                        {p.url ? (
+                                          <Link
+                                            href={p.url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="underline decoration-primary/20 underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
+                                          >
+                                            {p.title}
+                                          </Link>
+                                        ) : (
+                                          p.title
+                                        )}
+                                      </p>
+                                      <p className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-primary/70">
+                                        {p.venue ? `${p.venue} · ` : ""}{p.year}
+                                      </p>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            );
+                          })()}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </section>
         );

@@ -193,7 +193,64 @@
     "sections": [
       {
         "role": "Postdoctoral Fellow",
-        "members": []
+        "members": [
+          {
+            "name": "Farhan Samir",
+            "title": "NSERC Postdoctoral Fellow",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Farhan Samir is an NSERC Postdoctoral Fellow in the Department of Computer Science at the University of Toronto. He completed his PhD in linguistics at the University of British Columbia, focusing on computational methods for knowledge representation and information systems. His research studies representational imbalances in large information systems, especially Wikipedia, and designs AI methods to audit and expose these gaps.",
+            "areasOfInterest": [
+              "Human-centered AI",
+              "Computational linguistics",
+              "Social AI",
+              "Information equity"
+            ],
+            "researchInterests": "Farhan studies representational imbalances in large information systems, especially Wikipedia, and designs AI methods to audit and expose these gaps. He co-developed InfoGap, a dual-model AI method that identifies facts present in one language's Wikipedia page but missing or differently presented in another.",
+            "website": ""
+          },
+          {
+            "name": "Dipto Das",
+            "title": "Postdoctoral Fellow",
+            "focus": "University of Toronto / Cornell University",
+            "imagePath": "",
+            "links": [
+              {
+                "label": "Website",
+                "url": "https://www.diptodas.net/"
+              }
+            ],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Dipto Das is a postdoctoral researcher whose work bridges AI, algorithmic accountability, and socio-technical systems. He examines how AI systems and online platforms shape decision-making, public discourse, and identity across varied cultural contexts. His research covers AI governance, context-sensitive fairness measures, and cultural/political dimensions of AI usage.",
+            "areasOfInterest": [
+              "AI governance",
+              "Fairness",
+              "Accountability",
+              "Algorithmic bias"
+            ],
+            "researchInterests": "Dipto's research covers three threads: Governing (studying policies, impact assessments, AI registries and procurement for accountability), Evaluating (context-sensitive fairness measures and benchmarks for low-resource languages), and Situating (cultural/political dimensions of AI usage, including identity, moderation, and diaspora practices).",
+            "website": "https://www.diptodas.net/"
+          },
+          {
+            "name": "Rachel Levine",
+            "title": "Arts & Science Postdoctoral Fellow",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Rachel F. Levine is a cultural anthropologist and postdoctoral fellow in U of T's Computer Science Department. Her work examines the ethics of human-AI relationships, especially the normative and emergent aspects of humans forming bonds with robotic pets. She draws on anthropology to explore technology's social role.",
+            "areasOfInterest": [
+              "AI ethics",
+              "Human-robot interaction",
+              "Posthumanism",
+              "Critical animal studies"
+            ],
+            "researchInterests": "Levine studies how people form meaningful relationships with robotic pets, and how these reveal broader conceptions of intelligence, care, and companionship. Her project examines design, production, and use of robotic pets in contexts like home care and therapy.",
+            "website": ""
+          }
+        ]
       },
       {
         "role": "PhD Students",
@@ -205,7 +262,7 @@
             "imagePath": "/headshots/ramaravind-scaled.jpg",
             "links": [
               {
-                "label": "Personal site",
+                "label": "Website",
                 "url": "https://ramaravind.com"
               }
             ],
@@ -216,6 +273,138 @@
             ],
             "researchInterests": "Ramaravind's research centers on the dual reasoning challenge in AI safety: focusing on both how AI practitioners reason about their own assumptions and decisions, and how LLMs exhibit reasoning-like behaviors in safety-critical contexts. He develops reflective frameworks to surface implicit practitioner assumptions and designs theoretically grounded methods to evaluate LLM reasoning with greater depth than existing benchmarks allow. Situated at the intersection of HCI and NLP, his research combines user studies with insights from sociopolitical and philosophical theories to examine the normative and ambiguous dimensions of AI safety.",
             "website": "https://ramaravind.com"
+          },
+          {
+            "name": "Salman Sayeed",
+            "title": "PhD Student",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [
+              {
+                "label": "Website",
+                "url": "https://www.salmansayeed.com/"
+              }
+            ],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Salman Sayeed is a natural language processing (NLP) and HCI researcher focused on social and educational AI. He joins U of T in Fall 2026 as a PhD student under Prof. Ahmed. He currently leads AI engineering at a major Bangladeshi telecom.",
+            "areasOfInterest": [
+              "NLP",
+              "HCI",
+              "AI for social good",
+              "Responsible AI",
+              "Educational technology"
+            ],
+            "researchInterests": "Sayeed's research aims to make AI systems more ethical and inclusive. He focuses on social AI agents in education, designing AI-driven pedagogical conversational agents that help teachers create educational content.",
+            "website": "https://www.salmansayeed.com/"
+          },
+          {
+            "name": "Md. Arid Hasan",
+            "title": "PhD Candidate",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [
+              {
+                "label": "Website",
+                "url": "https://aridhasan.github.io/"
+              }
+            ],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Md. Arid Hasan is a PhD student in the U of T CS department and a graduate fellow at the Schwartz Reisman Institute. His research advances human-centered, responsible AI, especially NLP for global health contexts and low-resource languages.",
+            "areasOfInterest": [
+              "Natural language processing",
+              "Generative AI",
+              "Human-centered AI",
+              "AI for global health",
+              "Low-resource languages"
+            ],
+            "researchInterests": "Hasan studies how large language models encode cultural and subjective knowledge across languages and contexts. A key focus is on AI for mental health, investigating how culturally-aware AI can support community health workers in Global South settings.",
+            "website": "https://aridhasan.github.io/"
+          },
+          {
+            "name": "Sheza Munir",
+            "title": "PhD Student",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [
+              {
+                "label": "Website",
+                "url": "https://www.cs.toronto.edu/~sheza/"
+              }
+            ],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Sheza Munir is a PhD researcher in U of T's Computer Science Department, advised by Dr. Ahmed. She holds a Master's in Health Informatics from University of Michigan. Her work focuses on the sociotechnical aspects of data annotation and AI model evaluation.",
+            "areasOfInterest": [
+              "Data annotation",
+              "NLP evaluation",
+              "AI safety/fairness",
+              "Human-AI collaboration",
+              "Subjective labeling"
+            ],
+            "researchInterests": "Munir's research sits at the intersection of NLP and sociotechnical systems. She studies data annotation as a human practice: how annotator identity, expertise, and experience influence what data gets labeled or ignored.",
+            "website": "https://www.cs.toronto.edu/~sheza/",
+            "awards": [
+              "Collective Intelligence Project (CIP) Fellowship — selected from 700+ applicants"
+            ]
+          },
+          {
+            "name": "Zarif Masud",
+            "title": "PhD Student",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Zarif Masud is a PhD student in the Department of Computer Science at the University of Toronto, working on topics related to data migration and information retrieval systems.",
+            "areasOfInterest": [
+              "Information retrieval",
+              "AI ethics",
+              "Immigration narratives"
+            ],
+            "researchInterests": "Zarif's research focuses on how information retrieval systems construct and amplify immigration narratives, and the role of artificial intelligence in immigration from automation to accountability.",
+            "website": ""
+          },
+          {
+            "name": "Yasaman Rohanifar",
+            "title": "PhD Candidate",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [
+              {
+                "label": "Website",
+                "url": "https://www.cs.toronto.edu/~yasamanro/"
+              }
+            ],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Yasaman Rohanifar is a PhD candidate in U of T's Computer Science Department, supervised by Prof. Ahmed. She holds a Master's in Health Informatics and a BSc in CS (both U of T). Her research bridges HCI and financial technology.",
+            "areasOfInterest": [
+              "Human-computer interaction",
+              "Social computing",
+              "Financial technology (FinTech)",
+              "Critical computing"
+            ],
+            "researchInterests": "Rohanifar studies how emerging digital systems (like FinTech apps) influence people's everyday financial decisions, risk perceptions, and vulnerabilities. She approaches financial technology from a human-centered perspective.",
+            "website": "https://www.cs.toronto.edu/~yasamanro/"
+          },
+          {
+            "name": "Maryam Mokhberi",
+            "title": "PhD Candidate",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [
+              {
+                "label": "Website",
+                "url": "https://www.maryammokhberi.net/"
+              }
+            ],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Maryam Mokhberi is a PhD candidate in U of T's CS Department, supervised by Prof. Ahmed. She applies HCI and design to empower marginalized communities, with a focus on inclusive AI assistance for immigrant-led nonprofit organizations.",
+            "areasOfInterest": [
+              "Human-computer interaction",
+              "Social computing",
+              "AI equity",
+              "Community informatics"
+            ],
+            "researchInterests": "Mokhberi studies how digital and AI infrastructures affect immigrant-led nonprofit and community activities. She developed AMINA, an AI assistant to help immigrant organizations navigate funding and outreach.",
+            "website": "https://www.maryammokhberi.net/"
           }
         ]
       },
@@ -225,11 +414,348 @@
       },
       {
         "role": "Undergraduate Students",
-        "members": []
+        "members": [
+          {
+            "name": "Hargun Kaur",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Mohamed Ahmed",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Meghna Ravikumar",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Hana Greenberg",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Enaya Amir",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Benjamin Mah",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Krisha Kalsi",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Taha Saeed Piracha",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Sally Zhang",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Yibin Cui",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Ethan Ing",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Cordelia Min",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Benjamin Liu",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Afrin Prio",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Joanna Roy",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Hala Sheta",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Emily Traynor",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Esmat Sahak",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Amal Nabeel Koodoruth",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Peiwen Luo",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Lilly Wang",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Akiki Liang",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Soaad Hossain",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Diana Storchak",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Kailin Hong",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          },
+          {
+            "name": "Claire Zhang",
+            "title": "Undergraduate Researcher",
+            "focus": "Dept. of Computer Science, University of Toronto",
+            "imagePath": "",
+            "links": [],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Information coming soon.",
+            "areasOfInterest": [],
+            "researchInterests": "",
+            "website": ""
+          }
+        ]
       },
       {
         "role": "Collaborators",
-        "members": []
+        "members": [
+          {
+            "name": "Priyank Chandra",
+            "title": "Assistant Professor",
+            "focus": "Faculty of Information, University of Toronto",
+            "imagePath": "",
+            "links": [
+              {
+                "label": "Website",
+                "url": "https://www.priyankc.com/"
+              }
+            ],
+            "profileDetailEyebrow": "Profile",
+            "bio": "Priyank Chandra is an Assistant Professor in the Faculty of Information at U of T, where he directs the STREET Lab (Socio-Technical ResistancE and Ethical Technologies Lab). His research centers on technology and marginalized communities, focusing on social movements, worker resistance, and accessibility.",
+            "areasOfInterest": [
+              "HCI",
+              "CSCW",
+              "ICTD",
+              "Science & Technology Studies",
+              "Social movements"
+            ],
+            "researchInterests": "Chandra studies socio-technical practices of marginalized and informal communities, such as worker organizations, disabled communities, and social movements. He applies interdisciplinary theories from sociology, STS, and development studies to design interventions that support these communities.",
+            "website": "https://www.priyankc.com/"
+          }
+        ]
       },
       {
         "role": "Research Staff",
@@ -238,7 +764,167 @@
     ],
     "alumni": {
       "title": "Lab Alumni",
-      "members": []
+      "members": [
+        {
+          "name": "Aparna Moitra",
+          "title": "Former Postdoctoral Fellow",
+          "focus": "Ulula (Canada) / University of Toronto",
+          "imagePath": "",
+          "links": [
+            {
+              "label": "Website",
+              "url": "https://aparnamoitra.wixsite.com/zone"
+            }
+          ],
+          "profileDetailEyebrow": "Profile",
+          "bio": "Aparna Moitra is an ICTD/HCI researcher focusing on technology in development contexts, especially gender justice. She was a postdoctoral researcher in Prof. Ahmed's Thirdspace Lab at U of T, studying online feminist movements and ICT for gender-based violence.",
+          "areasOfInterest": [
+            "ICTD",
+            "HCI",
+            "Gender and technology",
+            "Social justice"
+          ],
+          "researchInterests": "Moitra studies how ICT tools can empower marginalized groups, particularly women and LGBTQ+ communities in South Asia. She has worked on designing culturally-appropriate digital safe spaces and voice-based social media for low-literacy contexts.",
+          "website": "https://aparnamoitra.wixsite.com/zone"
+        },
+        {
+          "name": "Mohammad Rashidujjaman Rifat",
+          "title": "Former PhD Student · Now Asst. Professor",
+          "focus": "University of Notre Dame",
+          "imagePath": "",
+          "links": [
+            {
+              "label": "Website",
+              "url": "https://www.rashidujjaman.com/"
+            }
+          ],
+          "profileDetailEyebrow": "Profile",
+          "bio": "Mohammad Rifat is an Assistant Professor of Tech Ethics & Global Affairs at the University of Notre Dame. He earned his PhD in CS from U of T (2025) under Prof. Ahmed. His research spans HCI, ethics in AI, and critical social sciences, focusing on the ethics of computing in pluralistic societies.",
+          "areasOfInterest": [
+            "AI ethics",
+            "HCI",
+            "Global technology justice",
+            "Cultural pluralism",
+            "Decolonial design"
+          ],
+          "researchInterests": "Rifat's work focuses on the ethics of computing in pluralistic societies. He investigates challenges of cultural and value diversity in AI, designing systems that support plural ethics and promoting pluralistic practices.",
+          "website": "https://www.rashidujjaman.com/"
+        },
+        {
+          "name": "Dina Sabie",
+          "title": "Former PhD Student · Now Professor",
+          "focus": "Humber College, Toronto",
+          "imagePath": "",
+          "links": [
+            {
+              "label": "Website",
+              "url": "http://www.cs.toronto.edu/~dsabie/"
+            }
+          ],
+          "profileDetailEyebrow": "Profile",
+          "bio": "Dina Sabie is a technologist and designer studying migration and resilience. She holds a PhD in Computer Science from U of T (Ahmed lab) and currently teaches game programming at Humber College. Her dissertation examined the emotional dimension of migration and how digital tools can support migrants' resilience.",
+          "areasOfInterest": [
+            "HCI",
+            "UX design",
+            "Migration studies",
+            "Emotional computing",
+            "AR/VR interfaces"
+          ],
+          "researchInterests": "Sabie's dissertation focused on the emotional dimension of migration, exploring how migrants use digital devices and augmented reality to participate in resilience activities and maintain community ties.",
+          "website": "http://www.cs.toronto.edu/~dsabie/"
+        },
+        {
+          "name": "Hazem Ibrahim",
+          "title": "Former MSc Student · Now PhD Candidate",
+          "focus": "New York University",
+          "imagePath": "",
+          "links": [
+            {
+              "label": "Website",
+              "url": "https://hazemibr.com/"
+            }
+          ],
+          "profileDetailEyebrow": "Profile",
+          "bio": "Hazem Ibrahim is a PhD candidate in Computer Science at New York University, specializing in computational social science and human-AI interaction. He earned an M.Sc. at U of T (2020). His research examines how algorithms create systematic inequalities.",
+          "areasOfInterest": [
+            "Algorithmic bias",
+            "AI ethics",
+            "Social media audits",
+            "Fairness in AI"
+          ],
+          "researchInterests": "Ibrahim studies systematic biases in large-scale data systems. His work includes algorithmic audits of social media and analyzing media representation.",
+          "website": "https://hazemibr.com/"
+        },
+        {
+          "name": "Abdul Kawsar Tushar",
+          "title": "Former MSc Student",
+          "focus": "UserTesting, Toronto",
+          "imagePath": "",
+          "links": [
+            {
+              "label": "Website",
+              "url": "https://sites.google.com/site/tusharkawsar"
+            }
+          ],
+          "profileDetailEyebrow": "Profile",
+          "bio": "Abdul Kawsar Tushar is a software engineer with experience in ML and HCI. He earned an M.Sc. in CS at U of T (2018-2020), specializing in HCI under Prof. Ahmed.",
+          "areasOfInterest": [
+            "Human-computer interaction",
+            "Machine learning",
+            "Accessibility"
+          ],
+          "researchInterests": "Tushar's graduate research involved improving OCR for HCI and developing classification techniques.",
+          "website": "https://sites.google.com/site/tusharkawsar"
+        },
+        {
+          "name": "Divas Kapur",
+          "title": "Former MSc Student",
+          "focus": "University of Toronto",
+          "imagePath": "",
+          "links": [],
+          "profileDetailEyebrow": "Profile",
+          "bio": "Information coming soon.",
+          "areasOfInterest": [],
+          "researchInterests": "",
+          "website": ""
+        },
+        {
+          "name": "Jamie Beverley",
+          "title": "Former MSc Student",
+          "focus": "University of Toronto",
+          "imagePath": "",
+          "links": [],
+          "profileDetailEyebrow": "Profile",
+          "bio": "Information coming soon.",
+          "areasOfInterest": [],
+          "researchInterests": "",
+          "website": ""
+        },
+        {
+          "name": "Amir Masud Bidaki Zare",
+          "title": "Former MSc Student",
+          "focus": "University of Toronto",
+          "imagePath": "",
+          "links": [],
+          "profileDetailEyebrow": "Profile",
+          "bio": "Information coming soon.",
+          "areasOfInterest": [],
+          "researchInterests": "",
+          "website": ""
+        },
+        {
+          "name": "Eva Smuc",
+          "title": "Former Visiting Student",
+          "focus": "University of Toronto",
+          "imagePath": "",
+          "links": [],
+          "profileDetailEyebrow": "Profile",
+          "bio": "Information coming soon.",
+          "areasOfInterest": [],
+          "researchInterests": "",
+          "website": ""
+        }
+      ]
     },
     "principalInvestigatorRole": "Principal Investigator",
     "heroRosterWord": "Roster",

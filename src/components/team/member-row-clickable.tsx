@@ -61,8 +61,8 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
           aria-label={`${labels.open} — ${member.name}`}
           className="group/member grid cursor-pointer grid-cols-12 items-start gap-x-6 gap-y-3 py-7 text-left transition-colors hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 sm:py-8"
         >
-          {hasImage && (
-            <div className="col-span-12 flex justify-center sm:col-span-2 sm:justify-start">
+          <div className="col-span-12 flex justify-center sm:col-span-2 sm:justify-start">
+            {hasImage ? (
               <div className="relative aspect-square w-32 shrink-0 overflow-hidden rounded-full border border-border bg-muted sm:w-40">
                 <Image
                   src={getAssetPath(member.imagePath!)}
@@ -72,14 +72,16 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
                   className="object-cover"
                 />
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="flex aspect-square w-32 items-center justify-center rounded-full border border-border bg-muted sm:w-40">
+                <span className="font-mono text-[15px] uppercase tracking-[0.12em] text-muted-foreground sm:text-lg">
+                  {member.name.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0]).join("")}
+                </span>
+              </div>
+            )}
+          </div>
 
-          <div
-            className={
-              "col-span-12 " + (hasImage ? "sm:col-span-10" : "sm:col-span-12")
-            }
-          >
+          <div className="col-span-12 sm:col-span-10">
             <p className="type-body font-medium text-foreground transition-colors group-hover/member:text-primary">
               {member.name}
             </p>
@@ -109,7 +111,7 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
 
         <div className="relative max-h-[90vh] overflow-y-auto">
           <div className="relative flex flex-col items-center gap-6 px-6 pt-10 sm:flex-row sm:items-start sm:gap-8 sm:px-10 sm:pt-12">
-            {hasImage && (
+            {hasImage ? (
               <div className="relative aspect-square w-40 shrink-0 overflow-hidden rounded-full border border-border bg-muted shadow-sm sm:w-48">
                 <Image
                   src={getAssetPath(member.imagePath!)}
@@ -118,6 +120,12 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
                   sizes="(min-width: 640px) 192px, 160px"
                   className="object-cover"
                 />
+              </div>
+            ) : (
+              <div className="flex aspect-square w-40 shrink-0 items-center justify-center rounded-full border border-border bg-muted shadow-sm sm:w-48">
+                <span className="font-mono text-lg uppercase tracking-[0.12em] text-muted-foreground sm:text-xl">
+                  {member.name.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0]).join("")}
+                </span>
               </div>
             )}
 
