@@ -22,15 +22,8 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function pad2(n: number) {
-  return n.toString().padStart(2, "0");
-}
-
 /**
- * Editorial desktop nav: a small mono numeral precedes each label. On hover
- * or when active the numeral picks up the brand colour and a hairline
- * slides under the label. Spacing is deliberately generous so the row
- * reads like a journal masthead, not a SaaS pill bar.
+ * Desktop nav links with hairline hover underline.
  */
 function DesktopLinks({ links, pathname }: { links: NavLink[]; pathname: string }) {
   return (
@@ -38,29 +31,18 @@ function DesktopLinks({ links, pathname }: { links: NavLink[]; pathname: string 
       aria-label="Primary"
       className="hidden items-center gap-1 md:flex"
     >
-      {links.map((link, i) => {
+      {links.map((link) => {
         const active = isActive(pathname, link.href);
         return (
           <Link
             key={link.label}
             href={link.href}
             aria-current={active ? "page" : undefined}
-            className="group relative inline-flex items-baseline gap-2 px-3 py-2"
+            className="group relative inline-flex items-baseline px-3 py-2"
           >
             <span
               className={cn(
-                "font-mono text-[10px] uppercase tracking-[0.18em] transition-colors",
-                active
-                  ? "text-primary"
-                  : "text-muted-foreground/60 group-hover:text-primary",
-              )}
-              aria-hidden
-            >
-              {pad2(i + 1)}
-            </span>
-            <span
-              className={cn(
-                "relative text-sm transition-colors",
+                "relative type-body transition-colors",
                 active
                   ? "text-foreground"
                   : "text-foreground/70 group-hover:text-foreground",
@@ -160,7 +142,7 @@ function MobileLinks({
   return (
     <div className="flex h-full flex-col">
       <SheetHeader className="border-b border-border px-6 py-5">
-        <SheetTitle className="font-heading text-base font-medium text-foreground">
+        <SheetTitle className="type-body font-medium text-foreground">
           {brandName}
         </SheetTitle>
         <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
@@ -172,7 +154,7 @@ function MobileLinks({
         className="flex-1 overflow-y-auto px-2"
       >
         <ul className="divide-y divide-border">
-          {links.map((link, i) => {
+          {links.map((link) => {
             const active = isActive(pathname, link.href);
             return (
               <li key={link.label}>
@@ -185,20 +167,9 @@ function MobileLinks({
                   >
                     <span
                       className={cn(
-                        "font-mono text-[11px] uppercase tracking-[0.18em] transition-colors",
+                        "flex-1 type-body font-medium transition-colors",
                         active
-                          ? "text-primary"
-                          : "text-muted-foreground/60 group-hover:text-primary",
-                      )}
-                      aria-hidden
-                    >
-                      {pad2(i + 1)}
-                    </span>
-                    <span
-                      className={cn(
-                        "flex-1 text-lg transition-colors",
-                        active
-                          ? "font-medium text-foreground"
+                          ? "text-foreground"
                           : "text-foreground/80 group-hover:text-foreground",
                       )}
                     >

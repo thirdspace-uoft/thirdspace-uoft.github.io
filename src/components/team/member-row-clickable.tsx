@@ -13,7 +13,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { getAssetPath } from "@/lib/utils";
-import { pad2 } from "@/lib/section-numbering";
 
 type Profile = {
   eyebrow: string;
@@ -62,12 +61,8 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
           aria-label={`${labels.open} — ${member.name}`}
           className="group/member grid cursor-pointer grid-cols-12 items-start gap-x-6 gap-y-3 py-7 text-left transition-colors hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 sm:py-8"
         >
-          <span className="col-span-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:col-span-1">
-            {pad2(index + 1)}
-          </span>
-
           {hasImage && (
-            <div className="col-span-10 flex justify-center sm:col-span-2 sm:justify-start">
+            <div className="col-span-12 flex justify-center sm:col-span-2 sm:justify-start">
               <div className="relative aspect-square w-32 shrink-0 overflow-hidden rounded-full border border-border bg-muted sm:w-40">
                 <Image
                   src={getAssetPath(member.imagePath!)}
@@ -82,23 +77,23 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
 
           <div
             className={
-              "col-span-12 " + (hasImage ? "sm:col-span-7" : "sm:col-span-9")
+              "col-span-12 " + (hasImage ? "sm:col-span-10" : "sm:col-span-12")
             }
           >
-            <p className="font-heading text-lg font-medium tracking-[-0.02em] text-foreground transition-colors group-hover/member:text-primary">
+            <p className="type-body font-medium text-foreground transition-colors group-hover/member:text-primary">
               {member.name}
             </p>
             {member.title && (
-              <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+              <p className="mt-1 type-meta uppercase tracking-[0.22em] text-muted-foreground">
                 {member.title}
               </p>
             )}
             {bioGlance && (
-              <p className="mt-2 line-clamp-2 max-w-prose text-pretty text-sm leading-6 text-muted-foreground">
+              <p className="mt-2 line-clamp-2 max-w-prose type-body text-muted-foreground">
                 {bioGlance}
               </p>
             )}
-            <p className="mt-3 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-primary">
+            <p className="mt-3 inline-flex items-center gap-1.5 type-meta uppercase tracking-[0.22em] text-primary">
               {labels.open}
               <ArrowUpRight className="size-3" />
             </p>
@@ -130,11 +125,11 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
               <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-muted/60 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
                 {profile.eyebrow}
               </span>
-              <h2 className="font-heading text-2xl font-semibold tracking-[-0.025em] text-foreground sm:text-3xl">
+              <h2 className="type-subhead text-foreground">
                 {member.name}
               </h2>
               {member.title && (
-                <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                <p className="mt-1 type-meta uppercase tracking-[0.22em] text-muted-foreground">
                   {member.title}
                 </p>
               )}
@@ -151,7 +146,7 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
           <div className="space-y-6 p-6 pt-8 sm:p-10 sm:pt-8">
             {profile.bio && (
               <ProfileSection label={labels.bio}>
-                <p className="text-pretty text-sm leading-7 text-foreground/90 sm:text-base">
+                <p className="type-body text-pretty text-foreground/90">
                   {profile.bio}
                 </p>
               </ProfileSection>
@@ -163,7 +158,7 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
                   {profile.areasOfInterest.map((area, i) => (
                     <li
                       key={`${area}-${i}`}
-                      className="inline-flex items-center rounded-full border border-border bg-muted/60 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground"
+                      className="inline-flex items-center rounded-full border border-border bg-muted/60 px-3 py-1 type-meta uppercase tracking-[0.18em] text-muted-foreground"
                     >
                       {area}
                     </li>
@@ -174,7 +169,7 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
 
             {profile.researchInterests && (
               <ProfileSection label={labels.research}>
-                <p className="text-pretty text-sm leading-7 text-foreground/90 sm:text-base">
+                <p className="type-body text-pretty text-foreground/90">
                   {profile.researchInterests}
                 </p>
               </ProfileSection>
@@ -186,7 +181,7 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
                   href={profile.website}
                   target="_blank"
                   rel="noreferrer"
-                  className="group inline-flex items-center gap-1.5 font-mono text-sm text-foreground underline decoration-primary/40 decoration-1 underline-offset-[5px] transition-colors hover:decoration-primary"
+                  className="group inline-flex items-center gap-1.5 type-body text-foreground underline decoration-primary/40 decoration-1 underline-offset-[5px] transition-colors hover:decoration-primary"
                 >
                   {profile.website.replace(/^https?:\/\//, "")}
                   <ArrowUpRight className="size-3.5 text-primary" />
@@ -209,7 +204,7 @@ function ProfileSection({
 }) {
   return (
     <div>
-      <h3 className="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+      <h3 className="mb-2 type-meta uppercase tracking-[0.22em] text-muted-foreground">
         {label}
       </h3>
       {children}

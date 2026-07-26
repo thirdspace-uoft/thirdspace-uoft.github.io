@@ -20,7 +20,6 @@ import {
 
 import contentData from "../../public/config/content.json";
 import { getAssetPath } from "@/lib/utils";
-import { pad2, eyebrow, figLabel } from "@/lib/section-numbering";
 
 type IconName =
   | "Users"
@@ -72,17 +71,13 @@ export default function Home() {
               <MapPin className="size-3 text-primary" />
               {hero.locationChip}
             </span>
-            <span className="hidden h-3 w-px bg-border sm:block" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-              {`${home.metaVolPrefix} ${home.metaVolNumber} · ${home.metaVolYear}`}
-            </span>
           </div>
           {/* Headline + lede */}
           <div className="grid gap-12 md:gap-16 lg:grid-cols-12 lg:gap-20">
             <div className="lg:col-span-8">
-              <h1 className="font-heading text-[clamp(2.5rem,5.4vw,5rem)] font-medium leading-[1.02] tracking-[-0.035em] text-foreground">
+              <h1 className="type-display text-foreground">
                 <span className="block">Utilizing human values,</span>
-                <span className="block italic text-muted-foreground">
+                <span className="block font-semibold text-muted-foreground">
                   situated knowledge,
                 </span>
                 <span className="block">and lived experiences.</span>
@@ -90,13 +85,13 @@ export default function Home() {
             </div>
 
             <aside className="space-y-8 lg:col-span-4 lg:pt-3">
-              <p className="text-pretty text-base leading-7 text-muted-foreground">
+              <p className="type-body text-pretty text-muted-foreground">
                 {hero.subParagraph}
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <Link
                   href="#about-group"
-                  className="inline-flex items-center gap-2 rounded-md bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
+                  className="inline-flex items-center gap-2 rounded-md bg-foreground px-4 py-2.5 type-body font-medium text-background transition-colors hover:bg-foreground/90"
                 >
                   {hero.primaryActionText}
                   <ArrowRight className="size-3.5" />
@@ -125,17 +120,16 @@ export default function Home() {
                   className="object-cover grayscale-[8%]"
                 />
               </div>
-              <figcaption className="mt-3 flex items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                <span>{figLabel(hero.figPrefix, 1)} · {hero.groupPhotoAlt}</span>
-                <span>{hero.locationChip}</span>
+              <figcaption className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                {hero.groupPhotoAlt}
               </figcaption>
             </div>
 
-            <div className="md:col-span-5 md:pl-2 md:pt-1">
+            <div className="flex flex-col justify-center md:col-span-5 md:px-4">
               <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary">
                 {hero.researchPostureLabel}
               </span>
-              <p className="mt-3 font-heading text-2xl font-medium leading-snug tracking-[-0.025em] text-foreground sm:text-3xl">
+              <p className="mt-3 type-subhead text-foreground">
                 {hero.researchPostureBody}
               </p>
               <dl className="mt-8 grid grid-cols-2 gap-6 border-t border-border pt-6">
@@ -143,7 +137,7 @@ export default function Home() {
                   <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                     {hero.methodsLabel}
                   </dt>
-                  <dd className="mt-2 text-sm font-medium leading-snug text-foreground">
+                  <dd className="mt-2 type-body font-medium text-foreground">
                     {hero.methodsValue}
                   </dd>
                 </div>
@@ -151,7 +145,7 @@ export default function Home() {
                   <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                     {hero.focusLabel}
                   </dt>
-                  <dd className="mt-2 text-sm font-medium leading-snug text-foreground">
+                  <dd className="mt-2 type-body font-medium text-foreground">
                     {hero.focusValue}
                   </dd>
                 </div>
@@ -178,155 +172,294 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* GROUP OVERVIEW — wide editorial block, hairline-bordered, professor profile alongside */}
-      <section
-        id="about-group"
-        className="relative scroll-mt-24 px-6 py-14 md:py-20 border-b border-border"
-      >
-        <div className="relative mx-auto w-full max-w-[1232px]">
-          <div className="relative overflow-hidden rounded-[2rem] border border-primary/15 bg-card/85 shadow-2xl shadow-primary/10 backdrop-blur">
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,transparent_0%,transparent_54%,var(--accent)_54%,transparent_55%)] opacity-25" />
-            <div className="pointer-events-none absolute bottom-0 left-0 h-28 w-full bg-gradient-to-t from-primary/5 to-transparent" />
-            <div className="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full border border-primary/10 bg-primary/5" />
-            <div className="grid gap-0 items-stretch lg:grid-cols-[minmax(0,1fr)_380px]">
-              <div className="relative p-6 md:p-10 lg:p-12">
-                <div className="mb-7 flex flex-wrap items-center justify-between gap-4 border-b border-border/80 pb-5">
-                  <div>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                      {eyebrow(1, groupOverview.eyebrow)}
+      {/* GROUP OVERVIEW — body + PI side by side, then focus cards */}
+      <section id="about-group" className="border-b border-border">
+        <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+          <div className="mb-10 border-b border-border/80 pb-5">
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+              {groupOverview.eyebrow}
+            </span>
+            <div className="mt-2 flex flex-wrap items-end justify-between gap-4">
+              <h2 className="text-balance text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+                {groupOverview.headline}
+              </h2>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                {groupOverview.locationChip}
+              </span>
+            </div>
+          </div>
+
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
+            <div className="lg:col-span-7">
+              <p className="text-pretty text-base leading-relaxed text-foreground/80">
+                {groupOverview.body.split(professor.name)[0]}
+                <a
+                  href={professor.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group/ishtiaque relative inline-flex items-baseline font-medium text-primary underline decoration-accent/70 decoration-2 underline-offset-4 transition-colors after:absolute after:left-0 after:top-full after:h-8 after:w-72 after:content-[''] hover:text-primary/80"
+                  aria-label={`Visit ${professor.name}'s website`}
+                >
+                  {professor.name}
+                  <span className="invisible pointer-events-auto absolute left-0 top-full z-50 mt-4 w-72 translate-y-3 rounded-[1.5rem] border border-primary/15 bg-card p-3 opacity-0 shadow-2xl shadow-primary/20 transition-all delay-300 duration-300 before:absolute before:-top-4 before:left-0 before:h-4 before:w-full before:content-[''] group-hover/ishtiaque:visible group-hover/ishtiaque:translate-y-1 group-hover/ishtiaque:opacity-100 group-hover/ishtiaque:delay-75">
+                    <span className="block relative h-52 w-full overflow-hidden rounded-[1.1rem] bg-muted">
+                      <Image
+                        src={getAssetPath(professor.imagePath)}
+                        alt={professor.name}
+                        fill
+                        sizes="288px"
+                        className="object-cover transition-transform duration-500 group-hover/ishtiaque:scale-105"
+                      />
                     </span>
-                    <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-foreground md:text-3xl">
-                      {groupOverview.headline}
-                    </h2>
-                  </div>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-muted-foreground">
-                    <span className="h-2 w-2 rounded-full bg-primary ring-4 ring-primary/10" />
-                    {groupOverview.locationChip}
-                  </span>
-                </div>
-
-                <p className="text-pretty text-base leading-8 text-foreground/90 md:text-lg md:leading-9">
-                  {groupOverview.body.split(professor.name)[0]}
-                  <a
-                    href={professor.website}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group/ishtiaque relative inline-flex items-baseline font-semibold text-primary underline decoration-accent/70 decoration-2 underline-offset-4 transition-colors after:absolute after:left-0 after:top-full after:h-8 after:w-72 after:content-[''] hover:text-primary/80"
-                    aria-label={`Visit ${professor.name}'s website`}
-                  >
-                    {professor.name}
-                    <span className="invisible pointer-events-auto absolute left-0 top-full z-50 mt-4 w-72 translate-y-3 rounded-[1.5rem] border border-primary/15 bg-card p-3 opacity-0 shadow-2xl shadow-primary/20 transition-all delay-300 duration-300 before:absolute before:-top-4 before:left-0 before:h-4 before:w-full before:content-[''] group-hover/ishtiaque:visible group-hover/ishtiaque:translate-y-1 group-hover/ishtiaque:opacity-100 group-hover/ishtiaque:delay-75">
-                      <span className="block relative h-52 w-full overflow-hidden rounded-[1.1rem] bg-muted">
-                        <Image
-                          src={getAssetPath(professor.imagePath)}
-                          alt={professor.name}
-                          fill
-                          sizes="288px"
-                          className="object-cover transition-transform duration-500 group-hover/ishtiaque:scale-105"
-                        />
-                      </span>
-                      <span className="mt-3 flex items-center justify-between gap-3 px-1 text-left">
-                        <span>
-                          <span className="block text-sm font-semibold text-foreground">
-                            {professor.name}
-                          </span>
-                          <span className="mt-1 block text-xs leading-5 text-muted-foreground">
-                            {professor.title}
-                            <br />
-                            {professor.department}
-                            <br />
-                            {professor.institution}
-                            <br />
-                            {professor.role}
-                          </span>
-                        </span>
-                        <MoveUpRight className="h-4 w-4 text-primary" />
-                      </span>
-                    </span>
-                  </a>
-                  {groupOverview.body.split(professor.name)[1]}
-                </p>
-
-                <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                  {groupOverview.focusCards.map((item, index) => {
-                    const Icon =
-                      iconMap[item.icon as keyof typeof iconMap] || Globe;
-
-                    return (
-                      <div
-                        key={item.title}
-                        className="group/focus relative min-h-36 overflow-hidden rounded-[1.4rem] border border-primary/10 bg-background/70 p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/25 hover:bg-card hover:shadow-xl hover:shadow-primary/10"
-                      >
-                        <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-primary/5 transition-transform duration-500 group-hover/focus:scale-125" />
-                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-primary via-accent to-primary opacity-40" />
-
-                        <div className="relative flex h-full flex-col justify-between gap-6">
-                          <div className="flex items-start justify-between gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-primary/10 bg-primary/8 text-primary transition-colors group-hover/focus:bg-primary group-hover/focus:text-primary-foreground">
-                              <Icon className="h-4 w-4" />
-                            </div>
-                            <span className="rounded-full border border-border bg-muted/70 px-2.5 py-1 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
-                              {pad2(index + 1)} / {item.label}
-                            </span>
-                          </div>
-
-                          <div>
-                            <h3 className="text-sm font-semibold leading-snug tracking-[-0.02em] text-foreground">
-                              {item.title}
-                            </h3>
-                            <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                              {item.description}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <a
-                href={professor.website}
-                target="_blank"
-                rel="noreferrer"
-                className="group/profile relative min-h-[360px] overflow-hidden rounded-b-[2rem] border-t border-border bg-primary text-primary-foreground lg:rounded-bl-none lg:rounded-r-[2rem] lg:border-l lg:border-t-0"
-                aria-label={`Visit ${professor.name}'s website`}
-              >
-                <Image
-                  src={getAssetPath(professor.imagePath)}
-                  alt={professor.name}
-                  fill
-                  sizes="(min-width: 1024px) 340px, 100vw"
-                  className="object-cover opacity-80 transition duration-700 group-hover/profile:scale-105 group-hover/profile:opacity-95"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/45 to-transparent" />
-                <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-white/15 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.22em] backdrop-blur">
-                  {groupOverview.glanceLabel}
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <div className="rounded-[1.4rem] border border-white/15 bg-white/12 p-4 backdrop-blur-md transition-transform duration-300 group-hover/profile:-translate-y-1">
-                    <div className="flex items-end justify-between gap-4">
-                      <div>
-                        <p className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-primary-foreground/70">
-                          <span>{figLabel(hero.figPrefix, 2)} · {home.groupOverviewFigLabel}</span>
-                        </p>
-                        <p className="mt-1 text-xl font-semibold tracking-[-0.03em]">
+                    <span className="mt-3 flex items-center justify-between gap-3 px-1 text-left">
+                      <span>
+                        <span className="block text-base font-semibold text-foreground">
                           {professor.name}
-                        </p>
-                      </div>
-                      <MoveUpRight className="h-5 w-5" />
-                    </div>
-                    <p className="mt-3 text-sm leading-6 text-primary-foreground/78">
-                      {professor.department}, {professor.institution}.<br />
+                        </span>
+                        <span className="mt-1 block text-sm text-muted-foreground">
+                          {professor.title}
+                          <br />
+                          {professor.department}
+                          <br />
+                          {professor.institution}
+                          <br />
+                          {professor.role}
+                        </span>
+                      </span>
+                      <MoveUpRight className="h-4 w-4 shrink-0 text-primary" />
+                    </span>
+                  </span>
+                </a>
+                {groupOverview.body.split(professor.name)[1]}
+              </p>
+            </div>
+
+            <div className="lg:col-span-4 lg:col-start-9">
+              <div className="flex flex-col items-start gap-5">
+                <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-full">
+                  <Image
+                    src={getAssetPath(professor.imagePath)}
+                    alt={professor.name}
+                    fill
+                    sizes="128px"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-xl font-semibold tracking-tight text-foreground">
+                      {professor.name}
+                    </p>
+                    <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                      {home.groupOverviewFigLabel}
+                    </p>
+                  </div>
+                  <div className="border-t border-border/60 pt-4">
+                    <a
+                      href={professor.website}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80"
+                      aria-label={`Visit ${professor.name}'s website`}
+                    >
+                      {professor.name}
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </a>
+                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                      {professor.title}, {professor.institution}.<br />
                       {professor.role}.
                     </p>
                   </div>
                 </div>
-              </a>
+              </div>
             </div>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            {groupOverview.focusCards.map((item) => {
+              const Icon =
+                iconMap[item.icon as keyof typeof iconMap] || Globe;
+
+              return (
+                <div
+                  key={item.title}
+                  className="rounded-2xl border border-border bg-background p-6 transition-all duration-300 hover:border-primary/20"
+                >
+                  <Icon className="h-4 w-4 text-primary" />
+                  <h3 className="mt-4 text-base font-medium leading-snug text-foreground">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
+      {/* LATEST RESEARCH + TEAM */}
+      {(() => {
+        const years = (contentData.publications.years ?? {}) as Record<string, any>;
+        const yearKeys = Object.keys(years).sort((a, b) => (a < b ? 1 : a > b ? -1 : 0));
+        const latestYear = yearKeys[0];
+        if (!latestYear) return null;
+
+        const bucket = years[latestYear];
+        const all: any[] = [
+          ...(bucket.journalArticles ?? []),
+          ...(bucket.conferenceProceedings ?? []),
+          ...(bucket.extendedAbstracts ?? []),
+          ...(bucket.researchArtifacts ?? []),
+        ];
+        if (all.length === 0) return null;
+
+        const maxShow = contentData.latestPublications?.maxToShow ?? 4;
+        const latest = all.slice(0, maxShow);
+
+        const { professor, team } = contentData;
+        const allMembers: { name: string; role: string; imagePath?: string }[] = [];
+        if (professor?.name) {
+          allMembers.push({ name: professor.name, role: professor.title, imagePath: professor.imagePath });
+        }
+        for (const section of team?.sections ?? []) {
+          for (const m of section.members ?? []) {
+            allMembers.push({ name: m.name, role: section.role, imagePath: m.imagePath });
+          }
+        }
+
+        return (
+          <section className="border-b border-border">
+            <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+              <div className="mb-10 flex items-end justify-between gap-6 border-b border-border pb-4">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                    {contentData.latestPublications?.eyebrow}
+                  </span>
+                  <span className="h-3 w-px bg-border" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary">
+                    {latestYear}
+                  </span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Link
+                    href="/team"
+                    className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {contentData.latestPublications?.viewAllLabel?.replace("publications", "team") ?? "Team"}
+                    <ArrowRight className="size-3" />
+                  </Link>
+                  <span className="h-3 w-px bg-border" />
+                  <Link
+                    href={contentData.latestPublications?.viewAllHref ?? "/publications"}
+                    className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {contentData.latestPublications?.viewAllLabel}
+                    <ArrowRight className="size-3" />
+                  </Link>
+                </div>
+              </div>
+
+              <div className="grid gap-10 lg:grid-cols-12">
+                {/* Publications — 2/3 */}
+                <div className="lg:col-span-8">
+                  <div className="grid gap-px bg-border sm:grid-cols-2">
+                    {latest.map((pub: any, i: number) => (
+                      <article
+                        key={pub.id ?? `latest-${i}`}
+                        className="bg-background p-6 transition-colors hover:bg-muted/20 sm:p-7"
+                      >
+                        {pub.award && (
+                          <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/8 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.15em] text-accent-foreground">
+                            <svg viewBox="0 0 24 24" className="size-2.5 fill-accent" aria-hidden>
+                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                            {pub.award}
+                          </span>
+                        )}
+                        <h3 className="text-[14px] font-medium leading-snug text-foreground">
+                          {pub.url ? (
+                            <Link
+                              href={pub.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="underline decoration-primary/25 underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
+                            >
+                              {pub.title}
+                            </Link>
+                          ) : (
+                            pub.title
+                          )}
+                        </h3>
+                        {pub.authors && (
+                          <p className="mt-1 text-[12px] leading-relaxed text-muted-foreground line-clamp-1">
+                            {pub.authors}
+                          </p>
+                        )}
+                        {pub.venue && (
+                          <p className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-primary/80">
+                            {pub.venue}
+                          </p>
+                        )}
+                      </article>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Team sidebar — 1/3 */}
+                <aside className="lg:col-span-4">
+                  <div className="rounded-2xl border border-border bg-background p-6">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                      {contentData.team?.principalInvestigatorRole ?? "Researchers"}
+                    </span>
+
+                    <div className="mt-5 space-y-4">
+                      {allMembers.slice(0, 5).map((m, i) => (
+                        <div key={i} className="flex items-center gap-3">
+                          {m.imagePath ? (
+                            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-border">
+                              <Image
+                                src={getAssetPath(m.imagePath)}
+                                alt={m.name}
+                                fill
+                                sizes="40px"
+                                className="object-cover"
+                              />
+                            </div>
+                          ) : (
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted">
+                              <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground">
+                                {m.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
+                              </span>
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <p className="text-[13px] font-medium leading-snug text-foreground truncate">
+                              {m.name}
+                            </p>
+                            <p className="text-[11px] leading-snug text-muted-foreground truncate">
+                              {m.role}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <Link
+                      href="/team"
+                      className="mt-5 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-primary transition-colors hover:text-primary/70"
+                    >
+                      {contentData.team?.principalInvestigatorRole?.replace("Principal Investigator", "All members") ?? "All members"}
+                      <ArrowRight className="size-3" />
+                    </Link>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
+
       {/* ABOUT THE GROUP — quote, hairline-left accent */}
       {about && (
         <section className="border-b border-border bg-muted/30">
@@ -334,10 +467,10 @@ export default function Home() {
             <div className="flex items-center gap-3 border-b border-border pb-4">
               <Quote className="size-4 text-primary" />
               <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                {eyebrow(2, about.title)}
+                {about.title}
               </h2>
             </div>
-            <p className="mt-10 max-w-3xl border-l border-primary pl-6 font-heading text-2xl font-medium leading-snug tracking-[-0.025em] text-foreground sm:text-3xl">
+            <p className="mt-10 max-w-3xl border-l border-primary pl-6 text-foreground">
               {about.body}
             </p>
             {(about as { ctaLabel?: string; ctaHref?: string }).ctaLabel && (
@@ -360,7 +493,7 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <Cpu className="size-3.5 text-primary" />
               <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                {eyebrow(3, researchDomains.sectionLabel)}
+                {researchDomains.sectionLabel}
               </h2>
             </div>
             <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
@@ -378,24 +511,19 @@ export default function Home() {
               return (
                 <li
                   key={item.title}
-                  className="group/dom border-b border-border py-7 first:border-t first:border-border sm:py-8"
+                  className="group/dom border-b border-border py-7 sm:py-8"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-3">
                       <Icon className="mt-1 size-4 shrink-0 text-primary" />
                       <div>
-                        <h3 className="font-heading text-lg font-medium tracking-[-0.02em] text-foreground">
+                        <h3 className="type-body font-medium text-foreground">
                           {item.title}
                         </h3>
-                        <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
+                        <p className="mt-2 max-w-md type-body text-muted-foreground">
                           {item.description}
                         </p>
                       </div>
                     </div>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                      {pad2(index + 1)}
-                    </span>
-                  </div>
                 </li>
               );
             })}
@@ -408,7 +536,7 @@ export default function Home() {
         <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
           <div className="mb-12 border-b border-border pb-4">
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-              {eyebrow(4, homePillars.eyebrow)}
+              {homePillars.eyebrow}
             </span>
           </div>
 
@@ -420,16 +548,11 @@ export default function Home() {
                   key={pillar.id}
                   className="bg-background p-8 transition-colors hover:bg-muted/40 sm:p-10"
                 >
-                  <div className="flex items-center justify-between">
-                    <Icon className="size-4 text-primary" />
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                      {pad2(index + 1)}
-                    </span>
-                  </div>
-                  <h3 className="mt-10 font-heading text-xl font-medium tracking-[-0.02em] text-foreground">
+                  <Icon className="size-4 text-primary" />
+                  <h3 className="mt-10 type-subhead text-foreground">
                     {pillar.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  <p className="mt-3 type-body text-muted-foreground">
                     {pillar.body}
                   </p>
                 </article>

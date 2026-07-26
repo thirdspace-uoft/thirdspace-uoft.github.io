@@ -5,7 +5,6 @@ import type { Metadata } from "next";
 
 import contentData from "../../../public/config/content.json";
 import { getAssetPath } from "@/lib/utils";
-import { pad2 } from "@/lib/section-numbering";
 import { MemberRowClickable } from "@/components/team/member-row-clickable";
 
 export const metadata: Metadata = {
@@ -47,12 +46,8 @@ function MemberRow({ index, member }: { index: number; member: Member }) {
 
   return (
     <article className="grid grid-cols-12 items-start gap-x-6 gap-y-3 border-t border-border py-7 sm:py-8">
-      <span className="col-span-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:col-span-1">
-        {pad2(index + 1)}
-      </span>
-
       {hasImage && (
-        <div className="col-span-10 sm:col-span-2">
+        <div className="col-span-12 sm:col-span-2">
           <div className="relative aspect-square w-20 overflow-hidden bg-muted sm:w-24">
             <Image
               src={getAssetPath(member.imagePath!)}
@@ -67,7 +62,7 @@ function MemberRow({ index, member }: { index: number; member: Member }) {
 
       <div
         className={
-          "col-span-12 " + (hasImage ? "sm:col-span-6" : "sm:col-span-7")
+          "col-span-12 " + (hasImage ? "sm:col-span-7" : "sm:col-span-8")
         }
       >
         {homepage ? (
@@ -75,23 +70,23 @@ function MemberRow({ index, member }: { index: number; member: Member }) {
             href={homepage.url}
             target="_blank"
             rel="noreferrer"
-            className="group inline-flex items-baseline gap-1.5 font-heading text-lg font-medium tracking-[-0.02em] text-foreground transition-colors hover:text-primary"
+            className="group inline-flex items-baseline gap-1.5 type-body font-medium text-foreground transition-colors hover:text-primary"
           >
             {member.name}
             <ArrowUpRight className="size-3.5 opacity-0 transition-opacity group-hover:opacity-100" />
           </Link>
         ) : (
-          <p className="font-heading text-lg font-medium tracking-[-0.02em] text-foreground">
+          <p className="type-body font-medium text-foreground">
             {member.name}
           </p>
         )}
         {(member.title || member.role) && (
-          <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+          <p className="mt-1 type-meta uppercase tracking-[0.22em] text-muted-foreground">
             {member.title || member.role}
           </p>
         )}
         {member.focus && (
-          <p className="mt-3 max-w-prose text-sm leading-6 text-muted-foreground">
+          <p className="mt-3 type-body max-w-prose text-muted-foreground">
             {member.focus}
           </p>
         )}
@@ -110,7 +105,7 @@ function MemberRow({ index, member }: { index: number; member: Member }) {
                   href={link.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
+                  className="inline-flex items-center gap-1 type-meta uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
                 >
                   {link.label}
                   <ArrowUpRight className="size-2.5" />
@@ -160,14 +155,9 @@ function RoleSection({
     <section className="border-t border-border">
       <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
         <div className="mb-6 flex items-baseline justify-between gap-6 border-b border-border pb-4">
-          <div className="flex items-baseline gap-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-              {pad2(index)}
-            </span>
-            <h2 className="font-heading text-2xl font-medium tracking-[-0.025em] text-foreground sm:text-3xl">
-              {role}
-            </h2>
-          </div>
+          <h2 className="type-subhead text-foreground">
+            {role}
+          </h2>
           <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
             {members.length === 0
               ? copy.membersDash
@@ -176,7 +166,7 @@ function RoleSection({
         </div>
 
         {members.length === 0 ? (
-          <p className="py-8 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                  <p className="py-8 type-meta uppercase tracking-[0.18em] text-muted-foreground">
             {copy.emptyRoleMessage}
           </p>
         ) : (
@@ -254,10 +244,10 @@ export default function TeamPage() {
           </div>
 
           <div className="grid gap-10 lg:grid-cols-12">
-            <h1 className="font-heading text-[clamp(2.25rem,5vw,4.5rem)] font-medium leading-[1.02] tracking-[-0.035em] text-foreground lg:col-span-8">
+            <h1 className="type-display text-foreground lg:col-span-8">
               {team.pageHeadline}
             </h1>
-            <p className="max-w-prose text-pretty text-base leading-7 text-muted-foreground lg:col-span-4 lg:pt-3">
+            <p className="type-body max-w-prose text-pretty text-muted-foreground lg:col-span-4 lg:pt-3">
               {team.pageBody}
             </p>
           </div>
@@ -268,14 +258,9 @@ export default function TeamPage() {
       <section className="border-t border-border">
         <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
           <div className="mb-6 flex items-baseline justify-between gap-6 border-b border-border pb-4">
-            <div className="flex items-baseline gap-4">
-              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                {pad2(1)}
-              </span>
-              <h2 className="font-heading text-2xl font-medium tracking-[-0.025em] text-foreground sm:text-3xl">
-                {team.principalInvestigatorRole}
-              </h2>
-            </div>
+            <h2 className="type-subhead text-foreground">
+              {team.principalInvestigatorRole}
+            </h2>
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
               {`1 ${team.membersCountSingular}`}
             </span>
@@ -339,14 +324,9 @@ export default function TeamPage() {
       <section className="border-t border-border">
         <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
           <div className="mb-6 flex items-baseline justify-between gap-6 border-b border-border pb-4">
-            <div className="flex items-baseline gap-4">
-              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                {pad2(team.sections.length + 2)}
-              </span>
-              <h2 className="font-heading text-2xl font-medium tracking-[-0.025em] text-foreground sm:text-3xl">
-                {team.alumni.title}
-              </h2>
-            </div>
+            <h2 className="type-subhead text-foreground">
+              {team.alumni.title}
+            </h2>
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
               {((team.alumni.members ?? []) as AlumniMember[]).length === 0
                 ? team.membersDash
@@ -365,20 +345,17 @@ export default function TeamPage() {
                   key={`${m.name}-${i}`}
                   className="grid grid-cols-12 items-baseline gap-x-4 gap-y-1 border-b border-border py-5 sm:py-6"
                 >
-                  <span className="col-span-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:col-span-1">
-                    {pad2(i + 1)}
-                  </span>
-                  <div className="col-span-10 sm:col-span-5">
-                    <p className="font-heading text-base font-medium tracking-[-0.015em] text-foreground">
+                  <div className="col-span-12 sm:col-span-5">
+                    <p className="type-body font-medium text-foreground">
                       {m.name}
                     </p>
                     {m.role && (
-                      <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                      <p className="mt-0.5 type-meta uppercase tracking-[0.22em] text-muted-foreground">
                         {m.role}
                       </p>
                     )}
                   </div>
-                  <p className="col-span-12 text-sm leading-6 text-muted-foreground sm:col-span-6">
+                  <p className="col-span-12 type-body text-muted-foreground sm:col-span-6">
                     {[m.currentPosition, m.currentAffiliation]
                       .filter(Boolean)
                       .join(" · ")}

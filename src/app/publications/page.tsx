@@ -41,16 +41,27 @@ type Book = {
   coverImagePath?: string;
 };
 
+function awardEmoji(award: string): string {
+  const lower = award.toLowerCase();
+  if (lower.includes("best paper award") && !lower.includes("honorable")) return "\uD83C\uDFC6";
+  if (lower.includes("best paper")) return "\uD83C\uDFC6";
+  if (lower.includes("honorable") || lower.includes("honourable")) return "\uD83C\uDF96\uFE0F";
+  if (lower.includes("diversity") || lower.includes("inclusion")) return "\uD83C\uDF1F";
+  return "\uD83C\uDFC6";
+}
+
 /* ─── Publication card ─── */
 function PubCard({
   pub,
   index,
+  year,
   awardBadgeLabel,
   doiPrefix,
   viewPaperLabel,
 }: {
   pub: Pub;
   index: number;
+  year: string;
   awardBadgeLabel: string;
   doiPrefix: string;
   viewPaperLabel: string;
@@ -90,6 +101,7 @@ function PubCard({
               <svg viewBox="0 0 24 24" className="size-3 fill-accent" aria-hidden>
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
               </svg>
+              <span className="text-[13px]" aria-hidden>{awardEmoji(pub.award)}</span>
               {awardBadgeLabel} · {pub.award}
             </span>
           </div>
@@ -98,7 +110,7 @@ function PubCard({
         {/* Authors */}
         {pub.authors && (
           <p className="text-[13px] leading-relaxed text-muted-foreground">
-            {pub.authors}
+            {pub.authors}. {year}.
           </p>
         )}
 
@@ -149,6 +161,7 @@ function PubCard({
 function PubSubsection({
   title,
   entries,
+  year,
   awardBadgeLabel,
   doiPrefix,
   entriesCountSingular,
@@ -158,6 +171,7 @@ function PubSubsection({
 }: {
   title: string;
   entries?: Pub[];
+  year: string;
   awardBadgeLabel: string;
   doiPrefix: string;
   entriesCountSingular: string;
@@ -185,6 +199,7 @@ function PubSubsection({
             key={p.id ?? `${title}-${i}`}
             pub={p}
             index={startIndex + i}
+            year={year}
             awardBadgeLabel={awardBadgeLabel}
             doiPrefix={doiPrefix}
             viewPaperLabel={viewPaperLabel}
@@ -418,6 +433,7 @@ export default function PublicationsPage() {
               <PubSubsection
                 title={publications.subsectionTitles.journalArticles}
                 entries={bucket.journalArticles}
+                year={year}
                 awardBadgeLabel={publications.awardBadgeLabel}
                 doiPrefix={publications.doiPrefix}
                 entriesCountSingular={publications.entriesCountSingular}
@@ -428,6 +444,7 @@ export default function PublicationsPage() {
               <PubSubsection
                 title={publications.subsectionTitles.conferenceProceedings}
                 entries={bucket.conferenceProceedings}
+                year={year}
                 awardBadgeLabel={publications.awardBadgeLabel}
                 doiPrefix={publications.doiPrefix}
                 entriesCountSingular={publications.entriesCountSingular}
@@ -438,6 +455,7 @@ export default function PublicationsPage() {
               <PubSubsection
                 title={publications.subsectionTitles.extendedAbstracts}
                 entries={bucket.extendedAbstracts}
+                year={year}
                 awardBadgeLabel={publications.awardBadgeLabel}
                 doiPrefix={publications.doiPrefix}
                 entriesCountSingular={publications.entriesCountSingular}
@@ -448,6 +466,7 @@ export default function PublicationsPage() {
               <PubSubsection
                 title={publications.subsectionTitles.researchArtifacts}
                 entries={bucket.researchArtifacts}
+                year={year}
                 awardBadgeLabel={publications.awardBadgeLabel}
                 doiPrefix={publications.doiPrefix}
                 entriesCountSingular={publications.entriesCountSingular}
