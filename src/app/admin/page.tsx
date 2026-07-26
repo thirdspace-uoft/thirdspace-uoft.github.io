@@ -1503,6 +1503,26 @@ function SignedInView({
                         />
                       </div>
                     </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-border mt-4">
+                      <div className="space-y-1">
+                        <Label htmlFor="social-x-aria" className="text-[10px] font-mono uppercase text-muted-foreground">X Aria Label (Desktop)</Label>
+                        <Input
+                          id="social-x-aria"
+                          value={content.socials.xDesktopAriaLabel ?? ""}
+                          onChange={(e) => handleFieldChange("socials", "xDesktopAriaLabel", e.target.value)}
+                          className="font-mono text-xs"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <Label htmlFor="social-x-aria-mobile" className="text-[10px] font-mono uppercase text-muted-foreground">X Aria Label (Mobile)</Label>
+                        <Input
+                          id="social-x-aria-mobile"
+                          value={content.socials.xMobileAriaLabel ?? ""}
+                          onChange={(e) => handleFieldChange("socials", "xMobileAriaLabel", e.target.value)}
+                          className="font-mono text-xs"
+                        />
+                      </div>
+                    </div>
                   </div>
 
                   {/* Research list */}
@@ -1929,6 +1949,67 @@ function SignedInView({
                     <div className="space-y-1">
                       <Label className="text-[10px] font-mono uppercase text-muted-foreground">CTA Href</Label>
                       <Input value={content.about.ctaHref ?? "/about"} onChange={(e) => handleFieldChange("about", "ctaHref", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "about" && content?.latestPublications && (
+                <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
+                  <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[9px] text-muted-foreground">R01</div>
+                  <div className="mb-2">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Draft Sheet</span>
+                    <h3 className="text-base font-bold text-foreground font-serif">Latest Research Section</h3>
+                    <p className="text-[11px] text-muted-foreground">Labels for the latest research and team sidebar on the homepage.</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">Eyebrow</Label>
+                      <Input value={content.latestPublications.eyebrow ?? ""} onChange={(e) => handleFieldChange("latestPublications", "eyebrow", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">Headline</Label>
+                      <Input value={content.latestPublications.headline ?? ""} onChange={(e) => handleFieldChange("latestPublications", "headline", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">View All Label</Label>
+                      <Input value={content.latestPublications.viewAllLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "viewAllLabel", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">Team View All Label</Label>
+                      <Input value={content.latestPublications.teamViewAllLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "teamViewAllLabel", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">PI Label</Label>
+                      <Input value={content.latestPublications.piLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "piLabel", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">Researchers Label</Label>
+                      <Input value={content.latestPublications.researchersLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "researchersLabel", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">All Members Label</Label>
+                      <Input value={content.latestPublications.allMembersLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "allMembersLabel", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">Featured Researcher Label</Label>
+                      <Input value={content.latestPublications.featuredResearcherLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "featuredResearcherLabel", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">Awards Label</Label>
+                      <Input value={content.latestPublications.awardsLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "awardsLabel", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">Recent Publications Label</Label>
+                      <Input value={content.latestPublications.recentPublicationsLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "recentPublicationsLabel", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">Max To Show</Label>
+                      <Input type="number" value={content.latestPublications.maxToShow ?? 6} onChange={(e) => handleFieldChange("latestPublications", "maxToShow", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">Empty Label</Label>
+                      <Input value={content.latestPublications.emptyLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "emptyLabel", e.target.value)} className="font-mono text-xs" />
                     </div>
                   </div>
                 </div>

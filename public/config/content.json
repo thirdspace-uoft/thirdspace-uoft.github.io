@@ -180,7 +180,14 @@
     "viewAllHref": "/publications",
     "emptyLabel": "No publications yet",
     "byLabel": "",
-    "awardLabel": "Award"
+    "awardLabel": "Award",
+    "teamViewAllLabel": "View all team",
+    "piLabel": "Principal Investigator",
+    "researchersLabel": "Researchers",
+    "allMembersLabel": "All members",
+    "featuredResearcherLabel": "Featured researcher",
+    "awardsLabel": "Awards",
+    "recentPublicationsLabel": "Recent publications"
   },
   "homePillars": {
     "eyebrow": "Three pillars"
@@ -1024,7 +1031,9 @@
   "socials": {
     "xUrl": "https://x.com/SpaceUoft",
     "xHandle": "@SpaceUoft",
-    "email": "thirdspace@dgp.toronto.edu"
+    "email": "thirdspace@dgp.toronto.edu",
+    "xDesktopAriaLabel": "Twitter / X",
+    "xMobileAriaLabel": "Twitter / X"
   },
   "brand": {
     "name": "Thirdspace",

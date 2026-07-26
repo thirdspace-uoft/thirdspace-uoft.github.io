@@ -76,11 +76,11 @@ export default function Home() {
           <div className="grid gap-12 md:gap-16 lg:grid-cols-12 lg:gap-20">
             <div className="lg:col-span-8">
               <h1 className="type-display text-foreground">
-                <span className="block">Utilizing human values,</span>
+                <span className="block">{hero.headlineLine1}</span>
                 <span className="block font-semibold text-muted-foreground">
-                  situated knowledge,
+                  {hero.headlineLine2}
                 </span>
-                <span className="block">and lived experiences.</span>
+                <span className="block">{hero.headlineLine3}</span>
               </h1>
             </div>
 
@@ -318,8 +318,9 @@ export default function Home() {
         const latest = all.slice(0, maxShow);
 
         const { professor, team } = contentData;
+        const piLabel = contentData.latestPublications?.piLabel ?? "Principal Investigator";
         const piMember: { name: string; role: string; imagePath?: string } | null =
-          professor?.name ? { name: professor.name, role: professor.title ?? "Principal Investigator", imagePath: professor.imagePath } : null;
+          professor?.name ? { name: professor.name, role: professor.title ?? piLabel, imagePath: professor.imagePath } : null;
         const piName = piMember?.name ?? "";
         const researchers: { name: string; role: string; imagePath?: string }[] = [];
         for (const section of team?.sections ?? []) {
@@ -348,7 +349,7 @@ export default function Home() {
                     href="/team"
                     className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
                   >
-                    {contentData.latestPublications?.viewAllLabel?.replace("publications", "team") ?? "Team"}
+                    {contentData.latestPublications?.teamViewAllLabel ?? "Team"}
                     <ArrowRight className="size-3" />
                   </Link>
                   <span className="h-3 w-px bg-border" />
@@ -416,7 +417,7 @@ export default function Home() {
                     {piMember && (
                       <div>
                         <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                          Principal Investigator
+                          {piLabel}
                         </span>
                         <div className="mt-4 flex items-center gap-3">
                           {piMember.imagePath ? (
@@ -452,7 +453,7 @@ export default function Home() {
                     {researchers.length > 0 && (
                       <div className="mt-6 border-t border-border pt-5">
                         <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                          Researchers
+                          {contentData.latestPublications?.researchersLabel ?? "Researchers"}
                         </span>
                         <div className="mt-4 space-y-3">
                           {researchers.slice(0, 5).map((m, i) => (
@@ -492,7 +493,7 @@ export default function Home() {
                       href="/team"
                       className="mt-6 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-primary transition-colors hover:text-primary/70"
                     >
-                      All members
+                      {contentData.latestPublications?.allMembersLabel ?? "All members"}
                       <ArrowRight className="size-3" />
                     </Link>
                   </div>
@@ -511,7 +512,7 @@ export default function Home() {
                 return (
                   <div className="mt-10">
                     <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
-                      Featured researcher
+                      {contentData.latestPublications?.featuredResearcherLabel ?? "Featured researcher"}
                     </span>
                     <div className="mt-4 grid gap-6 md:grid-cols-2">
                       {featured.map((fullData, fIdx) => (
@@ -559,7 +560,7 @@ export default function Home() {
                           {fullData.awards && fullData.awards.length > 0 && (
                             <div className="mt-4">
                               <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
-                                Awards
+                                {contentData.latestPublications?.awardsLabel ?? "Awards"}
                               </span>
                               <div className="mt-2 space-y-1.5">
                                 {fullData.awards.map((aw: string, ai: number) => (
@@ -608,7 +609,7 @@ export default function Home() {
                             return (
                               <div className="mt-5 border-t border-border pt-4">
                                 <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
-                                  Recent publications
+                                  {contentData.latestPublications?.recentPublicationsLabel ?? "Recent publications"}
                                 </span>
                                 <ul className="mt-3 space-y-2.5">
                                   {top.map((p, pi) => (

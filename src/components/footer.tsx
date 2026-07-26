@@ -35,7 +35,7 @@ export function Footer() {
                   target="_blank"
                   rel="noreferrer"
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-muted/60 text-muted-foreground transition-all hover:bg-primary/10 hover:text-primary ring-1 ring-border"
-                  aria-label="Twitter / X"
+                  aria-label={contentData.socials?.xDesktopAriaLabel ?? "Twitter / X"}
                 >
                   {/* SVG for X (formerly Twitter) */}
                   <svg
