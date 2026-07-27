@@ -24,8 +24,10 @@ import {
   BookOpenCheck,
   Plus,
   Trash2,
+  Image,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ImageUploader } from "@/components/image-uploader";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { auth, db } from "@/lib/firebase";
@@ -971,8 +973,15 @@ function SignedInView({
                         <Input value={content.hero.focusValue ?? ""} onChange={(e) => handleFieldChange("hero", "focusValue", e.target.value)} className="text-xs" />
                       </div>
                       <div className="space-y-1">
-                        <Label className="text-[10px] font-mono uppercase text-muted-foreground">Group Photo Path (from /public/group-photos)</Label>
-                        <Input value={content.hero.groupPhotoPath ?? ""} onChange={(e) => handleFieldChange("hero", "groupPhotoPath", e.target.value)} placeholder="/group-photos/group_photo_crp.PNG" className="font-mono text-xs" />
+                        <Label className="text-[10px] font-mono uppercase text-muted-foreground">Group Photo Path</Label>
+                        <div className="flex gap-2">
+                          <Input value={content.hero.groupPhotoPath ?? ""} onChange={(e) => handleFieldChange("hero", "groupPhotoPath", e.target.value)} placeholder="/group-photos/group_photo_crp.PNG" className="font-mono text-xs flex-1" />
+                          <ImageUploader
+                            currentPath={content.hero.groupPhotoPath ?? ""}
+                            folder="/group-photos"
+                            onUpload={(p) => handleFieldChange("hero", "groupPhotoPath", p)}
+                          />
+                        </div>
                       </div>
                       <div className="space-y-1">
                         <Label className="text-[10px] font-mono uppercase text-muted-foreground">Group Photo Alt Text</Label>
@@ -1598,8 +1607,15 @@ function SignedInView({
                       <Input value={content.professor.website} onChange={(e) => handleFieldChange("professor", "website", e.target.value)} className="font-mono text-xs text-muted-foreground" />
                     </div>
                     <div className="space-y-1 sm:col-span-2">
-                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">Profile Image Path (from /public/headshots)</Label>
-                      <Input value={content.professor.imagePath} onChange={(e) => handleFieldChange("professor", "imagePath", e.target.value)} className="font-mono text-xs text-muted-foreground" />
+                      <Label className="text-[10px] font-mono uppercase text-muted-foreground">Profile Image Path</Label>
+                      <div className="flex gap-2">
+                        <Input value={content.professor.imagePath} onChange={(e) => handleFieldChange("professor", "imagePath", e.target.value)} className="font-mono text-xs flex-1" />
+                        <ImageUploader
+                          currentPath={content.professor.imagePath}
+                          folder="/headshots"
+                          onUpload={(p) => handleFieldChange("professor", "imagePath", p)}
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className="space-y-1">
@@ -1841,7 +1857,14 @@ function SignedInView({
                               </div>
                               <div className="space-y-1">
                                 <Label className="text-[10px] font-mono uppercase text-muted-foreground">Image Path</Label>
-                                <Input value={member.imagePath ?? ""} onChange={(e) => handleTeamMemberChange(sectionIndex, memberIndex, "imagePath", e.target.value)} className="font-mono text-xs" placeholder="/headshots/name.png" />
+                                <div className="flex gap-2">
+                                  <Input value={member.imagePath ?? ""} onChange={(e) => handleTeamMemberChange(sectionIndex, memberIndex, "imagePath", e.target.value)} className="font-mono text-xs flex-1" placeholder="/headshots/name.png" />
+                                  <ImageUploader
+                                    currentPath={member.imagePath ?? ""}
+                                    folder="/headshots"
+                                    onUpload={(p) => handleTeamMemberChange(sectionIndex, memberIndex, "imagePath", p)}
+                                  />
+                                </div>
                               </div>
                             </div>
                             <div className="space-y-1">
