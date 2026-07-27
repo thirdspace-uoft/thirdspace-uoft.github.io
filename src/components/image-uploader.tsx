@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { Upload, Loader2, Check, AlertCircle, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const IMAGEKIT_PUBLIC_KEY = "public_ceZcPfhgVnUzLdYrWwlIHNbe0eI=";
+const IMAGEKIT_PUBLIC_KEY = process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY ?? "";
 const UPLOAD_URL = "https://upload.imagekit.io/api/v1/files/upload";
 
 interface ImageUploaderProps {

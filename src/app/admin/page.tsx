@@ -244,11 +244,12 @@ function SignedInView({
   const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "pillars" | "homePillars" | "navbar" | "footerLabs" | "location" | "marquee" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "aboutPage" | "contact">("layout");
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  const IMAGEKIT_URL_ENDPOINT = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT ?? "https://ik.imagekit.io/zb1q";
+  const IMAGEKIT_URL_ENDPOINT = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
   const IMAGEKIT_PRIVATE_KEY = process.env.NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY;
 
   async function deleteFromImageKit(path: string) {
     if (!IMAGEKIT_PRIVATE_KEY) throw new Error("NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY not set in .env");
+    if (!IMAGEKIT_URL_ENDPOINT) throw new Error("NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT not set in .env");
     const fullUrl = `${IMAGEKIT_URL_ENDPOINT}${path}`;
     const res = await fetch("https://api.imagekit.io/v1/files/delete-by-url", {
       method: "DELETE",
