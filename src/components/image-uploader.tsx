@@ -130,7 +130,7 @@ export function ImageUploader({ currentPath, folder, onUpload, onDelete }: Image
       </Button>
       {status === "success" && <Check className="h-3.5 w-3.5 text-green-600 shrink-0" />}
       {status === "error" && <AlertCircle className="h-3.5 w-3.5 text-destructive shrink-0" />}
-      {msg && <span className="text-[10px] font-mono text-muted-foreground truncate max-w-[200px]">{msg}</span>}
+      {msg && <span className="text-[12px] font-mono text-muted-foreground truncate max-w-[200px]">{msg}</span>}
     </div>
   );
 }

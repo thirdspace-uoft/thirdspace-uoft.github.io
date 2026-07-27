@@ -47,21 +47,21 @@ function MemberRow({ index, member }: { index: number; member: Member }) {
   const hasImage = !!member.imagePath;
 
   return (
-    <article className="grid grid-cols-12 items-start gap-x-6 gap-y-3 border-t border-border py-7 sm:py-8">
+    <article className="grid grid-cols-12 items-center gap-x-6 gap-y-3 border-t border-border py-7 sm:py-8">
       <div className="col-span-12 sm:col-span-2">
         {hasImage ? (
-          <div className="relative aspect-square w-20 overflow-hidden bg-muted sm:w-24">
+          <div className="relative aspect-square w-24 overflow-hidden bg-muted sm:w-28">
             <Image
               src={getImageUrl(member.imagePath!)}
               alt={member.name}
               fill
-              sizes="96px"
+              sizes="112px"
               className="object-cover"
             />
           </div>
         ) : (
-          <div className="flex aspect-square w-20 items-center justify-center rounded-full border border-border bg-muted sm:w-24">
-            <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+          <div className="flex aspect-square w-24 items-center justify-center rounded-full border border-border bg-muted sm:w-28">
+            <span className="font-mono text-[13px] uppercase tracking-[0.12em] text-muted-foreground">
               {member.name.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0]).join("")}
             </span>
           </div>
@@ -166,7 +166,7 @@ function RoleSection({
           <h2 className="type-subhead text-foreground">
             {role}
           </h2>
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+          <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
             {members.length === 0
               ? copy.membersDash
               : `${members.length} ${members.length === 1 ? copy.membersCountSingular : copy.membersCountPlural}`}
@@ -238,15 +238,15 @@ export default function TeamPage() {
       <section data-section="team" data-section-label="Team" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-20">
           <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
               {`${team.heroRosterWord} \u00B7 ${new Date().getFullYear()}`}
             </span>
             <span className="hidden h-3 w-px bg-border sm:block" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
               {`${totalMembers} ${totalMembers === 1 ? team.activeMembersWordSingular : team.activeMembersWordPlural}`}
             </span>
             <span className="hidden h-3 w-px bg-border sm:block" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
               {`${team.sections.length + 1} ${(team.sections.length + 1) === 1 ? team.sectionsCountSingular : team.sectionsCountPlural}`}
             </span>
           </div>
@@ -269,7 +269,7 @@ export default function TeamPage() {
             <h2 className="type-subhead text-foreground">
               {team.principalInvestigatorRole}
             </h2>
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
               {`1 ${team.membersCountSingular}`}
             </span>
           </div>
@@ -337,7 +337,7 @@ export default function TeamPage() {
             <h2 className="type-subhead text-foreground">
               {team.alumni.title}
             </h2>
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
               {((team.alumni.members ?? []) as AlumniMember[]).length === 0
                 ? team.membersDash
                 : `${(team.alumni.members ?? []).length} ${(team.alumni.members ?? []).length === 1 ? team.alumniCountSingular : team.alumniCountPlural}`}
@@ -345,7 +345,7 @@ export default function TeamPage() {
           </div>
 
           {((team.alumni.members ?? []) as AlumniMember[]).length === 0 ? (
-            <p className="py-8 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+            <p className="py-8 font-mono text-[13px] uppercase tracking-[0.18em] text-muted-foreground">
               {team.emptyAlumniMessage}
             </p>
           ) : (

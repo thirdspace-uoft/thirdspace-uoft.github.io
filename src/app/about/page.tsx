@@ -23,7 +23,7 @@ export default function AboutPage() {
             <h2 className="type-subhead text-foreground">
               {aboutPage.approachTitle}
             </h2>
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
               {`${aboutPage.approachItems?.length ?? 0} ${(aboutPage.approachItems?.length ?? 0) === 1 ? aboutPage.methodsCountSingular : aboutPage.methodsCountPlural}`}
             </span>
           </div>

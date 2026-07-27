@@ -60,21 +60,21 @@ export default function Home() {
     <main className="bg-background">
       {/* HERO — editorial split, mono meta strip, generous whitespace */}
       <section data-section="hero" data-section-label="Home" className="border-b border-border">
-        <div className="mx-auto w-full max-w-6xl px-5 pt-16 pb-20 sm:px-8 sm:pt-24 sm:pb-28">
+        <div className="mx-auto w-full max-w-6xl px-5 pt-10 pb-12 sm:px-8 sm:pt-14 sm:pb-16">
           {/* Meta strip */}
-          <div className="mb-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-4 sm:mb-16">
-            <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+          <div className="mb-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-3 sm:mb-10">
+            <span className="inline-flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
               <Orbit className="size-3 text-primary" />
               {hero.badge}
             </span>
             <span className="hidden h-3 w-px bg-border sm:block" />
-            <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="inline-flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
               <MapPin className="size-3 text-primary" />
               {hero.locationChip}
             </span>
           </div>
           {/* Headline + lede */}
-          <div className="grid gap-12 md:gap-16 lg:grid-cols-12 lg:gap-20">
+          <div className="grid gap-8 md:gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
             <div className="lg:col-span-8">
               <h1 className="type-display text-foreground">
                 <span className="block">{hero.headlineLine1}</span>
@@ -85,7 +85,7 @@ export default function Home() {
               </h1>
             </div>
 
-            <aside className="space-y-8 lg:col-span-4 lg:pt-3">
+            <aside className="space-y-5 lg:col-span-4">
               <p className="type-body text-pretty text-muted-foreground">
                 {hero.subParagraph}
               </p>
@@ -99,7 +99,7 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/team"
-                  className="inline-flex items-center gap-2 px-1 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+                  className="inline-flex items-center gap-2 px-1 py-2.5 font-mono text-[17px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {hero.secondaryActionText}
                   <ArrowUpRight className="size-3" />
@@ -109,7 +109,7 @@ export default function Home() {
           </div>
 
           {/* Plate — single photograph, no chrome */}
-          <figure className="mt-16 grid gap-6 sm:mt-20 md:grid-cols-12">
+          <figure className="mt-10 grid gap-5 sm:mt-12 md:grid-cols-12">
             <div className="md:col-span-7">
               <div className="relative aspect-[4/3] w-full overflow-hidden">
                 <Image
@@ -121,21 +121,21 @@ export default function Home() {
                   className="object-cover grayscale-[8%]"
                 />
               </div>
-              <figcaption className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              <figcaption className="mt-2 font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground">
                 {hero.groupPhotoAlt}
               </figcaption>
             </div>
 
             <div className="flex flex-col justify-center md:col-span-5 md:px-4">
-              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary">
+              <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-primary">
                 {hero.researchPostureLabel}
               </span>
-              <p className="mt-3 type-subhead text-foreground">
+              <p className="mt-2 type-subhead text-foreground">
                 {hero.researchPostureBody}
               </p>
-              <dl className="mt-8 grid grid-cols-2 gap-6 border-t border-border pt-6">
+              <dl className="mt-5 grid grid-cols-2 gap-4 border-t border-border pt-4">
                 <div>
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                  <dt className="font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground">
                     {hero.methodsLabel}
                   </dt>
                   <dd className="mt-2 type-body font-medium text-foreground">
@@ -143,7 +143,7 @@ export default function Home() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                  <dt className="font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground">
                     {hero.focusLabel}
                   </dt>
                   <dd className="mt-2 type-body font-medium text-foreground">
@@ -161,7 +161,7 @@ export default function Home() {
             {[...marquee.keywords, ...marquee.keywords].map((keyword, i) => (
               <div
                 key={i}
-                className="flex items-center gap-4 px-6 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground whitespace-nowrap"
+                className="flex items-center gap-4 px-6 py-3 font-mono text-[17px] uppercase tracking-[0.18em] text-muted-foreground whitespace-nowrap"
               >
                 <span>{keyword}</span>
                 <span
@@ -178,14 +178,14 @@ export default function Home() {
       <section id="about-group" data-section="people" data-section-label="People" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
           <div className="mb-10 border-b border-border/80 pb-5">
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
               {groupOverview.eyebrow}
             </span>
             <div className="mt-2 flex flex-wrap items-end justify-between gap-4">
               <h2 className="text-balance text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
                 {groupOverview.headline}
               </h2>
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              <span className="font-mono text-[14px] uppercase tracking-[0.2em] text-muted-foreground">
                 {groupOverview.locationChip}
               </span>
             </div>
@@ -193,7 +193,7 @@ export default function Home() {
 
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-7">
-              <p className="text-pretty text-base leading-relaxed text-foreground/80">
+              <p className="type-body text-pretty text-muted-foreground/90">
                 {groupOverview.body.split(professor.name)[0]}
                 <a
                   href={professor.website}
@@ -204,7 +204,7 @@ export default function Home() {
                 >
                   {professor.name}
                   <span className="invisible pointer-events-auto absolute left-0 top-full z-50 mt-4 w-72 translate-y-3 rounded-[1.5rem] border border-primary/15 bg-card p-3 opacity-0 shadow-2xl shadow-primary/20 transition-all delay-300 duration-300 before:absolute before:-top-4 before:left-0 before:h-4 before:w-full before:content-[''] group-hover/ishtiaque:visible group-hover/ishtiaque:translate-y-1 group-hover/ishtiaque:opacity-100 group-hover/ishtiaque:delay-75">
-                    <span className="block relative h-52 w-full overflow-hidden rounded-[1.1rem] bg-muted">
+                    <span className="block relative h-60 w-full overflow-hidden rounded-[1.1rem] bg-muted">
                       <Image
                         src={getImageUrl(professor.imagePath)}
                         alt={professor.name}
@@ -238,12 +238,12 @@ export default function Home() {
 
             <div className="lg:col-span-4 lg:col-start-9">
               <div className="flex flex-col items-start gap-5">
-                <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-full">
+                <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-full">
                   <Image
                     src={getImageUrl(professor.imagePath)}
                     alt={professor.name}
                     fill
-                    sizes="128px"
+                    sizes="160px"
                     className="object-cover"
                   />
                 </div>
@@ -252,7 +252,7 @@ export default function Home() {
                     <p className="text-xl font-semibold tracking-tight text-foreground">
                       {professor.name}
                     </p>
-                    <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                    <p className="mt-0.5 font-mono text-[14px] uppercase tracking-[0.2em] text-muted-foreground">
                       {home.groupOverviewFigLabel}
                     </p>
                   </div>
@@ -288,10 +288,10 @@ export default function Home() {
                   className="rounded-2xl border border-border bg-background p-6 transition-all duration-300 hover:border-primary/20"
                 >
                   <Icon className="h-4 w-4 text-primary" />
-                  <h3 className="mt-4 text-base font-medium leading-snug text-foreground">
+                  <h3 className="mt-4 type-body font-medium text-foreground">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-2 type-body text-muted-foreground">
                     {item.description}
                   </p>
                 </div>
@@ -339,18 +339,18 @@ export default function Home() {
             <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
               <div className="mb-10 flex items-end justify-between gap-6 border-b border-border pb-4">
                 <div className="flex items-center gap-3">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                  <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
                     {contentData.latestPublications?.eyebrow}
                   </span>
                   <span className="h-3 w-px bg-border" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary">
+                  <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-primary">
                     {latestYear}
                   </span>
                 </div>
                 <div className="flex items-center gap-4">
                   <Link
                     href="/team"
-                    className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {contentData.latestPublications?.teamViewAllLabel ?? "Team"}
                     <ArrowRight className="size-3" />
@@ -358,7 +358,7 @@ export default function Home() {
                   <span className="h-3 w-px bg-border" />
                   <Link
                     href={contentData.latestPublications?.viewAllHref ?? "/publications"}
-                    className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {contentData.latestPublications?.viewAllLabel}
                     <ArrowRight className="size-3" />
@@ -376,14 +376,14 @@ export default function Home() {
                         className="bg-background p-6 transition-colors hover:bg-muted/20 sm:p-7"
                       >
                         {pub.award && (
-                          <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/8 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.15em] text-accent-foreground">
+                          <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/8 px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-[0.15em] text-accent-foreground">
                             <svg viewBox="0 0 24 24" className="size-2.5 fill-accent" aria-hidden>
                               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                             </svg>
                             {pub.award}
                           </span>
                         )}
-                        <h3 className="text-[14px] font-medium leading-snug text-foreground">
+                        <h3 className="text-[16px] font-medium leading-snug text-foreground">
                           {pub.url ? (
                             <Link
                               href={pub.url}
@@ -398,12 +398,12 @@ export default function Home() {
                           )}
                         </h3>
                         {pub.authors && (
-                          <p className="mt-1 text-[12px] leading-relaxed text-muted-foreground line-clamp-1">
+                          <p className="mt-1 text-[14px] leading-relaxed text-muted-foreground line-clamp-1">
                             {pub.authors}
                           </p>
                         )}
                         {pub.venue && (
-                          <p className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-primary/80">
+                          <p className="mt-1.5 font-mono text-[14px] uppercase tracking-[0.1em] text-primary/80">
                             {pub.venue}
                           </p>
                         )}
@@ -419,32 +419,32 @@ export default function Home() {
                     {/* Principal Investigator */}
                     {piMember && (
                       <div>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                        <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
                           {piLabel}
                         </span>
                         <div className="mt-4 flex items-center gap-3">
                           {piMember.imagePath ? (
-                            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-border">
+                            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full border border-border">
                               <Image
                                 src={getImageUrl(piMember.imagePath)}
                                 alt={piMember.name}
                                 fill
-                                sizes="64px"
+                                sizes="80px"
                                 className="object-cover"
                               />
                             </div>
                           ) : (
-                            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-muted">
-                              <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
+                            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-muted">
+                              <span className="font-mono text-[14px] uppercase tracking-[0.15em] text-muted-foreground">
                                 {piMember.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
                               </span>
                             </div>
                           )}
                           <div className="min-w-0">
-                            <p className="text-[14px] font-medium leading-snug text-foreground">
+                            <p className="text-[16px] font-medium leading-snug text-foreground">
                               {piMember.name}
                             </p>
-                            <p className="text-[12px] leading-snug text-muted-foreground">
+                            <p className="text-[14px] leading-snug text-muted-foreground">
                               {piMember.role}
                             </p>
                           </div>
@@ -455,34 +455,34 @@ export default function Home() {
                     {/* Researchers */}
                     {researchers.length > 0 && (
                       <div className="mt-6 border-t border-border pt-5">
-                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                        <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
                           {contentData.latestPublications?.researchersLabel ?? "Researchers"}
                         </span>
                         <div className="mt-4 space-y-3">
                           {researchers.slice(0, 5).map((m, i) => (
                             <div key={i} className="flex items-center gap-3">
                               {m.imagePath ? (
-                                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-border">
+                                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-border">
                                   <Image
                                     src={getImageUrl(m.imagePath)}
                                     alt={m.name}
                                     fill
-                                    sizes="56px"
+                                    sizes="64px"
                                     className="object-cover"
                                   />
                                 </div>
                               ) : (
-                                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-muted">
-                                  <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground">
+                                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-muted">
+                                  <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
                                     {m.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
                                   </span>
                                 </div>
                               )}
                               <div className="min-w-0">
-                                <p className="text-[13px] font-medium leading-snug text-foreground truncate">
+                                <p className="text-[17px] font-medium leading-snug text-foreground truncate">
                                   {m.name}
                                 </p>
-                                <p className="text-[11px] leading-snug text-muted-foreground truncate">
+                                <p className="text-[17px] leading-snug text-muted-foreground truncate">
                                   {m.role}
                                 </p>
                               </div>
@@ -494,7 +494,7 @@ export default function Home() {
 
                     <Link
                       href="/team"
-                      className="mt-6 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-primary transition-colors hover:text-primary/70"
+                      className="mt-6 inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-primary transition-colors hover:text-primary/70"
                     >
                       {contentData.latestPublications?.allMembersLabel ?? "All members"}
                       <ArrowRight className="size-3" />
@@ -514,7 +514,7 @@ export default function Home() {
                 if (featured.length === 0) return null;
                 return (
                   <div className="mt-10">
-                    <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+                    <span className="font-mono text-[13px] uppercase tracking-[0.18em] text-muted-foreground">
                       {contentData.latestPublications?.featuredResearcherLabel ?? "Featured researcher"}
                     </span>
                     <div className="mt-4 grid gap-6 md:grid-cols-2">
@@ -522,29 +522,29 @@ export default function Home() {
                         <div key={fIdx} className="rounded-2xl border border-border bg-background p-7">
                           <div className="flex items-center gap-4">
                             {fullData.imagePath ? (
-                              <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-border">
+                              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full border border-border">
                                 <Image
                                   src={getImageUrl(fullData.imagePath)}
                                   alt={fullData.name}
                                   fill
-                                  sizes="64px"
+                                  sizes="80px"
                                   className="object-cover"
                                 />
                               </div>
                             ) : (
-                              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-primary">
+                              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                                <span className="font-mono text-[17px] uppercase tracking-[0.12em] text-primary">
                                   {fullData.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
                                 </span>
                               </div>
                             )}
                             <div>
-                              <p className="text-[15px] font-medium text-foreground">{fullData.name}</p>
-                              <p className="text-[12px] text-muted-foreground">{fullData.focus}</p>
+                              <p className="text-[19px] font-medium text-foreground">{fullData.name}</p>
+                              <p className="text-[16px] text-muted-foreground">{fullData.focus}</p>
                             </div>
                           </div>
                           {fullData.bio && (
-                            <p className="mt-4 text-[13px] leading-relaxed text-foreground/80 line-clamp-3">
+                            <p className="mt-4 text-[19px] leading-relaxed text-foreground/80 line-clamp-3">
                               {fullData.bio}
                             </p>
                           )}
@@ -553,7 +553,7 @@ export default function Home() {
                               {fullData.areasOfInterest.slice(0, 4).map((a: string, i: number) => (
                                 <span
                                   key={i}
-                                  className="rounded-full border border-border bg-muted/40 px-2.5 py-0.5 font-mono text-[8px] uppercase tracking-[0.12em] text-muted-foreground"
+                                  className="rounded-full border border-border bg-muted/40 px-2.5 py-0.5 font-mono text-[12px] uppercase tracking-[0.12em] text-muted-foreground"
                                 >
                                   {a}
                                 </span>
@@ -562,14 +562,14 @@ export default function Home() {
                           )}
                           {fullData.awards && fullData.awards.length > 0 && (
                             <div className="mt-4">
-                              <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                              <span className="font-mono text-[12px] uppercase tracking-[0.16em] text-muted-foreground">
                                 {contentData.latestPublications?.awardsLabel ?? "Awards"}
                               </span>
                               <div className="mt-2 space-y-1.5">
                                 {fullData.awards.map((aw: string, ai: number) => (
                                   <div
                                     key={ai}
-                                    className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/8 px-3 py-1 font-mono text-[8px] uppercase tracking-[0.12em] text-accent-foreground"
+                                    className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/8 px-3 py-1 font-mono text-[12px] uppercase tracking-[0.12em] text-accent-foreground"
                                   >
                                     <svg viewBox="0 0 24 24" className="size-2.5 fill-accent" aria-hidden>
                                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
@@ -585,7 +585,7 @@ export default function Home() {
                               href={fullData.links[0].url}
                               target="_blank"
                               rel="noreferrer"
-                              className="mt-3 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.16em] text-primary transition-colors hover:text-primary/70"
+                              className="mt-3 inline-flex items-center gap-1 font-mono text-[16px] uppercase tracking-[0.16em] text-primary transition-colors hover:text-primary/70"
                             >
                               {fullData.links[0].label}
                               <ArrowRight className="size-2.5" />
@@ -611,21 +611,21 @@ export default function Home() {
                             if (top.length === 0) return null;
                             return (
                               <div className="mt-5 border-t border-border pt-4">
-                                <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                                <span className="font-mono text-[12px] uppercase tracking-[0.16em] text-muted-foreground">
                                   {contentData.latestPublications?.recentPublicationsLabel ?? "Recent publications"}
                                 </span>
                                 <ul className="mt-3 space-y-2.5">
                                   {top.map((p, pi) => (
                                     <li key={pi}>
                                       {p.award && (
-                                        <span className="mb-1 inline-flex items-center gap-1 rounded-full border border-accent/30 bg-accent/8 px-2 py-0.5 font-mono text-[7px] uppercase tracking-[0.12em] text-accent-foreground">
+                                        <span className="mb-1 inline-flex items-center gap-1 rounded-full border border-accent/30 bg-accent/8 px-2 py-0.5 font-mono text-[11px] uppercase tracking-[0.12em] text-accent-foreground">
                                           <svg viewBox="0 0 24 24" className="size-2 fill-accent" aria-hidden>
                                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                                           </svg>
                                           {p.award}
                                         </span>
                                       )}
-                                      <p className="text-[12px] leading-snug text-foreground">
+                                      <p className="text-[16px] leading-snug text-foreground">
                                         {p.url ? (
                                           <Link
                                             href={p.url}
@@ -639,7 +639,7 @@ export default function Home() {
                                           p.title
                                         )}
                                       </p>
-                                      <p className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-primary/70">
+                                      <p className="mt-0.5 font-mono text-[13px] uppercase tracking-[0.1em] text-primary/70">
                                         {p.venue ? `${p.venue} \u00B7 ` : ""}{p.year}
                                       </p>
                                     </li>
@@ -665,17 +665,17 @@ export default function Home() {
           <div className="mx-auto w-full max-w-5xl px-5 py-20 sm:px-8 sm:py-28">
             <div className="flex items-center gap-3 border-b border-border pb-4">
               <Quote className="size-4 text-primary" />
-              <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+              <h2 className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
                 {about.title}
               </h2>
             </div>
-            <p className="mt-10 max-w-3xl border-l border-primary pl-6 text-foreground">
+            <p className="mt-10 max-w-3xl border-l border-primary pl-6 text-xl leading-relaxed text-foreground">
               {about.body}
             </p>
             {(about as { ctaLabel?: string; ctaHref?: string }).ctaLabel && (
               <Link
                 href={(about as { ctaHref?: string }).ctaHref ?? "/about"}
-                className="group mt-10 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-foreground transition-colors hover:text-primary"
+                className="group mt-10 inline-flex items-center gap-2 font-mono text-[17px] uppercase tracking-[0.22em] text-foreground transition-colors hover:text-primary"
               >
                 {(about as { ctaLabel?: string }).ctaLabel}
                 <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
@@ -691,11 +691,11 @@ export default function Home() {
           <div className="mb-10 flex items-baseline justify-between gap-6 border-b border-border pb-4">
             <div className="flex items-center gap-2">
               <Cpu className="size-3.5 text-primary" />
-              <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+              <h2 className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
                 {researchDomains.sectionLabel}
               </h2>
             </div>
-            <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="inline-flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
               <span
                 aria-hidden
                 className="size-1.5 rounded-full bg-emerald-500"
@@ -734,7 +734,7 @@ export default function Home() {
       <section data-section="approach" data-section-label="Approach">
         <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
           <div className="mb-12 border-b border-border pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
               {homePillars.eyebrow}
             </span>
           </div>

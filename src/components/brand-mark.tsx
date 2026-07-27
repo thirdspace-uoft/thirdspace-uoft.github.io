@@ -36,7 +36,7 @@ export function BrandMark({ className, variant = "color" }: BrandMarkProps) {
         </span>
         <span
           className={
-            "text-[10px] font-medium uppercase tracking-[0.18em] " +
+            "text-[12px] font-medium uppercase tracking-[0.18em] " +
             (variant === "reverse"
               ? "text-primary-foreground/70"
               : "text-muted-foreground")

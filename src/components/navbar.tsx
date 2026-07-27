@@ -99,7 +99,7 @@ function MenuToggle({
       </span>
       <span
         aria-hidden
-        className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground transition-colors group-hover:text-foreground"
+        className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground transition-colors group-hover:text-foreground"
       >
         {open ? navbar.menuCloseLabel : navbar.menuOpenLabel}
       </span>
@@ -122,7 +122,7 @@ function MobileLinks({
         <SheetTitle className="type-body font-medium text-foreground">
           {navbar.brandName}
         </SheetTitle>
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+        <p className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
           {navbar.mobileDrawerUniversity}
         </p>
       </SheetHeader>
@@ -155,7 +155,7 @@ function MobileLinks({
                     <span
                       aria-hidden
                       className={cn(
-                        "font-mono text-[10px] uppercase tracking-[0.22em] transition-opacity",
+                        "font-mono text-[12px] uppercase tracking-[0.22em] transition-opacity",
                         active ? "text-primary opacity-100" : "opacity-0 group-hover:opacity-100",
                       )}
                     >
@@ -169,7 +169,7 @@ function MobileLinks({
         </ul>
       </nav>
       <div className="border-t border-border px-6 py-5">
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+        <p className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
           {navbar.mobileFooterLine}
         </p>
       </div>

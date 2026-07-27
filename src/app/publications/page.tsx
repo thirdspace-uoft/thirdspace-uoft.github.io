@@ -98,7 +98,7 @@ function PubCard({
   return (
     <article className="group relative grid gap-x-6 gap-y-2 border-b border-border/60 py-6 sm:grid-cols-[3rem_1fr_auto] sm:py-8">
       {/* Index number */}
-      <span className="hidden font-mono text-[11px] tabular-nums tracking-[0.15em] text-muted-foreground/50 sm:block sm:pt-1">
+      <span className="hidden font-mono text-[13px] tabular-nums tracking-[0.15em] text-muted-foreground/50 sm:block sm:pt-1">
         {pad2(index + 1)}
       </span>
 
@@ -106,7 +106,7 @@ function PubCard({
       <div className="min-w-0 space-y-2">
         {/* Title row */}
         {pub.title && (
-          <h4 className="text-[15px] font-medium leading-snug tracking-[-0.01em] text-foreground sm:text-base">
+          <h4 className="text-[17px] font-medium leading-snug tracking-[-0.01em] text-foreground sm:text-base">
             {pub.url ? (
               <Link
                 href={pub.url}
@@ -126,11 +126,11 @@ function PubCard({
         {/* Award badge — prominent, warm gold */}
         {pub.award && (
           <div className="flex">
-            <span className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-accent/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-accent-foreground">
+            <span className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-accent/10 px-3 py-1 font-mono text-[12px] uppercase tracking-[0.18em] text-accent-foreground">
               <svg viewBox="0 0 24 24" className="size-3 fill-accent" aria-hidden>
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
               </svg>
-              <span className="text-[13px]" aria-hidden>{awardEmoji(pub.award)}</span>
+              <span className="text-[15px]" aria-hidden>{awardEmoji(pub.award)}</span>
               {awardBadgeLabel} \u00B7 {pub.award}
             </span>
           </div>
@@ -138,7 +138,7 @@ function PubCard({
 
         {/* Authors */}
         {pub.authors && (
-          <p className="text-[13px] leading-relaxed text-muted-foreground">
+          <p className="text-[15px] leading-relaxed text-muted-foreground">
             {pub.authors}. {year}.
           </p>
         )}
@@ -146,13 +146,13 @@ function PubCard({
         {/* Venue + meta chips */}
         <div className="flex flex-wrap items-center gap-2">
           {pub.venue && (
-            <span className="inline-flex items-center gap-1.5 rounded-md bg-muted/80 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5 rounded-md bg-muted/80 px-2.5 py-1 font-mono text-[12px] uppercase tracking-[0.15em] text-muted-foreground">
               <FileText className="size-2.5" />
               {pub.venue}
             </span>
           )}
           {pub.pages && (
-            <span className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/60">
+            <span className="font-mono text-[12px] tracking-[0.15em] text-muted-foreground/60">
               pp. {pub.pages}
             </span>
           )}
@@ -166,7 +166,7 @@ function PubCard({
             href={`https://doi.org/${pub.doi}`}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1 rounded-md border border-border/80 bg-background px-2 py-1 font-mono text-[10px] tracking-[0.12em] text-primary transition-colors hover:border-primary/40 hover:bg-primary/5"
+            className="inline-flex items-center gap-1 rounded-md border border-border/80 bg-background px-2 py-1 font-mono text-[12px] tracking-[0.12em] text-primary transition-colors hover:border-primary/40 hover:bg-primary/5"
           >
             {doiPrefix}{pub.doi}
           </Link>
@@ -176,7 +176,7 @@ function PubCard({
             href={pub.url}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1 rounded-md border border-border/80 bg-background px-2 py-1 font-mono text-[10px] tracking-[0.12em] text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+            className="inline-flex items-center gap-1 rounded-md border border-border/80 bg-background px-2 py-1 font-mono text-[12px] tracking-[0.12em] text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
           >
             {viewPaperLabel} <ArrowUpRight className="size-2.5" />
           </Link>
@@ -216,7 +216,7 @@ function PubSubsection({
         <h3 className="font-heading text-sm font-medium tracking-[-0.01em] text-foreground">
           {title}
         </h3>
-        <span className="shrink-0 rounded-full bg-muted/80 px-2.5 py-0.5 font-mono text-[10px] tabular-nums tracking-[0.15em] text-muted-foreground">
+        <span className="shrink-0 rounded-full bg-muted/80 px-2.5 py-0.5 font-mono text-[12px] tabular-nums tracking-[0.15em] text-muted-foreground">
           {entries.length} {entries.length === 1 ? entriesCountSingular : entriesCountPlural}
         </span>
       </div>
@@ -243,7 +243,7 @@ function PubSubsection({
 function BookRow({ book, index, bookCoverPlaceholder }: { book: Book; index: number; bookCoverPlaceholder: string }) {
   return (
     <article className="grid grid-cols-12 items-start gap-x-6 gap-y-3 border-t border-border py-7 sm:py-8">
-      <span className="col-span-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:col-span-1">
+      <span className="col-span-2 font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground sm:col-span-1">
         {pad2(index + 1)}
       </span>
 
@@ -262,7 +262,7 @@ function BookRow({ book, index, bookCoverPlaceholder }: { book: Book; index: num
       ) : (
         <div className="col-span-10 sm:col-span-2">
           <div className="flex aspect-[3/4] w-20 items-center justify-center bg-muted sm:w-24">
-            <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
               {bookCoverPlaceholder}
             </span>
           </div>
@@ -289,7 +289,7 @@ function BookRow({ book, index, bookCoverPlaceholder }: { book: Book; index: num
             </p>
           ))}
         {book.authors && (
-          <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+          <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
             {book.authors}
             {book.year ? ` \u00B7 ${book.year}` : ""}
           </p>
@@ -313,12 +313,12 @@ export default function PublicationsPage() {
         <div className="mx-auto w-full max-w-6xl px-5 pt-16 pb-20 sm:px-8 sm:pt-24 sm:pb-24">
           {/* Meta strip */}
           <div className="mb-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-4 sm:mb-16">
-            <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
               <BookOpen className="size-3 text-primary" />
               {publications.pageEyebrow}
             </span>
             <span className="hidden h-3 w-px bg-border sm:block" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
               {`${publications.indexWord} \u00B7 ${yearKeys.length} ${yearKeys.length === 1 ? publications.yearSingular : publications.yearPlural}`}
             </span>
           </div>
@@ -343,7 +343,7 @@ export default function PublicationsPage() {
               <span className="font-heading text-2xl font-medium tabular-nums tracking-[-0.03em] text-foreground sm:text-3xl">
                 {totalPubs + books.length}
               </span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted-foreground">
                 {totalPubs + books.length === 1 ? publications.entriesCountSingular : publications.entriesCountPlural}
               </span>
             </div>
@@ -351,7 +351,7 @@ export default function PublicationsPage() {
               <span className="font-heading text-2xl font-medium tabular-nums tracking-[-0.03em] text-foreground sm:text-3xl">
                 {venues.size}
               </span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted-foreground">
                 {publications.venuesLabel}
               </span>
             </div>
@@ -359,7 +359,7 @@ export default function PublicationsPage() {
               <span className="font-heading text-2xl font-medium tabular-nums tracking-[-0.03em] text-foreground sm:text-3xl">
                 {yearKeys.length}
               </span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted-foreground">
                 {yearKeys.length === 1 ? publications.yearSingular : publications.yearPlural}
               </span>
             </div>
@@ -377,7 +377,7 @@ export default function PublicationsPage() {
                   {publications.sectionMonographTitle}
                 </h2>
               </div>
-              <span className="shrink-0 rounded-full bg-muted/80 px-2.5 py-0.5 font-mono text-[10px] tabular-nums tracking-[0.15em] text-muted-foreground">
+              <span className="shrink-0 rounded-full bg-muted/80 px-2.5 py-0.5 font-mono text-[12px] tabular-nums tracking-[0.15em] text-muted-foreground">
                 {`${books.length} ${books.length === 1 ? publications.titlesCountSingular : publications.titlesCountPlural}`}
               </span>
             </div>
@@ -421,11 +421,11 @@ export default function PublicationsPage() {
                   <h2 className="font-heading text-4xl font-medium tabular-nums tracking-[-0.03em] text-foreground sm:text-6xl">
                     {bucket.label ?? year}
                   </h2>
-                  <span className="mb-1 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:mb-2">
+                  <span className="mb-1 font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground sm:mb-2">
                     {publications.sectionTitleTemplate}
                   </span>
                 </div>
-                <span className="mb-1 shrink-0 rounded-full bg-primary/8 px-3 py-1 font-mono text-[10px] tabular-nums tracking-[0.15em] text-primary sm:mb-2">
+                <span className="mb-1 shrink-0 rounded-full bg-primary/8 px-3 py-1 font-mono text-[12px] tabular-nums tracking-[0.15em] text-primary sm:mb-2">
                   {total} {total === 1 ? publications.entriesCountSingular : publications.entriesCountPlural}
                 </span>
               </div>
@@ -482,7 +482,7 @@ export default function PublicationsPage() {
       {/* ── Empty state ── */}
       {books.length === 0 && yearKeys.length === 0 && (
         <section className="mx-auto w-full max-w-4xl px-6 pb-24 pt-12">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+          <p className="font-mono text-[13px] uppercase tracking-[0.18em] text-muted-foreground">
             {publications.emptyMessage}
           </p>
         </section>

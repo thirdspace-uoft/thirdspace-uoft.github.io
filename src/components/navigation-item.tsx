@@ -82,7 +82,7 @@ export function NavigationItem({
 
       <motion.span
         className={cn(
-          "origin-left whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.18em] transition-colors duration-300",
+          "origin-left whitespace-nowrap font-mono text-[12px] uppercase tracking-[0.18em] transition-colors duration-300",
           isActive ? "text-foreground" : "text-muted-foreground",
           !isActive && "group-hover:text-foreground/80"
         )}

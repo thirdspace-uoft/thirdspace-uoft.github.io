@@ -136,7 +136,7 @@ export function Footer() {
                        <div>
                          <div className="flex items-center gap-1.5">
                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                           <span className="text-[10px] font-semibold tracking-wider uppercase text-muted-foreground">
+                           <span className="text-[12px] font-semibold tracking-wider uppercase text-muted-foreground">
                              {location.title}
                            </span>
                          </div>
@@ -177,7 +177,7 @@ export function Footer() {
                  </div>
                  <div className="p-3 bg-card border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground">
                    <span>{location.street}, Toronto</span>
-                   <span className="text-[10px] font-semibold text-primary uppercase">{location.footerMapLabel}</span>
+                   <span className="text-[12px] font-semibold text-primary uppercase">{location.footerMapLabel}</span>
                  </div>
                </HoverCardContent>
              </HoverCard>
@@ -223,7 +223,7 @@ export function Footer() {
             >
               {socials.xHandle} <ExternalLink className="h-3 w-3" />
             </a>
-            <span className="text-[10px] uppercase tracking-[0.18em] text-primary/70 font-semibold">
+            <span className="text-[12px] uppercase tracking-[0.18em] text-primary/70 font-semibold">
               {brand.tagline}
             </span>
           </div>
