@@ -13,18 +13,17 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import contentData from "../../public/config/content.json";
+import { getContent } from "@/lib/content";
 
 type NavLink = { label: string; href: string };
+
+const { navbar, layout } = getContent();
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-/**
- * Desktop nav links with hairline hover underline.
- */
 function DesktopLinks({ links, pathname }: { links: NavLink[]; pathname: string }) {
   return (
     <nav
@@ -66,29 +65,18 @@ function DesktopLinks({ links, pathname }: { links: NavLink[]; pathname: string 
   );
 }
 
-/**
- * Two-bar hamburger that morphs into an X when the sheet is open. The
- * lines are heavier than a default `Menu` icon and carry a label below
- * that swaps between "Menu" and "Close" so the affordance stays legible.
- */
 function MenuToggle({
   open,
   onClick,
-  brandName,
-  menuOpenLabel,
-  menuCloseLabel,
 }: {
   open: boolean;
   onClick: () => void;
-  brandName: string;
-  menuOpenLabel: string;
-  menuCloseLabel: string;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      aria-label={open ? `Close ${brandName} menu` : `Open ${brandName} menu`}
+      aria-label={open ? `Close ${navbar.brandName} menu` : `Open ${navbar.brandName} menu`}
       aria-expanded={open}
       className="group inline-flex flex-col items-center justify-center gap-1.5 px-2 py-2 md:hidden"
     >
@@ -113,40 +101,29 @@ function MenuToggle({
         aria-hidden
         className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground transition-colors group-hover:text-foreground"
       >
-        {open ? menuCloseLabel : menuOpenLabel}
+        {open ? navbar.menuCloseLabel : navbar.menuOpenLabel}
       </span>
     </button>
   );
 }
 
-/**
- * Mobile drawer: full-width sheet with editorial link list. Each link
- * carries the same numeric prefix used on desktop and is separated by a
- * single hairline rule — no boxes, no cards.
- */
 function MobileLinks({
   links,
   pathname,
   onNavigate,
-  brandName,
-  mobileDrawerUniversity,
-  mobileFooterLine,
 }: {
   links: NavLink[];
   pathname: string;
   onNavigate: () => void;
-  brandName: string;
-  mobileDrawerUniversity: string;
-  mobileFooterLine: string;
 }) {
   return (
     <div className="flex h-full flex-col">
       <SheetHeader className="border-b border-border px-6 py-5">
         <SheetTitle className="type-body font-medium text-foreground">
-          {brandName}
+          {navbar.brandName}
         </SheetTitle>
         <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-          {mobileDrawerUniversity}
+          {navbar.mobileDrawerUniversity}
         </p>
       </SheetHeader>
       <nav
@@ -193,7 +170,7 @@ function MobileLinks({
       </nav>
       <div className="border-t border-border px-6 py-5">
         <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-          {mobileFooterLine}
+          {navbar.mobileFooterLine}
         </p>
       </div>
     </div>
@@ -201,7 +178,6 @@ function MobileLinks({
 }
 
 export function Navbar() {
-  const { navbar, layout } = contentData;
   const links = (navbar.links ?? []) as NavLink[];
   const pathname = usePathname() ?? "/";
   const [open, setOpen] = React.useState(false);
@@ -223,9 +199,6 @@ export function Navbar() {
           <MenuToggle
             open={open}
             onClick={() => setOpen((o) => !o)}
-            brandName={navbar.brandName}
-            menuOpenLabel={navbar.menuOpenLabel}
-            menuCloseLabel={navbar.menuCloseLabel}
           />
           <SheetContent
             side="right"
@@ -236,9 +209,6 @@ export function Navbar() {
               links={links}
               pathname={pathname}
               onNavigate={() => setOpen(false)}
-              brandName={navbar.brandName}
-              mobileDrawerUniversity={navbar.mobileDrawerUniversity}
-              mobileFooterLine={navbar.mobileFooterLine}
             />
           </SheetContent>
         </Sheet>

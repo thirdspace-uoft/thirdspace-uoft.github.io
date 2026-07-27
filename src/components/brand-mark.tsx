@@ -1,24 +1,13 @@
 import { getAssetPath } from "@/lib/utils";
-import contentData from "../../public/config/content.json";
+import { getContent } from "@/lib/content";
 
 type BrandMarkProps = {
   className?: string;
   variant?: "color" | "reverse";
 };
 
-/**
- * Brand mark for Thirdspace at UofT.
- *
- * Renders the official classic University of Toronto signature logo
- * (downloaded from utoronto.ca theme assets). Adjacent to it is a
- * "Thirdspace" wordmark with a "UofT" sub-tag.
- */
 export function BrandMark({ className, variant = "color" }: BrandMarkProps) {
-  const { navbar } = contentData;
-  // Since the downloaded logo from UofT is the signature blue/red crest
-  // with navy text, we use it directly. We use a standard HTML <img> tag
-  // because Next.js <Image> optimization is not needed for SVGs and can trigger
-  // layout shift warnings.
+  const { navbar } = getContent();
   return (
     <div
       className={

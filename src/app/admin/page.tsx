@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import {
   Lock,
   Mail,
@@ -28,90 +28,27 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { auth, db } from "@/lib/firebase";
 import {
-  ADMIN_EMAIL,
-  ADMIN_PASSWORD,
-  ADMIN_SESSION_TTL_HOURS,
-} from "@/lib/admin-credentials";
-import {
-  clearSession,
-  readStoredSession,
-  signSession,
-  storeSession,
-  verifySession,
-  type AdminSession,
-} from "@/lib/admin-session";
+  signInWithEmailAndPassword,
+  signOut as firebaseSignOut,
+  onAuthStateChanged,
+  type User,
+} from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export default function AdminPage() {
-  const [session, setSession] = useState<AdminSession | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
-  const expiryTimer = useRef<number | null>(null);
-
-  function clearExpiryTimer() {
-    if (expiryTimer.current !== null) {
-      window.clearTimeout(expiryTimer.current);
-      expiryTimer.current = null;
-    }
-  }
-
-  function scheduleExpiry(expMs: number) {
-    clearExpiryTimer();
-    const delay = Math.max(0, expMs - Date.now());
-    expiryTimer.current = window.setTimeout(() => {
-      signOut("Session expired");
-    }, delay);
-  }
-
-  async function adopt(token: string): Promise<AdminSession | null> {
-    const verified = await verifySession(token);
-    if (!verified) {
-      clearSession();
-      setSession(null);
-      return null;
-    }
-    setSession(verified);
-    scheduleExpiry(verified.exp * 1000);
-    return verified;
-  }
-
-  function signOut(message?: string) {
-    clearSession();
-    clearExpiryTimer();
-    setSession(null);
-    if (message) setError(message);
-  }
 
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const token = readStoredSession();
-      if (token) await adopt(token);
-      if (!cancelled) setChecked(true);
-    })();
-
-    function onStorage(e: StorageEvent) {
-      if (e.key !== "thirdspace_admin_session") return;
-      if (e.newValue === null) {
-        clearExpiryTimer();
-        setSession(null);
-        return;
-      }
-      if (e.newValue) {
-        void adopt(e.newValue);
-      }
-    }
-
-    window.addEventListener("storage", onStorage);
-    return () => {
-      cancelled = true;
-      window.removeEventListener("storage", onStorage);
-      clearExpiryTimer();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const unsub = onAuthStateChanged(auth, (u) => {
+      setUser(u);
+      setChecked(true);
+    });
+    return unsub;
   }, []);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -123,33 +60,21 @@ export default function AdminPage() {
       const form = new FormData(e.currentTarget);
       const email = String(form.get("email") ?? "").trim();
       const password = String(form.get("password") ?? "");
-
-      if (
-        email.toLowerCase() !== ADMIN_EMAIL.toLowerCase() ||
-        password !== ADMIN_PASSWORD
-      ) {
-        setError("Invalid credentials");
-        return;
-      }
-
-      const token = await signSession(email);
-      storeSession(token);
-      const verified = await verifySession(token);
-      if (!verified) {
-        setError("Failed to establish session");
-        return;
-      }
-      setSession(verified);
-      scheduleExpiry(verified.exp * 1000);
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err: any) {
+      setError(err?.code === "auth/invalid-credential" ? "Invalid credentials" : err?.message ?? "Authentication failed");
     } finally {
       setPending(false);
     }
   }
 
+  async function handleSignOut() {
+    await firebaseSignOut(auth);
+  }
+
   if (!checked) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background relative overflow-hidden">
-        {/* Technical drafting grid background */}
         <div className="absolute inset-0 bg-[radial-gradient(var(--border)_1px,transparent_1px)] [background-size:16px_16px]" />
         <div className="relative flex flex-col items-center gap-2">
           <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
@@ -161,19 +86,16 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans relative antialiased selection:bg-accent/35">
-      {session ? (
+      {user ? (
         <SignedInView
-          email={session.email}
-          onSignOut={() => signOut()}
+          email={user.email ?? "admin@thirdspace.io"}
+          onSignOut={handleSignOut}
         />
       ) : (
         <div className="grid min-h-screen w-full grid-cols-1 lg:grid-cols-12 relative">
-          {/* Drafting grid backdrop */}
           <div className="absolute inset-0 bg-[radial-gradient(var(--border)_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
-          {/* Left Brand Panel */}
           <aside className="relative lg:col-span-5 hidden flex-col justify-between overflow-hidden border-r border-border bg-card p-12 lg:flex z-10">
-            {/* Structural top border mark */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
             
             <div className="relative flex items-center gap-2 text-foreground">
@@ -208,7 +130,6 @@ export default function AdminPage() {
             </div>
           </aside>
 
-          {/* Right Form Panel */}
           <main className="col-span-1 lg:col-span-7 flex items-center justify-center p-4 sm:p-6 md:p-12 z-10">
             <SignInView
               error={error}
@@ -317,45 +238,22 @@ function SignedInView({
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  // GitHub integration settings stored locally
-  const [pat, setPat] = useState("");
-  const [repoOwner, setRepoOwner] = useState("critical-nlp");
-  const [repoName, setRepoName] = useState("");
-  const [branch, setBranch] = useState("main");
-  const [showConfig, setShowConfig] = useState(false);
-
   // Form tab selection
   const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "pillars" | "homePillars" | "navbar" | "footerLabs" | "location" | "marquee" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "aboutPage" | "contact">("layout");
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
-    // Load config from localStorage if available
-    setPat(localStorage.getItem("ts_gh_pat") ?? "");
-    setRepoOwner(localStorage.getItem("ts_gh_owner") ?? "critical-nlp");
-    setRepoName(localStorage.getItem("ts_gh_name") ?? "");
-    setBranch(localStorage.getItem("ts_gh_branch") ?? "main");
-
-    // Fetch initial JSON from public asset folder
-    fetch("config/content.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setContent(data);
+    getDoc(doc(db, "config", "site"))
+      .then((snap) => {
+        if (snap.exists()) setContent(snap.data());
+        else console.warn("No Firestore document found");
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Failed to load local config", err);
+        console.error("Failed to load from Firestore", err);
         setLoading(false);
       });
   }, []);
-
-  const saveGithubConfig = () => {
-    localStorage.setItem("ts_gh_pat", pat);
-    localStorage.setItem("ts_gh_owner", repoOwner);
-    localStorage.setItem("ts_gh_name", repoName);
-    localStorage.setItem("ts_gh_branch", branch);
-    setMessage({ type: "success", text: "GitHub Settings updated locally!" });
-    setShowConfig(false);
-  };
 
   const handleFieldChange = (section: string, field: string, value: string) => {
     setContent((prev: any) => ({
@@ -725,64 +623,14 @@ function SignedInView({
   };
 
   const handlePublish = async () => {
-    if (!pat) {
-      setMessage({ type: "error", text: "GitHub Personal Access Token (PAT) required to push changes." });
-      setShowConfig(true);
-      return;
-    }
-
     setSaving(true);
     setMessage(null);
-
-    const filePath = "public/config/content.json";
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}?ref=${branch}`;
-
     try {
-      let sha = "";
-      const getRes = await fetch(url, {
-        headers: {
-          Authorization: `token ${pat}`,
-          Accept: "application/vnd.github.v3+json",
-        },
-      });
-
-      if (getRes.status === 200) {
-        const fileData = await getRes.json();
-        sha = fileData.sha;
-      } else if (getRes.status !== 404) {
-        throw new Error(`Connection verification failed. Status: ${getRes.status}`);
-      }
-
-      const updatedContent = JSON.stringify(content, null, 2);
-      const base64Content = btoa(unescape(encodeURIComponent(updatedContent)));
-
-      const commitRes = await fetch(url, {
-        method: "PUT",
-        headers: {
-          Authorization: `token ${pat}`,
-          Accept: "application/vnd.github.v3+json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: "CMS Update: public/config/content.json",
-          content: base64Content,
-          sha: sha || undefined,
-          branch,
-        }),
-      });
-
-      if (commitRes.ok) {
-        setMessage({
-          type: "success",
-          text: "Changes published to repository branch! Cloud compilation initiated.",
-        });
-      } else {
-        const errorData = await commitRes.json();
-        throw new Error(errorData.message || "Branch commit rejected.");
-      }
+      await setDoc(doc(db, "config", "site"), content);
+      setMessage({ type: "success", text: "Changes published to Firebase! Run npm run build to deploy." });
     } catch (err: any) {
       console.error(err);
-      setMessage({ type: "error", text: `Publish rejected: ${err.message}` });
+      setMessage({ type: "error", text: `Publish failed: ${err.message}` });
     } finally {
       setSaving(false);
     }
@@ -934,15 +782,6 @@ function SignedInView({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setShowConfig(!showConfig)}
-              className="text-xs font-mono h-8 rounded"
-            >
-              <Settings className="h-3.5 w-3.5 mr-1.5" />
-              <span className="hidden sm:inline">Settings</span>
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
               onClick={handleDownload}
               className="text-xs font-mono h-8 rounded"
             >
@@ -990,77 +829,6 @@ function SignedInView({
                   [Dismiss]
                 </Button>
               </div>
-            )}
-
-            {/* GitHub integration overlay config */}
-            {showConfig && (
-              <Card className="rounded-lg border-2 border-dashed border-border bg-card">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-xs font-mono uppercase tracking-wider text-foreground flex items-center gap-2">
-                    <Database className="h-4 w-4 text-primary" />
-                    GitHub Sync Protocol
-                  </CardTitle>
-                  <CardDescription className="text-xs">
-                    Specify the secure repository endpoint keys. Local values persist inside secure cache.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div className="space-y-1">
-                      <Label htmlFor="pat" className="text-[10px] font-mono uppercase text-muted-foreground">Security PAT Key</Label>
-                      <Input
-                        id="pat"
-                        type="password"
-                        placeholder="ghp_..."
-                        value={pat}
-                        onChange={(e) => setPat(e.target.value)}
-                        className="h-9 text-xs font-mono"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <Label htmlFor="owner" className="text-[10px] font-mono uppercase text-muted-foreground">Repo Owner</Label>
-                      <Input
-                        id="owner"
-                        type="text"
-                        placeholder="critical-nlp"
-                        value={repoOwner}
-                        onChange={(e) => setRepoOwner(e.target.value)}
-                        className="h-9 text-xs font-mono"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <Label htmlFor="name" className="text-[10px] font-mono uppercase text-muted-foreground">Repo Directory</Label>
-                      <Input
-                        id="name"
-                        type="text"
-                        placeholder="Leave empty for root domain"
-                        value={repoName}
-                        onChange={(e) => setRepoName(e.target.value)}
-                        className="h-9 text-xs font-mono"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <Label htmlFor="branch" className="text-[10px] font-mono uppercase text-muted-foreground">Target Branch</Label>
-                      <Input
-                        id="branch"
-                        type="text"
-                        placeholder="main"
-                        value={branch}
-                        onChange={(e) => setBranch(e.target.value)}
-                        className="h-9 text-xs font-mono"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-end gap-2 border-t border-border pt-3">
-                  <Button size="sm" variant="ghost" className="text-xs font-mono" onClick={() => setShowConfig(false)}>
-                    [Cancel]
-                  </Button>
-                  <Button size="sm" variant="default" className="text-xs font-mono rounded" onClick={saveGithubConfig}>
-                    [Apply Changes]
-                  </Button>
-                </CardFooter>
-              </Card>
             )}
 
             {/* Dynamic settings draft sheets based on active index */}

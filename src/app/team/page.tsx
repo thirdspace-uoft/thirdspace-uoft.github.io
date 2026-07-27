@@ -1,15 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import type { Metadata } from "next";
 
-import contentData from "../../../public/config/content.json";
-import { getAssetPath } from "@/lib/utils";
+import { getImageUrl } from "@/lib/utils";
+import { getContent } from "@/lib/content";
 import { MemberRowClickable } from "@/components/team/member-row-clickable";
 
-export const metadata: Metadata = {
-  title: contentData.team.pageTitle,
-  description: contentData.team.pageBody,
+const contentData = getContent();
+const { team, professor } = contentData;
+
+export const metadata = {
+  title: team.pageTitle,
+  description: team.pageBody,
 };
 
 type Member = {
@@ -50,7 +52,7 @@ function MemberRow({ index, member }: { index: number; member: Member }) {
         {hasImage ? (
           <div className="relative aspect-square w-20 overflow-hidden bg-muted sm:w-24">
             <Image
-              src={getAssetPath(member.imagePath!)}
+              src={getImageUrl(member.imagePath!)}
               alt={member.name}
               fill
               sizes="96px"
@@ -212,13 +214,11 @@ function RoleSection({
 }
 
 export default function TeamPage() {
-  const { team, professor } = contentData;
-
   // Lift the PI from the existing professor block into the unified member shape
   const pi: Member = {
     name: professor.name,
     title: professor.title,
-    focus: `${professor.department} · ${professor.institution}`,
+    focus: `${professor.department} \u00B7 ${professor.institution}`,
     imagePath: professor.imagePath,
     links: professor.website
       ? [{ label: team.homepageLinkLabel, url: professor.website }]
@@ -239,7 +239,7 @@ export default function TeamPage() {
         <div className="mx-auto w-full max-w-6xl px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-20">
           <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-4">
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-              {`${team.heroRosterWord} · ${new Date().getFullYear()}`}
+              {`${team.heroRosterWord} \u00B7 ${new Date().getFullYear()}`}
             </span>
             <span className="hidden h-3 w-px bg-border sm:block" />
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
@@ -368,7 +368,7 @@ export default function TeamPage() {
                   <p className="col-span-12 type-body text-muted-foreground sm:col-span-6">
                     {[m.currentPosition, m.currentAffiliation]
                       .filter(Boolean)
-                      .join(" · ")}
+                      .join(" \u00B7 ")}
                   </p>
                 </li>
               ))}

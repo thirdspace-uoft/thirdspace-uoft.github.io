@@ -17,3 +17,9 @@ export function getAssetPath(path: string): string {
   }
   return normalizedPath;
 }
+
+export function getImageUrl(path: string): string {
+  const endpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT ?? "https://ik.imagekit.io/6lrshzb1q";
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${endpoint}${normalizedPath}`;
+}

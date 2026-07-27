@@ -3,19 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "node --env-file=.env scripts/fetch-content.mjs && next dev",
+    "build": "node --env-file=.env scripts/fetch-content.mjs && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "fetch-content": "node --env-file=.env scripts/fetch-content.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
+    "@imagekit/next": "^2.1.5",
     "@shadcn/react": "^0.2.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.4.0",
     "embla-carousel-react": "^8.6.0",
+    "firebase": "^12.16.0",
+    "firebase-admin": "^14.2.0",
     "framer-motion": "^12.42.2",
     "input-otp": "^1.4.2",
     "jose": "^6.2.3",

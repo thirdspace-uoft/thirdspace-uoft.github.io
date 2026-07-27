@@ -43,6 +43,12 @@ yarn-error.log*
 .env*
 !.env.example
 
+# service account key (sensitive credentials)
+thirdspace-uoft-firebase-adminsdk-fbsvc-d10559b9db.json
+
+# build artifact — regenerated from Firestore by scripts/fetch-content.mjs
+/public/config/content.json
+
 # vercel
 .vercel
 

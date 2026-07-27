@@ -1,16 +1,45 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Metadata } from "next";
 import { ArrowUpRight, BookOpen, FileText } from "lucide-react";
 
-import contentData from "../../../public/config/content.json";
-import { getAssetPath } from "@/lib/utils";
+import { getImageUrl } from "@/lib/utils";
+import { getContent } from "@/lib/content";
 import { pad2 } from "@/lib/section-numbering";
 
-export const metadata: Metadata = {
-  title: contentData.publications.pageTitle,
-  description: contentData.publications.pageHeadline,
+const contentData = getContent();
+const { publications } = contentData;
+
+export const metadata = {
+  title: publications.pageTitle,
+  description: publications.pageHeadline,
 };
+const books = (publications.books ?? []) as Book[];
+const years = (publications.years ?? {}) as Record<string, YearBucket>;
+const yearKeys = Object.keys(years).sort((a, b) =>
+  a < b ? 1 : a > b ? -1 : 0,
+);
+
+// Compute total publications across all years
+const totalPubs = yearKeys.reduce((acc, y) => {
+  const b = years[y];
+  return (
+    acc +
+    (b.journalArticles?.length ?? 0) +
+    (b.conferenceProceedings?.length ?? 0) +
+    (b.extendedAbstracts?.length ?? 0) +
+    (b.researchArtifacts?.length ?? 0)
+  );
+}, 0);
+
+// Collect unique venues
+const venues = new Set<string>();
+yearKeys.forEach((y) => {
+  const b = years[y];
+  [b.journalArticles, b.conferenceProceedings, b.extendedAbstracts, b.researchArtifacts]
+    .flat()
+    .filter(Boolean)
+    .forEach((p) => { if (p?.venue) venues.add(p.venue); });
+});
 
 type Pub = {
   id?: string;
@@ -102,7 +131,7 @@ function PubCard({
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
               </svg>
               <span className="text-[13px]" aria-hidden>{awardEmoji(pub.award)}</span>
-              {awardBadgeLabel} · {pub.award}
+              {awardBadgeLabel} \u00B7 {pub.award}
             </span>
           </div>
         )}
@@ -222,7 +251,7 @@ function BookRow({ book, index, bookCoverPlaceholder }: { book: Book; index: num
         <div className="col-span-10 sm:col-span-2">
           <div className="relative aspect-[3/4] w-20 overflow-hidden bg-muted sm:w-24">
             <Image
-              src={getAssetPath(book.coverImagePath)}
+              src={getImageUrl(book.coverImagePath)}
               alt={book.title ?? "Book cover"}
               fill
               sizes="96px"
@@ -262,7 +291,7 @@ function BookRow({ book, index, bookCoverPlaceholder }: { book: Book; index: num
         {book.authors && (
           <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
             {book.authors}
-            {book.year ? ` · ${book.year}` : ""}
+            {book.year ? ` \u00B7 ${book.year}` : ""}
           </p>
         )}
         {book.description && (
@@ -277,35 +306,6 @@ function BookRow({ book, index, bookCoverPlaceholder }: { book: Book; index: num
 
 /* ─── Page ─── */
 export default function PublicationsPage() {
-  const { publications } = contentData;
-  const books = (publications.books ?? []) as Book[];
-  const years = (publications.years ?? {}) as Record<string, YearBucket>;
-  const yearKeys = Object.keys(years).sort((a, b) =>
-    a < b ? 1 : a > b ? -1 : 0,
-  );
-
-  // Compute total publications across all years
-  const totalPubs = yearKeys.reduce((acc, y) => {
-    const b = years[y];
-    return (
-      acc +
-      (b.journalArticles?.length ?? 0) +
-      (b.conferenceProceedings?.length ?? 0) +
-      (b.extendedAbstracts?.length ?? 0) +
-      (b.researchArtifacts?.length ?? 0)
-    );
-  }, 0);
-
-  // Collect unique venues
-  const venues = new Set<string>();
-  yearKeys.forEach((y) => {
-    const b = years[y];
-    [b.journalArticles, b.conferenceProceedings, b.extendedAbstracts, b.researchArtifacts]
-      .flat()
-      .filter(Boolean)
-      .forEach((p) => { if (p?.venue) venues.add(p.venue); });
-  });
-
   return (
     <main className="bg-background">
       {/* ── Hero ── */}
@@ -319,7 +319,7 @@ export default function PublicationsPage() {
             </span>
             <span className="hidden h-3 w-px bg-border sm:block" />
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-              {`${publications.indexWord} · ${yearKeys.length} ${yearKeys.length === 1 ? publications.yearSingular : publications.yearPlural}`}
+              {`${publications.indexWord} \u00B7 ${yearKeys.length} ${yearKeys.length === 1 ? publications.yearSingular : publications.yearPlural}`}
             </span>
           </div>
 

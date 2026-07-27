@@ -18,8 +18,21 @@ import {
   Users,
 } from "lucide-react";
 
-import contentData from "../../public/config/content.json";
-import { getAssetPath } from "@/lib/utils";
+import { getImageUrl } from "@/lib/utils";
+import { getContent } from "@/lib/content";
+
+const contentData = getContent();
+const {
+  hero,
+  home,
+  marquee,
+  groupOverview,
+  professor,
+  researchDomains,
+  about,
+  homePillars,
+  pillars,
+} = contentData;
 
 type IconName =
   | "Users"
@@ -43,18 +56,6 @@ const iconMap: Record<IconName, React.ComponentType<{ className?: string }>> = {
 };
 
 export default function Home() {
-  const {
-    hero,
-    home,
-    marquee,
-    groupOverview,
-    professor,
-    researchDomains,
-    about,
-    homePillars,
-    pillars,
-  } = contentData;
-
   return (
     <main className="bg-background">
       {/* HERO — editorial split, mono meta strip, generous whitespace */}
@@ -112,7 +113,7 @@ export default function Home() {
             <div className="md:col-span-7">
               <div className="relative aspect-[4/3] w-full overflow-hidden">
                 <Image
-                  src={getAssetPath(hero.groupPhotoPath)}
+                  src={getImageUrl(hero.groupPhotoPath)}
                   alt={hero.groupPhotoAlt}
                   fill
                   priority
@@ -172,6 +173,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* GROUP OVERVIEW — body + PI side by side, then focus cards */}
       <section id="about-group" data-section="people" data-section-label="People" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
@@ -204,7 +206,7 @@ export default function Home() {
                   <span className="invisible pointer-events-auto absolute left-0 top-full z-50 mt-4 w-72 translate-y-3 rounded-[1.5rem] border border-primary/15 bg-card p-3 opacity-0 shadow-2xl shadow-primary/20 transition-all delay-300 duration-300 before:absolute before:-top-4 before:left-0 before:h-4 before:w-full before:content-[''] group-hover/ishtiaque:visible group-hover/ishtiaque:translate-y-1 group-hover/ishtiaque:opacity-100 group-hover/ishtiaque:delay-75">
                     <span className="block relative h-52 w-full overflow-hidden rounded-[1.1rem] bg-muted">
                       <Image
-                        src={getAssetPath(professor.imagePath)}
+                        src={getImageUrl(professor.imagePath)}
                         alt={professor.name}
                         fill
                         sizes="288px"
@@ -238,7 +240,7 @@ export default function Home() {
               <div className="flex flex-col items-start gap-5">
                 <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-full">
                   <Image
-                    src={getAssetPath(professor.imagePath)}
+                    src={getImageUrl(professor.imagePath)}
                     alt={professor.name}
                     fill
                     sizes="128px"
@@ -298,6 +300,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* LATEST RESEARCH + TEAM */}
       {(() => {
         const years = (contentData.publications.years ?? {}) as Record<string, any>;
@@ -423,7 +426,7 @@ export default function Home() {
                           {piMember.imagePath ? (
                             <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-border">
                               <Image
-                                src={getAssetPath(piMember.imagePath)}
+                                src={getImageUrl(piMember.imagePath)}
                                 alt={piMember.name}
                                 fill
                                 sizes="64px"
@@ -461,7 +464,7 @@ export default function Home() {
                               {m.imagePath ? (
                                 <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-border">
                                   <Image
-                                    src={getAssetPath(m.imagePath)}
+                                    src={getImageUrl(m.imagePath)}
                                     alt={m.name}
                                     fill
                                     sizes="56px"
@@ -521,7 +524,7 @@ export default function Home() {
                             {fullData.imagePath ? (
                               <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-border">
                                 <Image
-                                  src={getAssetPath(fullData.imagePath)}
+                                  src={getImageUrl(fullData.imagePath)}
                                   alt={fullData.name}
                                   fill
                                   sizes="64px"
@@ -637,7 +640,7 @@ export default function Home() {
                                         )}
                                       </p>
                                       <p className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-primary/70">
-                                        {p.venue ? `${p.venue} · ` : ""}{p.year}
+                                        {p.venue ? `${p.venue} \u00B7 ` : ""}{p.year}
                                       </p>
                                     </li>
                                   ))}

@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { getAssetPath } from "@/lib/utils";
+import { getImageUrl } from "@/lib/utils";
 
 type Profile = {
   eyebrow: string;
@@ -65,7 +65,7 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
             {hasImage ? (
               <div className="relative aspect-square w-32 shrink-0 overflow-hidden rounded-full border border-border bg-muted sm:w-40">
                 <Image
-                  src={getAssetPath(member.imagePath!)}
+                  src={getImageUrl(member.imagePath!)}
                   alt={member.name}
                   fill
                   sizes="160px"
@@ -114,7 +114,7 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance }
             {hasImage ? (
               <div className="relative aspect-square w-40 shrink-0 overflow-hidden rounded-full border border-border bg-muted shadow-sm sm:w-48">
                 <Image
-                  src={getAssetPath(member.imagePath!)}
+                  src={getImageUrl(member.imagePath!)}
                   alt={member.name}
                   fill
                   sizes="(min-width: 640px) 192px, 160px"

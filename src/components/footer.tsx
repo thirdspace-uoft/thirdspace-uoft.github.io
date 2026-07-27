@@ -6,11 +6,11 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import contentData from "../../public/config/content.json";
+import { getContent } from "@/lib/content";
+
+const { location, brand, researchLabs, campuses, socials } = getContent();
 
 export function Footer() {
-  const { location, brand, researchLabs, campuses, socials } = contentData;
-
   return (
     <footer className="border-t border-border bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-card/40">
       <div className="mx-auto max-w-6xl px-6 py-12 md:py-16">
@@ -35,9 +35,8 @@ export function Footer() {
                   target="_blank"
                   rel="noreferrer"
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-muted/60 text-muted-foreground transition-all hover:bg-primary/10 hover:text-primary ring-1 ring-border"
-                  aria-label={contentData.socials?.xDesktopAriaLabel ?? "Twitter / X"}
+                  aria-label={socials?.xDesktopAriaLabel ?? "Twitter / X"}
                 >
-                  {/* SVG for X (formerly Twitter) */}
                   <svg
                     viewBox="0 0 24 24"
                     aria-hidden="true"
@@ -110,13 +109,13 @@ export function Footer() {
               ))}
             </ul>
           </div>
- 
+
            {/* Column 4: Location Info (3 cols) */}
            <div className="space-y-4 md:col-span-3">
              <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-primary/80">
                {location.locationHeading}
              </h3>
-             
+
              {/* Interactive Location Tag with Hover Google Map */}
              <HoverCard openDelay={100} closeDelay={100}>
                <HoverCardTrigger asChild>
@@ -127,11 +126,10 @@ export function Footer() {
                    className="group block relative rounded-2xl border border-dashed border-border bg-muted/30 p-4 transition-all duration-300 hover:bg-card hover:shadow-sm hover:border-accent/40 focus:outline-none focus:ring-2 focus:ring-accent/40 overflow-hidden"
                  >
                    <div className="absolute top-0 right-0 h-16 w-16 bg-accent/5 rounded-full blur-xl transition-all group-hover:bg-accent/10" />
-                   
+
                    <div className="relative space-y-3.5">
                      <div className="flex items-center gap-2">
                        <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10 text-accent-foreground transition-transform duration-300 group-hover:scale-110">
-                         {/* Animated Location Pin / Radar */}
                          <span className="absolute inline-flex h-full w-full rounded-lg bg-accent/20 opacity-0 group-hover:animate-ping group-hover:opacity-100" />
                          <MapPin className="h-4.5 w-4.5 text-accent-foreground relative z-10" />
                        </div>
@@ -147,7 +145,7 @@ export function Footer() {
                          </p>
                        </div>
                      </div>
-                     
+
                      <div className="text-sm text-muted-foreground leading-relaxed pt-1 border-t border-border/40">
                         <p className="font-semibold text-foreground text-xs uppercase tracking-wide">
                           {location.institution}
@@ -158,10 +156,10 @@ export function Footer() {
                    </div>
                  </a>
                </HoverCardTrigger>
-               <HoverCardContent 
-                 side="top" 
-                 align="end" 
-                 sideOffset={12} 
+               <HoverCardContent
+                 side="top"
+                 align="end"
+                 sideOffset={12}
                  className="w-[280px] sm:w-[320px] p-0 overflow-hidden rounded-xl bg-card border border-border shadow-lg"
                >
                  <div className="relative h-[200px] w-full bg-muted">
@@ -189,7 +187,7 @@ export function Footer() {
         {/* Footer Bottom */}
         <div className="mt-12 border-t border-border/60 pt-6 flex flex-col items-center justify-between gap-4 sm:flex-row text-xs text-muted-foreground">
           <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-            <p>© {new Date().getFullYear()} {brand.name} {brand.copyrightSuffix}</p>
+            <p>&copy; {new Date().getFullYear()} {brand.name} {brand.copyrightSuffix}</p>
             {brand.creditAuthorUrl && (
               <>
                 <span aria-hidden className="h-3 w-px bg-border" />

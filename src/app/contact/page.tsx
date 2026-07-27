@@ -1,22 +1,22 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail, MapPin } from "lucide-react";
-import type { Metadata } from "next";
 
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import contentData from "../../../public/config/content.json";
+import { getContent } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: contentData.contact.pageTitle,
-  description: contentData.contact.headline,
+const contentData = getContent();
+const { contact, location, socials, professor } = contentData;
+
+export const metadata = {
+  title: contact.pageTitle,
+  description: contact.headline,
 };
 
 export default function ContactPage() {
-  const { contact, location, socials, professor } = contentData;
-
   return (
     <main className="bg-background">
       {/* Hero */}

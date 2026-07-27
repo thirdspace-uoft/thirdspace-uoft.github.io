@@ -2,18 +2,18 @@ import Link from "next/link";
 import {
   ArrowUpRight,
 } from "lucide-react";
-import type { Metadata } from "next";
 
-import contentData from "../../../public/config/content.json";
+import { getContent } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: contentData.aboutPage.pageTitle,
-  description: contentData.aboutPage.subhead,
+const contentData = getContent();
+const { aboutPage, researchLabs, campuses } = contentData;
+
+export const metadata = {
+  title: aboutPage.pageTitle,
+  description: aboutPage.subhead,
 };
 
 export default function AboutPage() {
-  const { aboutPage, researchLabs, campuses } = contentData;
-
   return (
     <main className="bg-background">
       {/* Approach */}
@@ -34,7 +34,7 @@ export default function AboutPage() {
 
           {aboutPage.approachItems && aboutPage.approachItems.length > 0 && (
             <ol className="border-t border-border">
-              {aboutPage.approachItems.map((item, i) => (
+              {aboutPage.approachItems.map((item: any, i: number) => (
                 <li
                   key={`${item.title}-${i}`}
                   className="grid grid-cols-12 gap-x-6 gap-y-2 border-b border-border py-7 sm:py-8"
@@ -69,7 +69,7 @@ export default function AboutPage() {
                 {researchLabs.title}
               </h3>
               <ul className="border-t border-border">
-                {researchLabs.items.map((item, i) => (
+                {researchLabs.items.map((item: any, i: number) => (
                   <li
                     key={`${item.name}-${i}`}
                     className="flex items-center justify-between gap-3 border-b border-border py-3"
@@ -99,7 +99,7 @@ export default function AboutPage() {
                 {campuses.title}
               </h3>
               <ul className="border-t border-border">
-                {campuses.items.map((campus, i) => (
+                {campuses.items.map((campus: any, i: number) => (
                   <li
                     key={`${campus.name}-${i}`}
                     className="flex items-center justify-between gap-3 border-b border-border py-3"
