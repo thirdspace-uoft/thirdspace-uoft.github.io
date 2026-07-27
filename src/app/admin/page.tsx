@@ -251,15 +251,18 @@ function SignedInView({
     if (!IMAGEKIT_PRIVATE_KEY) throw new Error("NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY not set in .env");
     if (!IMAGEKIT_URL_ENDPOINT) throw new Error("NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT not set in .env");
     const auth = "Basic " + btoa(IMAGEKIT_PRIVATE_KEY + ":");
-    const filename = path.split("/").pop() ?? "";
-    const searchRes = await fetch("https://api.imagekit.io/v1/files?searchQuery=" + encodeURIComponent(`name="${filename}"`), {
-      headers: { Authorization: auth },
-    });
-    if (!searchRes.ok) throw new Error("Failed to search for file");
-    const searchData = await searchRes.json();
-    const fileId = searchData.assets?.[0]?.fileId;
-    if (!fileId) throw new Error("File not found in ImageKit");
-    const delRes = await fetch(`https://api.imagekit.io/v1/files/${fileId}`, {
+    const parts = path.split("/");
+    const filename = parts.pop() ?? "";
+    const folder = parts.join("/") + "/";
+    const listRes = await fetch(
+      `https://api.imagekit.io/v1/files?path=${encodeURIComponent(folder)}`,
+      { headers: { Authorization: auth } },
+    );
+    if (!listRes.ok) throw new Error("Failed to list files");
+    const list = await listRes.json();
+    const found = (list as any[])?.find((f: any) => f.name === filename);
+    if (!found) throw new Error("File not found in ImageKit");
+    const delRes = await fetch(`https://api.imagekit.io/v1/files/${found.fileId}`, {
       method: "DELETE",
       headers: { Authorization: auth },
     });
