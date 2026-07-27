@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { Upload, Loader2, Check, AlertCircle, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const IMAGEKIT_PUBLIC_KEY = process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY ?? "";
+const IMAGEKIT_PRIVATE_KEY = process.env.NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY ?? "";
 const UPLOAD_URL = "https://upload.imagekit.io/api/v1/files/upload";
 
 interface ImageUploaderProps {
@@ -26,6 +26,12 @@ export function ImageUploader({ currentPath, folder, onUpload, onDelete }: Image
       return;
     }
 
+    if (!IMAGEKIT_PRIVATE_KEY) {
+      setStatus("error");
+      setMsg("NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY not set in .env");
+      return;
+    }
+
     setStatus("uploading");
     setMsg("");
 
@@ -35,20 +41,20 @@ export function ImageUploader({ currentPath, folder, onUpload, onDelete }: Image
       formData.append("fileName", file.name);
       formData.append("folder", folder);
       formData.append("useUniqueFileName", "true");
-      formData.append("publicKey", IMAGEKIT_PUBLIC_KEY);
 
-      const res = await fetch(UPLOAD_URL, { method: "POST", body: formData });
+      const res = await fetch(UPLOAD_URL, {
+        method: "POST",
+        headers: {
+          Authorization: "Basic " + btoa(IMAGEKIT_PRIVATE_KEY + ":"),
+        },
+        body: formData,
+      });
       const data = await res.json();
       console.log("ImageKit upload response:", res.status, data);
 
       if (!res.ok) {
-        if (data.message?.includes("unauthorized") || data.message?.includes("signature") || data.message?.includes("auth")) {
-          setStatus("error");
-          setMsg("Unsigned uploads not enabled. Enable in ImageKit Dashboard → Settings → Allow unsigned uploads.");
-        } else {
-          setStatus("error");
-          setMsg(data.message ?? "Upload failed");
-        }
+        setStatus("error");
+        setMsg(data.message ?? "Upload failed");
         return;
       }
 
