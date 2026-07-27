@@ -25,19 +25,11 @@ import {
   Plus,
   Trash2,
   Image,
-  KeyRound,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageUploader } from "@/components/image-uploader";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { auth, db } from "@/lib/firebase";
 import {
   signInWithEmailAndPassword,
@@ -251,32 +243,17 @@ function SignedInView({
   // Form tab selection
   const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "pillars" | "homePillars" | "navbar" | "footerLabs" | "location" | "marquee" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "aboutPage" | "contact">("layout");
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [keychainOpen, setKeychainOpen] = useState(false);
-  const [imageKitPrivateKey, setImageKitPrivateKey] = useState("");
-  const [imageKitPrivateKeyDraft, setImageKitPrivateKeyDraft] = useState("");
-
-  useEffect(() => {
-    const saved = localStorage.getItem("imagekit-private-key");
-    if (saved) {
-      setImageKitPrivateKey(saved);
-      setImageKitPrivateKeyDraft(saved);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (keychainOpen) setImageKitPrivateKeyDraft(imageKitPrivateKey);
-  }, [keychainOpen]);
 
   const IMAGEKIT_URL_ENDPOINT = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT ?? "https://ik.imagekit.io/zb1q";
+  const IMAGEKIT_PRIVATE_KEY = process.env.NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY;
 
   async function deleteFromImageKit(path: string) {
-    const key = imageKitPrivateKey;
-    if (!key) throw new Error("ImageKit Private Key not set (open Keychain)");
+    if (!IMAGEKIT_PRIVATE_KEY) throw new Error("NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY not set in .env");
     const fullUrl = `${IMAGEKIT_URL_ENDPOINT}${path}`;
     const res = await fetch("https://api.imagekit.io/v1/files/delete-by-url", {
       method: "DELETE",
       headers: {
-        Authorization: "Basic " + btoa(key + ":"),
+        Authorization: "Basic " + btoa(IMAGEKIT_PRIVATE_KEY + ":"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ url: fullUrl }),
@@ -827,60 +804,6 @@ function SignedInView({
 
           {/* Action Blocks */}
           <div className="flex items-center gap-2">
-            <Dialog open={keychainOpen} onOpenChange={setKeychainOpen}>
-              <DialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="text-xs font-mono h-8 rounded"
-                  title="API Keys"
-                >
-                  <KeyRound className="h-3.5 w-3.5 mr-1.5" />
-                  <span className="hidden sm:inline">Keys</span>
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle className="font-mono text-sm">Keychain</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-3 py-2">
-                  <div className="space-y-1.5">
-                    <Label className="text-[10px] font-mono uppercase text-muted-foreground">ImageKit Private Key</Label>
-                    <Input
-                      type="password"
-                      value={imageKitPrivateKeyDraft}
-                      onChange={(e) => setImageKitPrivateKeyDraft(e.target.value)}
-                      placeholder="private_..."
-                      className="font-mono text-xs"
-                    />
-                    <p className="text-[9px] font-mono text-muted-foreground">
-                      Found in ImageKit Dashboard → Developer Options → Private Key
-                    </p>
-                  </div>
-                  <div className="flex justify-end gap-2 pt-1">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setKeychainOpen(false)}
-                      className="text-xs font-mono"
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={() => {
-                        setImageKitPrivateKey(imageKitPrivateKeyDraft);
-                        localStorage.setItem("imagekit-private-key", imageKitPrivateKeyDraft);
-                        setKeychainOpen(false);
-                      }}
-                      className="text-xs font-mono"
-                    >
-                      Save Key
-                    </Button>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
             <Button
               variant="outline"
               size="sm"

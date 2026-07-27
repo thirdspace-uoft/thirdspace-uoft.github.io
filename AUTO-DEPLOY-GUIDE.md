@@ -60,7 +60,7 @@ jobs:
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
           NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT: ${{ secrets.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT }}
           NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY: ${{ secrets.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY }}
-          IMAGEKIT_PRIVATE_KEY: ${{ secrets.IMAGEKIT_PRIVATE_KEY }}
+          NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY: ${{ secrets.IMAGEKIT_PRIVATE_KEY }}
 
       - uses: peaceiris/actions-gh-pages@v4
         with:
@@ -198,7 +198,7 @@ Add these secrets in **Settings → Secrets and variables → Actions**:
 | `FIREBASE_SERVICE_ACCOUNT_KEY` | Full JSON content of the service account key file |
 | `NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT` | `https://ik.imagekit.io/6lrshzb1q` |
 | `NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY` | `public_ceZcPfhgVnUzLdYrWwlIHNbe0eI=` |
-| `IMAGEKIT_PRIVATE_KEY` | `private_2SzHE4jnHyc1KhJUQ6dZykIKxh4=` |
+| `NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY` | `private_2SzHE4jnHyc1KhJUQ6dZykIKxh4=` |
 
 ---
 
