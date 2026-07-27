@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Upload, Loader2, Check, AlertCircle } from "lucide-react";
+import { Upload, Loader2, Check, AlertCircle, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const IMAGEKIT_PUBLIC_KEY = "public_ceZcPfhgVnUzLdYrWwlIHNbe0eI=";
@@ -11,11 +11,12 @@ interface ImageUploaderProps {
   currentPath: string;
   folder: string;
   onUpload: (path: string) => void;
+  onDelete?: () => Promise<void>;
 }
 
-export function ImageUploader({ currentPath, folder, onUpload }: ImageUploaderProps) {
+export function ImageUploader({ currentPath, folder, onUpload, onDelete }: ImageUploaderProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [status, setStatus] = useState<"idle" | "uploading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "uploading" | "deleting" | "success" | "error">("idle");
   const [msg, setMsg] = useState("");
 
   async function handleFile(file: File) {
@@ -60,8 +61,22 @@ export function ImageUploader({ currentPath, folder, onUpload }: ImageUploaderPr
     }
   }
 
+  async function handleDelete() {
+    if (!onDelete) return;
+    setStatus("deleting");
+    setMsg("");
+    try {
+      await onDelete();
+      setStatus("success");
+      setMsg("Deleted from ImageKit");
+    } catch (e: unknown) {
+      setStatus("error");
+      setMsg(e instanceof Error ? e.message : "Delete failed");
+    }
+  }
+
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1.5">
       <input
         ref={inputRef}
         type="file"
@@ -73,11 +88,29 @@ export function ImageUploader({ currentPath, folder, onUpload }: ImageUploaderPr
           e.target.value = "";
         }}
       />
+      {currentPath && onDelete && (
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          disabled={status === "deleting" || status === "uploading"}
+          onClick={handleDelete}
+          className="shrink-0 text-xs gap-1.5 text-destructive hover:text-destructive"
+          title="Delete from ImageKit"
+        >
+          {status === "deleting" ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+          ) : (
+            <Trash2 className="h-3.5 w-3.5" />
+          )}
+          {status === "deleting" ? "Deleting..." : "Delete"}
+        </Button>
+      )}
       <Button
         type="button"
         variant="outline"
         size="sm"
-        disabled={status === "uploading"}
+        disabled={status === "uploading" || status === "deleting"}
         onClick={() => inputRef.current?.click()}
         className="shrink-0 text-xs gap-1.5"
       >
