@@ -39,6 +39,7 @@ export function ImageUploader({ currentPath, folder, onUpload, onDelete }: Image
 
       const res = await fetch(UPLOAD_URL, { method: "POST", body: formData });
       const data = await res.json();
+      console.log("ImageKit upload response:", res.status, data);
 
       if (!res.ok) {
         if (data.message?.includes("unauthorized") || data.message?.includes("signature") || data.message?.includes("auth")) {

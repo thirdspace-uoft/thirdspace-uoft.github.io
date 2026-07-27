@@ -260,15 +260,18 @@ function SignedInView({
     );
     if (!listRes.ok) throw new Error("Failed to list files");
     const list = await listRes.json();
+    console.log("ImageKit list response:", listRes.status, list);
     const found = (list as any[])?.find((f: any) => f.name === filename);
     if (!found) throw new Error("File not found in ImageKit");
+    console.log("Found file:", found.fileId, found.name);
     const delRes = await fetch(`https://api.imagekit.io/v1/files/${found.fileId}`, {
       method: "DELETE",
       headers: { Authorization: auth },
     });
+    const delData = await delRes.json().catch(() => ({}));
+    console.log("ImageKit delete response:", delRes.status, delData);
     if (!delRes.ok) {
-      const data = await delRes.json().catch(() => ({}));
-      throw new Error(data.message ?? "Delete failed");
+      throw new Error(delData.message ?? "Delete failed");
     }
   }
 
