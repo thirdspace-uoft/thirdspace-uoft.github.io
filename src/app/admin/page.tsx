@@ -261,7 +261,11 @@ function SignedInView({
     if (!listRes.ok) throw new Error("Failed to list files");
     const list = await listRes.json();
     console.log("ImageKit list response:", listRes.status, list);
-    const found = (list as any[])?.find((f: any) => f.name === filename);
+    const dot = filename.lastIndexOf(".");
+    const base = dot >= 0 ? filename.slice(0, dot) : filename;
+    const found = (list as any[])?.find(
+      (f: any) => f.name === filename || f.name.startsWith(base + "_"),
+    );
     if (!found) throw new Error("File not found in ImageKit");
     console.log("Found file:", found.fileId, found.name);
     const delRes = await fetch(`https://api.imagekit.io/v1/files/${found.fileId}`, {
