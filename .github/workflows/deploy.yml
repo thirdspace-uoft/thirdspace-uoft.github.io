@@ -19,6 +19,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.check.outputs.skip }}
     steps:
       - uses: actions/checkout@v5
 
@@ -48,18 +50,72 @@ jobs:
           echo "$SA_KEY" >> .env
           echo "EOF" >> .env
 
-      - run: npm run build
+      # ── Skip build if Firestore content hasn't changed ──
+      - name: Cache last deployed timestamp
+        id: cache-ts
+        uses: actions/cache@v4
+        with:
+          path: .last-deployed-ts
+          key: last-deployed-ts
 
-      - run: touch out/.nojekyll
+      - name: Fetch lastModified from Firestore
+        id: firestore
+        env:
+          SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+        run: |
+          CURRENT_TS=$(node --input-type=module -e "
+            import { initializeApp, cert, getApps } from 'firebase-admin/app';
+            import { getFirestore } from 'firebase-admin/firestore';
+            const key = JSON.parse(process.env.SA_KEY);
+            if (!getApps().length) initializeApp({ credential: cert(key) });
+            const doc = await getFirestore().doc('config/site').get();
+            console.log(doc.data()?.lastModified || '0');
+          ")
+          CACHED_TS=$(cat .last-deployed-ts 2>/dev/null || echo "0")
+          echo "CURRENT_TS=$CURRENT_TS" >> $GITHUB_OUTPUT
+          echo "CACHED_TS=$CACHED_TS" >> $GITHUB_OUTPUT
 
-      - uses: actions/configure-pages@v5
+      - name: Check for changes
+        id: check
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "skip=false" >> $GITHUB_OUTPUT
+          elif [ "${{ steps.firestore.outputs.CURRENT_TS }}" = "${{ steps.firestore.outputs.CACHED_TS }}" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Skip build if unchanged
+        if: steps.check.outputs.skip == 'true'
+        run: echo "No Firestore changes since last deploy — skipping"
+
+      # ── Build only on cron/workflow_dispatch if content changed ──
+      - name: Build
+        if: steps.check.outputs.skip != 'true'
+        run: npm run build
+
+      - name: Save timestamp
+        if: steps.check.outputs.skip != 'true'
+        run: echo "${{ steps.firestore.outputs.CURRENT_TS }}" > .last-deployed-ts
+
+      - name: Touch .nojekyll
+        if: steps.check.outputs.skip != 'true'
+        run: touch out/.nojekyll
+
+      - name: Configure Pages
+        if: steps.check.outputs.skip != 'true'
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        if: steps.check.outputs.skip != 'true'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
 
   deploy:
     needs: build
+    if: needs.build.outputs.skip != 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

@@ -626,7 +626,10 @@ function SignedInView({
     setSaving(true);
     setMessage(null);
     try {
-      await setDoc(doc(db, "config", "site"), content);
+      await setDoc(doc(db, "config", "site"), {
+        ...content,
+        lastModified: new Date().toISOString(),
+      });
       setMessage({ type: "success", text: "Changes published to Firebase! Run npm run build to deploy." });
     } catch (err: any) {
       console.error(err);
