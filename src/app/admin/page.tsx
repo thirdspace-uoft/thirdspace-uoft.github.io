@@ -250,17 +250,21 @@ function SignedInView({
   async function deleteFromImageKit(path: string) {
     if (!IMAGEKIT_PRIVATE_KEY) throw new Error("NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY not set in .env");
     if (!IMAGEKIT_URL_ENDPOINT) throw new Error("NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT not set in .env");
-    const fullUrl = `${IMAGEKIT_URL_ENDPOINT}${path}`;
-    const res = await fetch("https://api.imagekit.io/v1/files/delete-by-url", {
-      method: "DELETE",
-      headers: {
-        Authorization: "Basic " + btoa(IMAGEKIT_PRIVATE_KEY + ":"),
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ url: fullUrl }),
+    const auth = "Basic " + btoa(IMAGEKIT_PRIVATE_KEY + ":");
+    const filename = path.split("/").pop() ?? "";
+    const searchRes = await fetch("https://api.imagekit.io/v1/files?searchQuery=" + encodeURIComponent(`name="${filename}"`), {
+      headers: { Authorization: auth },
     });
-    if (!res.ok) {
-      const data = await res.json().catch(() => ({}));
+    if (!searchRes.ok) throw new Error("Failed to search for file");
+    const searchData = await searchRes.json();
+    const fileId = searchData.assets?.[0]?.fileId;
+    if (!fileId) throw new Error("File not found in ImageKit");
+    const delRes = await fetch(`https://api.imagekit.io/v1/files/${fileId}`, {
+      method: "DELETE",
+      headers: { Authorization: auth },
+    });
+    if (!delRes.ok) {
+      const data = await delRes.json().catch(() => ({}));
       throw new Error(data.message ?? "Delete failed");
     }
   }
