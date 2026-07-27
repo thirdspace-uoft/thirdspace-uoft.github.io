@@ -3,6 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: "*/5 * * * *"   # every 5 minutes
   workflow_dispatch:
 
 permissions:
@@ -27,16 +29,24 @@ jobs:
 
       - run: npm ci
 
-      - name: Write build env from secrets
+      - name: Write .env from secrets
+        env:
+          SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
         run: |
-          {
-            echo "NEXT_PUBLIC_ADMIN_EMAIL=${{ secrets.NEXT_PUBLIC_ADMIN_EMAIL }}"
-            echo "NEXT_PUBLIC_ADMIN_PASSWORD=${{ secrets.NEXT_PUBLIC_ADMIN_PASSWORD }}"
-            echo "NEXT_PUBLIC_ADMIN_SESSION_SECRET=${{ secrets.NEXT_PUBLIC_ADMIN_SESSION_SECRET }}"
-            echo "NEXT_PUBLIC_ADMIN_SESSION_TTL_HOURS=${{ secrets.NEXT_PUBLIC_ADMIN_SESSION_TTL_HOURS }}"
-          } >> .env.production
-          echo "--- .env.production ---"
-          cat .env.production
+          cat > .env << 'EOF'
+          NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
+          NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
+          NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT=${{ secrets.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT }}
+          NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY }}
+          IMAGEKIT_PRIVATE_KEY=${{ secrets.IMAGEKIT_PRIVATE_KEY }}
+          EOF
+          echo "FIREBASE_SERVICE_ACCOUNT_KEY<<EOF" >> .env
+          echo "$SA_KEY" >> .env
+          echo "EOF" >> .env
 
       - run: npm run build
 
