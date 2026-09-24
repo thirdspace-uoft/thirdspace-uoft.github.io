@@ -127,8 +127,40 @@ npm run lint    # eslint (next + ts config)
 | ----------------------------- | --------------------------------------------- |
 | List available components     | `npx shadcn@latest add`                       |
 | Add a single component        | `npx shadcn@latest add dialog`                |
-| Re-run init non-interactively | `npx shadcn@latest init --preset nova --yes`  |
+| Re-run init non-interactively | `npx shadcn@latest init --preset nova --yes`   |
 | Type-check                    | `npx tsc --noEmit`                            |
+
+## Content Sync with Firebase
+
+All site content lives in `public/config/content.json` and is synced bidirectionally with Firestore (collection `config`, document `site`).
+
+### Download from Firestore → content.json
+
+Pulls the latest content from Firestore and writes it to `public/config/content.json`:
+
+```bash
+npm run fetch-content
+```
+
+This runs automatically as a pre-step before `npm run dev` and `npm run build`.
+
+### Upload content.json → Firestore
+
+Pushes the local `content.json` up to Firestore with a `lastModified` timestamp:
+
+```bash
+npm run upload-content
+```
+
+### Admin CMS (in-browser)
+
+You can also publish directly from `/admin` — sign in, edit fields, and click **"Commit Draft"** to push changes to Firestore.
+
+### Prerequisites
+
+Both scripts require Firebase admin credentials from `.env`:
+- `FIREBASE_SERVICE_ACCOUNT_KEY` — inline JSON string, or
+- `FIREBASE_SERVICE_ACCOUNT_KEY_PATH` — path to a `.json` key file
 
 ## Notes on Tailwind v4
 

@@ -12,7 +12,6 @@ import {
   Microscope,
   MoveUpRight,
   Orbit,
-  Quote,
   Scale,
   Sparkles,
   Users,
@@ -29,7 +28,6 @@ const {
   groupOverview,
   professor,
   researchDomains,
-  about,
   homePillars,
   pillars,
 } = contentData;
@@ -98,7 +96,7 @@ export default function Home() {
                   <ArrowRight className="size-3.5" />
                 </Link>
                 <Link
-                  href="/team"
+                  href="/people"
                   className="inline-flex items-center gap-2 px-1 py-2.5 font-mono text-[17px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {hero.secondaryActionText}
@@ -349,10 +347,10 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-4">
                   <Link
-                    href="/team"
+                    href="/people"
                     className="inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
                   >
-                    {contentData.latestPublications?.teamViewAllLabel ?? "Team"}
+                    {contentData.latestPublications?.teamViewAllLabel ?? "People"}
                     <ArrowRight className="size-3" />
                   </Link>
                   <span className="h-3 w-px bg-border" />
@@ -493,7 +491,7 @@ export default function Home() {
                     )}
 
                     <Link
-                      href="/team"
+                      href="/people"
                       className="mt-6 inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-primary transition-colors hover:text-primary/70"
                     >
                       {contentData.latestPublications?.allMembersLabel ?? "All members"}
@@ -658,32 +656,6 @@ export default function Home() {
           </section>
         );
       })()}
-
-      {/* ABOUT THE GROUP — quote, hairline-left accent */}
-      {about && (
-        <section data-section="about" data-section-label="About" className="border-b border-border bg-muted/30">
-          <div className="mx-auto w-full max-w-5xl px-5 py-20 sm:px-8 sm:py-28">
-            <div className="flex items-center gap-3 border-b border-border pb-4">
-              <Quote className="size-4 text-primary" />
-              <h2 className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
-                {about.title}
-              </h2>
-            </div>
-            <p className="mt-10 max-w-3xl border-l border-primary pl-6 text-xl leading-relaxed text-foreground">
-              {about.body}
-            </p>
-            {(about as { ctaLabel?: string; ctaHref?: string }).ctaLabel && (
-              <Link
-                href={(about as { ctaHref?: string }).ctaHref ?? "/about"}
-                className="group mt-10 inline-flex items-center gap-2 font-mono text-[17px] uppercase tracking-[0.22em] text-foreground transition-colors hover:text-primary"
-              >
-                {(about as { ctaLabel?: string }).ctaLabel}
-                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
-              </Link>
-            )}
-          </div>
-        </section>
-      )}
 
       {/* RESEARCH DOMAINS — clean 2-col index, hairline rules, no bento */}
       <section data-section="domains" data-section-label="Domains" className="border-b border-border">

@@ -241,7 +241,7 @@ function SignedInView({
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Form tab selection
-  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "pillars" | "homePillars" | "navbar" | "footerLabs" | "location" | "marquee" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "aboutPage" | "contact">("layout");
+  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "pillars" | "homePillars" | "navbar" | "footerLabs" | "location" | "marquee" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications">("layout");
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const IMAGEKIT_URL_ENDPOINT = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
@@ -493,14 +493,6 @@ function SignedInView({
     });
   };
 
-  const handleApproachItemChange = (index: number, field: string, value: string) => {
-    setContent((prev: any) => {
-      const items = [...(prev.aboutPage.approachItems ?? [])];
-      items[index] = { ...items[index], [field]: value };
-      return { ...prev, aboutPage: { ...prev.aboutPage, approachItems: items } };
-    });
-  };
-
   const handleHomePillarsFieldChange = (field: string, value: string) => {
     setContent((prev: any) => ({
       ...prev,
@@ -573,40 +565,6 @@ function SignedInView({
     });
   };
 
-  const handleContactSectionChange = (section: string, value: string) => {
-    setContent((prev: any) => ({
-      ...prev,
-      contact: {
-        ...prev.contact,
-        sections: { ...prev.contact.sections, [section]: value },
-      },
-    }));
-  };
-
-  const handleContactRowChange = (row: string, field: "icon" | "label", value: string) => {
-    setContent((prev: any) => ({
-      ...prev,
-      contact: {
-        ...prev.contact,
-        rows: { ...prev.contact.rows, [row]: { ...prev.contact.rows[row], [field]: value } },
-      },
-    }));
-  };
-
-  const handleContactOnlineChange = (key: string, value: string) => {
-    setContent((prev: any) => ({
-      ...prev,
-      contact: { ...prev.contact, onlineChannels: { ...prev.contact.onlineChannels, [key]: value } },
-    }));
-  };
-
-  const handleContactAudienceChange = (key: string, value: string) => {
-    setContent((prev: any) => ({
-      ...prev,
-      contact: { ...prev.contact, audienceTags: { ...prev.contact.audienceTags, [key]: value } },
-    }));
-  };
-
   const handlePublicationFieldChange = (field: string, value: string) => {
     setContent((prev: any) => ({
       ...prev,
@@ -632,21 +590,6 @@ function SignedInView({
       ...prev,
       [section]: value,
     }));
-  };
-
-  const handleApproachItemAdd = () => {
-    setContent((prev: any) => {
-      const items = [...(prev.aboutPage.approachItems ?? []), { title: "", body: "" }];
-      return { ...prev, aboutPage: { ...prev.aboutPage, approachItems: items } };
-    });
-  };
-
-  const handleApproachItemRemove = (index: number) => {
-    setContent((prev: any) => {
-      const items = [...(prev.aboutPage.approachItems ?? [])];
-      items.splice(index, 1);
-      return { ...prev, aboutPage: { ...prev.aboutPage, approachItems: items } };
-    });
   };
 
   const handleDownload = () => {
@@ -686,14 +629,12 @@ function SignedInView({
     { id: "professor" as const, label: "07. Professor", icon: ShieldCheck },
     { id: "researchDomains" as const, label: "08. Research Domains", icon: Database },
     { id: "marquee" as const, label: "09. Marquee Band", icon: Sparkles },
-    { id: "about" as const, label: "10. About Section", icon: FileCode },
-    { id: "team" as const, label: "11. Team", icon: Users },
+    { id: "about" as const, label: "10. Latest Research", icon: FileCode },
+    { id: "team" as const, label: "11. People", icon: Users },
     { id: "publications" as const, label: "12. Publications", icon: BookOpenCheck },
-    { id: "aboutPage" as const, label: "13. About Page", icon: FileCode },
-    { id: "contact" as const, label: "14. Contact", icon: Mail },
-    { id: "navbar" as const, label: "15. Nav Settings", icon: Compass },
-    { id: "footerLabs" as const, label: "16. Lab & Campuses", icon: Database },
-    { id: "location" as const, label: "17. Campus Location", icon: MapPin },
+    { id: "navbar" as const, label: "13. Nav Settings", icon: Compass },
+    { id: "footerLabs" as const, label: "14. Lab & Campuses", icon: Database },
+    { id: "location" as const, label: "15. Campus Location", icon: MapPin },
   ];
 
   if (loading) {
@@ -1745,39 +1686,6 @@ function SignedInView({
                 </div>
               )}
 
-              {activeTab === "about" && content?.about && (
-                <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
-                  <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">A01</div>
-                  <div className="mb-2">
-                    <span className="text-[12px] font-mono uppercase tracking-widest text-muted-foreground">Draft Sheet</span>
-                    <h3 className="text-base font-bold text-foreground font-serif">About the Group Section</h3>
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-[12px] font-mono uppercase text-muted-foreground">Section Title</Label>
-                    <Input value={content.about.title} onChange={(e) => handleFieldChange("about", "title", e.target.value)} className="font-mono text-xs" />
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-[12px] font-mono uppercase text-muted-foreground">Body Paragraph</Label>
-                    <textarea
-                      rows={5}
-                      value={content.about.body}
-                      onChange={(e) => handleFieldChange("about", "body", e.target.value)}
-                      className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed"
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">CTA Label</Label>
-                      <Input value={content.about.ctaLabel ?? ""} onChange={(e) => handleFieldChange("about", "ctaLabel", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">CTA Href</Label>
-                      <Input value={content.about.ctaHref ?? "/about"} onChange={(e) => handleFieldChange("about", "ctaHref", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                  </div>
-                </div>
-              )}
-
               {activeTab === "about" && content?.latestPublications && (
                 <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
                   <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">R01</div>
@@ -2311,284 +2219,6 @@ function SignedInView({
                         ))}
                       </div>
                     ))}
-                  </div>
-                </div>
-              )}
-
-              {activeTab === "aboutPage" && content?.aboutPage && (
-                <div className="space-y-6">
-                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
-                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">B01</div>
-                    <h3 className="text-base font-bold text-foreground font-serif">About Page Hero</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Page Title</Label>
-                        <Input value={content.aboutPage.pageTitle ?? ""} onChange={(e) => handleFieldChange("aboutPage", "pageTitle", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Badge</Label>
-                        <Input value={content.aboutPage.heroBadge ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroBadge", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Location Chip</Label>
-                        <Input value={content.aboutPage.heroLocationChip ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroLocationChip", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Meta Vol Line</Label>
-                        <Input value={content.aboutPage.metaVolLine ?? ""} onChange={(e) => handleFieldChange("aboutPage", "metaVolLine", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Field Notes Label</Label>
-                        <Input value={content.aboutPage.fieldNotesLabel ?? ""} onChange={(e) => handleFieldChange("aboutPage", "fieldNotesLabel", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Get In Touch Label</Label>
-                        <Input value={content.aboutPage.getInTouchLabel ?? ""} onChange={(e) => handleFieldChange("aboutPage", "getInTouchLabel", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Affiliations Eyebrow</Label>
-                        <Input value={content.aboutPage.affiliationsEyebrow ?? ""} onChange={(e) => handleFieldChange("aboutPage", "affiliationsEyebrow", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Eyebrow</Label>
-                      <Input value={content.aboutPage.eyebrow ?? ""} onChange={(e) => handleFieldChange("aboutPage", "eyebrow", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Headline</Label>
-                      <Input value={content.aboutPage.headline ?? ""} onChange={(e) => handleFieldChange("aboutPage", "headline", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Subhead</Label>
-                      <textarea rows={3} value={content.aboutPage.subhead ?? ""} onChange={(e) => handleFieldChange("aboutPage", "subhead", e.target.value)} className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Headline Line 1</Label>
-                      <Input value={content.aboutPage.heroHeadlineLine1 ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroHeadlineLine1", e.target.value)} className="font-serif font-bold" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Headline Line 2</Label>
-                      <Input value={content.aboutPage.heroHeadlineLine2 ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroHeadlineLine2", e.target.value)} className="font-serif" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Headline Line 3 (accent)</Label>
-                      <Input value={content.aboutPage.heroHeadlineLine3 ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroHeadlineLine3", e.target.value)} className="font-serif" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Sub Paragraph</Label>
-                      <textarea rows={3} value={content.aboutPage.heroSubParagraph ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroSubParagraph", e.target.value)} className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Primary Action Text</Label>
-                      <Input value={content.aboutPage.heroPrimaryActionText ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroPrimaryActionText", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Research Posture Label</Label>
-                      <Input value={content.aboutPage.heroResearchPostureLabel ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroResearchPostureLabel", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Research Posture Body</Label>
-                      <textarea rows={2} value={content.aboutPage.heroResearchPostureBody ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroResearchPostureBody", e.target.value)} className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Methods Label</Label>
-                        <Input value={content.aboutPage.heroMethodsLabel ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroMethodsLabel", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Methods Value</Label>
-                        <Input value={content.aboutPage.heroMethodsValue ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroMethodsValue", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Focus Label</Label>
-                        <Input value={content.aboutPage.heroFocusLabel ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroFocusLabel", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Focus Value</Label>
-                        <Input value={content.aboutPage.heroFocusValue ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroFocusValue", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Group Photo Path</Label>
-                        <Input value={content.aboutPage.heroGroupPhotoPath ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroGroupPhotoPath", e.target.value)} placeholder="/group-photos/..." className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Group Photo Alt</Label>
-                        <Input value={content.aboutPage.heroGroupPhotoAlt ?? ""} onChange={(e) => handleFieldChange("aboutPage", "heroGroupPhotoAlt", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Methods (singular)</Label>
-                        <Input value={content.aboutPage.methodsCountSingular ?? ""} onChange={(e) => handleFieldChange("aboutPage", "methodsCountSingular", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Methods (plural)</Label>
-                        <Input value={content.aboutPage.methodsCountPlural ?? ""} onChange={(e) => handleFieldChange("aboutPage", "methodsCountPlural", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
-                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">B02</div>
-                    <h3 className="text-base font-bold text-foreground font-serif">About Page Body</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Mission Title</Label>
-                        <Input value={content.aboutPage.missionTitle ?? ""} onChange={(e) => handleFieldChange("aboutPage", "missionTitle", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Approach Title</Label>
-                        <Input value={content.aboutPage.approachTitle ?? ""} onChange={(e) => handleFieldChange("aboutPage", "approachTitle", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Mission Body</Label>
-                      <textarea rows={4} value={content.aboutPage.missionBody ?? ""} onChange={(e) => handleFieldChange("aboutPage", "missionBody", e.target.value)} className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Approach Body</Label>
-                      <textarea rows={4} value={content.aboutPage.approachBody ?? ""} onChange={(e) => handleFieldChange("aboutPage", "approachBody", e.target.value)} className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Story Title</Label>
-                      <Input value={content.aboutPage.storyTitle ?? ""} onChange={(e) => handleFieldChange("aboutPage", "storyTitle", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Story Body</Label>
-                      <textarea rows={5} value={content.aboutPage.storyBody ?? ""} onChange={(e) => handleFieldChange("aboutPage", "storyBody", e.target.value)} className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Approach Items</Label>
-                        <Button size="xs" variant="ghost" onClick={handleApproachItemAdd}>
-                          <Plus className="h-3 w-3" /> Add
-                        </Button>
-                      </div>
-                      {(content.aboutPage.approachItems ?? []).map((item: any, idx: number) => (
-                        <div key={`approach-${idx}`} className="rounded border border-border bg-muted/30 p-3 space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="font-mono text-[12px] uppercase text-muted-foreground">{item.title || `Item ${idx + 1}`}</span>
-                            <Button size="xs" variant="ghost" onClick={() => handleApproachItemRemove(idx)}>
-                              <Trash2 className="h-3 w-3" />
-                            </Button>
-                          </div>
-                          <Input value={item.title ?? ""} onChange={(e) => handleApproachItemChange(idx, "title", e.target.value)} placeholder="Title" className="font-mono text-xs" />
-                          <textarea rows={2} value={item.body ?? ""} onChange={(e) => handleApproachItemChange(idx, "body", e.target.value)} placeholder="Body" className="w-full text-xs p-2 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === "contact" && content?.contact && (
-                <div className="space-y-6">
-                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
-                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">C01</div>
-                    <h3 className="text-base font-bold text-foreground font-serif">Contact Page</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Page Title</Label>
-                        <Input value={content.contact.pageTitle ?? ""} onChange={(e) => handleFieldChange("contact", "pageTitle", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Personal Site Label</Label>
-                        <Input value={content.contact.personalSiteLabel ?? ""} onChange={(e) => handleFieldChange("contact", "personalSiteLabel", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Email Label</Label>
-                        <Input value={content.contact.emailLabel ?? ""} onChange={(e) => handleFieldChange("contact", "emailLabel", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Connect Title</Label>
-                        <Input value={content.contact.connectTitle ?? ""} onChange={(e) => handleFieldChange("contact", "connectTitle", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Eyebrow</Label>
-                      <Input value={content.contact.eyebrow ?? ""} onChange={(e) => handleFieldChange("contact", "eyebrow", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Headline</Label>
-                      <Input value={content.contact.headline ?? ""} onChange={(e) => handleFieldChange("contact", "headline", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Body</Label>
-                      <textarea rows={3} value={content.contact.body ?? ""} onChange={(e) => handleFieldChange("contact", "body", e.target.value)} className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Connect Body</Label>
-                      <textarea rows={4} value={content.contact.connectBody ?? ""} onChange={(e) => handleFieldChange("contact", "connectBody", e.target.value)} className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Response Time</Label>
-                      <Input value={content.contact.responseTime ?? ""} onChange={(e) => handleFieldChange("contact", "responseTime", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                  </div>
-
-                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
-                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">C02</div>
-                    <h3 className="text-base font-bold text-foreground font-serif">Contact Section & Row Labels</h3>
-                    <div className="space-y-2">
-                      <span className="text-[12px] font-mono uppercase text-muted-foreground tracking-wider">Sections</span>
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div className="space-y-1">
-                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Direct Channels</Label>
-                          <Input value={content.contact.sections?.directChannels ?? ""} onChange={(e) => handleContactSectionChange("directChannels", e.target.value)} className="font-mono text-xs" />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Find Us Online</Label>
-                          <Input value={content.contact.sections?.findUsOnline ?? ""} onChange={(e) => handleContactSectionChange("findUsOnline", e.target.value)} className="font-mono text-xs" />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Working With Us</Label>
-                          <Input value={content.contact.sections?.workingWithUs ?? ""} onChange={(e) => handleContactSectionChange("workingWithUs", e.target.value)} className="font-mono text-xs" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <span className="text-[12px] font-mono uppercase text-muted-foreground tracking-wider">Rows</span>
-                      {(["email", "office", "principalInvestigator"] as const).map((rowKey) => (
-                        <div key={rowKey} className="grid grid-cols-3 gap-2">
-                          <div className="space-y-1">
-                            <Label className="text-[12px] font-mono uppercase text-muted-foreground">{rowKey} · Icon</Label>
-                            <Input value={content.contact.rows?.[rowKey]?.icon ?? ""} onChange={(e) => handleContactRowChange(rowKey, "icon", e.target.value)} className="font-mono text-xs" />
-                          </div>
-                          <div className="space-y-1 col-span-2">
-                            <Label className="text-[12px] font-mono uppercase text-muted-foreground">{rowKey} · Label</Label>
-                            <Input value={content.contact.rows?.[rowKey]?.label ?? ""} onChange={(e) => handleContactRowChange(rowKey, "label", e.target.value)} className="font-mono text-xs" />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="space-y-2">
-                      <span className="text-[12px] font-mono uppercase text-muted-foreground tracking-wider">Online Channels</span>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-1">
-                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Twitter / X</Label>
-                          <Input value={content.contact.onlineChannels?.twitter ?? ""} onChange={(e) => handleContactOnlineChange("twitter", e.target.value)} className="font-mono text-xs" />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Email</Label>
-                          <Input value={content.contact.onlineChannels?.email ?? ""} onChange={(e) => handleContactOnlineChange("email", e.target.value)} className="font-mono text-xs" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <span className="text-[12px] font-mono uppercase text-muted-foreground tracking-wider">Audience Tags</span>
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div className="space-y-1">
-                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Prospective Students</Label>
-                          <Input value={content.contact.audienceTags?.prospectiveStudents ?? ""} onChange={(e) => handleContactAudienceChange("prospectiveStudents", e.target.value)} className="font-mono text-xs" />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Visiting Researchers</Label>
-                          <Input value={content.contact.audienceTags?.visitingResearchers ?? ""} onChange={(e) => handleContactAudienceChange("visitingResearchers", e.target.value)} className="font-mono text-xs" />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Community Partners</Label>
-                          <Input value={content.contact.audienceTags?.communityPartners ?? ""} onChange={(e) => handleContactAudienceChange("communityPartners", e.target.value)} className="font-mono text-xs" />
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               )}

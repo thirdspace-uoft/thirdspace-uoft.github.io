@@ -213,7 +213,7 @@ function RoleSection({
   );
 }
 
-export default function TeamPage() {
+export default function PeoplePage() {
   // Lift the PI from the existing professor block into the unified member shape
   const pi: Member = {
     name: professor.name,
@@ -235,7 +235,7 @@ export default function TeamPage() {
   return (
     <main className="bg-background">
       {/* Hero — meta strip + headline */}
-      <section data-section="team" data-section-label="Team" className="border-b border-border">
+      <section data-section="team" data-section-label="People" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-20">
           <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-4">
             <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
