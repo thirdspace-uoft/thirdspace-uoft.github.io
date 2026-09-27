@@ -1,0 +1,1517 @@
+{
+  "2008": {
+    "extendedAbstracts": [],
+    "journalArticles": [],
+    "label": "2008",
+    "conferenceProceedings": [
+      {
+        "venue": "ICCIT 2008",
+        "title": "Cutting a cornered convex polygon out of a circle",
+        "id": "2008-iccit-cutting",
+        "authors": "Syed Ishtiaque Ahmed, Md Ariful Islam, Masud Hasan"
+      }
+    ],
+    "researchArtifacts": []
+  },
+  "2009": {
+    "journalArticles": [],
+    "label": "2009",
+    "researchArtifacts": [
+      {
+        "id": "2009-bachelor-thesis",
+        "authors": "Syed Ishtiaque Ahmed",
+        "title": "Algorithms in Computational Geometry",
+        "venue": "Bachelor Thesis 2009"
+      }
+    ],
+    "extendedAbstracts": [],
+    "conferenceProceedings": [
+      {
+        "venue": "ASME ICACTE 2009",
+        "title": "An Efficient System for Searching Frequently Lost Objects Using Binary Detection Sensor",
+        "authors": "Syed Ishtiaque Ahmed",
+        "id": "2009-icacte-lost"
+      },
+      {
+        "venue": "IEEE ACT 2009",
+        "title": "Searching for the Centers of Spheres and Ellipsoids",
+        "authors": "Md Hasanuzzaman Bhuiyan, Syed Ishtiaque Ahmed",
+        "id": "2009-ieee-act-spheres"
+      },
+      {
+        "venue": "IEEE CSA 2009",
+        "title": "Policy Requirements to Ensure Security in Enterprise Grid Security Systems",
+        "id": "2009-ieee-csa-grid",
+        "authors": "Md Hasanuzzaman Bhuiyan, Syed Ishtiaque Ahmed"
+      }
+    ]
+  },
+  "2010": {
+    "label": "2010",
+    "conferenceProceedings": [
+      {
+        "id": "2010-isvd-voronoi",
+        "venue": "ISVD 2010",
+        "url": "https://doi.org/10.1109/ISVD.2010.25",
+        "title": "Vindictive Voronoi Games and Stabbing Delaunay Circles",
+        "authors": "Syed Ishtiaque Ahmed, Masud Hasan, Awalin Sopan"
+      },
+      {
+        "title": "Cutting a convex polyhedron out of a sphere",
+        "venue": "WALCOM 2010",
+        "id": "2010-walcom-polyhedron",
+        "authors": "Syed Ishtiaque Ahmed, Md. Ariful Islam, Masud Hasan",
+        "url": "https://doi.org/10.1007/978-3-642-11440-3_9"
+      },
+      {
+        "authors": "Syed Ishtiaque Ahmed, Md. Mansurul Alam Bhuiyan, Masud Hasan, Ishita Kamal Khan",
+        "venue": "WALCOM 2010",
+        "title": "On finding a better position of a convex polygon inside a circle to minimize the cutting cost",
+        "url": "https://doi.org/10.1007/978-3-642-11440-3_23",
+        "id": "2010-walcom-position"
+      }
+    ],
+    "extendedAbstracts": [],
+    "researchArtifacts": [],
+    "journalArticles": [
+      {
+        "url": "https://www.researchgate.net/publication/2845594",
+        "title": "Cutting a cornered convex polygon out of a circle",
+        "venue": "Journal of Computers 2010",
+        "id": "2010-journal-computers",
+        "authors": "Syed Ishtiaque Ahmed, Md. Ariful Islam, Masud Hasan"
+      }
+    ]
+  },
+  "2011": {
+    "researchArtifacts": [
+      {
+        "authors": "Une Thoing Rosi, Syed Ishtiaque Ahmed",
+        "id": "2011-crc-chapter",
+        "title": "Toward a Robust Trust Model for Ensuring Security and Privacy in VANETs",
+        "venue": "Chapter in “Security of Self-Organizing Networks”, CRC Press 2011"
+      },
+      {
+        "venue": "HCIToCH 2011",
+        "title": "The state of OpenStreetMap in Bangladesh",
+        "id": "2011-hci-toch-openstreetmap",
+        "authors": "Sohaila Binte Ridwan, Hasan Shahid Ferdous, Syed Ishtiaque Ahmed"
+      }
+    ],
+    "conferenceProceedings": [
+      {
+        "title": "A-Class: Intelligent Classroom Software for the Autistic Children",
+        "venue": "ISCI 2011",
+        "authors": "Md. Ridwanur Rahman, Proteek Chandan Roy, Shujon Naha, Ishrat Ahmed, Samiha Samrose, Md. Mizanur Rahman, Syed Ishtiaque Ahmed",
+        "id": "2011-isci-classroom"
+      },
+      {
+        "authors": "Anika Anwar, Md Mustafizur Rahman, SM Ferdous, Samiul Alam Anik, Syed Ishtiaque Ahmed",
+        "title": "A computer game based approach for increasing fluency in the speech of the autistic children",
+        "venue": "IEEE ICALT 2011",
+        "id": "2011-icalt-game"
+      },
+      {
+        "authors": "Ali S Sabbir, M Omar Rahman, Khosru M. Salim, Raihan Bin Rafique, Syed Ishtiaque Ahmed, Md Hasanuzzaman Bhuiyan, Md. Mustafizur Rahman, Hasan Shahid Ferdous",
+        "id": "2011-wish-birth",
+        "venue": "WISH 2011",
+        "title": "Birth Record Communicator: A Pathway to Automated Health Data Acquisition System"
+      },
+      {
+        "venue": "IEEE DMWPC 2011",
+        "title": "Smart Blood Query: A Novel Mobile Phone Based Privacy-Aware Blood Donor Recruitment and Management System for Developing Regions",
+        "id": "2011-ieee-dmwpc-blood",
+        "authors": "Sajidur Rahman, Khondoker Asif Akter, Shakil Hossain, Anjon Basak, Syed Ishtiaque Ahmed"
+      },
+      {
+        "authors": "Masum Ahmed, AKM Fahad Aziz, Raj Narayan Saha, Susmita Das, Laila Sharmin, Hasan Shahid Ferdous, Syed Ishtiaque Ahmed",
+        "id": "2011-scored-microcredit",
+        "title": "Toward a mobile phone based solution for microcredit in rural Bangladesh",
+        "venue": "IEEE SCOReD 2011"
+      },
+      {
+        "venue": "IEEE ISM 2011",
+        "authors": "Arshia Zernab Hassan, Bushra Tasnim Zahed, Fatema Tuz Zohora, Johra Muhammad Moosa, Tasmiha Salam, Md Mustafizur Rahman, Hasan Shahid Ferdous, Syed Ishtiaque Ahmed",
+        "title": "Developing the concept of money by interactive computer games for autistic children",
+        "id": "2011-ism-autistic-concept"
+      },
+      {
+        "url": "https://www.semanticscholar.org/paper/bc7d7c81e65c54b5377d0a4e4a06271381079a61",
+        "doi": "10.1109/ICOS.2011.6079240",
+        "id": "2011-icos-openstreetmap",
+        "authors": "Sufian Latif, KM Rakibul Islam, Md Monjurul Islam Khan, Syed Ishtiaque Ahmed",
+        "title": "OpenStreetMap for the disaster management in Bangladesh",
+        "venue": "IEEE ICOS 2011"
+      }
+    ],
+    "extendedAbstracts": [],
+    "label": "2011",
+    "journalArticles": [
+      {
+        "id": "2011-itse-speech",
+        "authors": "Md. Mustafizur Rahman, S. M. Ferdous, Syed Ishtiaque Ahmed, Anika Anwar",
+        "venue": "Journal of Interactive Technology and Smart Education (ITSE) 2011",
+        "title": "Speech Development of Autistic Children by Interactive Computer Games"
+      },
+      {
+        "authors": "Syed Ishtiaque Ahmed, Masud Hasan, Md. Ariful Islam",
+        "doi": "10.1007/s00373-011-1018-1",
+        "url": "https://doi.org/10.1007/s00373-011-1018-1",
+        "id": "2011-graphs-combinatorics",
+        "title": "Cutting a cornered convex polyhedron out of a sphere",
+        "venue": "Graphs and Combinatorics 2011"
+      }
+    ]
+  },
+  "2012": {
+    "conferenceProceedings": [
+      {
+        "authors": "Syed Ishtiaque Ahmed, Shion Guha",
+        "title": "Distance matters: an exploratory analysis of the linguistic features of Flickr photo tag metadata in relation to impression management",
+        "venue": "SIGMOD DBSocial 2012",
+        "id": "2012-sigmod-distance",
+        "url": "https://doi.org/10.1145/2320765.2320782"
+      }
+    ],
+    "extendedAbstracts": [],
+    "label": "2012",
+    "journalArticles": [
+      {
+        "title": "VizResearch: Linking the knowledge of people and the people with knowledge",
+        "venue": "Procedia Computer Science 2012",
+        "url": "https://www.semanticscholar.org/paper/fc67faa5e794d68ee4cb4f7c4df704390e6c76e1",
+        "doi": "10.1016/j.procs.2012.04.156",
+        "id": "2012-procedia-vizresearch",
+        "authors": "Sarah Masud, Monjura Afrin, Farhana Murtaza Choudhury, Syed Ishtiaque Ahmed"
+      }
+    ],
+    "researchArtifacts": [
+      {
+        "title": "The State of OpenStreetMap in Bangladesh",
+        "venue": "Lecture Notes in Computer Science, Volume 7546, 2012",
+        "authors": "Sohaila Binte Ridwan, Hasan Shahid Ferdous, Syed Ishtiaque Ahmed",
+        "id": "2012-lncs-openstreetmap"
+      }
+    ]
+  },
+  "2013": {
+    "extendedAbstracts": [
+      {
+        "authors": "Syed Ishtiaque Ahmed, Scott Allen Cambo, Carl Lagoze, Theresa Velden",
+        "venue": "iConference 2013 (short paper)",
+        "title": "Toward a Mesoscopic Analysis of the Temporal Evolution of Scientific Collaboration Networks",
+        "url": "https://www.semanticscholar.org/paper/b7a5f6119483047568b5b1bfc5974f268d71f88d",
+        "doi": "10.9776/13446",
+        "id": "2013-iconf-mesoscopic"
+      },
+      {
+        "id": "2013-dev-poster-memory",
+        "url": "https://www.semanticscholar.org/paper/9bdfcb471463a6d55bb3142fae3472c5d77a445d",
+        "doi": "10.1145/2442882.2442930",
+        "authors": "Syed Ishtiaque Ahmed, Maruf Zaber, Shion Guha",
+        "venue": "DEV 2013 (poster)",
+        "title": "Usage of the Memory of Mobile Phones by Illiterate People"
+      },
+      {
+        "authors": "Sabirat Rubya, Syed Ishtiaque Ahmed",
+        "venue": "DEV 2013 (poster)",
+        "title": "Design implication for a customized smartphone file explorer from user feedback",
+        "id": "2013-dev-poster-file-explorer",
+        "doi": "10.1145/2537052.2537079",
+        "url": "https://www.semanticscholar.org/paper/9a55c8fa3c8ed3aece1e7fcc24a90059c9a70f72"
+      }
+    ],
+    "conferenceProceedings": [
+      {
+        "title": "Ecologies of Use and Design: Individual and Social Uses of Mobile Phones Within Low-Literate Rickshaw-Puller Communities in Urban Bangladesh",
+        "venue": "DEV 2013",
+        "authors": "Syed Ishtiaque Ahmed, Steven J. Jackson, Maruf Zaber, Mehrab Bin Morshed, Habibullah Bin Ismail, Sharmin Afrose",
+        "url": "https://doi.org/10.1145/2442882.2442901",
+        "id": "2013-dev-ecologies"
+      },
+      {
+        "id": "2013-jcdl-bibliometric",
+        "authors": "Shion Guha, Stephanie Steinhardt, Syed Ishtiaque Ahmed, Carl Lagoze",
+        "url": "https://doi.org/10.1145/2467696.2467725",
+        "venue": "JCDL 2013",
+        "title": "Following Bibliometric Footprints: The ACM Digital Library and the Evolution of Computer Science"
+      },
+      {
+        "authors": "Theresa Velden, Syed Ishtiaque Ahmed, Scott Allen Cambo, Carl Lagoze",
+        "venue": "ISSI 2013",
+        "title": "Toward a Time-sensitive Mesoscopic Analysis of Co-Author Networks: A Case Study of Two Research Specialties",
+        "id": "2013-issi-mesoscopic",
+        "doi": "10.1002/meet.14505001066"
+      }
+    ],
+    "label": "2013",
+    "researchArtifacts": [],
+    "journalArticles": [
+      {
+        "id": "2013-what-autistic",
+        "authors": "Ishrat Ahmed, Samiha Samrose, Anika Anwar, Hasan Shahid Ferdous, Syed Ishtiaque Ahmed, Md. Mustafizur Rahman",
+        "title": "Types of Autistic Children Identification and Implementation in e-Learning Software",
+        "venue": "IEEE Workshop on Human and Technology (WHAT) 2013"
+      }
+    ]
+  },
+  "2014": {
+    "label": "2014",
+    "researchArtifacts": [],
+    "journalArticles": [],
+    "conferenceProceedings": [
+      {
+        "venue": "CHI 2014",
+        "title": "Protibadi: A Platform for Fighting Sexual Harassment in Urban Bangladesh",
+        "authors": "Syed Ishtiaque Ahmed, Steven J. Jackson, Nova Ahmed, Hasan Shahid Ferdous, Md. Rashidujjaman Rifat, A.S.M. Rizvi, Shamir Ahmed, Rifat Sabbir Mansur",
+        "url": "https://doi.org/10.1145/2556288.2557211",
+        "id": "2014-chi-protibadi"
+      },
+      {
+        "url": "https://doi.org/10.1145/2598784.2598801",
+        "title": "Learning, Innovation, and Sustainability among Mobile Phone Repairers in Dhaka, Bangladesh",
+        "venue": "DIS 2014",
+        "id": "2014-dis-learning",
+        "authors": "Steven J. Jackson, Syed Ishtiaque Ahmed, Md. Rashidujjaman Rifat"
+      },
+      {
+        "id": "2014-workshop-sex-ict",
+        "title": "Sex and the ICT",
+        "venue": "Workshop on Women Empowerment through ICT 2014",
+        "authors": "Tasmin Chowdhury, Syed Ishtiaque Ahmed",
+        "doi": "10.1145/2628363.2628379"
+      }
+    ],
+    "extendedAbstracts": [
+      {
+        "authors": "Syed Ishtiaque Ahmed, Shion Guha, Md. Rashidujjaman Rifat",
+        "title": "Privacy Concerns in Repairing",
+        "venue": "SOUPS 2014 (poster)",
+        "id": "2014-soups-poster-privacy"
+      },
+      {
+        "url": "https://www.semanticscholar.org/paper/81b8abbc575d321917e830d419db5be738461bcf",
+        "doi": "10.1145/2556420.2556504",
+        "authors": "Mashfiqui Rabbi, Syed Ishtiaque Ahmed",
+        "id": "2014-cscw-poster-stress",
+        "venue": "CSCW 2014 (poster)",
+        "title": "Sensing Stress Network for Social Coping"
+      }
+    ]
+  },
+  "2015": {
+    "conferenceProceedings": [
+      {
+        "url": "https://doi.org/10.1145/2702123.2702573",
+        "venue": "CHI 2015",
+        "title": "Residual Mobilities: Infrastructural Displacement and Post-Colonial Computing in Bangladesh",
+        "id": "2015-chi-residual",
+        "authors": "Syed Ishtiaque Ahmed, Nusrat Jahan Mim, Steven J. Jackson"
+      },
+      {
+        "authors": "Syed Ishtiaque Ahmed, Steven J. Jackson, Md. Rashidujjaman Rifat",
+        "venue": "ICTD 2015",
+        "title": "Learning to Fix: Knowledge, Collaboration and Mobile Phone Repair in Dhaka, Bangladesh",
+        "id": "2015-ictd-learning",
+        "url": "https://doi.org/10.1145/2737856.2738019"
+      },
+      {
+        "url": "https://doi.org/10.1145/2737856.2738020",
+        "venue": "DEV 2015",
+        "title": "Suhrid: A Collaborative Mobile Phone Interface for Low Literate People",
+        "authors": "Syed Ishtiaque Ahmed, Maruf Zaber, Mehrab Bin Morshed, Habibullah Bin Ismail, Dan Cosley, Steven J. Jackson",
+        "id": "2015-dev-suhrid"
+      }
+    ],
+    "extendedAbstracts": [],
+    "label": "2015",
+    "journalArticles": [],
+    "researchArtifacts": []
+  },
+  "2016": {
+    "extendedAbstracts": [],
+    "journalArticles": [],
+    "label": "2016",
+    "conferenceProceedings": [
+      {
+        "id": "2016-chi-peer-to-peer",
+        "authors": "Syed Ishtiaque Ahmed, Nicola Bidwell, Himanshu Zade, Srihari Muralidhar, Anupama Dhareshwar, Baneen Karachiwala, Cedrick Tandong, Jacki O'Neill",
+        "award": "Best Paper Honorable Mention Award",
+        "url": "https://doi.org/10.1145/2858036.2858168",
+        "venue": "CHI 2016",
+        "title": "Peer-to-peer in the workplace: A view from the road"
+      },
+      {
+        "authors": "Lara Houston, Steven J. Jackson, Daniela Rosner, Syed Ishtiaque Ahmed, Meg Young, Laewoo Kang",
+        "id": "2016-chi-values-repair",
+        "url": "https://doi.org/10.1145/2858036.2858470",
+        "title": "Values in Repair",
+        "venue": "CHI 2016"
+      },
+      {
+        "title": "Privacy in Repair: An Analysis of the Privacy Challenges Surrounding Broken Digital Artifacts in Bangladesh",
+        "venue": "ICTD 2016",
+        "url": "https://doi.org/10.1145/2909609.2909642",
+        "award": "Best of ICTD 2016 Papers",
+        "authors": "Syed Ishtiaque Ahmed, Shion Guha, Md. Rashidujjaman Rifat, Md. Foysal Hossain, Nicola Dell",
+        "id": "2016-ictd-privacy-repair"
+      },
+      {
+        "url": "https://doi.org/10.1145/2909609.2909643",
+        "id": "2016-ictd-short-missing",
+        "authors": "Meghana Marathe, Priyank Chandra, Vaishnav Kameswaran, Tsuyoshi Kano, Syed Ishtiaque Ahmed",
+        "title": "In search of missing pieces: A re-examination of trends in ICTD research",
+        "venue": "ICTD 2016 (short paper)"
+      },
+      {
+        "authors": "Syed Ishtiaque Ahmed, Nova Ahmed, Faheem Hussain, Neha Kumar",
+        "venue": "LIMITS 2016",
+        "title": "Computing beyond Gender-Imposed Limits",
+        "id": "2016-limits-gender",
+        "doi": "10.1145/2926676.2926681",
+        "url": "https://www.semanticscholar.org/paper/d8cdc8eb15dd0f90b54dcf7295a6c1384237f785"
+      }
+    ],
+    "researchArtifacts": []
+  },
+  "2017": {
+    "conferenceProceedings": [
+      {
+        "title": "Privacy, Security, and Surveillance in the Global South: A Study of Biometric Mobile SIM Registration in Bangladesh",
+        "venue": "CHI 2017",
+        "authors": "Syed Ishtiaque Ahmed, Md. Romael Hoque, Shion Guha, Md. Rashidujjaman Rifat, Nicola Dell",
+        "url": "https://doi.org/10.1145/3025453.3025458",
+        "id": "2017-chi-sim"
+      },
+      {
+        "authors": "Priyank Chandra, Syed Ishtiaque Ahmed, Joyojeet Pal",
+        "url": "https://doi.org/10.1145/3025453.3025459",
+        "id": "2017-chi-bazaar",
+        "venue": "CHI 2017",
+        "title": "Market Practices and the Bazaar: Technology Consumption in Informal ICT Markets in the Global South"
+      },
+      {
+        "venue": "CSCW 2017",
+        "title": "When the internet goes down in Bangladesh",
+        "id": "2017-cscw-internet",
+        "authors": "Mehrab Bin Morshed, Michaelanne Dye, Syed Ishtiaque Ahmed, Neha Kumar",
+        "url": "https://doi.org/10.1145/2998181.2998233"
+      },
+      {
+        "url": "https://doi.org/10.1145/3136560.3136580",
+        "title": "Working with Women in ICTD",
+        "venue": "ICTD 2017 (note)",
+        "authors": "Jasmine Hentschel, Syed Ishtiaque Ahmed, Faheem Hussain, Nova Ahmed, Neha Kumar",
+        "id": "2017-ictd-women"
+      }
+    ],
+    "researchArtifacts": [],
+    "label": "2017",
+    "extendedAbstracts": [],
+    "journalArticles": [
+      {
+        "id": "2017-itid-privacy",
+        "title": "Privacy Vulnerabilities in the Practices of Repairing Broken Digital Artifacts in Bangladesh",
+        "venue": "Information Technologies & International Development (ITID) 2017",
+        "url": "https://www.semanticscholar.org/paper/1402c6df28b998599a5ebd6c36f09dbb90092b27",
+        "authors": "Syed Ishtiaque Ahmed, Shion Guha, Mohammad Rashidujjaman Rifat, Faysal Hossain Shezan, Nicola Dell"
+      }
+    ]
+  },
+  "2018": {
+    "extendedAbstracts": [],
+    "conferenceProceedings": [
+      {
+        "id": "2018-cscw-digital-privacy",
+        "venue": "CSCW 2017/18",
+        "title": "Digital Privacy Challenges with Shared Mobile Phone Use in Bangladesh",
+        "authors": "Syed Ishtiaque Ahmed, Md. Romael Hoque, Jay Chen, Nicola Dell",
+        "url": "https://doi.org/10.1145/3132992"
+      }
+    ],
+    "label": "2018",
+    "journalArticles": [
+      {
+        "doi": "10.2196/jmhe.2018.1.e1",
+        "title": "Making or Making Do? Challenging the Mythologies of Making and Hacking",
+        "venue": "Journal of Peer Production, Vol. 12, 2018",
+        "authors": "Morgan G. Ames, Silvia Lindtner, Shaowen Bardzell, Jeffrey Bardzell, Lilly Nguyen, Syed Ishtiaque Ahmed, Nusrat Jahan, Steven J. Jackson, Paul Dourish",
+        "id": "2018-peer-production"
+      },
+      {
+        "authors": "Upol Ehsan, Nazmus Sakib, Md Munirul Haque, Tanjir Soron, Devansh Saxena, Sheikh Iqbal Ahamed, Amy Schwichtenberg, Golam Rabbani, Shaheen Akter, Faruq Alam, Azima Begum, Syed Ishtiaque Ahmed",
+        "url": "https://www.semanticscholar.org/paper/3983e421a502587f75a16d8fcdbd6776b37a13bb",
+        "doi": "10.4108/EAI.13-7-2018.155082",
+        "venue": "EAI Transactions on Pervasive Health and Technology, Vol. 4(14), 2018",
+        "title": "Confronting Autism in Urban Bangladesh: Unpacking Infrastructural and Cultural Challenges",
+        "id": "2018-eai-autism"
+      }
+    ],
+    "researchArtifacts": [
+      {
+        "authors": "Syed Ishtiaque Ahmed",
+        "url": "https://hdl.handle.net/1813/59387",
+        "id": "2018-phd-thesis",
+        "venue": "Ph.D. Thesis, Cornell University, 2018",
+        "title": "Designing for Voice: The Challenges of Access, Autonomy, and Accountability"
+      }
+    ]
+  },
+  "2019": {
+    "journalArticles": [],
+    "extendedAbstracts": [
+      {
+        "authors": "Yasaman Rohanifar, Mohammad Rashidujjaman Rifat, Nusrat Jahan Mim, Syed Ishtiaque Ahmed",
+        "id": "2019-dis-demo-ambivalence",
+        "venue": "DIS 2019 (Demo)",
+        "title": "Ambivalence: Simultaneous Tactile Experiences of Using and Recycling Smartphones",
+        "url": "https://www.semanticscholar.org/paper/dcf83d1b1539b67a0268299d3262fe6de909587a",
+        "doi": "10.1145/3301019.3325149"
+      }
+    ],
+    "label": "2019",
+    "researchArtifacts": [
+      {
+        "authors": "Arpeeta Shams Mizan, Syed Ishtiaque Ahmed",
+        "doi": "10.1145/3359166",
+        "venue": "ELCOP Yearbook of Human Rights 2019",
+        "title": "Silencing the Minority through Domination in Social Media Platform: Impact on the Pluralistic Bangladeshi Society",
+        "id": "2019-elcop"
+      }
+    ],
+    "conferenceProceedings": [
+      {
+        "authors": "Mohammad Rashidujjaman Rifat, Hasan Mahmud Prottoy, Syed Ishtiaque Ahmed",
+        "title": "The Breaking Hand: Knowledge, Care, and Sufferings of the Hand of an Electronic Waste Worker in Bangladesh",
+        "venue": "CHI 2019",
+        "award": "Best Paper Honorable Mention Award",
+        "id": "2019-chi-breaking-hand",
+        "url": "https://doi.org/10.1145/3290605.3300793"
+      },
+      {
+        "venue": "CHI 2019",
+        "title": "“Everyone Has Some Personal Stuff”: Designing to Support Digital Privacy with Shared Mobile Phone Use in Bangladesh",
+        "url": "https://doi.org/10.1145/3290605.3300794",
+        "id": "2019-chi-personal-stuff",
+        "authors": "Syed Ishtiaque Ahmed, Md. Romael Haque, Irtaza Haider, Jay Chen, Nicola Dell"
+      },
+      {
+        "url": "https://doi.org/10.1145/3290605.3300795",
+        "authors": "Sharifa Sultana, Syed Ishtiaque Ahmed",
+        "id": "2019-chi-witchcraft",
+        "venue": "CHI 2019",
+        "title": "Witchcraft and HCI: Morality, Modernity, and Postcolonial Computing in Rural Bangladesh"
+      },
+      {
+        "url": "https://doi.org/10.1145/3359187",
+        "venue": "CSCW 2019",
+        "title": "Of Ulti, ‘Hajano’, and “Matachetar otanetak datam”: Exploring Local Practices of Exchanging Confidential and Sensitive Information in Urban Bangladesh",
+        "id": "2019-cscw-ulti",
+        "authors": "S M Taiabul Haque, Pratyasha Saha, Muhammad Sajidur Rahman, Syed Ishtiaque Ahmed"
+      },
+      {
+        "url": "https://doi.org/10.1145/3359188",
+        "authors": "Sharifa Sultana, Syed Ishtiaque Ahmed, Susan Fussell",
+        "id": "2019-cscw-parar-daktar",
+        "title": "“Parar-daktar Understands My Problems Better”: Disentangling the Challenges to Designing Better Access to Healthcare in Rural Bangladesh",
+        "venue": "CSCW 2019"
+      },
+      {
+        "url": "https://doi.org/10.1145/3359189",
+        "award": "Diversity and Inclusion Award",
+        "id": "2019-cscw-philippines",
+        "venue": "CSCW 2019",
+        "title": "Trust and Technology Repair Infrastructures in the Remote Rural Philippines: Navigating Urban-Rural Seams",
+        "authors": "Esther Jang, Philip Garrison, Mary Claire Barela, Ronel Vincent Vistal, Thessa Cunanan, Philip Martinez, Mia Perez, Matthew William Johnson, Andoy Evangelista, Syed Ishtiaque Ahmed, Josephine Dionisio, Kurtis Heimerl"
+      },
+      {
+        "url": "https://doi.org/10.1145/3359190",
+        "title": "“My cousin bought the phone for me. I never go to mobile shops”: The Role of Family in Women’s Technological Inclusion in Islamic Culture",
+        "authors": "Samia Ibtasam, Lubna Razaq, Maryam Ayub, Jennifer R Webster, Syed Ishtiaque Ahmed, Richard Anderson",
+        "venue": "CSCW 2019",
+        "id": "2019-cscw-my-cousin"
+      },
+      {
+        "authors": "Mizanur Rahman, Nestor Hernandez, Ruben Recabarren, Syed Ishtiaque Ahmed, Bogdan Carbunar",
+        "id": "2019-ccs-fraudulent",
+        "venue": "CCS 2019",
+        "title": "The Art and Craft of Fraudulent App Promotion in Google Play",
+        "url": "https://doi.org/10.1145/3319535.3363219"
+      },
+      {
+        "id": "2019-ictd-harassment",
+        "title": "Online Sexual Harassment over Anonymous Social Media in Bangladesh",
+        "venue": "ICTD 2019",
+        "url": "https://doi.org/10.1145/3337090",
+        "authors": "Fayika Farhat Nova, Shion Guha, Md. Rashidujjaman Rifat, Pratyasha Saha, Syed Ishtiaque Ahmed"
+      },
+      {
+        "url": "https://www.semanticscholar.org/paper/8b31369dcda56f008c5c5f14cfe5332a913fb3fe",
+        "venue": "LIMITS 2019",
+        "title": "Exile Within Borders: Understanding the Limits of the Internally Displaced People (IDPs) in Iraq",
+        "doi": "10.1145/3338103.3338104",
+        "id": "2019-limits-exile",
+        "authors": "Dina Sabie, Samar Sabie, Cansu Ekmekcioglu Dedeoglu, Yasaman Rohanifar, Fatma Hashim, Steve Easterbrook, Syed Ishtiaque Ahmed"
+      },
+      {
+        "url": "https://doi.org/10.1145/3314344.3332498",
+        "id": "2019-compass-refugees",
+        "title": "Moving into a Technology Land: Exploring the Challenges of the Refugees in Canada in Accessing its Computerized Infrastructures",
+        "venue": "COMPASS 2019",
+        "authors": "Dina Sabie, Syed Ishtiaque Ahmed"
+      },
+      {
+        "authors": "Naeemul Hassan, Manash Kumar Mandal, Mansurul Bhuiyan, Aparna Moitra, Syed Ishtiaque Ahmed",
+        "doi": "10.1145/3341161.3343701",
+        "url": "https://www.semanticscholar.org/paper/7a041aebdda74d5193e44c9fcea88a1d8d4b0d95",
+        "venue": "ASONAM 2019",
+        "title": "Can Women Break the Glass Ceiling?: An Analysis of #MeToo Hashtagged Posts on Twitter",
+        "id": "2019-asonam-glass-ceiling"
+      },
+      {
+        "authors": "Marfua Mowla, Ehsanur Rahman, Hasan Mahmud Prottoy, Syed Ishtiaque Ahmed, Nirupam Aich, Nafisa Islam",
+        "id": "2019-icerd-heavy-metals",
+        "title": "Health risk assessment of heavy metals in E-waste recycling shops in Dhaka, Bangladesh",
+        "doi": "10.1007/978-3-030-32112-3_10",
+        "venue": "iCERP 2019"
+      },
+      {
+        "authors": "Naeemul Hassan, Manas Kumar Mandal, Mansurul Alam Bhuiyan, Aparna Moitra, Syed Ishtiaque Ahmed",
+        "id": "2019-ictd-poster-nonparticipation",
+        "title": "Nonparticipation of Bangladeshi women in #MeToo movement",
+        "venue": "ICTD 2019 (poster/short paper)",
+        "doi": "10.1145/3287098.3287125",
+        "url": "https://www.semanticscholar.org/paper/cf41415b1a304e6df29978a4481fd8ceea7635f5"
+      },
+      {
+        "authors": "Sharifa Sultana, Shaid Hasan, Khandaker Reaz Mahmud, Syed Ishtiaque Ahmed",
+        "doi": "10.1145/3287098.3287132",
+        "venue": "ICTD 2019 (poster/short paper)",
+        "id": "2019-ictd-poster-baksho",
+        "title": "Shada Baksho: a hardware device to explore the fears of using mobile phones among the rural women of Bangladesh"
+      }
+    ]
+  },
+  "2020": {
+    "researchArtifacts": [
+      {
+        "url": "https://www.semanticscholar.org/paper/2d3af9ef1ebb409264ac9d80145eb6fb7db4d16a",
+        "doi": "10.1007/978-3-030-32112-3_11",
+        "title": "The Hidden Risks of E-Waste: Perspectives from Environmental Engineering, Epidemiology, Environmental Health, and Human-Computer Interaction",
+        "venue": "Chapter in “Transforming Global Health”, Springer 2020",
+        "id": "2020-chapter-evaste",
+        "authors": "Nirupam Aich, Katarzyna Kordas, Syed Ishtiaque Ahmed, Tara Sabo-Attwood"
+      }
+    ],
+    "extendedAbstracts": [
+      {
+        "authors": "Tamanna Motahar, Mahmood Jasim, Syed Ishtiaque Ahmed, Narges Mahyar",
+        "venue": "Late-Breaking Work CHI 2020 (companion proceedings)",
+        "title": "Exploring How International Graduate Students in the US Seek Support",
+        "url": "https://www.semanticscholar.org/paper/58844e7dfc4129a9e051d37bba8b545070c6da47",
+        "doi": "10.1145/3334480.3383094",
+        "id": "2020-chi-lbw-grad"
+      },
+      {
+        "id": "2020-altchi-parareligious",
+        "doi": "10.1145/3334480.3381819",
+        "url": "https://doi.org/10.1145/3334480.3381819",
+        "venue": "alt.CHI 2020 (companion proceedings)",
+        "title": "Parareligious-HCI: Designing for ‘Alternative’ Rationality in Rural Wellbeing in Bangladesh",
+        "authors": "Sharifa Sultana, Zinnat Sultana, Syed Ishtiaque Ahmed"
+      },
+      {
+        "venue": "COMPASS 2020 (short paper)",
+        "title": "The ‘Imagined Communities’ Online: Understanding the Sensibility of Solidarity, Sovereignty, and Connectedness with Bangladeshi Facebook Groups",
+        "authors": "Sharifa Sultana, Shaid Hasan, Pratyasha Saha, Rokeya Akter, S.M. Raihanul Alam, Raihan Islam Arnob, Md. Mirajul Islam, Mahdi Nasrullah Al-Ameen, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3378393.3402235",
+        "doi": "10.1145/3378393.3402235",
+        "id": "2020-compass-short-imagined"
+      }
+    ],
+    "journalArticles": [
+      {
+        "id": "2020-science-total-env",
+        "venue": "Science of the Total Environment, Elsevier, 2020",
+        "title": "Measuring exposure of e-waste dismantlers in Dhaka Bangladesh to organophosphate esters and halogenated flame retardants using silicone wristbands and T-shirts",
+        "authors": "Yan Wang, Andrea Peris, Mohammad Rashidujjaman Rifat, Syed Ishtiaque Ahmed, Nirupam Aich, Linh V. Nguyen, Jakub Urík, Ethel Eljarrat, Branislav Vrana, Liisa M. Jantunen, Miriam L. Diamond",
+        "url": "https://doi.org/10.1016/j.scitotenv.2020.137608"
+      },
+      {
+        "title": "Critical Requirements Engineering in Practice",
+        "venue": "IEEE Software 2020",
+        "authors": "Leticia Duboc, Curtis McCord, Christoph Becker, Syed Ishtiaque Ahmed",
+        "id": "2020-ieee-software",
+        "url": "https://www.semanticscholar.org/paper/da99fbdd4ff38e90e898816b7461b1b2afcd45eb",
+        "doi": "10.1109/MS.2019.2944784"
+      }
+    ],
+    "conferenceProceedings": [
+      {
+        "award": "Best Paper Honorable Mention Award",
+        "title": "Memory through Design: Supporting Cultural Identity for Immigrants through a Paper-Based Home Drafting Tool",
+        "venue": "CHI 2020",
+        "id": "2020-chi-memory",
+        "authors": "Dina Sabie, Samar Sabie, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3313831.3376639"
+      },
+      {
+        "id": "2020-chi-others-images",
+        "authors": "Nusrat Jahan Mim, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3313831.3376640",
+        "award": "Best Paper Honorable Mention Award",
+        "title": "Others’ Images: Online Social Media, Architectural Improvisations, and Spatial Marginalization in Bangladesh",
+        "venue": "CHI 2020"
+      },
+      {
+        "title": "Religion and Sustainability: Lessons of Sustainable Computing from Islamic Religious Communities",
+        "venue": "CSCW 2020",
+        "authors": "Mohammad Rashidujjaman Rifat, Toha Tariq, Syed Ishtiaque Ahmed",
+        "id": "2020-cscw-religion",
+        "url": "https://doi.org/10.1145/3415196"
+      },
+      {
+        "id": "2020-cscw-misinformation",
+        "url": "https://doi.org/10.1145/3415197",
+        "authors": "Md Mahfuzul Haque, Mohammad Yousuf, Ahmed Shatil Alam, Pratyasha Saha, Syed Ishtiaque Ahmed, Naeemul Hassan",
+        "title": "Combating Misinformation in Bangladesh: Roles and Responsibilities as Perceived by Journalists, Fact-checkers, and Users",
+        "venue": "CSCW 2020"
+      },
+      {
+        "authors": "Sharifa Sultana, Syed Ishtiaque Ahmed, Jeffrey M Rzeszotarski",
+        "url": "https://doi.org/10.1145/3415198",
+        "venue": "CSCW 2020",
+        "title": "Seeing in Context: Traditional Visual Communication Practices in Rural Bangladesh",
+        "id": "2020-cscw-seeing"
+      },
+      {
+        "id": "2020-ictd-hope",
+        "url": "https://doi.org/10.1145/3392561.3394646",
+        "venue": "ICTD 2020",
+        "title": "Infrastructuring Hope: Solidarity, Leadership, Negotiation, and ICT among the Rohingya Refugees in Bangladesh",
+        "authors": "Faheem Hussain, Abdullah Hasan Safir, Dina Sabie, Zulkarin Jahangir, Syed Ishtiaque Ahmed"
+      },
+      {
+        "id": "2020-ictd-privacy",
+        "authors": "S M Taiabul Haque, Md. Romael Haque, Swapnil Nandy, Priyank Chandra, Mahdi Nasrullah Al-Ameen, Shion Guha, Syed Ishtiaque Ahmed",
+        "venue": "ICTD 2020",
+        "title": "Privacy Vulnerabilities in Public Digital Service Centers in Dhaka, Bangladesh",
+        "url": "https://doi.org/10.1145/3392561.3394647"
+      },
+      {
+        "url": "https://doi.org/10.1145/3392561.3394648",
+        "authors": "Abdul Kawsar Tushar, Iffat Jahan Antara, Dipto Das, Priyank Chandra, Tanjir Rashid Soron, Md Munirul Haque, Sheikh Iqbal Ahamed, Syed Ishtiaque Ahmed",
+        "id": "2020-ictd-autism",
+        "title": "“We Need More Power to Stand Up”: Designing to Combat Stigmatization of the Caregivers of Children with Autism in Urban Bangladesh",
+        "venue": "ICTD 2020"
+      },
+      {
+        "id": "2020-group-metoo",
+        "url": "https://doi.org/10.1145/3375198",
+        "authors": "Aparna Moitra, Naeemul Hassan, Manash Kumar Mandal, Mansurul Bhuiyan, Syed Ishtiaque Ahmed",
+        "title": "Understanding the Challenges for Bangladeshi Women to Participate in #MeToo Movement",
+        "venue": "GROUP 2020"
+      },
+      {
+        "url": "https://www.semanticscholar.org/paper/6e350c4909495cc6ffa52727404e3b5a9c165f35",
+        "title": "Towards Automated Sexual Violence Report Tracking",
+        "venue": "ICWSM 2020",
+        "doi": "10.1609/icwsm.v14i1.7296",
+        "authors": "Naeemul Hassan, Amrit Poudel, Jason Hale, Claire Hubacek, Khandakar Tasnim Huq, Shubhra Kanti Karmaker Santu, Syed Ishtiaque Ahmed",
+        "id": "2020-icwsm-violence"
+      },
+      {
+        "authors": "Mahdi Nasrullah Al-Ameen, Tanjina Tamanna, Swapnil Nandy, M A Manazir Ahsan, Priyank Chandra, Syed Ishtiaque Ahmed",
+        "title": "“We Don’t Give a Second Thought Before Providing Our Information”: Understanding Users’ Perceptions of Information Collection by Apps in Urban Bangladesh",
+        "venue": "COMPASS 2020",
+        "id": "2020-compass-info-collection",
+        "url": "https://doi.org/10.1145/3401335.3401823"
+      },
+      {
+        "venue": "GI 2020",
+        "title": "Computer Vision Applications and their Ethical Risks in the Global South",
+        "authors": "Charles-Olivier Dufresne Camaro, Fanny Chevalier, Syed Ishtiaque Ahmed",
+        "id": "2020-gi-computer-vision",
+        "doi": "10.20380/GI2020.17",
+        "url": "https://www.semanticscholar.org/paper/0164d42bcbc1bd3dedc89e22cd7c67991bc7a860"
+      },
+      {
+        "authors": "Ishtiaque Hussain, Ahmed Shamim Hasan, Rafed Muhammad Yasir, Ahmedul Kabir, Syed Ishtiaque Ahmed",
+        "id": "2020-cseet-education",
+        "url": "https://www.semanticscholar.org/paper/70739db03c151457bd7c51ad3e658ecbca8047e8",
+        "venue": "CSEE&T 2020",
+        "title": "How Well Does Undergraduate Education Prepare Software Engineers? Perspectives of Practitioners in Bangladesh",
+        "doi": "10.1109/CSEET49119.2020.9206232"
+      },
+      {
+        "venue": "FTC 2020",
+        "title": "Ethical Analysis on the Application of Neurotechnology for Human Augmentation in Physicians and Surgeons",
+        "authors": "Soaad Q. Hossain, Syed Ishtiaque Ahmed",
+        "id": "2020-ftc-neurotech",
+        "doi": "10.1007/978-3-030-63092-8_6",
+        "url": "https://www.semanticscholar.org/paper/54223faecedc5e59cda87d6cfc10ab6b1bccbb5a"
+      },
+      {
+        "url": "https://www.semanticscholar.org/paper/30597b812ecc02b389a91c2af3352f52d9436792",
+        "title": "Towards Developing A Mobile-Based Care for Children with ASD (mCARE) in Low and Middle Income Countries (LMICs) like Bangladesh",
+        "venue": "COMPSAC 2020",
+        "doi": "10.1109/COMPSAC48688.2020.0-170",
+        "authors": "Munirul M. Haque, Dipranjan Das Dipal, Masud Rabbani, Md Ishrak Islam Zarif, Anik Iqbal, Shaheen Akhter, Shahana Parveen, Mohammad Rasel, Basana Rani Muhuri, Tanjir Soron, Syed Ishtiaque Ahmed, Sheikh Iqbal Ahamed",
+        "id": "2020-compsac-mcare"
+      }
+    ],
+    "label": "2020"
+  },
+  "2021": {
+    "label": "2021",
+    "extendedAbstracts": [
+      {
+        "title": "Negotiating Intersectional Non-Normative Queer Identities in India",
+        "venue": "CHI 2021 Extended Abstract (companion proceedings)",
+        "url": "https://doi.org/10.1145/3411763.3451822",
+        "id": "2021-chi-ext-queer",
+        "authors": "Aparna Moitra, Megh Marathe, Syed Ishtiaque Ahmed, Priyank Chandra",
+        "doi": "10.1145/3411763.3451822"
+      }
+    ],
+    "conferenceProceedings": [
+      {
+        "id": "2021-chi-unmochon",
+        "authors": "Sharifa Sultana, Mitrasree Deb, Ananya Bhattacharjee, Shaid Hasan, S.M. Raihanul Alam, Trishna Chakraborty, Prianka Roy, Samira Fairuz Ahmed, Aparna Moitra, M Ashraful Amin, Najmul Islam, Syed Ishtiaque Ahmed",
+        "title": "‘Unmochon’: A Tool to Combat Online Sexual Harassment over Facebook Messenger",
+        "venue": "CHI 2021",
+        "award": "Best Paper Honorable Mention Award",
+        "url": "https://doi.org/10.1145/3411764.3445128"
+      },
+      {
+        "title": "Chasing Luck: Use of Statistical Probability, Faith, Hunch, and Cultural Norms in Rural Betting Practices",
+        "venue": "CHI 2021",
+        "id": "2021-chi-chasing-luck",
+        "url": "https://doi.org/10.1145/3411764.3445129",
+        "authors": "Sharifa Sultana, MD. Mobaydul Haque Mozumder, Syed Ishtiaque Ahmed"
+      },
+      {
+        "url": "https://doi.org/10.1145/3411764.3445130",
+        "venue": "CHI 2021",
+        "title": "Money Whispers: Informality, International Politics, and Immigration in Transnational Finance",
+        "id": "2021-chi-money-whispers",
+        "authors": "Yasaman Rohanifar, Priyank Chandra, Md. Ataur Rahman, Syed Ishtiaque Ahmed"
+      },
+      {
+        "url": "https://doi.org/10.1145/3449180",
+        "id": "2021-cscw-uber",
+        "authors": "S M Taiabul Haque, Rayhan Rashed, Mehrab Bin Morshed, Naeemul Hassan, Syed Ishtiaque Ahmed",
+        "title": "Exploring the Tensions between the Owners and the Drivers of Uber Cars in Urban Bangladesh",
+        "venue": "CSCW 2021"
+      },
+      {
+        "authors": "Aparna Moitra, Syed Ishtiaque Ahmed, Priyank Chandra",
+        "id": "2021-cscw-metoo",
+        "url": "https://doi.org/10.1145/3449181",
+        "venue": "CSCW 2021",
+        "title": "Parsing the ‘Me’ in #MeToo: Sexual Harassment, Social Media, and Justice Infrastructures"
+      },
+      {
+        "authors": "Nestor Hernandez, Ruben Recabarren, Bogdan Carbunar, Syed Ishtiaque Ahmed",
+        "title": "Measurements of Device and App Usage in Google Play Store Search Optimization Campaigns",
+        "venue": "IMC 2021",
+        "url": "https://doi.org/10.1145/3487553.3524220",
+        "id": "2021-imc-measurements"
+      },
+      {
+        "id": "2021-compass-purdah",
+        "url": "https://doi.org/10.1145/3460112.3471950",
+        "authors": "Mohammad Rashidujjaman Rifat, Mahiratul Jannat, Mahdi Nasrullah Al-Ameen, S M Taiabul Haque, Muhammad Ashad Kabir, Syed Ishtiaque Ahmed",
+        "venue": "COMPASS 2021",
+        "title": "Purdah, Amanah, and Gheebat: Understanding Privacy in Bangladeshi “pious” Muslim Communities"
+      },
+      {
+        "title": "Privacy during Pandemic: A Global View of Privacy Practices around COVID-19 Apps",
+        "venue": "COMPASS 2021",
+        "authors": "Tanusree Sharma, Md. Mirajul Islam, Anupam Das, S. M. Taiabul Haque, Syed Ishtiaque Ahmed",
+        "id": "2021-compass-privacy-pandemic",
+        "url": "https://doi.org/10.1145/3460112.3471951"
+      },
+      {
+        "authors": "Sharifa Sultana, Ilan Mandel, Shaid Hasan, S.M. Raihanul Alam, Khandaker Reaz, Zinnat Sultana, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3460112.3471952",
+        "id": "2021-compass-opaque",
+        "venue": "COMPASS 2021",
+        "title": "Opaque Obstacles: The Role of Stigma, Rumor, and Superstition in Limiting Women’s Access to Computing in Rural Bangladesh"
+      },
+      {
+        "url": "https://doi.org/10.1145/3460112.3471953",
+        "id": "2021-compass-pandemic-repair",
+        "venue": "COMPASS 2021",
+        "title": "Pandemic, Repair, and Resilience: Coping with Technology Breakdown during COVID-19",
+        "authors": "Rayhan Rashed, Mohammad Rashidujjaman Rifat, Syed Ishtiaque Ahmed"
+      },
+      {
+        "url": "https://www.semanticscholar.org/paper/bd41d7f00c6c4b5c4b480e1391b2a41b5eff6f6a",
+        "doi": "10.1007/978-3-030-89880-9_33",
+        "authors": "Soraia Oueida, Soaad Qahhar Hossain, Yehia Kotb, Syed Ishtiaque Ahmed",
+        "id": "2021-ftc-healthcare",
+        "venue": "FTC 2021",
+        "title": "A Fair and Ethical Healthcare Artificial Intelligence System for Monitoring Driver Behavior and Preventing Road Accidents"
+      }
+    ],
+    "journalArticles": [
+      {
+        "url": "https://doi.org/10.1038/s41598-021-93455-1",
+        "authors": "Masud Rabbani, Munirul M Haque, Dipranjan Das Dipal, Md Ishrak Islam Zarif, Anik Iqbal, Amy Schwichtenberg, Naveen Bansal, Tanjir Rashid Soron, Syed Ishtiaque Ahmed, Sheikh Iqbal Ahamed",
+        "venue": "Scientific Reports 2021",
+        "title": "An mCARE study on patterns of risk and resilience for children with ASD in Bangladesh",
+        "id": "2021-scientific-reports"
+      },
+      {
+        "url": "https://doi.org/10.2196/27114",
+        "title": "Understanding The Social Determinants Of Mental Health Of The Undergraduate Students In Bangladesh: Interview Study",
+        "id": "2021-jmir-formative",
+        "venue": "JMIR Formative Research 2021",
+        "authors": "Ananya Bhattacharjee, S M Taiabul Haque, Abdul Hady, S.M. Raihanul Alam, Mashfiqui Rabbi, Muhammad Ashad Kabir, Syed Ishtiaque Ahmed"
+      },
+      {
+        "url": "https://doi.org/10.2196/27242",
+        "id": "2021-jmir-medical-informatics",
+        "venue": "JMIR Medical Informatics 2021",
+        "title": "Informing Developmental Milestone Achievement for Children With Autism: Machine Learning Approach",
+        "authors": "Munirul M. Haque, Masud Rabbani, Dipranjan Das Dipal, Md Ishrak Islam Zarif, Anik Iqbal, Amy Schwichtenberg, Naveen Bansal, Tanjir Rashid Soron, Syed Ishtiaque Ahmed, Sheikh Iqbal Ahamed"
+      },
+      {
+        "authors": "Munirul M Haque, Masud Rabbani, Dipranjan Das Dipal, Md Ishrak Islam Zarif, Anik Iqbal, Shaheen Akhter, Shahana Parveen, Mohammad Rasel, Golam Rabbani, Faruq Alam, Tanjir Rashid Soron, Syed Ishtiaque Ahmed, Sheikh Iqbal Ahamed",
+        "title": "Mobile-Based Care for Children with Autism Spectrum Disorder (ASD) for Low- and Middle-Income Countries (LMICs)",
+        "venue": "Journal of Psychiatry and Brain Science 2021",
+        "id": "2021-journal-psychiatry",
+        "doi": "10.20900/jpbs.20210004"
+      },
+      {
+        "venue": "ACM Interactions 2021",
+        "url": "https://www.semanticscholar.org/paper/baa64b3e1875e38b9bdacea6c387bb979b388c6f",
+        "title": "Designing with the internally displaced slum dwellers in Bangladesh",
+        "doi": "10.1145/3447990",
+        "id": "2021-interactions-designing",
+        "authors": "Abdullah Hasan Safir, Nusrat Jahan Mim, SM Taiabul Haque, Syed Ishtiaque Ahmed"
+      },
+      {
+        "authors": "Sharifa Sultana, AKM Najmul Islam, Syed Ishtiaque Ahmed",
+        "venue": "ACM Interactions 2021",
+        "id": "2021-interactions-coronavirus",
+        "title": "Fighting Coronavirus with Faith: Religious and Parareligious Responses to Covid-19 in Rural Bangladesh",
+        "doi": "10.1145/3440926"
+      }
+    ],
+    "researchArtifacts": [
+      {
+        "url": "https://doi.org/10.1007/978-3-030-54932-9_11",
+        "doi": "10.1007/978-3-030-54932-9_11",
+        "id": "2021-chapter-mental-health",
+        "authors": "Abdul Kawsar Tushar, Muhammad Ashad Kabir, Syed Ishtiaque Ahmed",
+        "venue": "Chapter in Signal Processing Techniques for Computational Health Informatics, 2021",
+        "title": "Mental Health and Sensing"
+      }
+    ]
+  },
+  "2022": {
+    "researchArtifacts": [
+      {
+        "id": "2022-chapter-mhealth",
+        "authors": "Masud Rabbani, Munirul M. Haque, Dipranjan Das Dipal, Md Ishrak Islam Zarif, Anik Iqbal, Shaheen Akhter, Shahana Parveen, Mohammad Rasel, Tanjir Rashid Soron, Naveen Bansal, Amy Schwichtenberg, Syed Ishtiaque Ahmed, Sheikh Iqbal Ahamed",
+        "doi": "10.1007/978-3-031-20319-0_31",
+        "venue": "Book Chapter in AI Applications for Disease Diagnosis and Treatment, IGI Global, 2022",
+        "title": "A Mobile Health Application for Monitoring the Children with Autism Spectrum Disorder: ASD Monitoring by mHealth"
+      }
+    ],
+    "label": "2022",
+    "conferenceProceedings": [
+      {
+        "authors": "Mohammad Rashidujjaman Rifat, Hasan Mahmud Prottoy, Syed Ishtiaque Ahmed",
+        "title": "Putting The Waz on the Social Media: Infrastructuring Online Islamic Counterpublic through Digital Sermons in Bangladesh",
+        "venue": "CHI 2022",
+        "url": "https://doi.org/10.1145/3491102.3501853",
+        "id": "2022-chi-waz"
+      },
+      {
+        "venue": "CHI 2022",
+        "id": "2022-chi-shishu",
+        "title": "ShishuShurokkha: A Transformative Justice Approach for Combating Child Sexual Abuse in Bangladesh",
+        "authors": "Sharifa Sultana, Sadia Tasnuva Pritha, Rahnuma Tasnim, Anik Das, Rokeya Akter, Shaid Hasan, S.M. Raihanul Alam, Muhammad Ashad Kabir, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3491102.3501854"
+      },
+      {
+        "id": "2022-cscw-kabootar",
+        "authors": "Yasaman Rohanifar, Sharifa Sultana, Shaid Hasan, Priyank Chandra, Syed Ishtiaque Ahmed",
+        "venue": "CSCW 2022",
+        "title": "\"Kabootar\": Towards Informal, Trustworthy, and Community-Based FinTech for Marginalized Immigrants",
+        "url": "https://doi.org/10.1145/3512967"
+      },
+      {
+        "authors": "Mohammad Rashidujjaman Rifat, Mohammad Ruhul Amin, Syed Ishtiaque Ahmed",
+        "venue": "CSCW 2022",
+        "title": "Situating Public Speaking: The Politics and Poetics of the Digital Islamic Sermons in Bangladesh",
+        "id": "2022-cscw-public-speaking",
+        "url": "https://doi.org/10.1145/3512968"
+      },
+      {
+        "url": "https://doi.org/10.1145/3512969",
+        "id": "2022-cscw-ai-disaster",
+        "authors": "Aparna Moitra, Robert Soden, Manveer Kalirai, Dennis Wagenaar, Syed Ishtiaque Ahmed",
+        "title": "AI and Disaster Risk: A Practitioner Perspective",
+        "venue": "CSCW 2022"
+      },
+      {
+        "authors": "Sharifa Sultana, Pratyasha Saha, Shaid Hasan, S.M. Raihanul Alam, Rokeya Akter, Md Mirajul Islam, Raihan Islam Arnob, A.K.M. Najmul Islam, Mahdi Nasrullah Al-Ameen, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3512970",
+        "id": "2022-cscw-imagined",
+        "title": "Imagined Online Communities: Communionship, Sovereignty, and Inclusiveness in Bangladeshi Facebook Groups",
+        "venue": "CSCW 2022"
+      },
+      {
+        "url": "https://doi.org/10.1145/3512971",
+        "id": "2022-cscw-sustainable-ictd",
+        "authors": "Manika Saha, Delvin Varghese, Tom Bartindale, Shakuntala Haraksingh Thilsted, Syed Ishtiaque Ahmed, Patrick Olivier",
+        "venue": "CSCW 2022",
+        "title": "Towards Sustainable ICTD in Bangladesh: Understanding the Program and Policy Landscape and its Implications for CSCW and HCI"
+      },
+      {
+        "authors": "Dan Richardson, Bronwyn J. Cumbo, Tom Bartindale, Delvin Varghese, Manika Saha, Pratyasha Saha, Syed Ishtiaque Ahmed, Gillian C. Oliver, Patrick Olivier",
+        "id": "2022-dis-embedded",
+        "url": "https://doi.org/10.1145/3532106.3533459",
+        "title": "Critically Engaging with Embedded Values through Constrained Technology Design",
+        "venue": "DIS 2022"
+      },
+      {
+        "title": "Understanding the Strategies and Practices of Facebook Microcelebrities in the Global South",
+        "venue": "ICTD 2022",
+        "url": "https://doi.org/10.1145/3512966",
+        "id": "2022-ictd-microcelebrities",
+        "authors": "Dipto Das, A.K.M. Najmul Islam, S M Taiabul Haque, Jukka Vuorinen, Syed Ishtiaque Ahmed"
+      },
+      {
+        "authors": "Sharifa Sultana, Rokeya Akter, Zinnat Sultana, Syed Ishtiaque Ahmed",
+        "id": "2022-ictd-toleration",
+        "title": "Toleration Factors: The Expectations of Decorum, Civility, and Certainty on Rural Social Media",
+        "venue": "ICTD 2022",
+        "url": "https://doi.org/10.1145/3512965"
+      },
+      {
+        "url": "https://doi.org/10.1145/3512964",
+        "title": "Connecting Mental Health with Sustainable Development Goals: Insights from Call Data of a Telephone Crisis Helpline in Bangladesh",
+        "venue": "ICTD 2022",
+        "id": "2022-ictd-mental-health",
+        "authors": "Ananya Bhattacharjee, Mohammad Ruhul Amin, Yeshim Iqbal, Syed Ishtiaque Ahmed"
+      },
+      {
+        "url": "https://doi.org/10.1145/3512963",
+        "id": "2022-ictd-commissioning",
+        "venue": "ICTD 2022",
+        "title": "Commissioning Development: Grantmaking, Community Voices, and their Implications for ICTD",
+        "authors": "Manika Saha, Tom Bartindale, Sharifa Sultana, Gillian Oliver, Dan Richardson, Shakuntala Haraksingh Thilsted, Syed Ishtiaque Ahmed, Patrick Olivier"
+      },
+      {
+        "venue": "ECSCW 2022 Pictorial",
+        "doi": "10.1145/3544549.3573902",
+        "id": "2022-ecscw-ethical",
+        "title": "Ethical Dilemmas: Reflections on Designing Pictorial Consent Forms from a Fieldwork",
+        "authors": "Manika Saha, Tom Bartindale, Sharifa Sultana, Gillian Oliver, Shakuntala Haraksingh Thilsted, Syed Ishtiaque Ahmed, Patrick Olivier"
+      }
+    ],
+    "journalArticles": [
+      {
+        "authors": "Dina Sabie, Cansu Ekmekcioglu, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3490555",
+        "title": "A Decade of International Migration Research in HCI: Overview, Challenges, Ethics, Impact, and Future Directions",
+        "venue": "ACM Transactions on Computer-Human Interaction (ToCHI) 2022",
+        "id": "2022-tochi-migration"
+      },
+      {
+        "authors": "Chinenye Ndulue, Oladapo Oyebode, Ravishankar Subramani Iyer, Anirudh Ganesh, Syed Ishtiaque Ahmed, Rita Orji",
+        "doi": "10.1007/s11257-022-09333-w",
+        "title": "Personality-targeted persuasive gamified systems: exploring the impact of application domain on the effectiveness of behaviour change strategies",
+        "venue": "Springer Nature 2022",
+        "id": "2022-springer-gamified"
+      },
+      {
+        "id": "2022-tech-forecasting",
+        "url": "https://www.semanticscholar.org/paper/1612bf5189340d97bfacb0fef49137befb442fca",
+        "doi": "10.1016/j.techfore.2021.121390",
+        "venue": "Technological Forecasting & Social Change 2022",
+        "title": "What Influences Algorithmic Decision-Making? A Systematic Literature Review on Algorithm Aversion",
+        "authors": "Hasan Mahmud, AKM Najmul Islam, Syed Ishtiaque Ahmed, Kari Smolander"
+      }
+    ],
+    "extendedAbstracts": []
+  },
+  "2023": {
+    "conferenceProceedings": [
+      {
+        "venue": "CHI 2023",
+        "title": "Be Our Guest: Intercultural Heritage Exchange through Augmented Reality (AR)",
+        "authors": "Dina Sabie, Hala Sheta, Hasan Ferdous, Vannie Kopalakrishnan, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3544548.3580695",
+        "id": "2023-chi-be-our-guest"
+      },
+      {
+        "authors": "Sharifa Sultana, Syed Ishtiaque Ahmed, Jeffrey M Rzeszotarski",
+        "url": "https://doi.org/10.1145/3544548.3580696",
+        "title": "Communicating Consequences: Visual Narratives, Abstraction, and Polysemy in Rural Bangladesh",
+        "id": "2023-chi-communicating",
+        "venue": "CHI 2023"
+      },
+      {
+        "id": "2023-chi-targeted-ads",
+        "url": "https://doi.org/10.1145/3544548.3580697",
+        "venue": "CHI 2023",
+        "authors": "Tanusree Sharma, Smirity Kaushik, Yaman Yu, Syed Ishtiaque Ahmed",
+        "title": "User Perceptions and Experiences of Targeted Ads on Social Media Platforms: Learning from Bangladesh and India"
+      },
+      {
+        "authors": "Manika Saha, Tom Bartindale, Delvin Varghese, Stephen Lindsay, Dan Richardson, Syed Ishtiaque Ahmed, Patrick Olivier",
+        "url": "https://doi.org/10.1145/3544548.3580698",
+        "title": "Community Voice as Data: Affordances of Participatory Videos for International Program Development",
+        "venue": "CHI 2023",
+        "id": "2023-chi-community-voice"
+      },
+      {
+        "authors": "Cansu Ekmekcioglu, Priyank Chandra, Syed Ishtiaque Ahmed",
+        "id": "2023-cscw-matter-of-time",
+        "title": "A Matter of Time: Anticipation Work and Digital Temporalities in Refugee Humanitarian Assistance in Turkey",
+        "venue": "CSCW 2023",
+        "url": "https://doi.org/10.1145/3610067"
+      },
+      {
+        "authors": "Ananya Bhattacharjee, Sharifa Sultana, Mohammad Ruhul Amin, Yeshim Iqbal, Syed Ishtiaque Ahmed",
+        "id": "2023-compass-mental-health",
+        "venue": "COMPASS 2023",
+        "title": "“What’s the Point of Having this Conversation?”: From a Telephone Crisis Helpline in Bangladesh to the Decolonization of Mental Health Services",
+        "url": "https://doi.org/10.1145/3587421"
+      },
+      {
+        "url": "https://doi.org/10.1145/3587422",
+        "id": "2023-compass-security",
+        "authors": "Ankit Shreshtha, Tanusree Sharma, Pratyasha Saha, Syed Ishtiaque Ahmed, Mahdi Nasrullah Al-Ameen",
+        "title": "A First Look into Software Security Practices in Bangladesh",
+        "venue": "COMPASS 2023"
+      }
+    ],
+    "researchArtifacts": [],
+    "journalArticles": [
+      {
+        "id": "2023-tsc-islamophobia",
+        "authors": "Mohammad Rashidujjaman Rifat, Ashratuz Zavin Asha, Shivesh Singh Jadon, Xinyi Yan, Shion Guha, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3587420",
+        "title": "Combating Islamophobia: Compromise, Community, and Harmony in Mitigating Harmful Online Content",
+        "venue": "ACM Transactions on Social Computing (TSC) 2023"
+      }
+    ],
+    "label": "2023",
+    "extendedAbstracts": []
+  },
+  "2024": {
+    "extendedAbstracts": [],
+    "conferenceProceedings": [
+      {
+        "url": "https://doi.org/10.1145/3613904.3642686",
+        "venue": "CHI 2024",
+        "title": "Computing and the Stigmatized: Trust, Surveillance, and Space Politics with the Sex Workers in Bangladesh",
+        "id": "2024-chi-stigmatized",
+        "authors": "Pratyasha Saha, Nadira Nowsher, Ayien Utshob Baidya, Nusrat Jahan Mim, Syed Ishtiaque Ahmed, S M Taiabul Haque",
+        "award": "Best Paper Award"
+      },
+      {
+        "authors": "Ananya Bhattacharjee, Yuchen Zeng, Sarah Yi Xu, Dana Kulzhabayeva, Minyi Ma, Rachel Kornfield, Syed Ishtiaque Ahmed, Alex Mariakakis, Mary P Czerwinski, Anastasia Kuzminykh, Michael Liut, Joseph Jay Williams",
+        "venue": "CHI 2024",
+        "title": "Understanding the Role of Large Language Models in Personalizing and Scaffolding Strategies to Combat Academic Procrastination",
+        "id": "2024-chi-procrastination",
+        "url": "https://doi.org/10.1145/3613904.3642687",
+        "award": "Best Paper Honorable Mention Award"
+      },
+      {
+        "id": "2024-chi-politics-past",
+        "title": "Politics of the Past: Understanding the Role of Memory, Postmemory, and Remembrance in Navigating the History of Migrant Families",
+        "venue": "CHI 2024",
+        "authors": "Nabila Chowdhury, Natasha Shokri, Cibeles Herrera Valera, Azhagu Meena SP, Carolina Reyes Marquez, Mohammad Rashidujjaman Rifat, Marisol Wong-Villacres, Cosmin Munteanu, Negin Dahya, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3613904.3642688"
+      },
+      {
+        "authors": "Nusrat Jahan Mim, Dipannita Nandi, Sadaf Sumyia Khan, Arundhuti Dey, Syed Ishtiaque Ahmed",
+        "venue": "CHI 2024",
+        "title": "In-Between Visuals and Visible: The Impacts of Text-to-Image Generative AI Tools on Digital Image-making Practices",
+        "id": "2024-chi-text-to-image",
+        "url": "https://doi.org/10.1145/3613904.3642689"
+      },
+      {
+        "title": "Cohabitant: The Design, Implementation, and Evaluation of a Virtual Reality Application for Interfaith Learning and Empathy Building",
+        "venue": "CHI 2024",
+        "authors": "Mohammad Rashidujjaman Rifat, Reem Ayad, Ashratuz Zavin Asha, Bingjian Huang, Selin Okman, Dina Sabie, Hasan Shahid Ferdous, Robert Soden, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3613904.3642690",
+        "id": "2024-chi-cohabitant"
+      },
+      {
+        "venue": "CHI 2024",
+        "title": "Towards a Non-Ideal Methodological Framework for Responsible ML",
+        "authors": "Ramaravind Kommiya Mothilal, Shion Guha, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3613904.3642691",
+        "id": "2024-chi-non-ideal-ml"
+      },
+      {
+        "authors": "Manika Saha, Stephen Lindsay, Jessica L Watterson, Tom Bartindale, Delvin Varghese, Mallika Saha, Gillian C. Oliver, Syed Ishtiaque Ahmed, Patrick Olivier",
+        "url": "https://doi.org/10.1145/3613904.3642692",
+        "id": "2024-chi-hearing-community",
+        "venue": "CHI 2024",
+        "title": "Hearing Community Voices in HCI4D: Establishing Safe Places to Co-Create Counter-Collective Narratives with Women Farmers in Bangladesh"
+      },
+      {
+        "authors": "Mohammad Rashidujjaman Rifat, Dipto Das, Arpon Poddar, Mahiratul Jannat, Robert Soden, Bryan Semaan, Syed Ishtiaque Ahmed",
+        "title": "The Politics of Fear and the Experience of Bangladeshi Religious Minority Communities Using Social Media Platforms",
+        "venue": "CSCW 2024",
+        "url": "https://doi.org/10.1145/3686980",
+        "id": "2024-cscw-fear"
+      },
+      {
+        "id": "2024-facct-annotation",
+        "title": "Data, Annotation, and Meaning-Making: The Politics of Categorization in Annotating a Dataset of Faith-based Communal Violence",
+        "venue": "FAccT 2024",
+        "authors": "Mohammad Rashidujjaman Rifat, Abdullah Hasan Safir, Sourav Saha, Jahedul Alam Junaed, Maryam Saleki, Mohammad Ruhul Amin, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3630106.3659029"
+      },
+      {
+        "url": "https://doi.org/10.1145/3706598.3720243",
+        "authors": "Achhiya Sultana, Dipto Das, Saadia Binte Alam, Mohammad Shidujaman, Syed Ishtiaque Ahmed",
+        "id": "2024-ictd-civics",
+        "venue": "ICTD 2024",
+        "title": "A Civics-oriented Approach to Understanding Intersectionally Marginalized Users' Experience with Hate Speech Online"
+      },
+      {
+        "id": "2024-ictd-ancient-elephant",
+        "authors": "Hafsah Mahzabin Chowdhury, Mizanur Rahman, Rokeya Akter, Zinnat Sultana, Syed Ishtiaque Ahmed, Sharifa Sultana",
+        "venue": "ICTD 2024",
+        "title": "The Ancient Elephant in the Room: Stigma, Gender Norms, and Cultural Barriers in Reproductive Care in Bangladesh",
+        "url": "https://doi.org/10.1145/3706598.3720244"
+      },
+      {
+        "url": "https://doi.org/10.1145/3723743",
+        "id": "2024-pervasive-mcare",
+        "venue": "Pervasive Health 2024",
+        "title": "mCARE: Integrating Mobile Phones, Caregivers, and Health Practitioners to Provide Regular Monitoring and Care for the Children with ASD in Bangladesh",
+        "authors": "Md M Haque, Md Ishrak Islam, Masud Rabbani, Dipranjan Das, Amy Schwichtenberg, Naveen Bansal, Tanjir Rashid Soron, Shahana Parvee, Shaheen Akhter, Azima Begum, Shah A Patwary, Austin Schmidt, Syed Ishtiaque Ahmed, Sheikh Iqbal Ahamed"
+      }
+    ],
+    "journalArticles": [],
+    "researchArtifacts": [],
+    "label": "2024"
+  },
+  "2025": {
+    "researchArtifacts": [
+      {
+        "authors": "Zarif Masud, Syed Ishtiaque Ahmed, Ebrahim Bagheri",
+        "venue": "Chapter in the Handbook on Migration and Artificial Intelligence, Edward Elgar Publishing, 2025",
+        "title": "The Role of Artificial Intelligence in Immigration: From Automation to Accountability",
+        "doi": "10.1145/3727324",
+        "id": "2025-chapter-immigration"
+      }
+    ],
+    "label": "2025",
+    "conferenceProceedings": [
+      {
+        "title": "Talking About the Assumption in the Room",
+        "venue": "CHI 2025",
+        "authors": "Ramaravind Kommiya Mothilal, Faisal M Lalani, Syed Ishtiaque Ahmed, Shion Guha, Sharifa Sultana",
+        "url": "https://doi.org/10.1145/3706598.3720237",
+        "id": "2025-chi-assumption"
+      },
+      {
+        "url": "https://doi.org/10.1145/3706599.3720240",
+        "title": "Residual Mobilities and Religious Practices: Exploring the Experiences of the Hindu Migrants in Canada",
+        "authors": "Ananya Bhattacharjee, Mohammad Rashidujjaman Rifat, Dipto Das, S M Taiabul Haque, Syed Ishtiaque Ahmed",
+        "venue": "CSCW 2025",
+        "id": "2025-cscw-residual"
+      },
+      {
+        "id": "2025-aies-collective",
+        "title": "Collective Agency in Art-making: Towards Community-centric Design of Text-to-Image (T2I) AI Tools",
+        "venue": "AIES 2025",
+        "url": "https://doi.org/10.1145/3711775",
+        "authors": "Abdullah Hasan Safir, Noshin Tahsin, Pratyasha Saha, Dipannita Nandi, Zulkarin Jahangir, Cecily Morrison, Syed Ishtiaque Ahmed, Nusrat Jahan Mim"
+      },
+      {
+        "authors": "Ananya Bhattacharjee, Sarah Yi Xu, Pranav Rao, Yuchen Zeng, Jonah Meyerhoff, Syed Ishtiaque Ahmed, David C. Mohr, Michael Liut, Alex Mariakakis, Rachel Kornfield, Joseph Jay Williams",
+        "venue": "DIS 2025",
+        "title": "Perfectly to a Tee: Understanding User Perceptions of Personalized LLM-Enhanced Narrative Interventions",
+        "id": "2025-dis-tee",
+        "url": "https://doi.org/10.1145/3772318.3791280"
+      },
+      {
+        "url": "https://doi.org/10.1145/3701716.3735470",
+        "venue": "WWW 2025",
+        "title": "MAML: Towards a Faster Web in Developing Regions",
+        "authors": "Ayush Pandey, Matteo Varvello, Syed Ishtiaque Ahmed, Shurui Zhou, Lakshmi Subramanian, Yasir Zaki",
+        "id": "2025-www-maml"
+      },
+      {
+        "id": "2025-compass-resilient",
+        "venue": "COMPASS 2025",
+        "title": "Resilient Hope: Identity, Extensibility, and Freedom as Design and Policy Considerations in Social Computing",
+        "url": "https://doi.org/10.1145/3723742",
+        "authors": "Abdullah Hasan Safir, Nusrat Jahan Mim, SM Taiabul Haque, Syed Ishtiaque Ahmed"
+      },
+      {
+        "id": "2025-chi-lbw-disconnection",
+        "venue": "CHI 2025 (LBW)",
+        "title": "Internet Disconnection as a Risk to Cross-Border Human Rights",
+        "authors": "Zinnat Sultana, Miss Rokeya Akter, Tanveer Ehsanur Rahman, Hasan Shahid Ferdous, Teresa Wulandari, M Ashraful Amin, Syed Ishtiaque Ahmed, Sharifa Sultana",
+        "url": "https://doi.org/10.1145/3706599.3720245"
+      }
+    ],
+    "extendedAbstracts": [],
+    "journalArticles": [
+      {
+        "doi": "10.1002/aaai.12208",
+        "id": "2025-ai-magazine",
+        "venue": "AI Magazine 2025",
+        "title": "On the Reliability of Large Language Models to Misinformed and Demographically-Informed Prompts",
+        "authors": "Toluwani Aremu, Oluwakemi Akinwehinmi, Chukwuemeka Nwagu, Syed Ishtiaque Ahmed, Rita Orji, Pedro Arnau Del Amo, Abdulmotaleb El Saddik"
+      },
+      {
+        "id": "2025-sleep",
+        "doi": "10.1371/journal.pdig.0000487",
+        "authors": "Lauren Hale, Dimitri Christakis, Gina Mathew, Isaac Rodriguez, Azfar Adib, Yasmin Aljedawi, Justin Thomas, Syed Ishtiaque Ahmed, Sohailul Alvi, Mamunar Rashid",
+        "title": "Associations Between Digital Technology and Sleep Health by Country, Age, and Sex",
+        "venue": "SLEEP 2025"
+      },
+      {
+        "id": "2025-canadian-ethnic-studies",
+        "doi": "10.1145/3772363.3798583",
+        "authors": "Eleyan Sawafta, Zarif Masud, Yasmeen Abu-Laban, Syed Ishtiaque Ahmed, Ebrahim Bagheri, Geoffrey Rockwell",
+        "venue": "Canadian Ethnic Studies, Volume 57, Number 3, 2025",
+        "title": "Partisan Perspectives on AI and Immigration: An Analysis of Canadian Parliamentary Discourse (2014–2024)"
+      }
+    ]
+  },
+  "2026": {
+    "extendedAbstracts": [],
+    "conferenceProceedings": [
+      {
+        "url": "https://aclanthology.org/2026.acl-long.1565/",
+        "id": "2026-acl-long-1565",
+        "venue": "ACL 2026 (Main)",
+        "title": "LLM-Based Multi-Task Bangla Hate Speech Detection: Type, Severity, and Target",
+        "authors": "Md Arid Hasan, Firoj Alam, Md Fahad Hossain, Usman Naseem, Syed Ishtiaque Ahmed"
+      },
+      {
+        "authors": "Usman Naseem, Robert Geislinger, Juan Ren, Sarah Kohail, Rudy Alexandro Garrido Veliz, P Sam Sahil, Yiran Zhang, Idris Abdulmumin, Marco Antonio Stranisci, Özge Alacam, Cengiz Acarturk, Aisha Jabr, Saba Anwar, Abinew Ali Ayele, Simona Frenda, Alessandra Teresa Cignarella, Elena Tutubalina, Oleg Rogov, Aung Kyaw Htet, Xintong Wang, Surendrabikram Thapa, Kritesh Rauniyar, Tanmoy Chakraborty, MD Arfeen Zeeshan, Dheeraj Kodati, Satya Keerthi, Sahar Moradizeyveh, Firoj Alam, Md Arid Hasan, Syed Ishtiaque Ahmed, Ye Kyaw Thu, Shantipriya Parida, Ihsan Ayyub Qazi, Lilian Diana Awuor Wanzare, Nelson Odhiambo Onyango, Clemencia Siro, Jane Wanjiru Kimani, Ibrahim Said Ahmad, Adem Chanie Ali, Martin Semmann, Chris Biemann, Shamsuddeen Hassan Muhammad, Seid Muhie Yimam",
+        "title": "POLAR: A Benchmark for Multilingual, Multicultural, and Multi-Event Online Polarization",
+        "venue": "ACL 2026 (Findings)",
+        "url": "https://aclanthology.org/2026.findings-acl.1433/",
+        "id": "2026-findings-acl-1433"
+      },
+      {
+        "authors": "Yasaman Rohanifar, Rachel FJ Levine, Sharifa Sultana, Syed Ishtiaque Ahmed",
+        "id": "2026-chi-3790605",
+        "url": "https://doi.org/10.1145/3772318.3790605",
+        "title": "Data Migration in HCI: The Politics of Invisible Borders, Informal Networks, and Immigrants' Data",
+        "venue": "CHI 2026",
+        "doi": "10.1145/3772318.3790605"
+      },
+      {
+        "authors": "Hellina Hailu Nigatu, Farhana Shahid, Vishal Sharma, Abigail Oppong, Michaelanne Thomas, Syed Ishtiaque Ahmed",
+        "venue": "CHI 2026",
+        "title": "UnWEIRDing Peer Review in Human-Computer Interaction",
+        "id": "2026-chi-3791553",
+        "url": "https://doi.org/10.1145/3772318.3791553",
+        "doi": "10.1145/3772318.3791553"
+      },
+      {
+        "award": "Best Paper Honorable Mention Award",
+        "url": "https://doi.org/10.1145/3772318.3791792",
+        "doi": "10.1145/3772318.3791792",
+        "authors": "Dipto Das, Afrin Prio, Pritu Saha, Shion Guha, Syed Ishtiaque Ahmed",
+        "venue": "CHI 2026",
+        "title": "How do the Global South Diasporas Mobilize for Transnational Political Change?",
+        "id": "2026-chi-3791792"
+      },
+      {
+        "url": "https://doi.org/10.1145/3772318.3791340",
+        "authors": "Sharifa Sultana, Jeffrey M Rzeszotarski, Zinnat Sultana, Syed Ishtiaque Ahmed",
+        "venue": "CHI 2026",
+        "title": "Embodying Facts, Figures, and Faiths in Narrative Artistic Performances in Rural Bangladesh",
+        "id": "2026-chi-embodying"
+      },
+      {
+        "award": "Best Paper Honorable Mention Award",
+        "id": "2026-chi-data-repair",
+        "url": "https://doi.org/10.1145/3772318.3791745",
+        "authors": "A.T.M Mizanur Rahman, Sharifa Sultana, Syed Ishtiaque Ahmed",
+        "title": "Data Repair",
+        "venue": "CHI 2026"
+      },
+      {
+        "authors": "Manika Saha, Misita Anwar, Md Khalid Hossain, Tanjila Kanij, Umme Humayra, Syed Ishtiaque Ahmed, Gillian C. Oliver, Stephen Lindsay",
+        "id": "2026-chi-women-entrepreneurs",
+        "url": "https://doi.org/10.1145/3772318.3791409",
+        "title": "\"Deprived of support because we're born women\": Emerging Socio-Technical Pathways and Evolving Struggles for Women Entrepreneurs in Bangladesh",
+        "venue": "CHI 2026"
+      },
+      {
+        "id": "2026-facc-t-consensus-trap",
+        "venue": "FAccT 2026",
+        "title": "The Consensus Trap: Dissecting Subjectivity and the \"Ground Truth\" Illusion in Data Annotation",
+        "url": "https://doi.org/10.1145/3630106.3659030",
+        "authors": "Sheza Munir, Benjamin Mah, Krisha Kalsi, Shivani Kapania, Julian Posada, Edith Law, Ding Wang, Syed Ishtiaque Ahmed"
+      },
+      {
+        "id": "2026-facc-t-bureaucratic",
+        "title": "Bureaucratic Silences: What the Canadian AI Register Reveals, Omits, and Obscures",
+        "venue": "FAccT 2026",
+        "authors": "Dipto Das, Christelle Tessono, Syed Ishtiaque Ahmed, Shion Guha",
+        "url": "https://doi.org/10.1145/3630106.3659031"
+      },
+      {
+        "id": "2026-aies-prediction",
+        "authors": "Yasaman Rohanifar, Sharifa Sultana, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3711771",
+        "venue": "AIES 2026",
+        "title": "Prediction Laundering: The Sociotechnical Production of Truth on Polymarket"
+      },
+      {
+        "title": "Studying People to Study AI: Expert Perspectives on the Epistemic Fit and Barriers of Human Research in AI Safety & Ethics",
+        "venue": "AIES 2026",
+        "url": "https://doi.org/10.1145/3711772",
+        "authors": "Jessica Bo, Paula Aoyagui, Shalaleh Rismani, Syed Ishtiaque Ahmed, Ashton Anderson",
+        "id": "2026-aies-studying"
+      },
+      {
+        "authors": "Maryam Mokhberi, Dipto Das, Syed Ishtiaque Ahmed",
+        "id": "2026-group-amina",
+        "url": "https://doi.org/10.1145/3724405",
+        "title": "AMINA: The Inclusive and Accountable AI for Marginalized Immigrant Nonprofit Assistance",
+        "venue": "GROUP 2026"
+      },
+      {
+        "title": "Artificial Intelligence at the Margins: Risks and Opportunities for Iranian Immigrant Nonprofits in the Global North",
+        "venue": "DIS 2026",
+        "id": "2026-dis-margins",
+        "authors": "Maryam Mokhberi, Dipto Das, Pratyasha Saha, Syed Ishtiaque Ahmed, Nusrat Jahan Mim",
+        "award": "Best Paper Honorable Mention Award",
+        "url": "https://doi.org/10.1145/3772318.3791360"
+      },
+      {
+        "authors": "Farhan Samir, Jappun Dhillon, Meghna Ravikumar, Syed Ishtiaque Ahmed, Vered Shwartz",
+        "url": "https://doi.org/10.1145/3784766",
+        "id": "2026-websci-media",
+        "title": "Quantifying Media Representation Dynamics Across 25 Years of News Reporting on Policing-related Deaths",
+        "venue": "WebSci 2026"
+      },
+      {
+        "venue": "ECIR 2026",
+        "title": "How Information Retrieval Systems Construct and Amplify Immigration Narratives",
+        "id": "2026-ecir-immigration",
+        "authors": "Zarif Masud, Abhijit Paul, Syed Ishtiaque Ahmed, Ebrahim Bagheri",
+        "url": "https://doi.org/10.1007/978-3-031-87359-3_12"
+      },
+      {
+        "title": "Mod-Guide: An LLM-based Content Moderation Feedback System to Address Insensitive Speech toward Indigenous Ethnic and Religious Minority Communities",
+        "venue": "COMPASS 2026",
+        "url": "https://doi.org/10.1145/3811242.3819096",
+        "id": "2026-compass-mod-guide",
+        "authors": "Dipto Das, Achhiya Sultana, Ankit Singh Chauhan, Saadia Binte Alam, Mohammad Shidujaman, Shion Guha, Sunandan Chakraborty, Syed Ishtiaque Ahmed"
+      },
+      {
+        "id": "2026-compass-bangladesh-ai",
+        "venue": "COMPASS 2026",
+        "authors": "Sharifa Sultana, Rupali Tasnim Samad, Mehzabin Haque, Zinnat Sultana, Zulkarin Jahangir, B M Mainul Hossain, Rashed Mujib Noman, Syed Ishtiaque Ahmed",
+        "title": "Bangladesh AI Readiness: Gaps in Curriculum, Infrastructure, and Governance",
+        "url": "https://doi.org/10.1145/3723740"
+      },
+      {
+        "venue": "COMPASS 2026",
+        "title": "\"Is This Not Enough?\": Asymmetries in Institutional Accountability and Collective Sensemaking in the Case of Canada's Algorithmic Visa Triage System",
+        "authors": "Dipto Das, Matthew Tamura, Syed Ishtiaque Ahmed, Shion Guha",
+        "url": "https://doi.org/10.1145/3723741",
+        "id": "2026-compass-is-this-enough"
+      },
+      {
+        "title": "Are You the A-hole? A Fair, Multi-Perspective, Ethical Reasoning Framework",
+        "venue": "Canadian AI 2026",
+        "url": "https://doi.org/10.1007/978-3-031-87359-3_15",
+        "authors": "Sheza Munir, Ahanaf Rodoshi, Sumin Lee, Feiran Chang, Xujie Si, Syed Ishtiaque Ahmed",
+        "id": "2026-canadian-ai-ahole"
+      },
+      {
+        "title": "LLM Sycophancy: How Users Flag and Respond",
+        "venue": "Canadian AI 2026",
+        "authors": "Kazi Noshin, Syed Ishtiaque Ahmed, Sharifa Sultana",
+        "id": "2026-canadian-ai-sycophancy",
+        "url": "https://doi.org/10.1007/978-3-031-87359-3_16"
+      },
+      {
+        "id": "2026-eacl-arguments",
+        "authors": "Ramaravind K Mothilal, Joanna Roy, Syed Ishtiaque Ahmed, Shion Guha",
+        "url": "https://aclanthology.org/2026.eacl-findings.1/",
+        "venue": "EACL 2026 (Findings)",
+        "title": "Argument-Based Consistency in Toxicity Explanations of LLMs"
+      },
+      {
+        "authors": "Ramaravind Kommiya Mothilal, Syed Ishtiaque Ahmed, Shion Guha",
+        "id": "2026-cascon-toxicity",
+        "venue": "CASCON 2026",
+        "title": "Evaluating Toxicity Understanding of LLM Agents",
+        "url": "https://ieeexplore.ieee.org/document/11344136/"
+      },
+      {
+        "authors": "Sharifa Sultana, Pratyasha Saha, Nadira Nowsher, Sumaia Arefin Ritu, Zinnat Sultana, Syed Ishtiaque Ahmed, S M Taiabul Haque",
+        "id": "2026-chi-post-deepfakes",
+        "url": "https://doi.org/10.1145/3772318.3791650",
+        "venue": "CHI 2026 (Poster)",
+        "title": "Perception of Deepfakes among Bangladeshi Women"
+      },
+      {
+        "venue": "CHI 2026 (Poster)",
+        "title": "Bangladesh's AI Readiness: Perspectives from the Academia, Industry, and Government",
+        "id": "2026-chi-post-ai-readiness",
+        "authors": "Sharifa Sultana, Rupali Tasnim Samad, Mehzabin Haque, Zinnat Sultana, Zulkarin Jahangir, B M Mainul Hossain, Rashed Mujib Noman, Syed Ishtiaque Ahmed",
+        "url": "https://doi.org/10.1145/3772318.3791651"
+      },
+      {
+        "url": "https://doi.org/10.1145/3791652",
+        "id": "2026-sigcomm-broadband",
+        "authors": "Syed Tauhidun Nabi, S. M. Taiabul Haque, Syed Ishtiaque Ahmed, Shaddi Hasan",
+        "venue": "SIGCOMM 2026 (Poster)",
+        "title": "Measuring the Unmeasured: Mobile Broadband Inequality in the Global South"
+      }
+    ],
+    "journalArticles": [
+      {
+        "authors": "Jiessie Tie, Bingsheng Yao, Tianshi Li, Hongbo Fang, Syed Ishtiaque Ahmed, Dakuo Wang, Shurui Zhou",
+        "url": "https://doi.org/10.1145/3801972",
+        "id": "2026-tosem",
+        "title": "\"Should I Give Up Now?\" Investigating LLM Pitfalls in Software Engineering",
+        "venue": "ACM Transactions on Software Engineering and Methodology (TOSEM) 2026"
+      },
+      {
+        "authors": "Benjamin Kaveladze, ... Syed Ishtiaque Ahmed, ..., Jessica Schleider",
+        "id": "2026-nature-human-behavior",
+        "doi": "10.1038/s41562-026-02415-6",
+        "url": "https://doi.org/10.1038/s41562-026-02415-6",
+        "venue": "Nature Human Behavior 2026",
+        "title": "A Crowdsourced Megastudy of 12 Digital Single-Session Interventions for Depression in American Adults"
+      },
+      {
+        "authors": "Enzhuo Zhang, Syed Ishtiaque Ahmed",
+        "title": "Information-Theoretic and Physical Constraints on Advanced Neural Signal Decoding",
+        "venue": "Frontiers in Systems Neuroscience 2026",
+        "id": "2026-frontiers-systems-neuroscience",
+        "doi": "10.3389/fnsys.2026.1786729",
+        "url": "https://doi.org/10.3389/fnsys.2026.1786729"
+      },
+      {
+        "venue": "PLOS Digital Health 2026",
+        "title": "From patient voices to policy: data analytics reveals patterns in Ontario's Hospital feedback",
+        "url": "https://doi.org/10.1371/journal.pdig.0000547",
+        "authors": "Pourya Momtaz, Mohammad Noaeen, Konrad Samsel, Neil Seeman, Robert Cribb, Syed Ishtiaque Ahmed, Amol Verma, Dionne M Aleman, Zahra Shakeri",
+        "id": "2026-plos-digital-health"
+      }
+    ],
+    "label": "2026",
+    "researchArtifacts": []
+  }
+}

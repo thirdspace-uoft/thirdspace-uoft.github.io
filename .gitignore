@@ -49,6 +49,10 @@ thirdspace-uoft-firebase-adminsdk-fbsvc-d10559b9db.json
 # build artifact — regenerated from Firestore by scripts/fetch-content.mjs
 /public/config/content.json
 
+# publication sync report — written by scripts/sync-publications.mjs and
+# published as a workflow artifact, not committed
+/artifacts/
+
 # vercel
 .vercel
 

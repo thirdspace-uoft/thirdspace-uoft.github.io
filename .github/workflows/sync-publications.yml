@@ -1,0 +1,59 @@
+name: Sync publications from ishtiaque.net
+
+# Adds any publication that appears on the author's writing page but is not yet
+# in Firestore. Bumping `lastModified` is all that is needed to publish —
+# `deploy.yml` polls that field on its own cron and rebuilds.
+#
+# Kept separate from `deploy.yml` deliberately:
+#   - it only reads the repo, so it needs `contents: read` and none of the
+#     Pages or OIDC permissions a deploy requires;
+#   - `deploy.yml` runs on a 5-minute cron inside a `concurrency` group with
+#     `cancel-in-progress: true`, and sharing that group would let a deploy
+#     tick kill a half-finished Firestore write.
+
+on:
+  schedule:
+    # Daily at 06:17 UTC. Off the hour on purpose — scheduled workflows are
+    # queued at the top of the hour, and the exact minute only needs to be
+    # consistent, not meaningful.
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publications-sync
+  # Never interrupt a write in progress; the next run will simply find nothing
+  # new if this one already added them.
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Sync publications
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+          # Identifies the request to OpenAlex's polite pool. Optional, but it
+          # gets faster and more reliable service.
+          OPENALEX_MAILTO: ${{ vars.OPENALEX_MAILTO }}
+        run: node scripts/sync-publications.mjs
+
+      - name: Upload review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: publications-review
+          path: artifacts/publications-review.md
+          if-no-files-found: warn

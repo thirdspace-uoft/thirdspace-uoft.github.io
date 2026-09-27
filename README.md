@@ -1,4 +1,4 @@
-# Thirdspace — Next.js 16 + ShadCN UI
+# ThirdSpace — Next.js 16 + ShadCN UI
 
 A Next.js 16 application with **ShadCN UI** fully integrated, set up using
 guidance from the Context7 MCP for both `shadcn-ui/ui` and `vercel/next.js`.
