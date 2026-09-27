@@ -216,20 +216,30 @@ export default function Home() {
       {(() => {
         const years = (contentData.publications.years ?? {}) as Record<string, any>;
         const yearKeys = Object.keys(years).sort((a, b) => (a < b ? 1 : a > b ? -1 : 0));
-        const latestYear = yearKeys[0];
-        if (!latestYear) return null;
 
-        const bucket = years[latestYear];
-        const all: any[] = [
-          ...(bucket.journalArticles ?? []),
-          ...(bucket.conferenceProceedings ?? []),
-          ...(bucket.extendedAbstracts ?? []),
-          ...(bucket.researchArtifacts ?? []),
-        ];
+        // Pool the two most recent years rather than just the newest one. A
+        // single new year is often nearly empty — 2027 holds one paper — so
+        // reading from it alone left this section looking almost blank.
+        const featuredYears = yearKeys.slice(0, 2);
+        if (featuredYears.length === 0) return null;
+
+        const all: any[] = featuredYears.flatMap((year) => {
+          const bucket = years[year] ?? {};
+          return [
+            ...(bucket.journalArticles ?? []),
+            ...(bucket.conferenceProceedings ?? []),
+            ...(bucket.extendedAbstracts ?? []),
+            ...(bucket.researchArtifacts ?? []),
+          ];
+        });
         if (all.length === 0) return null;
 
         const maxShow = contentData.latestPublications?.maxToShow ?? 4;
         const latest = all.slice(0, maxShow);
+        const yearLabel =
+          featuredYears.length > 1
+            ? `${featuredYears[0]} – ${featuredYears.at(-1)}`
+            : featuredYears[0];
 
         return (
           <section data-section="research" data-section-label="Research" className="border-b border-border">
@@ -250,7 +260,7 @@ export default function Home() {
                       </h2>
                       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                         <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-primary">
-                          {latestYear}
+                          {yearLabel}
                         </span>
                         <span aria-hidden className="h-3 w-px bg-border" />
                         <Link

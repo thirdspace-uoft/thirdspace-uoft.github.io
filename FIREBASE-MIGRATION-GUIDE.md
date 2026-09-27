@@ -1,4 +1,4 @@
-# Firebase + ImageKit Migration Guide — Thirdspace
+# Firebase + ImageKit Migration Guide — ThirdSpace
 
 Migrate from `content.json` + GitHub-based CMS to **Firebase Firestore** (structured data) and **ImageKit** (images).
 
