@@ -140,16 +140,10 @@ export function Footer() {
                              {location.title}
                            </span>
                          </div>
-                         <p className="text-xs text-muted-foreground font-mono mt-0.5">
-                           {location.coordinates}
-                         </p>
                        </div>
                      </div>
 
                      <div className="text-sm text-muted-foreground leading-relaxed pt-1 border-t border-border/40">
-                        <p className="font-semibold text-foreground text-xs uppercase tracking-wide">
-                          {location.institution}
-                        </p>
                         <p className="mt-0.5">{location.street}</p>
                         <p>{location.cityCountry}</p>
                       </div>
@@ -215,14 +209,16 @@ export function Footer() {
             )}
           </div>
           <div className="flex items-center gap-6">
-            <a
-              href={socials.xUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="hover:underline hover:text-primary flex items-center gap-1"
-            >
-              {socials.xHandle} <ExternalLink className="h-3 w-3" />
-            </a>
+            {socials.xUrl && (
+              <a
+                href={socials.xUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:underline hover:text-primary flex items-center gap-1"
+              >
+                {socials.xHandle} <ExternalLink className="h-3 w-3" />
+              </a>
+            )}
             <span className="text-[12px] uppercase tracking-[0.18em] text-primary/70 font-semibold">
               {brand.tagline}
             </span>

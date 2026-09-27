@@ -8,10 +8,7 @@ import {
   Cpu,
   Globe,
   HeartHandshake,
-  MapPin,
   Microscope,
-  MoveUpRight,
-  Orbit,
   Scale,
   Sparkles,
   Users,
@@ -19,17 +16,15 @@ import {
 
 import { getImageUrl } from "@/lib/utils";
 import { getContent } from "@/lib/content";
+import { ResearcherRail, type RailMember } from "@/components/researcher-rail";
 
 const contentData = getContent();
 const {
   hero,
   home,
-  marquee,
   groupOverview,
   professor,
   researchDomains,
-  homePillars,
-  pillars,
 } = contentData;
 
 type IconName =
@@ -56,21 +51,9 @@ const iconMap: Record<IconName, React.ComponentType<{ className?: string }>> = {
 export default function Home() {
   return (
     <main className="bg-background">
-      {/* HERO — editorial split, mono meta strip, generous whitespace */}
+      {/* HERO — editorial split, generous whitespace */}
       <section data-section="hero" data-section-label="Home" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 pt-10 pb-12 sm:px-8 sm:pt-14 sm:pb-16">
-          {/* Meta strip */}
-          <div className="mb-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-3 sm:mb-10">
-            <span className="inline-flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
-              <Orbit className="size-3 text-primary" />
-              {hero.badge}
-            </span>
-            <span className="hidden h-3 w-px bg-border sm:block" />
-            <span className="inline-flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
-              <MapPin className="size-3 text-primary" />
-              {hero.locationChip}
-            </span>
-          </div>
           {/* Headline + lede */}
           <div className="grid gap-8 md:gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
             <div className="min-w-0 lg:col-span-8">
@@ -107,195 +90,116 @@ export default function Home() {
           </div>
 
           {/* Plate — single photograph, no chrome */}
-          <figure className="mt-10 grid gap-5 sm:mt-12 md:grid-cols-12">
-            <div className="md:col-span-7">
-              <div className="relative aspect-[4/3] w-full overflow-hidden">
-                <Image
-                  src={getImageUrl(hero.groupPhotoPath)}
-                  alt={hero.groupPhotoAlt}
-                  fill
-                  priority
-                  sizes="(min-width: 768px) 60vw, 100vw"
-                  className="object-cover grayscale-[8%]"
-                />
-              </div>
-              <figcaption className="mt-2 font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground">
-                {hero.groupPhotoAlt}
-              </figcaption>
-            </div>
-
-            <div className="flex flex-col justify-center md:col-span-5 md:px-4">
-              <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-primary">
-                {hero.researchPostureLabel}
-              </span>
-              <p className="mt-2 type-subhead text-foreground">
-                {hero.researchPostureBody}
-              </p>
-              <dl className="mt-5 grid grid-cols-2 gap-4 border-t border-border pt-4">
-                <div>
-                  <dt className="font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground">
-                    {hero.methodsLabel}
-                  </dt>
-                  <dd className="mt-2 type-body font-medium text-foreground">
-                    {hero.methodsValue}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground">
-                    {hero.focusLabel}
-                  </dt>
-                  <dd className="mt-2 type-body font-medium text-foreground">
-                    {hero.focusValue}
-                  </dd>
-                </div>
-              </dl>
+          <figure className="mt-10 sm:mt-12">
+            <div className="relative aspect-[4/3] w-full overflow-hidden">
+              <Image
+                src={getImageUrl(hero.groupPhotoPath)}
+                alt={hero.groupPhotoAlt}
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover grayscale-[8%]"
+              />
             </div>
           </figure>
         </div>
-
-        {/* Marquee keyword band — kept, restrained */}
-        <div className="overflow-hidden border-y border-border">
-          <div className="flex w-max animate-marquee">
-            {[...marquee.keywords, ...marquee.keywords].map((keyword, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-4 px-6 py-3 font-mono text-[17px] uppercase tracking-[0.18em] text-muted-foreground whitespace-nowrap"
-              >
-                <span>{keyword}</span>
-                <span
-                  aria-hidden
-                  className="h-1 w-1 rounded-full bg-primary/40"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
-      {/* GROUP OVERVIEW — body + PI side by side, then focus cards */}
+      {/* GROUP OVERVIEW — PI card + focus cards, then the researcher rail */}
       <section id="about-group" data-section="people" data-section-label="People" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-          <div className="mb-10 border-b border-border/80 pb-5">
-            <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
-              {groupOverview.eyebrow}
-            </span>
-            <div className="mt-2 flex flex-wrap items-end justify-between gap-4">
-              <h2 className="text-balance text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-                {groupOverview.headline}
-              </h2>
-              <span className="font-mono text-[14px] uppercase tracking-[0.2em] text-muted-foreground">
-                {groupOverview.locationChip}
-              </span>
-            </div>
-          </div>
-
-          <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
-            <div className="min-w-0 lg:col-span-7">
-              <p className="type-body text-pretty text-muted-foreground/90">
-                {groupOverview.body.split(professor.name)[0]}
-                <a
-                  href={professor.website}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group/ishtiaque relative inline-flex items-baseline font-medium text-primary underline decoration-accent/70 decoration-2 underline-offset-4 transition-colors after:absolute after:left-1/2 after:top-full after:h-8 after:w-[min(18rem,calc(100vw-2.5rem))] after:-translate-x-1/2 after:content-[''] hover:text-primary/80"
-                  aria-label={`Visit ${professor.name}'s website`}
-                >
-                  {professor.name}
-                  <span className="invisible pointer-events-auto absolute top-full left-1/2 z-50 mt-4 w-[min(18rem,calc(100vw-2.5rem))] -translate-x-1/2 translate-y-3 rounded-[1.5rem] border border-primary/15 bg-card p-3 opacity-0 shadow-2xl shadow-primary/20 transition-all delay-300 duration-300 before:absolute before:-top-4 before:left-0 before:h-4 before:w-full before:content-[''] group-hover/ishtiaque:visible group-hover/ishtiaque:translate-y-1 group-hover/ishtiaque:opacity-100 group-hover/ishtiaque:delay-75">
-                    <span className="block relative h-60 w-full overflow-hidden rounded-[1.1rem] bg-muted">
-                      <Image
-                        src={getImageUrl(professor.imagePath)}
-                        alt={professor.name}
-                        fill
-                        sizes="288px"
-                        className="object-cover transition-transform duration-500 group-hover/ishtiaque:scale-105"
-                      />
-                    </span>
-                    <span className="mt-3 flex items-center justify-between gap-3 px-1 text-left">
-                      <span>
-                        <span className="block text-base font-semibold text-foreground">
-                          {professor.name}
-                        </span>
-                        <span className="mt-1 block text-sm text-muted-foreground">
-                          {professor.title}
-                          <br />
-                          {professor.department}
-                          <br />
-                          {professor.institution}
-                          <br />
-                          {professor.role}
-                        </span>
-                      </span>
-                      <MoveUpRight className="h-4 w-4 shrink-0 text-primary" />
-                    </span>
-                  </span>
-                </a>
-                {groupOverview.body.split(professor.name)[1]}
-              </p>
-            </div>
-
-            <div className="lg:col-span-4 lg:col-start-9">
-              <div className="flex flex-col items-start gap-5">
-                <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-full">
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
+            {/* PI — portrait and credentials centred as one block */}
+            <div className="lg:col-span-5">
+              <div className="mx-auto flex max-w-md flex-col items-center gap-6 text-center lg:max-w-none lg:flex-row lg:items-start lg:gap-7 lg:text-left">
+                <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-full sm:h-36 sm:w-36">
                   <Image
                     src={getImageUrl(professor.imagePath)}
                     alt={professor.name}
                     fill
-                    sizes="160px"
+                    sizes="144px"
                     className="object-cover"
                   />
                 </div>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-xl font-semibold tracking-tight text-foreground">
-                      {professor.name}
-                    </p>
-                    <p className="mt-0.5 font-mono text-[14px] uppercase tracking-[0.2em] text-muted-foreground">
-                      {home.groupOverviewFigLabel}
-                    </p>
-                  </div>
-                  <div className="border-t border-border/60 pt-4">
-                    <a
-                      href={professor.website}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80"
-                      aria-label={`Visit ${professor.name}'s website`}
-                    >
-                      {professor.name}
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </a>
-                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                      {professor.title}, {professor.institution}.<br />
-                      {professor.role}.
-                    </p>
-                  </div>
+                <div className="min-w-0 flex-1">
+                  <a
+                    href={professor.website}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group/name inline-flex items-start gap-1 text-[22px] font-semibold leading-tight tracking-tight text-foreground transition-colors hover:text-primary lg:inline"
+                  >
+                    <span>{professor.name}</span>
+                    <ArrowUpRight className="mt-0.5 size-4 shrink-0 text-primary lg:ml-1 lg:mt-0 lg:inline" />
+                  </a>
+                  <p className="mt-2 font-mono text-[12px] uppercase tracking-[0.2em] text-primary">
+                    {home.groupOverviewFigLabel}
+                  </p>
+                  <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
+                    <span className="text-foreground">
+                      {professor.title}
+                    </span>
+                    , {professor.institution}. {professor.role}.
+                  </p>
                 </div>
               </div>
             </div>
+
+            {/* Focus areas — full-width hairline rows, not cramped cards */}
+            <div className="lg:col-span-6 lg:col-start-7">
+              <ul>
+                {groupOverview.focusCards.map((item) => {
+                  const Icon =
+                    iconMap[item.icon as keyof typeof iconMap] || Globe;
+
+                  return (
+                    <li
+                      key={item.title}
+                      className="flex gap-4 border-t border-border py-4 first:border-t-0 first:pt-0 lg:py-5"
+                    >
+                      <Icon className="mt-0.5 size-4 shrink-0 text-primary" />
+                      <div className="min-w-0">
+                        <h3 className="type-body font-medium leading-snug text-foreground">
+                          {item.title}
+                        </h3>
+                        <p className="mt-1 text-[15px] leading-relaxed text-muted-foreground">
+                          {item.description}
+                        </p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
-            {groupOverview.focusCards.map((item) => {
-              const Icon =
-                iconMap[item.icon as keyof typeof iconMap] || Globe;
+          <ResearcherRail
+            members={(() => {
+              // PhD students only. The PI heads this section directly above,
+              // and the postdocs / undergrads / collaborators have their own
+              // rows on the people page.
+              const piName = professor?.name ?? "";
+              const phds = (contentData.team?.sections ?? [])
+                .filter((s: any) => s.role === "PhD Students")
+                .flatMap((s: any) =>
+                  (s.members ?? [])
+                    .filter((m: any) => m.name !== piName)
+                    .map((m: any) => ({
+                      name: m.name,
+                      role: s.role,
+                      imagePath: m.imagePath,
+                      bio: m.bio,
+                      areasOfInterest: m.areasOfInterest,
+                      website: m.links?.find((l: any) => l.url)?.url,
+                      websiteLabel: m.links?.find((l: any) => l.url)?.label,
+                    })),
+                );
 
-              return (
-                <div
-                  key={item.title}
-                  className="rounded-2xl border border-border bg-background p-6 transition-all duration-300 hover:border-primary/20"
-                >
-                  <Icon className="h-4 w-4 text-primary" />
-                  <h3 className="mt-4 type-body font-medium text-foreground">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 type-body text-muted-foreground">
-                    {item.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
+              return phds as RailMember[];
+            })()}
+            label={contentData.latestPublications?.researchersLabel ?? "Researchers"}
+            ctaLabel={contentData.latestPublications?.allMembersLabel ?? "View all people"}
+            ctaHref="/people"
+          />
         </div>
       </section>
 
@@ -318,20 +222,6 @@ export default function Home() {
         const maxShow = contentData.latestPublications?.maxToShow ?? 4;
         const latest = all.slice(0, maxShow);
 
-        const { professor, team } = contentData;
-        const piLabel = contentData.latestPublications?.piLabel ?? "Principal Investigator";
-        const piMember: { name: string; role: string; imagePath?: string } | null =
-          professor?.name ? { name: professor.name, role: professor.title ?? piLabel, imagePath: professor.imagePath } : null;
-        const piName = piMember?.name ?? "";
-        const researchers: { name: string; role: string; imagePath?: string }[] = [];
-        for (const section of team?.sections ?? []) {
-          for (const m of section.members ?? []) {
-            if (m.name !== piName) {
-              researchers.push({ name: m.name, role: section.role, imagePath: m.imagePath });
-            }
-          }
-        }
-
         return (
           <section data-section="research" data-section-label="Research" className="border-b border-border">
             <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
@@ -347,14 +237,6 @@ export default function Home() {
                 </div>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                   <Link
-                    href="/people"
-                    className="inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {contentData.latestPublications?.teamViewAllLabel ?? "People"}
-                    <ArrowRight className="size-3" />
-                  </Link>
-                  <span className="h-3 w-px bg-border" />
-                  <Link
                     href={contentData.latestPublications?.viewAllHref ?? "/publications"}
                     className="inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
                   >
@@ -364,10 +246,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid gap-10 lg:grid-cols-12">
-                {/* Publications — 2/3 */}
-                <div className="lg:col-span-8">
-                  <div className="grid gap-px bg-border sm:grid-cols-2">
+              {/* Publications — full width now that the team rail moved out */}
+              <div className="grid gap-px bg-border sm:grid-cols-2">
                     {latest.map((pub: any, i: number) => (
                       <article
                         key={pub.id ?? `latest-${i}`}
@@ -407,251 +287,7 @@ export default function Home() {
                         )}
                       </article>
                     ))}
-                  </div>
-                </div>
-
-                {/* Team sidebar — 1/3 */}
-                <aside className="lg:col-span-4">
-                  <div className="rounded-2xl border border-border bg-background p-6">
-
-                    {/* Principal Investigator */}
-                    {piMember && (
-                      <div>
-                        <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
-                          {piLabel}
-                        </span>
-                        <div className="mt-4 flex items-center gap-3">
-                          {piMember.imagePath ? (
-                            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full border border-border">
-                              <Image
-                                src={getImageUrl(piMember.imagePath)}
-                                alt={piMember.name}
-                                fill
-                                sizes="80px"
-                                className="object-cover"
-                              />
-                            </div>
-                          ) : (
-                            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-muted">
-                              <span className="font-mono text-[14px] uppercase tracking-[0.15em] text-muted-foreground">
-                                {piMember.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
-                              </span>
-                            </div>
-                          )}
-                          <div className="min-w-0">
-                            <p className="text-[16px] font-medium leading-snug text-foreground">
-                              {piMember.name}
-                            </p>
-                            <p className="text-[14px] leading-snug text-muted-foreground">
-                              {piMember.role}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Researchers */}
-                    {researchers.length > 0 && (
-                      <div className="mt-6 border-t border-border pt-5">
-                        <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
-                          {contentData.latestPublications?.researchersLabel ?? "Researchers"}
-                        </span>
-                        <div className="mt-4 space-y-3">
-                          {researchers.slice(0, 5).map((m, i) => (
-                            <div key={i} className="flex items-center gap-3">
-                              {m.imagePath ? (
-                                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-border">
-                                  <Image
-                                    src={getImageUrl(m.imagePath)}
-                                    alt={m.name}
-                                    fill
-                                    sizes="64px"
-                                    className="object-cover"
-                                  />
-                                </div>
-                              ) : (
-                                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-muted">
-                                  <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
-                                    {m.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
-                                  </span>
-                                </div>
-                              )}
-                              <div className="min-w-0">
-                                <p className="text-[17px] font-medium leading-snug text-foreground truncate">
-                                  {m.name}
-                                </p>
-                                <p className="text-[17px] leading-snug text-muted-foreground truncate">
-                                  {m.role}
-                                </p>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    <Link
-                      href="/people"
-                      className="mt-6 inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-primary transition-colors hover:text-primary/70"
-                    >
-                      {contentData.latestPublications?.allMembersLabel ?? "All members"}
-                      <ArrowRight className="size-3" />
-                    </Link>
-                  </div>
-                </aside>
               </div>
-
-              {/* Featured researchers — full width below */}
-              {(() => {
-                const allSectionsMembers = (contentData.team?.sections ?? []).flatMap((s: any) => s.members ?? []);
-                const featured: any[] = [];
-                const sheza = allSectionsMembers.find((m: any) => m.name.toLowerCase().includes("sheza"));
-                const rama = allSectionsMembers.find((m: any) => m.name.toLowerCase().includes("ramaravind"));
-                if (sheza) featured.push(sheza);
-                if (rama) featured.push(rama);
-                if (featured.length === 0) return null;
-                return (
-                  <div className="mt-10">
-                    <span className="font-mono text-[13px] uppercase tracking-[0.18em] text-muted-foreground">
-                      {contentData.latestPublications?.featuredResearcherLabel ?? "Featured researcher"}
-                    </span>
-                    <div className="mt-4 grid gap-6 md:grid-cols-2">
-                      {featured.map((fullData, fIdx) => (
-                        <div key={fIdx} className="rounded-2xl border border-border bg-background p-7">
-                          <div className="flex items-center gap-4">
-                            {fullData.imagePath ? (
-                              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full border border-border">
-                                <Image
-                                  src={getImageUrl(fullData.imagePath)}
-                                  alt={fullData.name}
-                                  fill
-                                  sizes="80px"
-                                  className="object-cover"
-                                />
-                              </div>
-                            ) : (
-                              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                                <span className="font-mono text-[17px] uppercase tracking-[0.12em] text-primary">
-                                  {fullData.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
-                                </span>
-                              </div>
-                            )}
-                            <div>
-                              <p className="text-[19px] font-medium text-foreground">{fullData.name}</p>
-                              <p className="text-[16px] text-muted-foreground">{fullData.focus}</p>
-                            </div>
-                          </div>
-                          {fullData.bio && (
-                            <p className="mt-4 text-[19px] leading-relaxed text-foreground/80 line-clamp-3">
-                              {fullData.bio}
-                            </p>
-                          )}
-                          {fullData.areasOfInterest && fullData.areasOfInterest.length > 0 && (
-                            <div className="mt-3 flex flex-wrap gap-1.5">
-                              {fullData.areasOfInterest.slice(0, 4).map((a: string, i: number) => (
-                                <span
-                                  key={i}
-                                  className="rounded-full border border-border bg-muted/40 px-2.5 py-0.5 font-mono text-[12px] uppercase tracking-[0.12em] text-muted-foreground"
-                                >
-                                  {a}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                          {fullData.awards && fullData.awards.length > 0 && (
-                            <div className="mt-4">
-                              <span className="font-mono text-[12px] uppercase tracking-[0.16em] text-muted-foreground">
-                                {contentData.latestPublications?.awardsLabel ?? "Awards"}
-                              </span>
-                              <div className="mt-2 space-y-1.5">
-                                {fullData.awards.map((aw: string, ai: number) => (
-                                  <div
-                                    key={ai}
-                                    className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/8 px-3 py-1 font-mono text-[12px] uppercase tracking-[0.12em] text-accent-foreground"
-                                  >
-                                    <svg viewBox="0 0 24 24" className="size-2.5 fill-accent" aria-hidden>
-                                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                    </svg>
-                                    {aw}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                          {fullData.links && fullData.links[0] && (
-                            <Link
-                              href={fullData.links[0].url}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="mt-3 inline-flex items-center gap-1 font-mono text-[16px] uppercase tracking-[0.16em] text-primary transition-colors hover:text-primary/70"
-                            >
-                              {fullData.links[0].label}
-                              <ArrowRight className="size-2.5" />
-                            </Link>
-                          )}
-
-                          {/* Contributed publications */}
-                          {(() => {
-                            const nameParts = fullData.name.toLowerCase().split(" ");
-                            const nameKey = nameParts[0];
-                            const pubs: any[] = [];
-                            for (const [y, bucket] of Object.entries(contentData.publications.years ?? {})) {
-                              for (const items of Object.values(bucket as any)) {
-                                if (!Array.isArray(items)) continue;
-                                for (const p of items) {
-                                  if (p.authors && p.authors.toLowerCase().includes(nameKey)) {
-                                    pubs.push({ year: y, ...p });
-                                  }
-                                }
-                              }
-                            }
-                            const top = pubs.sort((a, b) => (a.year < b.year ? 1 : -1)).slice(0, 3);
-                            if (top.length === 0) return null;
-                            return (
-                              <div className="mt-5 border-t border-border pt-4">
-                                <span className="font-mono text-[12px] uppercase tracking-[0.16em] text-muted-foreground">
-                                  {contentData.latestPublications?.recentPublicationsLabel ?? "Recent publications"}
-                                </span>
-                                <ul className="mt-3 space-y-2.5">
-                                  {top.map((p, pi) => (
-                                    <li key={pi}>
-                                      {p.award && (
-                                        <span className="mb-1 inline-flex items-center gap-1 rounded-full border border-accent/30 bg-accent/8 px-2 py-0.5 font-mono text-[11px] uppercase tracking-[0.12em] text-accent-foreground">
-                                          <svg viewBox="0 0 24 24" className="size-2 fill-accent" aria-hidden>
-                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                          </svg>
-                                          {p.award}
-                                        </span>
-                                      )}
-                                      <p className="text-[16px] leading-snug text-foreground">
-                                        {p.url ? (
-                                          <Link
-                                            href={p.url}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="underline decoration-primary/20 underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
-                                          >
-                                            {p.title}
-                                          </Link>
-                                        ) : (
-                                          p.title
-                                        )}
-                                      </p>
-                                      <p className="mt-0.5 font-mono text-[13px] uppercase tracking-[0.1em] text-primary/70">
-                                        {p.venue ? `${p.venue} \u00B7 ` : ""}{p.year}
-                                      </p>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            );
-                          })()}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })()}
             </div>
           </section>
         );
@@ -699,37 +335,6 @@ export default function Home() {
               );
             })}
           </ul>
-        </div>
-      </section>
-
-      {/* PILLARS — three columns, hairline borders, no shadows */}
-      <section data-section="approach" data-section-label="Approach">
-        <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-          <div className="mb-12 border-b border-border pb-4">
-            <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
-              {homePillars.eyebrow}
-            </span>
-          </div>
-
-          <div className="grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
-            {pillars.map((pillar, index) => {
-              const Icon = iconMap[pillar.icon as IconName] ?? iconMap.Sparkles;
-              return (
-                <article
-                  key={pillar.id}
-                  className="bg-background p-8 transition-colors hover:bg-muted/40 sm:p-10"
-                >
-                  <Icon className="size-4 text-primary" />
-                  <h3 className="mt-10 type-subhead text-foreground">
-                    {pillar.title}
-                  </h3>
-                  <p className="mt-3 type-body text-muted-foreground">
-                    {pillar.body}
-                  </p>
-                </article>
-              );
-            })}
-          </div>
         </div>
       </section>
     </main>

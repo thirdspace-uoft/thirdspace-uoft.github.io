@@ -7,7 +7,6 @@ import {
   ShieldCheck,
   Sparkles,
   Layout,
-  Layers,
   MapPin,
   Compass,
   FileCode,
@@ -115,7 +114,7 @@ export default function AdminPage() {
                 DRAFT.ENV
               </div>
               <h1 className="text-3xl font-bold tracking-tight text-foreground font-serif leading-tight">
-                Architectural CMS for Thirdspace.
+                Architectural CMS for ThirdSpace.
               </h1>
               <p className="text-xs leading-relaxed text-muted-foreground">
                 This environment manages content layouts, coordinates, and team modules across UofT campus networks. Commits are pushed directly to main production trees via securely signed local keys.
@@ -241,7 +240,7 @@ function SignedInView({
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Form tab selection
-  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "pillars" | "homePillars" | "navbar" | "footerLabs" | "location" | "marquee" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications">("layout");
+  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications">("layout");
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const IMAGEKIT_URL_ENDPOINT = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
@@ -300,14 +299,6 @@ function SignedInView({
         [field]: value,
       },
     }));
-  };
-
-  const handlePillarChange = (index: number, field: string, value: string) => {
-    setContent((prev: any) => {
-      const pillars = [...prev.pillars];
-      pillars[index] = { ...pillars[index], [field]: value };
-      return { ...prev, pillars };
-    });
   };
 
   const handleListItemChange = (section: string, index: number, field: string, value: string | boolean) => {
@@ -493,13 +484,6 @@ function SignedInView({
     });
   };
 
-  const handleHomePillarsFieldChange = (field: string, value: string) => {
-    setContent((prev: any) => ({
-      ...prev,
-      homePillars: { ...prev.homePillars, [field]: value },
-    }));
-  };
-
   const handleResearchDomainColSpanChange = (index: number, value: string) => {
     setContent((prev: any) => {
       const items = [...prev.researchDomains.items];
@@ -513,14 +497,6 @@ function SignedInView({
       const items = [...prev.researchDomains.items];
       items[index] = { ...items[index], accent: value };
       return { ...prev, researchDomains: { ...prev.researchDomains, items } };
-    });
-  };
-
-  const handlePillarIconChange = (index: number, value: string) => {
-    setContent((prev: any) => {
-      const pillars = [...prev.pillars];
-      pillars[index] = { ...pillars[index], icon: value };
-      return { ...prev, pillars };
     });
   };
 
@@ -624,17 +600,14 @@ function SignedInView({
     { id: "hero" as const, label: "02. Hero Banner", icon: Layout },
     { id: "home" as const, label: "03. Home Meta", icon: Sparkles },
     { id: "groupOverview" as const, label: "04. Group Overview", icon: Layout },
-    { id: "homePillars" as const, label: "05. Home Pillars", icon: Layers },
-    { id: "pillars" as const, label: "06. Core Pillars", icon: Layers },
-    { id: "professor" as const, label: "07. Professor", icon: ShieldCheck },
-    { id: "researchDomains" as const, label: "08. Research Domains", icon: Database },
-    { id: "marquee" as const, label: "09. Marquee Band", icon: Sparkles },
-    { id: "about" as const, label: "10. Latest Research", icon: FileCode },
-    { id: "team" as const, label: "11. People", icon: Users },
-    { id: "publications" as const, label: "12. Publications", icon: BookOpenCheck },
-    { id: "navbar" as const, label: "13. Nav Settings", icon: Compass },
-    { id: "footerLabs" as const, label: "14. Lab & Campuses", icon: Database },
-    { id: "location" as const, label: "15. Campus Location", icon: MapPin },
+    { id: "professor" as const, label: "05. Professor", icon: ShieldCheck },
+    { id: "researchDomains" as const, label: "06. Research Domains", icon: Database },
+    { id: "about" as const, label: "07. Latest Research", icon: FileCode },
+    { id: "team" as const, label: "08. People", icon: Users },
+    { id: "publications" as const, label: "09. Publications", icon: BookOpenCheck },
+    { id: "navbar" as const, label: "10. Nav Settings", icon: Compass },
+    { id: "footerLabs" as const, label: "11. Lab & Campuses", icon: Database },
+    { id: "location" as const, label: "12. Campus Location", icon: MapPin },
   ];
 
   if (loading) {
@@ -671,7 +644,7 @@ function SignedInView({
             </div>
             {sidebarOpen && (
               <span className="text-xs font-bold font-mono uppercase tracking-widest text-foreground">
-                Thirdspace.CMS
+                ThirdSpace.CMS
               </span>
             )}
           </div>
@@ -856,26 +829,6 @@ function SignedInView({
                   </div>
 
                   <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-1">
-                        <Label htmlFor="hero-badge" className="text-[12px] font-mono uppercase text-muted-foreground">Eyebrow Banner</Label>
-                        <Input
-                          id="hero-badge"
-                          value={content.hero.badge}
-                          onChange={(e) => handleFieldChange("hero", "badge", e.target.value)}
-                          className="font-mono text-xs"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label htmlFor="hero-location" className="text-[12px] font-mono uppercase text-muted-foreground">Location Chip</Label>
-                        <Input
-                          id="hero-location"
-                          value={content.hero.locationChip ?? ""}
-                          onChange={(e) => handleFieldChange("hero", "locationChip", e.target.value)}
-                          className="font-mono text-xs"
-                        />
-                      </div>
-                    </div>
                     <div className="space-y-1">
                       <Label className="text-[12px] font-mono uppercase text-muted-foreground">Headline Line 1</Label>
                       <Input value={content.hero.headlineLine1 ?? ""} onChange={(e) => handleFieldChange("hero", "headlineLine1", e.target.value)} className="font-serif font-bold" />
@@ -918,36 +871,7 @@ function SignedInView({
                         />
                       </div>
                     </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Research Posture Label</Label>
-                      <Input value={content.hero.researchPostureLabel ?? ""} onChange={(e) => handleFieldChange("hero", "researchPostureLabel", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Research Posture Body</Label>
-                      <textarea
-                        rows={2}
-                        value={content.hero.researchPostureBody ?? ""}
-                        onChange={(e) => handleFieldChange("hero", "researchPostureBody", e.target.value)}
-                        className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed"
-                      />
-                    </div>
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Methods Label</Label>
-                        <Input value={content.hero.methodsLabel ?? ""} onChange={(e) => handleFieldChange("hero", "methodsLabel", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Methods Value</Label>
-                        <Input value={content.hero.methodsValue ?? ""} onChange={(e) => handleFieldChange("hero", "methodsValue", e.target.value)} className="text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Focus Label</Label>
-                        <Input value={content.hero.focusLabel ?? ""} onChange={(e) => handleFieldChange("hero", "focusLabel", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Focus Value</Label>
-                        <Input value={content.hero.focusValue ?? ""} onChange={(e) => handleFieldChange("hero", "focusValue", e.target.value)} className="text-xs" />
-                      </div>
                       <div className="space-y-1">
                         <Label className="text-[12px] font-mono uppercase text-muted-foreground">Group Photo Path</Label>
                         <div className="flex gap-2">
@@ -1024,79 +948,6 @@ function SignedInView({
                       <Input value={content.home.groupOverviewFigLabel ?? ""} onChange={(e) => handleFieldChange("home", "groupOverviewFigLabel", e.target.value)} className="font-mono text-xs" />
                     </div>
                   </div>
-                </div>
-              )}
-
-              {activeTab === "homePillars" && content?.homePillars && (
-                <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
-                  <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">HP1</div>
-                  <div className="mb-2">
-                    <span className="text-[12px] font-mono uppercase tracking-widest text-muted-foreground">Draft Sheet</span>
-                    <h3 className="text-base font-bold text-foreground font-serif">Home Pillars Section</h3>
-                    <p className="text-[13px] text-muted-foreground">Eyebrow label for the home page pillars block.</p>
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-[12px] font-mono uppercase text-muted-foreground">Eyebrow</Label>
-                    <Input value={content.homePillars.eyebrow ?? ""} onChange={(e) => handleHomePillarsFieldChange("eyebrow", e.target.value)} className="font-mono text-xs" />
-                  </div>
-                </div>
-              )}
-
-              {activeTab === "pillars" && content?.pillars && (
-                <div className="space-y-4">
-                  <div className="mb-4">
-                    <span className="text-[12px] font-mono uppercase tracking-widest text-muted-foreground">Draft Sheet</span>
-                    <h3 className="text-base font-bold text-foreground font-serif">Core Pillars</h3>
-                    <p className="text-[13px] text-muted-foreground">Modify structural information cards displayed across layout grids.</p>
-                  </div>
-                  {content.pillars.map((pillar: any, index: number) => (
-                    <div key={pillar.id} className="relative bg-card border border-border rounded p-6 shadow-sm">
-                      <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">
-                        P0{index + 1}
-                      </div>
-
-                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                        <div className="sm:col-span-1 space-y-1">
-                          <Label htmlFor={`p-id-${index}`} className="text-[12px] font-mono uppercase text-muted-foreground">ID Slug</Label>
-                          <Input
-                            id={`p-id-${index}`}
-                            value={pillar.id ?? ""}
-                            onChange={(e) => handlePillarChange(index, "id", e.target.value)}
-                            className="font-mono text-xs text-muted-foreground"
-                            placeholder="pillar-..."
-                          />
-                        </div>
-                        <div className="sm:col-span-1 space-y-1">
-                          <Label htmlFor={`p-icon-${index}`} className="text-[12px] font-mono uppercase text-muted-foreground">Icon Name (Lucide)</Label>
-                          <Input
-                            id={`p-icon-${index}`}
-                            value={pillar.icon ?? ""}
-                            onChange={(e) => handlePillarIconChange(index, e.target.value)}
-                            className="font-mono text-xs text-muted-foreground"
-                            placeholder="Users, Sparkles, ..."
-                          />
-                        </div>
-                        <div className="sm:col-span-1 space-y-1">
-                          <Label htmlFor={`p-title-${index}`} className="text-[12px] font-mono uppercase text-muted-foreground">Title Accent</Label>
-                          <Input
-                            id={`p-title-${index}`}
-                            value={pillar.title}
-                            onChange={(e) => handlePillarChange(index, "title", e.target.value)}
-                            className="font-mono text-xs font-bold"
-                          />
-                        </div>
-                        <div className="sm:col-span-3 space-y-1">
-                          <Label htmlFor={`p-body-${index}`} className="text-[12px] font-mono uppercase text-muted-foreground">Supporting Content</Label>
-                          <Input
-                            id={`p-body-${index}`}
-                            value={pillar.body}
-                            onChange={(e) => handlePillarChange(index, "body", e.target.value)}
-                            className="text-xs"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               )}
 
@@ -1449,33 +1300,6 @@ function SignedInView({
                 </div>
               )}
 
-              {activeTab === "marquee" && content?.marquee && (
-                <div className="relative bg-card border border-border rounded p-6 shadow-sm">
-                  <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">
-                    M01
-                  </div>
-                  <div className="mb-6">
-                    <h2 className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Marquee Band</h2>
-                    <h3 className="text-base font-bold text-foreground font-serif">Scrolling keywords</h3>
-                    <p className="text-[13px] text-muted-foreground">One keyword per line. These cycle across the marquee strip.</p>
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-[12px] font-mono uppercase text-muted-foreground">Keywords (one per line)</Label>
-                    <textarea
-                      rows={12}
-                      value={content.marquee.keywords.join("\n")}
-                      onChange={(e) =>
-                        setContent((prev: any) => ({
-                          ...prev,
-                          marquee: { keywords: e.target.value.split("\n").map((k: string) => k.trim()).filter(Boolean) },
-                        }))
-                      }
-                      className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-mono leading-relaxed"
-                    />
-                  </div>
-                </div>
-              )}
-
               {activeTab === "groupOverview" && content?.groupOverview && (
                 <div className="space-y-4">
                   <div className="mb-2">
@@ -1485,33 +1309,6 @@ function SignedInView({
 
                   <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
                     <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">G01</div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Eyebrow Label</Label>
-                        <Input value={content.groupOverview.eyebrow} onChange={(e) => handleFieldChange("groupOverview", "eyebrow", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Location Chip</Label>
-                        <Input value={content.groupOverview.locationChip} onChange={(e) => handleFieldChange("groupOverview", "locationChip", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Headline</Label>
-                      <Input value={content.groupOverview.headline} onChange={(e) => handleFieldChange("groupOverview", "headline", e.target.value)} className="font-serif font-bold" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Body Paragraph</Label>
-                      <textarea
-                        rows={5}
-                        value={content.groupOverview.body}
-                        onChange={(e) => handleFieldChange("groupOverview", "body", e.target.value)}
-                        className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Profile Panel Label ("Glance")</Label>
-                      <Input value={content.groupOverview.glanceLabel} onChange={(e) => handleFieldChange("groupOverview", "glanceLabel", e.target.value)} className="font-mono text-xs" />
-                    </div>
                   </div>
 
                   <div className="space-y-3">
@@ -1708,10 +1505,6 @@ function SignedInView({
                       <Input value={content.latestPublications.viewAllLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "viewAllLabel", e.target.value)} className="font-mono text-xs" />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Team View All Label</Label>
-                      <Input value={content.latestPublications.teamViewAllLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "teamViewAllLabel", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
                       <Label className="text-[12px] font-mono uppercase text-muted-foreground">PI Label</Label>
                       <Input value={content.latestPublications.piLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "piLabel", e.target.value)} className="font-mono text-xs" />
                     </div>
@@ -1722,18 +1515,6 @@ function SignedInView({
                     <div className="space-y-1">
                       <Label className="text-[12px] font-mono uppercase text-muted-foreground">All Members Label</Label>
                       <Input value={content.latestPublications.allMembersLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "allMembersLabel", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Featured Researcher Label</Label>
-                      <Input value={content.latestPublications.featuredResearcherLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "featuredResearcherLabel", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Awards Label</Label>
-                      <Input value={content.latestPublications.awardsLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "awardsLabel", e.target.value)} className="font-mono text-xs" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Recent Publications Label</Label>
-                      <Input value={content.latestPublications.recentPublicationsLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "recentPublicationsLabel", e.target.value)} className="font-mono text-xs" />
                     </div>
                     <div className="space-y-1">
                       <Label className="text-[12px] font-mono uppercase text-muted-foreground">Max To Show</Label>
@@ -1912,28 +1693,8 @@ function SignedInView({
                         <Input value={content.team.principalInvestigatorRole ?? ""} onChange={(e) => handleFieldChange("team", "principalInvestigatorRole", e.target.value)} className="font-mono text-xs" />
                       </div>
                       <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Roster Word</Label>
-                        <Input value={content.team.heroRosterWord ?? ""} onChange={(e) => handleFieldChange("team", "heroRosterWord", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
                         <Label className="text-[12px] font-mono uppercase text-muted-foreground">PI Row Bio Glance</Label>
                         <Input value={content.team.piRowBioGlance ?? ""} onChange={(e) => handleFieldChange("team", "piRowBioGlance", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Active Member (singular)</Label>
-                        <Input value={content.team.activeMembersWordSingular ?? ""} onChange={(e) => handleFieldChange("team", "activeMembersWordSingular", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Active Members (plural)</Label>
-                        <Input value={content.team.activeMembersWordPlural ?? ""} onChange={(e) => handleFieldChange("team", "activeMembersWordPlural", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Section (singular)</Label>
-                        <Input value={content.team.sectionsCountSingular ?? ""} onChange={(e) => handleFieldChange("team", "sectionsCountSingular", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Sections (plural)</Label>
-                        <Input value={content.team.sectionsCountPlural ?? ""} onChange={(e) => handleFieldChange("team", "sectionsCountPlural", e.target.value)} className="font-mono text-xs" />
                       </div>
                       <div className="space-y-1">
                         <Label className="text-[12px] font-mono uppercase text-muted-foreground">Member (singular)</Label>
@@ -2014,14 +1775,18 @@ function SignedInView({
                       <Input value={content.publications.pageTitle ?? ""} onChange={(e) => handlePublicationFieldChange("pageTitle", e.target.value)} className="font-mono text-xs" />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Page Subhead</Label>
+                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Page Subhead (fallback)</Label>
                       <textarea rows={2} value={content.publications.pageSubhead ?? ""} onChange={(e) => handlePublicationFieldChange("pageSubhead", e.target.value)} className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
                     </div>
+                    <div className="space-y-1">
+                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">CTA Link Text</Label>
+                      <textarea rows={2} value={content.publications.ctaLabel ?? ""} onChange={(e) => handlePublicationFieldChange("ctaLabel", e.target.value)} className="w-full text-xs p-3 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">CTA URL (blank = show subhead instead)</Label>
+                      <Input value={content.publications.ctaUrl ?? ""} onChange={(e) => handlePublicationFieldChange("ctaUrl", e.target.value)} className="font-mono text-xs" />
+                    </div>
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Eyebrow</Label>
-                        <Input value={content.publications.pageEyebrow} onChange={(e) => handleFieldChange("publications", "pageEyebrow", e.target.value)} className="font-mono text-xs" />
-                      </div>
                       <div className="space-y-1">
                         <Label className="text-[12px] font-mono uppercase text-muted-foreground">Headline</Label>
                         <Input value={content.publications.pageHeadline} onChange={(e) => handleFieldChange("publications", "pageHeadline", e.target.value)} className="font-mono text-xs" />
@@ -2049,10 +1814,6 @@ function SignedInView({
                         <Input value={content.publications.doiPrefix ?? ""} onChange={(e) => handlePublicationFieldChange("doiPrefix", e.target.value)} className="font-mono text-xs" />
                       </div>
                       <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Index Word</Label>
-                        <Input value={content.publications.indexWord ?? ""} onChange={(e) => handlePublicationFieldChange("indexWord", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
                         <Label className="text-[12px] font-mono uppercase text-muted-foreground">Book Cover Placeholder</Label>
                         <Input value={content.publications.bookCoverPlaceholder ?? ""} onChange={(e) => handlePublicationFieldChange("bookCoverPlaceholder", e.target.value)} className="font-mono text-xs" />
                       </div>
@@ -2063,10 +1824,6 @@ function SignedInView({
                       <div className="space-y-1">
                         <Label className="text-[12px] font-mono uppercase text-muted-foreground">Award Badge Label</Label>
                         <Input value={content.publications.awardBadgeLabel ?? ""} onChange={(e) => handlePublicationFieldChange("awardBadgeLabel", e.target.value)} className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Venues Label</Label>
-                        <Input value={content.publications.venuesLabel ?? ""} onChange={(e) => handlePublicationFieldChange("venuesLabel", e.target.value)} className="font-mono text-xs" />
                       </div>
                       <div className="space-y-1">
                         <Label className="text-[12px] font-mono uppercase text-muted-foreground">View Paper Label</Label>

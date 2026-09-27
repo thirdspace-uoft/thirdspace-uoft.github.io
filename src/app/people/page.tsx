@@ -227,30 +227,11 @@ export default function PeoplePage() {
 
   const sectionId = (role: string) => role.toLowerCase().replace(/[\s/]+/g, "-").replace(/[^a-z0-9-]/g, "");
 
-  const totalMembers = 1 + team.sections.reduce((acc, s) => {
-    const list = (s.members ?? []) as Member[];
-    return acc + list.length;
-  }, 0);
-
   return (
     <main className="bg-background">
       {/* Hero — meta strip + headline */}
       <section data-section="team" data-section-label="People" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-20">
-          <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-4">
-            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
-              {`${team.heroRosterWord} \u00B7 ${new Date().getFullYear()}`}
-            </span>
-            <span className="hidden h-3 w-px bg-border sm:block" />
-            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
-              {`${totalMembers} ${totalMembers === 1 ? team.activeMembersWordSingular : team.activeMembersWordPlural}`}
-            </span>
-            <span className="hidden h-3 w-px bg-border sm:block" />
-            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
-              {`${team.sections.length + 1} ${(team.sections.length + 1) === 1 ? team.sectionsCountSingular : team.sectionsCountPlural}`}
-            </span>
-          </div>
-
           <div className="grid gap-10 lg:grid-cols-12">
             <h1 className="type-display min-w-0 text-foreground lg:col-span-8">
               {team.pageHeadline}

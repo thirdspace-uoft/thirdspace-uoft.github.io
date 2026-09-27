@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, BookOpen, FileText } from "lucide-react";
+import { ArrowUpRight, FileText } from "lucide-react";
 
 import { getImageUrl } from "@/lib/utils";
 import { getContent } from "@/lib/content";
@@ -15,31 +15,12 @@ export const metadata = {
 };
 const books = (publications.books ?? []) as Book[];
 const years = (publications.years ?? {}) as Record<string, YearBucket>;
-const yearKeys = Object.keys(years).sort((a, b) =>
-  a < b ? 1 : a > b ? -1 : 0,
-);
 
-// Compute total publications across all years
-const totalPubs = yearKeys.reduce((acc, y) => {
-  const b = years[y];
-  return (
-    acc +
-    (b.journalArticles?.length ?? 0) +
-    (b.conferenceProceedings?.length ?? 0) +
-    (b.extendedAbstracts?.length ?? 0) +
-    (b.researchArtifacts?.length ?? 0)
-  );
-}, 0);
-
-// Collect unique venues
-const venues = new Set<string>();
-yearKeys.forEach((y) => {
-  const b = years[y];
-  [b.journalArticles, b.conferenceProceedings, b.extendedAbstracts, b.researchArtifacts]
-    .flat()
-    .filter(Boolean)
-    .forEach((p) => { if (p?.venue) venues.add(p.venue); });
-});
+// Only render the most recent decade-plus of work (2016 onward).
+const FIRST_VISIBLE_YEAR = "2016";
+const yearKeys = Object.keys(years)
+  .filter((y) => y >= FIRST_VISIBLE_YEAR)
+  .sort((a, b) => (a < b ? 1 : a > b ? -1 : 0));
 
 type Pub = {
   id?: string;
@@ -311,19 +292,7 @@ export default function PublicationsPage() {
       {/* ── Hero ── */}
       <section data-section="publications" data-section-label="Publications" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 pt-16 pb-20 sm:px-8 sm:pt-24 sm:pb-24">
-          {/* Meta strip */}
-          <div className="mb-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-4 sm:mb-16">
-            <span className="inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
-              <BookOpen className="size-3 text-primary" />
-              {publications.pageEyebrow}
-            </span>
-            <span className="hidden h-3 w-px bg-border sm:block" />
-            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
-              {`${publications.indexWord} \u00B7 ${yearKeys.length} ${yearKeys.length === 1 ? publications.yearSingular : publications.yearPlural}`}
-            </span>
-          </div>
-
-          {/* Headline + subhead */}
+          {/* Headline + CTA */}
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
             <div className="lg:col-span-8">
               <h1 className="font-heading text-[clamp(2.25rem,5vw,4.5rem)] font-medium leading-[1.02] tracking-[-0.035em] text-foreground">
@@ -331,38 +300,24 @@ export default function PublicationsPage() {
               </h1>
             </div>
             <aside className="space-y-6 lg:col-span-4 lg:pt-3">
-              <p className="max-w-prose text-pretty text-base leading-7 text-muted-foreground">
-                {publications.pageSubhead}
-              </p>
+              {publications.ctaUrl ? (
+                <Link
+                  href={publications.ctaUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group/cta inline-flex items-start gap-2 text-lg font-medium leading-snug tracking-[-0.02em] text-primary transition-colors hover:text-foreground"
+                >
+                  <span className="underline decoration-primary/30 decoration-1 underline-offset-[5px] transition-colors group-hover/cta:decoration-primary">
+                    {publications.ctaLabel}
+                  </span>
+                  <ArrowUpRight className="mt-1 size-4 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover/cta:opacity-100" />
+                </Link>
+              ) : (
+                <p className="max-w-prose text-pretty text-base leading-7 text-muted-foreground">
+                  {publications.pageSubhead}
+                </p>
+              )}
             </aside>
-          </div>
-
-          {/* Stats row */}
-          <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border sm:mt-16 sm:grid-cols-3">
-            <div className="flex flex-col gap-1 bg-background px-5 py-5">
-              <span className="font-heading text-2xl font-medium tabular-nums tracking-[-0.03em] text-foreground sm:text-3xl">
-                {totalPubs + books.length}
-              </span>
-              <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted-foreground">
-                {totalPubs + books.length === 1 ? publications.entriesCountSingular : publications.entriesCountPlural}
-              </span>
-            </div>
-            <div className="flex flex-col gap-1 bg-background px-5 py-5">
-              <span className="font-heading text-2xl font-medium tabular-nums tracking-[-0.03em] text-foreground sm:text-3xl">
-                {venues.size}
-              </span>
-              <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted-foreground">
-                {publications.venuesLabel}
-              </span>
-            </div>
-            <div className="col-span-2 flex flex-col gap-1 bg-background px-5 py-5 sm:col-span-1">
-              <span className="font-heading text-2xl font-medium tabular-nums tracking-[-0.03em] text-foreground sm:text-3xl">
-                {yearKeys.length}
-              </span>
-              <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted-foreground">
-                {yearKeys.length === 1 ? publications.yearSingular : publications.yearPlural}
-              </span>
-            </div>
           </div>
         </div>
       </section>

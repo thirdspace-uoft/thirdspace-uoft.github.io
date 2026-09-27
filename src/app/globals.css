@@ -157,13 +157,32 @@
     line-height: 1.5rem;
     font-weight: 400;
   }
+
+  /* Researcher rail marquee. The roster is rendered twice, so translating by
+     -50% lands exactly on the copy and the loop is seamless. Playback is
+     paused from JS (animation-play-state) on hover, focus, and via the
+     pause control, so no pause affordance is baked into the keyframes. */
+  .rail-track {
+    animation-name: rail-marquee;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+
+  /* Motion-sensitive visitors get the static row; the preview still opens on
+     hover and focus, and every tile is still a link. */
+  @media (prefers-reduced-motion: reduce) {
+    .rail-track {
+      animation: none;
+    }
+  }
 }
 
-/* Marquee animation for hero keyword band */
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.animate-marquee {
-  animation: marquee 30s linear infinite;
+@keyframes rail-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
