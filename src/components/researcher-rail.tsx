@@ -5,11 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
-import { getImageUrl } from "@/lib/utils";
+import { getAssetPath, getImageUrl } from "@/lib/utils";
 
 export type RailMember = {
   name: string;
   role: string;
+  /** Fragment on /people addressing this person — see `memberAnchor`. */
+  anchor?: string;
   imagePath?: string;
   bio?: string;
   areasOfInterest?: string[];
@@ -134,14 +136,26 @@ export function ResearcherRail({
     >
       {[...members, ...members].map((m, i) => {
         const duplicate = i >= members.length;
+        // The tile carries the person's own anchor, so following it lands on
+        // that row's section on /people rather than the top of the page. A
+        // member without an anchor falls back to the plain section link.
+        const href = m.anchor ? `${ctaHref}#${m.anchor}` : ctaHref;
+        // A plain <a>, not next/link. Next's client router re-applies the
+        // fragment on top of the one it already restored from history, so
+        // arriving at /people, going back, and clicking the same tile again
+        // lands on `/people#a/b#a/b` — a fragment no element matches, and the
+        // profile never opens. A native anchor hands the fragment to the
+        // browser, which resolves it once. The trade-off is a full page load
+        // instead of a client transition, which is the right cost here: the
+        // destination is a different route that reads its own JSON anyway.
         return (
           <li
             key={`${m.name}-${i}`}
             className={duplicate ? "shrink-0 rail-duplicate" : "shrink-0"}
             aria-hidden={duplicate || undefined}
           >
-            <Link
-              href={ctaHref}
+            <a
+              href={getAssetPath(href)}
               tabIndex={duplicate ? -1 : undefined}
               onMouseEnter={(e) => show(m, e.currentTarget)}
               onMouseLeave={hide}
@@ -173,7 +187,7 @@ export function ResearcherRail({
                   {m.role}
                 </span>
               </span>
-            </Link>
+            </a>
           </li>
         );
       })}
@@ -245,9 +259,20 @@ export function ResearcherRail({
                   </span>
                 )}
                 <div className="min-w-0 pt-0.5">
-                  <p className="text-[15px] font-semibold leading-snug text-foreground">
+                  {/* Native anchor, for the same reason as the tile: Next's
+                      client router can double the fragment on a
+                      back-then-click-again navigation. */}
+                  <a
+                    href={getAssetPath(
+                      preview.member.anchor
+                        ? `${ctaHref}#${preview.member.anchor}`
+                        : ctaHref,
+                    )}
+                    className="text-[15px] font-semibold leading-snug text-foreground transition-colors hover:text-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    onMouseEnter={clearClose}
+                  >
                     {preview.member.name}
-                  </p>
+                  </a>
                   <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.16em] text-primary">
                     {preview.member.role}
                   </p>

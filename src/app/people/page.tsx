@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 
 import { getImageUrl } from "@/lib/utils";
 import { getContent } from "@/lib/content";
+import { memberAnchor, sectionSlug } from "@/lib/people";
 import { MemberRowClickable } from "@/components/team/member-row-clickable";
 
 const contentData = getContent();
@@ -41,13 +42,24 @@ type AlumniMember = {
  * outbound links. No card chrome — each member is a hairline-divided
  * row inside a role section, reading like a journal masthead.
  */
-function MemberRow({ index, member }: { index: number; member: Member }) {
+function MemberRow({
+  index,
+  member,
+  anchor,
+}: {
+  index: number;
+  member: Member;
+  anchor?: string;
+}) {
   const homepage = member.links?.find((l) => l.url);
   const otherLinks = member.links?.filter((l) => l.url).slice(1) ?? [];
   const hasImage = !!member.imagePath;
 
   return (
-    <article className="grid grid-cols-12 items-center gap-x-6 gap-y-3 border-t border-border py-7 sm:py-8">
+    <article
+      id={anchor}
+      className="grid scroll-mt-24 grid-cols-12 items-center gap-x-6 gap-y-3 border-t border-border py-7 sm:py-8"
+    >
       <div className="col-span-12 sm:col-span-2">
         {hasImage ? (
           <div className="relative aspect-square w-24 overflow-hidden bg-muted sm:w-28">
@@ -182,6 +194,7 @@ function RoleSection({
             {members.map((m, i) => {
               const hasProfile = !!m.bio;
               const glance = m.bioGlance ?? m.focus;
+              const anchor = memberAnchor(role, m.name);
               if (hasProfile) {
                 return (
                   <MemberRowClickable
@@ -201,10 +214,11 @@ function RoleSection({
                     }}
                     labels={profileLabels}
                     bioGlance={glance}
+                    anchor={anchor}
                   />
                 );
               }
-              return <MemberRow key={`${m.name}-${i}`} index={i} member={m} />;
+              return <MemberRow key={`${m.name}-${i}`} index={i} member={m} anchor={anchor} />;
             })}
           </div>
         )}
@@ -225,7 +239,7 @@ export default function PeoplePage() {
       : [],
   };
 
-  const sectionId = (role: string) => role.toLowerCase().replace(/[\s/]+/g, "-").replace(/[^a-z0-9-]/g, "");
+  const sectionId = (role: string) => sectionSlug(role);
 
   return (
     <main className="bg-background">
@@ -262,6 +276,7 @@ export default function PeoplePage() {
               title: pi.title,
               imagePath: pi.imagePath,
             }}
+            anchor={memberAnchor(team.principalInvestigatorRole, pi.name)}
             profile={{
               eyebrow: professor.profileDetailEyebrow,
               bio: professor.bio,

@@ -13,6 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { getImageUrl } from "@/lib/utils";
+import { currentAnchor } from "@/lib/people";
 
 type Profile = {
   eyebrow: string;
@@ -42,24 +43,90 @@ type Props = {
   profile: Profile;
   labels: DetailLabels;
   bioGlance?: string;
+  /** Fragment this row answers to — see `memberAnchor`. */
+  anchor?: string;
 };
+
+/** How long the row stays lit after being jumped to via its anchor. */
+const HIGHLIGHT_MS = 1800;
 
 /**
  * Clickable editorial row that opens a full-profile dialog on click.
  * Mirrors the regular MemberRow but routes every interaction through
  * a single "View full profile" affordance that opens the dialog.
+ *
+ * Each row is also its own deep-link target: arriving on /people with this
+ * member's anchor in the URL scrolls to the row, flashes it, and opens the
+ * profile — so a link minted on the home rail lands on the full profile in
+ * one click. Rows share nothing but the helper, so the page stays a server
+ * component and only this file ships to the client.
  */
-export function MemberRowClickable({ index, member, profile, labels, bioGlance }: Props) {
+export function MemberRowClickable({ index, member, profile, labels, bioGlance, anchor }: Props) {
   const hasImage = !!member.imagePath;
+  const [open, setOpen] = React.useState(false);
+  const [highlighted, setHighlighted] = React.useState(false);
+  const rowRef = React.useRef<HTMLElement>(null);
+
+  // Re-runs on mount and on every hash change, so the row responds both to a
+  // fresh load with a link in the URL and to a later jump to another person.
+  const [hash, setHash] = React.useState(() => currentAnchor());
+
+  React.useEffect(() => {
+    const sync = () => setHash(currentAnchor());
+    // `hashchange` alone misses the hash already present at mount, and
+    // `location.hash` isn't reactive, so both are needed.
+    sync();
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, []);
+
+  const targeted = !!anchor && hash === anchor;
+
+  // A dialog this row opened — by link or by click — must close when the hash
+  // moves on to someone else, or the stale profile stays up over the new row.
+  // Keyed on `hash` as well as `targeted` so a jump to another person closes
+  // this one even when this row is not the new target.
+  React.useEffect(() => {
+    if (!targeted) setOpen(false);
+  }, [hash, targeted]);
+
+  React.useEffect(() => {
+    if (!targeted) return;
+
+    setOpen(true);
+    setHighlighted(true);
+    const hide = setTimeout(() => setHighlighted(false), HIGHLIGHT_MS);
+
+    // Open first, scroll second. Radix locks body scroll while the dialog is
+    // up, which repositions the page — a scrollIntoView issued beforehand
+    // would be undone by that reflow. Doing it on the next frame lets the
+    // lock settle first, so the row lands at the top of the viewport.
+    const frame = requestAnimationFrame(() => {
+      rowRef.current?.scrollIntoView({
+        block: "start",
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
+    });
+
+    return () => {
+      clearTimeout(hide);
+      cancelAnimationFrame(frame);
+    };
+  }, [targeted]);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <article
+          ref={rowRef}
+          id={anchor}
+          data-highlighted={highlighted || undefined}
           role="button"
           tabIndex={0}
           aria-label={`${labels.open} — ${member.name}`}
-          className="group/member grid cursor-pointer grid-cols-12 items-center gap-x-6 gap-y-3 py-7 text-left transition-colors hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 sm:py-8"
+          className="group/member -mx-4 grid cursor-pointer scroll-mt-24 grid-cols-12 items-center gap-x-6 gap-y-3 rounded-lg px-4 py-7 text-left transition-colors hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 data-[highlighted]:bg-primary/8 sm:py-8"
         >
           <div className="col-span-12 flex justify-center sm:col-span-4 lg:col-span-3 sm:justify-start">
             {hasImage ? (

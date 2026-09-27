@@ -16,6 +16,7 @@ import {
 
 import { getImageUrl } from "@/lib/utils";
 import { getContent } from "@/lib/content";
+import { memberAnchor } from "@/lib/people";
 import { ResearcherRail, type RailMember } from "@/components/researcher-rail";
 
 const contentData = getContent();
@@ -191,6 +192,9 @@ export default function Home() {
                       // Singular: the tile names one person, while the section
                       // heading on /people stays plural.
                       role: contentData.latestPublications?.railPhdRoleLabel ?? "PhD Student",
+                      // Addresses this person's row on /people. Minted here with
+                      // the same helper the page uses, so the two can't drift.
+                      anchor: memberAnchor(s.role, m.name),
                       imagePath: m.imagePath,
                       bio: m.bio,
                       areasOfInterest: m.areasOfInterest,
