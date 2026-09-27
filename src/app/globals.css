@@ -111,6 +111,23 @@
   }
   html {
     @apply font-sans;
+    /* The site is a single-column, viewport-width layout: never let a wide
+       descendant (long unbroken string, fixed-width element) introduce a
+       horizontal scrollbar. `clip` also suppresses the scroll container that
+       would otherwise appear. */
+    overflow-x: clip;
+  }
+  body {
+    /* `body` is a flex column, so it is a flex item of `html` and defaults to
+       `min-width: auto` — that lets an overflowing descendant shrink the body
+       below the viewport width and push the navbar's menu button off-screen. */
+    min-width: 0;
+    max-width: 100vw;
+  }
+  /* Long single words (research group names, DOIs, venue strings) must wrap
+     rather than widen the page on narrow screens. */
+  p, h1, h2, h3, h4, li, dd, dt, span, a {
+    overflow-wrap: break-word;
   }
 }
 

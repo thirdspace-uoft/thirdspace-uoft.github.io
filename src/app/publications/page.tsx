@@ -146,7 +146,7 @@ function PubCard({
         {/* Venue + meta chips */}
         <div className="flex flex-wrap items-center gap-2">
           {pub.venue && (
-            <span className="inline-flex items-center gap-1.5 rounded-md bg-muted/80 px-2.5 py-1 font-mono text-[12px] uppercase tracking-[0.15em] text-muted-foreground">
+            <span className="inline-flex min-w-0 items-center gap-1.5 rounded-md bg-muted/80 px-2.5 py-1 font-mono text-[12px] uppercase tracking-[0.15em] text-muted-foreground">
               <FileText className="size-2.5" />
               {pub.venue}
             </span>
@@ -160,13 +160,13 @@ function PubCard({
       </div>
 
       {/* Right column: DOI + link */}
-      <div className="flex items-start gap-2 sm:flex-col sm:items-end sm:gap-1.5 sm:pt-1">
+      <div className="flex min-w-0 items-start gap-2 sm:flex-col sm:items-end sm:gap-1.5 sm:pt-1">
         {pub.doi && (
           <Link
             href={`https://doi.org/${pub.doi}`}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1 rounded-md border border-border/80 bg-background px-2 py-1 font-mono text-[12px] tracking-[0.12em] text-primary transition-colors hover:border-primary/40 hover:bg-primary/5"
+            className="inline-flex min-w-0 items-center gap-1 break-all rounded-md border border-border/80 bg-background px-2 py-1 font-mono text-[12px] tracking-[0.12em] text-primary transition-colors hover:border-primary/40 hover:bg-primary/5"
           >
             {doiPrefix}{pub.doi}
           </Link>

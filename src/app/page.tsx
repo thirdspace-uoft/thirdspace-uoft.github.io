@@ -73,7 +73,7 @@ export default function Home() {
           </div>
           {/* Headline + lede */}
           <div className="grid gap-8 md:gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
-            <div className="lg:col-span-8">
+            <div className="min-w-0 lg:col-span-8">
               <h1 className="type-display text-foreground">
                 <span className="block">{hero.headlineLine1}</span>
                 <span className="block font-semibold text-muted-foreground">
@@ -190,18 +190,18 @@ export default function Home() {
           </div>
 
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
-            <div className="lg:col-span-7">
+            <div className="min-w-0 lg:col-span-7">
               <p className="type-body text-pretty text-muted-foreground/90">
                 {groupOverview.body.split(professor.name)[0]}
                 <a
                   href={professor.website}
                   target="_blank"
                   rel="noreferrer"
-                  className="group/ishtiaque relative inline-flex items-baseline font-medium text-primary underline decoration-accent/70 decoration-2 underline-offset-4 transition-colors after:absolute after:left-0 after:top-full after:h-8 after:w-72 after:content-[''] hover:text-primary/80"
+                  className="group/ishtiaque relative inline-flex items-baseline font-medium text-primary underline decoration-accent/70 decoration-2 underline-offset-4 transition-colors after:absolute after:left-1/2 after:top-full after:h-8 after:w-[min(18rem,calc(100vw-2.5rem))] after:-translate-x-1/2 after:content-[''] hover:text-primary/80"
                   aria-label={`Visit ${professor.name}'s website`}
                 >
                   {professor.name}
-                  <span className="invisible pointer-events-auto absolute left-0 top-full z-50 mt-4 w-72 translate-y-3 rounded-[1.5rem] border border-primary/15 bg-card p-3 opacity-0 shadow-2xl shadow-primary/20 transition-all delay-300 duration-300 before:absolute before:-top-4 before:left-0 before:h-4 before:w-full before:content-[''] group-hover/ishtiaque:visible group-hover/ishtiaque:translate-y-1 group-hover/ishtiaque:opacity-100 group-hover/ishtiaque:delay-75">
+                  <span className="invisible pointer-events-auto absolute top-full left-1/2 z-50 mt-4 w-[min(18rem,calc(100vw-2.5rem))] -translate-x-1/2 translate-y-3 rounded-[1.5rem] border border-primary/15 bg-card p-3 opacity-0 shadow-2xl shadow-primary/20 transition-all delay-300 duration-300 before:absolute before:-top-4 before:left-0 before:h-4 before:w-full before:content-[''] group-hover/ishtiaque:visible group-hover/ishtiaque:translate-y-1 group-hover/ishtiaque:opacity-100 group-hover/ishtiaque:delay-75">
                     <span className="block relative h-60 w-full overflow-hidden rounded-[1.1rem] bg-muted">
                       <Image
                         src={getImageUrl(professor.imagePath)}
@@ -335,7 +335,7 @@ export default function Home() {
         return (
           <section data-section="research" data-section-label="Research" className="border-b border-border">
             <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-              <div className="mb-10 flex items-end justify-between gap-6 border-b border-border pb-4">
+              <div className="mb-10 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b border-border pb-4">
                 <div className="flex items-center gap-3">
                   <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
                     {contentData.latestPublications?.eyebrow}
@@ -345,7 +345,7 @@ export default function Home() {
                     {latestYear}
                   </span>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                   <Link
                     href="/people"
                     className="inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"

@@ -11,7 +11,7 @@ export function BrandMark({ className, variant = "color" }: BrandMarkProps) {
   return (
     <div
       className={
-        "flex items-center gap-3 " + (className ?? "")
+        "flex min-w-0 items-center gap-2 sm:gap-3 " + (className ?? "")
       }
     >
       <img
@@ -19,16 +19,16 @@ export function BrandMark({ className, variant = "color" }: BrandMarkProps) {
         alt={navbar.brandLogoAlt}
         width={150}
         height={40}
-        className="h-10 w-auto object-contain shrink-0"
+        className="h-8 w-auto object-contain shrink-0 sm:h-10"
       />
       <span
         aria-hidden
-        className="h-8 w-px bg-border"
+        className="hidden h-8 w-px bg-border sm:block"
       />
-      <div className="flex flex-col leading-tight">
+      <div className="flex min-w-0 flex-col leading-tight">
         <span
           className={
-            "text-base font-semibold tracking-tight " +
+            "truncate text-base font-semibold tracking-tight " +
             (variant === "reverse" ? "text-primary-foreground" : "text-primary")
           }
         >
@@ -36,7 +36,7 @@ export function BrandMark({ className, variant = "color" }: BrandMarkProps) {
         </span>
         <span
           className={
-            "text-[12px] font-medium uppercase tracking-[0.18em] " +
+            "hidden text-[12px] font-medium uppercase tracking-[0.18em] sm:block " +
             (variant === "reverse"
               ? "text-primary-foreground/70"
               : "text-muted-foreground")

@@ -252,10 +252,10 @@ export default function PeoplePage() {
           </div>
 
           <div className="grid gap-10 lg:grid-cols-12">
-            <h1 className="type-display text-foreground lg:col-span-8">
+            <h1 className="type-display min-w-0 text-foreground lg:col-span-8">
               {team.pageHeadline}
             </h1>
-            <p className="type-body max-w-prose text-pretty text-muted-foreground lg:col-span-4 lg:pt-3">
+            <p className="type-body min-w-0 max-w-prose text-pretty text-muted-foreground lg:col-span-4 lg:pt-3">
               {team.pageBody}
             </p>
           </div>

@@ -78,7 +78,7 @@ function MenuToggle({
       onClick={onClick}
       aria-label={open ? `Close ${navbar.brandName} menu` : `Open ${navbar.brandName} menu`}
       aria-expanded={open}
-      className="group inline-flex flex-col items-center justify-center gap-1.5 px-2 py-2 md:hidden"
+      className="group inline-flex shrink-0 flex-col items-center justify-center gap-1.5 px-2 py-2 md:hidden"
     >
       <span
         aria-hidden
@@ -187,10 +187,10 @@ export function Navbar() {
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link
           href="/"
-          className="flex shrink-0 items-center"
+          className="flex min-w-0 items-center"
           aria-label={`${navbar.brandName} ${layout.homeAriaLabelSuffix}`}
         >
-          <BrandMark />
+          <BrandMark className="min-w-0" />
         </Link>
 
         <DesktopLinks links={links} pathname={pathname} />
