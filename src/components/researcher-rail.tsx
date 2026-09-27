@@ -25,7 +25,9 @@ type ResearcherRailProps = {
 };
 
 const PREVIEW_WIDTH = 336; // 21rem
-const SECONDS_PER_MEMBER = 1.8; // one full loop ≈ 66s for a 37-person roster
+const PREVIEW_GAP = 20; // px of clear space between the card and the tile
+const HIDE_DELAY_MS = 260; // grace period to move pointer from tile to card
+const SECONDS_PER_MEMBER = 2.6; // one full loop ≈ 18s for a 7-person roster
 
 function initialsOf(name: string) {
   return name
@@ -63,42 +65,69 @@ export function ResearcherRail({
   ctaHref,
 }: ResearcherRailProps) {
   const wrapRef = React.useRef<HTMLDivElement>(null);
+  const closeTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const [preview, setPreview] = React.useState<Preview | null>(null);
   const [engaged, setEngaged] = React.useState(false);
 
   const running = !engaged;
 
-  const show = React.useCallback((member: RailMember, el: HTMLElement) => {
-    const wrap = wrapRef.current;
-    if (!wrap) return;
-    // Measure against the wrapper so the offset is correct mid-animation,
-    // when the tile's layout offset and its painted position differ.
-    const wrapRect = wrap.getBoundingClientRect();
-    const tileRect = el.getBoundingClientRect();
-    const centre = tileRect.left - wrapRect.left + tileRect.width / 2;
-    const max = Math.max(0, wrapRect.width - PREVIEW_WIDTH);
-    setPreview({
-      left: Math.max(0, Math.min(centre - PREVIEW_WIDTH / 2, max)),
-      member,
-    });
-    // Placeholder-only members still freeze the track on hover, so the tile
-    // under the cursor doesn't slide out from under it.
-    setEngaged(true);
+  const clearClose = React.useCallback(() => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
   }, []);
 
+  const show = React.useCallback(
+    (member: RailMember, el: HTMLElement) => {
+      const wrap = wrapRef.current;
+      if (!wrap) return;
+      // Measure against the wrapper so the offset is correct mid-animation,
+      // when the tile's layout offset and its painted position differ.
+      const wrapRect = wrap.getBoundingClientRect();
+      const tileRect = el.getBoundingClientRect();
+      const centre = tileRect.left - wrapRect.left + tileRect.width / 2;
+      const max = Math.max(0, wrapRect.width - PREVIEW_WIDTH);
+      clearClose();
+      setPreview({
+        left: Math.max(0, Math.min(centre - PREVIEW_WIDTH / 2, max)),
+        member,
+      });
+      // Placeholder-only members still freeze the track on hover, so the tile
+      // under the cursor doesn't slide out from under it.
+      setEngaged(true);
+    },
+    [clearClose],
+  );
+
+  // The card floats above the tile with a gap, so the pointer has to cross
+  // dead space to get from one to the other — without a grace period the
+  // leave handler fires mid-crossing and the card vanishes before it can be
+  // reached. Closing is deferred so the pointer can make the trip.
   const hide = React.useCallback(() => {
-    setPreview(null);
-    setEngaged(false);
-  }, []);
+    clearClose();
+    closeTimer.current = setTimeout(() => {
+      setPreview(null);
+      setEngaged(false);
+    }, HIDE_DELAY_MS);
+  }, [clearClose]);
+
+  React.useEffect(() => () => clearClose(), [clearClose]);
 
   const track = (
     <ul
-      className="rail-track flex w-max gap-4"
+      className="rail-track flex w-max gap-6 sm:gap-8"
       style={{
         animationDuration: `${Math.max(20, members.length * SECONDS_PER_MEMBER)}s`,
+        // The inline play-state is what pauses on hover/focus. Below `md` the
+        // CSS rule sets `animation: none`, which wins because it also resets
+        // animation-name rather than competing on play-state alone.
         animationPlayState: running ? "running" : "paused",
       }}
-      onFocusCapture={() => setEngaged(true)}
+      onFocusCapture={() => {
+        clearClose();
+        setEngaged(true);
+      }}
       onBlurCapture={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) hide();
       }}
@@ -108,7 +137,7 @@ export function ResearcherRail({
         return (
           <li
             key={`${m.name}-${i}`}
-            className="shrink-0"
+            className={duplicate ? "shrink-0 rail-duplicate" : "shrink-0"}
             aria-hidden={duplicate || undefined}
           >
             <Link
@@ -117,30 +146,30 @@ export function ResearcherRail({
               onMouseEnter={(e) => show(m, e.currentTarget)}
               onMouseLeave={hide}
               onFocus={(e) => show(m, e.currentTarget)}
-              className="flex w-[17rem] items-center gap-5 rounded-2xl border border-border bg-background p-5 transition-colors duration-200 hover:border-primary/40 hover:bg-muted/30 focus-visible:border-primary/40 focus-visible:bg-muted/30 focus-visible:outline-none sm:w-[21rem] sm:gap-6 sm:p-6"
+              className="flex w-[21rem] items-center gap-6 rounded-2xl border border-border bg-background p-6 transition-colors duration-200 hover:border-primary/40 hover:bg-muted/30 focus-visible:border-primary/40 focus-visible:bg-muted/30 focus-visible:outline-none sm:w-[27rem] sm:gap-8 sm:p-8"
             >
               {m.imagePath ? (
-                <span className="relative block h-20 w-20 shrink-0 overflow-hidden rounded-full bg-muted sm:h-24 sm:w-24">
+                <span className="relative block h-24 w-24 shrink-0 overflow-hidden rounded-full bg-muted sm:h-32 sm:w-32">
                   <Image
                     src={getImageUrl(m.imagePath)}
                     alt=""
                     fill
-                    sizes="96px"
+                    sizes="128px"
                     className="object-cover"
                   />
                 </span>
               ) : (
-                <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-muted sm:h-24 sm:w-24">
-                  <span className="font-mono text-sm uppercase tracking-[0.12em] text-muted-foreground">
+                <span className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-muted sm:h-32 sm:w-32">
+                  <span className="font-mono text-base uppercase tracking-[0.12em] text-muted-foreground">
                     {initialsOf(m.name)}
                   </span>
                 </span>
               )}
               <span className="min-w-0">
-                <span className="block text-lg font-medium leading-snug text-foreground sm:text-xl">
+                <span className="block text-xl font-medium leading-snug text-foreground sm:text-2xl">
                   {m.name}
                 </span>
-                <span className="mt-1.5 block font-mono text-[11px] uppercase leading-snug tracking-[0.14em] text-muted-foreground">
+                <span className="mt-2 block font-mono text-[12px] uppercase leading-snug tracking-[0.14em] text-muted-foreground">
                   {m.role}
                 </span>
               </span>
@@ -168,18 +197,28 @@ export function ResearcherRail({
         </div>
       </div>
 
-      <div
-        ref={wrapRef}
-        className="relative overflow-hidden"
-        onMouseLeave={hide}
-      >
-        {track}
+      <div className="relative">
+        {/* The track scrolls, so it must clip its own overflow. The preview is
+            a sibling of the clipping wrapper rather than a child of it —
+            `overflow: hidden` would otherwise cut off the part of the card
+            that rises above the rail, leaving a sliver that reads as a shadow
+            fused to the tile. */}
+        <div
+          ref={wrapRef}
+          className="rail-viewport relative"
+          onMouseLeave={hide}
+        >
+          {track}
+        </div>
 
         {preview && hasRealBio(preview.member.bio) && (
           <div
-            className="pointer-events-none absolute bottom-full z-40 hidden w-[21rem] pb-3 md:block"
-            style={{ left: preview.left }}
-            onMouseEnter={() => setEngaged(true)}
+            // Sits a full tile-gap above the rail; the wrapper spans that gap so
+            // the pointer can still cross from tile to card without the card
+            // being treated as left.
+            className="pointer-events-none absolute z-40 hidden w-[21rem] md:block"
+            style={{ left: preview.left, bottom: "100%", paddingBottom: PREVIEW_GAP }}
+            onMouseEnter={clearClose}
             onMouseLeave={hide}
           >
             <div
@@ -235,10 +274,16 @@ export function ResearcherRail({
               )}
 
               {preview.member.website && (
-                <span className="mt-3 inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.16em] text-primary">
+                <a
+                  href={preview.member.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-3 inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.16em] text-primary transition-colors hover:text-primary/70 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  onMouseEnter={clearClose}
+                >
                   {preview.member.websiteLabel}
                   <ArrowUpRight className="size-2.5" />
-                </span>
+                </a>
               )}
             </div>
           </div>

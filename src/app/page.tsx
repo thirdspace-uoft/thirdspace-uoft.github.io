@@ -66,7 +66,15 @@ export default function Home() {
               </h1>
             </div>
 
-            <aside className="space-y-5 lg:col-span-4">
+            {/* Optical centring. The grid box-centres these columns, but their
+                ink doesn't centre with them: the h1's cap-height sits high in
+                its 60px line box, so its visible text starts lower than the box
+                top. Measured on real glyph bounds, the top gap came out ~7px
+                wider than the bottom. The 2px lift below equalises them. Inline
+                style rather than a `translate-y-*` utility because the negative
+                fractional variant isn't emitted by this Tailwind build. Applied
+                via a media query so the stacked layout below `lg` is untouched. */}
+            <aside className="space-y-5 lg:col-span-4 lg:[translate:0_-2px]">
               <p className="type-body text-pretty text-muted-foreground">
                 {hero.subParagraph}
               </p>
@@ -108,16 +116,16 @@ export default function Home() {
       {/* GROUP OVERVIEW — PI card + focus cards, then the researcher rail */}
       <section id="about-group" data-section="people" data-section-label="People" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-          <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-14">
             {/* PI — portrait and credentials centred as one block */}
             <div className="lg:col-span-5">
-              <div className="mx-auto flex max-w-md flex-col items-center gap-6 text-center lg:max-w-none lg:flex-row lg:items-start lg:gap-7 lg:text-left">
-                <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-full sm:h-36 sm:w-36">
+              <div className="mx-auto flex max-w-md flex-col items-center gap-7 text-center lg:max-w-none lg:flex-row lg:items-center lg:gap-9 lg:text-left">
+                <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-full sm:h-48 sm:w-48">
                   <Image
                     src={getImageUrl(professor.imagePath)}
                     alt={professor.name}
                     fill
-                    sizes="144px"
+                    sizes="192px"
                     className="object-cover"
                   />
                 </div>
@@ -126,15 +134,15 @@ export default function Home() {
                     href={professor.website}
                     target="_blank"
                     rel="noreferrer"
-                    className="group/name inline-flex items-start gap-1 text-[22px] font-semibold leading-tight tracking-tight text-foreground transition-colors hover:text-primary lg:inline"
+                    className="group/name inline-flex items-start gap-1.5 text-[30px] font-semibold leading-tight tracking-tight text-foreground transition-colors hover:text-primary lg:inline"
                   >
                     <span>{professor.name}</span>
-                    <ArrowUpRight className="mt-0.5 size-4 shrink-0 text-primary lg:ml-1 lg:mt-0 lg:inline" />
+                    <ArrowUpRight className="mt-1 size-5 shrink-0 text-primary lg:ml-1.5 lg:mt-0 lg:inline" />
                   </a>
-                  <p className="mt-2 font-mono text-[12px] uppercase tracking-[0.2em] text-primary">
+                  <p className="mt-3 font-mono text-[13px] uppercase tracking-[0.2em] text-primary">
                     {home.groupOverviewFigLabel}
                   </p>
-                  <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
+                  <p className="mt-5 text-[17px] leading-relaxed text-muted-foreground">
                     <span className="text-foreground">
                       {professor.title}
                     </span>
@@ -144,27 +152,22 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Focus areas — full-width hairline rows, not cramped cards */}
+            {/* Focus areas — three columns, vertically centred on the PI block */}
             <div className="lg:col-span-6 lg:col-start-7">
-              <ul>
+              <ul className="grid gap-x-8 gap-y-6 sm:grid-cols-3">
                 {groupOverview.focusCards.map((item) => {
                   const Icon =
                     iconMap[item.icon as keyof typeof iconMap] || Globe;
 
                   return (
-                    <li
-                      key={item.title}
-                      className="flex gap-4 border-t border-border py-4 first:border-t-0 first:pt-0 lg:py-5"
-                    >
-                      <Icon className="mt-0.5 size-4 shrink-0 text-primary" />
-                      <div className="min-w-0">
-                        <h3 className="type-body font-medium leading-snug text-foreground">
-                          {item.title}
-                        </h3>
-                        <p className="mt-1 text-[15px] leading-relaxed text-muted-foreground">
-                          {item.description}
-                        </p>
-                      </div>
+                    <li key={item.title}>
+                      <Icon className="size-4 text-primary" />
+                      <h3 className="mt-3 text-[17px] font-medium leading-snug text-foreground">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1.5 text-[14px] leading-relaxed text-muted-foreground">
+                        {item.description}
+                      </p>
                     </li>
                   );
                 })}
@@ -185,7 +188,9 @@ export default function Home() {
                     .filter((m: any) => m.name !== piName)
                     .map((m: any) => ({
                       name: m.name,
-                      role: s.role,
+                      // Singular: the tile names one person, while the section
+                      // heading on /people stays plural.
+                      role: contentData.latestPublications?.railPhdRoleLabel ?? "PhD Student",
                       imagePath: m.imagePath,
                       bio: m.bio,
                       areasOfInterest: m.areasOfInterest,
@@ -225,118 +230,124 @@ export default function Home() {
         return (
           <section data-section="research" data-section-label="Research" className="border-b border-border">
             <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-              <div className="mb-10 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b border-border pb-4">
-                <div className="flex items-center gap-3">
-                  <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
-                    {contentData.latestPublications?.eyebrow}
-                  </span>
-                  <span className="h-3 w-px bg-border" />
-                  <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-primary">
-                    {latestYear}
-                  </span>
-                </div>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                  <Link
-                    href={contentData.latestPublications?.viewAllHref ?? "/publications"}
-                    className="inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+              <div>
+                  {/* Latest research */}
+                  <section
+                    id="latest-research"
+                    aria-labelledby="latest-research-heading"
+                    className="scroll-mt-24"
                   >
-                    {contentData.latestPublications?.viewAllLabel}
-                    <ArrowRight className="size-3" />
-                  </Link>
-                </div>
-              </div>
-
-              {/* Publications — full width now that the team rail moved out */}
-              <div className="grid gap-px bg-border sm:grid-cols-2">
-                    {latest.map((pub: any, i: number) => (
-                      <article
-                        key={pub.id ?? `latest-${i}`}
-                        className="bg-background p-6 transition-colors hover:bg-muted/20 sm:p-7"
+                    <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b border-border pb-4">
+                      <h2
+                        id="latest-research-heading"
+                        className="font-mono text-[14px] uppercase tracking-[0.22em] text-foreground"
                       >
-                        {pub.award && (
-                          <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/8 px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-[0.15em] text-accent-foreground">
-                            <svg viewBox="0 0 24 24" className="size-2.5 fill-accent" aria-hidden>
-                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                            {pub.award}
-                          </span>
-                        )}
-                        <h3 className="text-[16px] font-medium leading-snug text-foreground">
-                          {pub.url ? (
-                            <Link
-                              href={pub.url}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="underline decoration-primary/25 underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
-                            >
-                              {pub.title}
-                            </Link>
-                          ) : (
-                            pub.title
+                        {contentData.latestPublications?.eyebrow}
+                      </h2>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                        <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-primary">
+                          {latestYear}
+                        </span>
+                        <span aria-hidden className="h-3 w-px bg-border" />
+                        <Link
+                          href={contentData.latestPublications?.viewAllHref ?? "/publications"}
+                          className="inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                          {contentData.latestPublications?.viewAllLabel}
+                          <ArrowRight className="size-3" />
+                        </Link>
+                      </div>
+                    </div>
+
+                    <div className="grid gap-px bg-border sm:grid-cols-2">
+                      {latest.map((pub: any, i: number) => (
+                        <article
+                          key={pub.id ?? `latest-${i}`}
+                          className="bg-background p-6 transition-colors hover:bg-muted/20 sm:p-7"
+                        >
+                          {pub.award && (
+                            <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/8 px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-[0.15em] text-accent-foreground">
+                              <svg viewBox="0 0 24 24" className="size-2.5 fill-accent" aria-hidden>
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                              </svg>
+                              {pub.award}
+                            </span>
                           )}
-                        </h3>
-                        {pub.authors && (
-                          <p className="mt-1 text-[14px] leading-relaxed text-muted-foreground line-clamp-1">
-                            {pub.authors}
-                          </p>
-                        )}
-                        {pub.venue && (
-                          <p className="mt-1.5 font-mono text-[14px] uppercase tracking-[0.1em] text-primary/80">
-                            {pub.venue}
-                          </p>
-                        )}
-                      </article>
-                    ))}
+                          <h3 className="text-[16px] font-medium leading-snug text-foreground">
+                            {pub.url ? (
+                              <Link
+                                href={pub.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="underline decoration-primary/25 underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
+                              >
+                                {pub.title}
+                              </Link>
+                            ) : (
+                              pub.title
+                            )}
+                          </h3>
+                          {pub.authors && (
+                            <p className="mt-1 text-[14px] leading-relaxed text-muted-foreground line-clamp-1">
+                              {pub.authors}
+                            </p>
+                          )}
+                          {pub.venue && (
+                            <p className="mt-1.5 font-mono text-[14px] uppercase tracking-[0.1em] text-primary/80">
+                              {pub.venue}
+                            </p>
+                          )}
+                        </article>
+                      ))}
+                    </div>
+                  </section>
+
+                  {/* Research domains */}
+                  <section
+                    id="research-domains"
+                    aria-labelledby="research-domains-heading"
+                    className="mt-16 scroll-mt-24"
+                  >
+                    <div className="mb-8 border-b border-border pb-4">
+                      <h2
+                        id="research-domains-heading"
+                        className="inline-flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.22em] text-foreground"
+                      >
+                        <Cpu className="size-3.5 text-primary" />
+                        {researchDomains.sectionLabel}
+                      </h2>
+                    </div>
+
+                    <ul className="grid gap-x-12 sm:grid-cols-2 md:gap-x-16">
+                      {researchDomains.items.map((item: any) => {
+                        const Icon = iconMap[item.icon as IconName] ?? iconMap.Globe;
+                        return (
+                          <li
+                            key={item.title}
+                            className="border-b border-border py-7 sm:py-8"
+                          >
+                            <div className="flex items-start gap-3">
+                              <Icon className="mt-1 size-4 shrink-0 text-primary" />
+                              <div>
+                                <h3 className="type-body font-medium text-foreground">
+                                  {item.title}
+                                </h3>
+                                <p className="mt-2 max-w-md type-body text-muted-foreground">
+                                  {item.description}
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </section>
               </div>
             </div>
           </section>
         );
       })()}
 
-      {/* RESEARCH DOMAINS — clean 2-col index, hairline rules, no bento */}
-      <section data-section="domains" data-section-label="Domains" className="border-b border-border">
-        <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-          <div className="mb-10 flex items-baseline justify-between gap-6 border-b border-border pb-4">
-            <div className="flex items-center gap-2">
-              <Cpu className="size-3.5 text-primary" />
-              <h2 className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
-                {researchDomains.sectionLabel}
-              </h2>
-            </div>
-            <span className="inline-flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
-              <span
-                aria-hidden
-                className="size-1.5 rounded-full bg-emerald-500"
-              />
-              {researchDomains.statusLabel}
-            </span>
-          </div>
-
-          <ul className="grid gap-x-12 gap-y-0 sm:grid-cols-2 md:gap-x-16">
-            {researchDomains.items.map((item, index) => {
-              const Icon = iconMap[item.icon as IconName] ?? iconMap.Globe;
-              return (
-                <li
-                  key={item.title}
-                  className="group/dom border-b border-border py-7 sm:py-8"
-                >
-                  <div className="flex items-start gap-3">
-                      <Icon className="mt-1 size-4 shrink-0 text-primary" />
-                      <div>
-                        <h3 className="type-body font-medium text-foreground">
-                          {item.title}
-                        </h3>
-                        <p className="mt-2 max-w-md type-body text-muted-foreground">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
     </main>
   );
 }

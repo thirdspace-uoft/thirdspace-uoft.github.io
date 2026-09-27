@@ -158,15 +158,55 @@
     font-weight: 400;
   }
 
-  /* Researcher rail marquee. The roster is rendered twice, so translating by
-     -50% lands exactly on the copy and the loop is seamless. Playback is
-     paused from JS (animation-play-state) on hover, focus, and via the
-     pause control, so no pause affordance is baked into the keyframes. */
+  /* Researcher rail. On phones and tablets a self-advancing marquee is
+     unusable — it moves while you're trying to read or tap a tile — so below
+     `md` the track becomes a snap-scroll list the reader drives themselves.
+     The duplicate half of the roster is hidden there so the loop point never
+     shows up as a repeated name mid-list. */
+  .rail-viewport {
+    overflow: hidden;
+  }
+
   .rail-track {
     animation-name: rail-marquee;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     will-change: transform;
+  }
+
+  @media (max-width: 767px) {
+    .rail-viewport {
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+    .rail-track {
+      animation: none;
+      padding-inline: 1.25rem;
+      scroll-padding-inline: 1.25rem;
+    }
+    .rail-track > li {
+      scroll-snap-align: start;
+    }
+    /* The roster is rendered twice so the -50% marquee loop is seamless. Only
+       the first pass is reachable by scrolling, so the duplicate half is
+       hidden here — otherwise the last name would repeat mid-swipe. */
+    .rail-duplicate {
+      display: none;
+    }
+    .rail-viewport::-webkit-scrollbar {
+      height: 6px;
+    }
+    .rail-viewport::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .rail-viewport::-webkit-scrollbar-thumb {
+      background-color: var(--border);
+      border-radius: 9999px;
+    }
   }
 
   /* Motion-sensitive visitors get the static row; the preview still opens on

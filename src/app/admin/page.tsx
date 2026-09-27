@@ -1446,10 +1446,6 @@ function SignedInView({
                         <Label className="text-[12px] font-mono uppercase text-muted-foreground">Section Label</Label>
                         <Input value={content.researchDomains.sectionLabel} onChange={(e) => handleFieldChange("researchDomains", "sectionLabel", e.target.value)} className="font-mono text-xs" />
                       </div>
-                      <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Status Badge</Label>
-                        <Input value={content.researchDomains.statusLabel} onChange={(e) => handleFieldChange("researchDomains", "statusLabel", e.target.value)} className="font-mono text-xs" />
-                      </div>
                     </div>
                   </div>
                   <span className="text-[12px] font-mono uppercase text-muted-foreground tracking-wider">Domain Cards</span>
@@ -1511,6 +1507,10 @@ function SignedInView({
                     <div className="space-y-1">
                       <Label className="text-[12px] font-mono uppercase text-muted-foreground">Researchers Label</Label>
                       <Input value={content.latestPublications.researchersLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "researchersLabel", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Rail PhD Role Label (singular)</Label>
+                      <Input value={content.latestPublications.railPhdRoleLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "railPhdRoleLabel", e.target.value)} className="font-mono text-xs" />
                     </div>
                     <div className="space-y-1">
                       <Label className="text-[12px] font-mono uppercase text-muted-foreground">All Members Label</Label>
