@@ -1,9 +1,6 @@
-"use client";
-
-import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { getAssetPath, getImageUrl } from "@/lib/utils";
 
@@ -13,10 +10,6 @@ export type RailMember = {
   /** Fragment on /people addressing this person — see `memberAnchor`. */
   anchor?: string;
   imagePath?: string;
-  bio?: string;
-  areasOfInterest?: string[];
-  website?: string;
-  websiteLabel?: string;
 };
 
 type ResearcherRailProps = {
@@ -25,11 +18,6 @@ type ResearcherRailProps = {
   ctaLabel: string;
   ctaHref: string;
 };
-
-const PREVIEW_WIDTH = 336; // 21rem
-const PREVIEW_GAP = 20; // px of clear space between the card and the tile
-const HIDE_DELAY_MS = 260; // grace period to move pointer from tile to card
-const SECONDS_PER_MEMBER = 2.6; // one full loop ≈ 18s for a 7-person roster
 
 function initialsOf(name: string) {
   return name
@@ -40,25 +28,17 @@ function initialsOf(name: string) {
     .join("");
 }
 
-/** Placeholder bios ("Information coming soon.") carry no information, so a
- *  card built from one is just noise — those tiles get no preview. */
-function hasRealBio(bio?: string) {
-  return !!bio && !/coming soon/i.test(bio);
-}
-
-type Preview = { left: number; member: RailMember };
-
 /**
- * Marquee roster of lab members. Tiles advance on their own; hovering or
- * focusing one freezes the track and raises a profile preview above it.
+ * Editorial roster of lab members — every researcher on one static list.
  *
- * The preview is a single shared element rendered as a sibling of the track
- * rather than nested in a tile: an ancestor with `overflow: hidden` clips on
- * both axes, so anything positioned above the track inside it is invisible.
+ * This replaced a self-advancing marquee that duplicated the roster to fake a
+ * seamless loop. Two things were wrong with that: it moved while you were
+ * trying to read or tap a tile, and it showed a 6-person roster at 21rem wide
+ * in a track that had to scroll. With a static list the whole roster is
+ * visible at once and stays put, which is what a directory is for.
  *
- * The roster is rendered twice to make the -50% translate loop seamlessly. The
- * duplicate is aria-hidden and removed from the tab order, so assistive tech
- * and keyboard users meet each person exactly once.
+ * Each row is a hairline-divided line rather than a card, matching the masthead
+ * treatment on /people: portrait, name, role, and a link to the full profile.
  */
 export function ResearcherRail({
   members,
@@ -66,254 +46,73 @@ export function ResearcherRail({
   ctaLabel,
   ctaHref,
 }: ResearcherRailProps) {
-  const wrapRef = React.useRef<HTMLDivElement>(null);
-  const closeTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [preview, setPreview] = React.useState<Preview | null>(null);
-  const [engaged, setEngaged] = React.useState(false);
-
-  const running = !engaged;
-
-  const clearClose = React.useCallback(() => {
-    if (closeTimer.current) {
-      clearTimeout(closeTimer.current);
-      closeTimer.current = null;
-    }
-  }, []);
-
-  const show = React.useCallback(
-    (member: RailMember, el: HTMLElement) => {
-      const wrap = wrapRef.current;
-      if (!wrap) return;
-      // Measure against the wrapper so the offset is correct mid-animation,
-      // when the tile's layout offset and its painted position differ.
-      const wrapRect = wrap.getBoundingClientRect();
-      const tileRect = el.getBoundingClientRect();
-      const centre = tileRect.left - wrapRect.left + tileRect.width / 2;
-      const max = Math.max(0, wrapRect.width - PREVIEW_WIDTH);
-      clearClose();
-      setPreview({
-        left: Math.max(0, Math.min(centre - PREVIEW_WIDTH / 2, max)),
-        member,
-      });
-      // Placeholder-only members still freeze the track on hover, so the tile
-      // under the cursor doesn't slide out from under it.
-      setEngaged(true);
-    },
-    [clearClose],
-  );
-
-  // The card floats above the tile with a gap, so the pointer has to cross
-  // dead space to get from one to the other — without a grace period the
-  // leave handler fires mid-crossing and the card vanishes before it can be
-  // reached. Closing is deferred so the pointer can make the trip.
-  const hide = React.useCallback(() => {
-    clearClose();
-    closeTimer.current = setTimeout(() => {
-      setPreview(null);
-      setEngaged(false);
-    }, HIDE_DELAY_MS);
-  }, [clearClose]);
-
-  React.useEffect(() => () => clearClose(), [clearClose]);
-
-  const track = (
-    <ul
-      className="rail-track flex w-max gap-6 sm:gap-8"
-      style={{
-        animationDuration: `${Math.max(20, members.length * SECONDS_PER_MEMBER)}s`,
-        // The inline play-state is what pauses on hover/focus. Below `md` the
-        // CSS rule sets `animation: none`, which wins because it also resets
-        // animation-name rather than competing on play-state alone.
-        animationPlayState: running ? "running" : "paused",
-      }}
-      onFocusCapture={() => {
-        clearClose();
-        setEngaged(true);
-      }}
-      onBlurCapture={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node)) hide();
-      }}
-    >
-      {[...members, ...members].map((m, i) => {
-        const duplicate = i >= members.length;
-        // The tile carries the person's own anchor, so following it lands on
-        // that row's section on /people rather than the top of the page. A
-        // member without an anchor falls back to the plain section link.
-        const href = m.anchor ? `${ctaHref}#${m.anchor}` : ctaHref;
-        // A plain <a>, not next/link. Next's client router re-applies the
-        // fragment on top of the one it already restored from history, so
-        // arriving at /people, going back, and clicking the same tile again
-        // lands on `/people#a/b#a/b` — a fragment no element matches, and the
-        // profile never opens. A native anchor hands the fragment to the
-        // browser, which resolves it once. The trade-off is a full page load
-        // instead of a client transition, which is the right cost here: the
-        // destination is a different route that reads its own JSON anyway.
-        return (
-          <li
-            key={`${m.name}-${i}`}
-            className={duplicate ? "shrink-0 rail-duplicate" : "shrink-0"}
-            aria-hidden={duplicate || undefined}
-          >
-            <a
-              href={getAssetPath(href)}
-              tabIndex={duplicate ? -1 : undefined}
-              onMouseEnter={(e) => show(m, e.currentTarget)}
-              onMouseLeave={hide}
-              onFocus={(e) => show(m, e.currentTarget)}
-              className="flex w-[21rem] items-center gap-6 rounded-2xl border border-border bg-background p-6 transition-colors duration-200 hover:border-primary/40 hover:bg-muted/30 focus-visible:border-primary/40 focus-visible:bg-muted/30 focus-visible:outline-none sm:w-[27rem] sm:gap-8 sm:p-8"
-            >
-              {m.imagePath ? (
-                <span className="relative block h-24 w-24 shrink-0 overflow-hidden rounded-full bg-muted sm:h-32 sm:w-32">
-                  <Image
-                    src={getImageUrl(m.imagePath)}
-                    alt=""
-                    fill
-                    sizes="128px"
-                    className="object-cover"
-                  />
-                </span>
-              ) : (
-                <span className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-muted sm:h-32 sm:w-32">
-                  <span className="font-mono text-base uppercase tracking-[0.12em] text-muted-foreground">
-                    {initialsOf(m.name)}
-                  </span>
-                </span>
-              )}
-              <span className="min-w-0">
-                <span className="block text-xl font-medium leading-snug text-foreground sm:text-2xl">
-                  {m.name}
-                </span>
-                <span className="mt-2 block font-mono text-[12px] uppercase leading-snug tracking-[0.14em] text-muted-foreground">
-                  {m.role}
-                </span>
-              </span>
-            </a>
-          </li>
-        );
-      })}
-    </ul>
-  );
-
   return (
     <div className="mt-14 border-t border-border pt-8">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-4">
         <h3 className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
           {label}
         </h3>
-        <div className="flex items-center gap-5">
-          <Link
-            href={ctaHref}
-            className="group/cta inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-primary transition-colors hover:text-primary/70"
-          >
-            {ctaLabel}
-            <ArrowRight className="size-3 transition-transform group-hover/cta:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover/cta:translate-x-0" />
-          </Link>
-        </div>
+        <Link
+          href={ctaHref}
+          className="group/cta inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-primary transition-colors hover:text-primary/70"
+        >
+          {ctaLabel}
+          <ArrowRight className="size-3 transition-transform group-hover/cta:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover/cta:translate-x-0" />
+        </Link>
       </div>
 
-      <div className="relative">
-        {/* The track scrolls, so it must clip its own overflow. The preview is
-            a sibling of the clipping wrapper rather than a child of it —
-            `overflow: hidden` would otherwise cut off the part of the card
-            that rises above the rail, leaving a sliver that reads as a shadow
-            fused to the tile. */}
-        <div
-          ref={wrapRef}
-          className="rail-viewport relative"
-          onMouseLeave={hide}
-        >
-          {track}
-        </div>
+      <ul className="border-t border-border">
+        {members.map((m, i) => {
+          // Plain <a>, not next/link. Next's client router re-applies the
+          // fragment on top of the one it already restored from history, so
+          // arriving at /people, going back, and clicking the same row again
+          // lands on `/people#a/b#a/b` — a fragment no element matches, and the
+          // profile never opens. A native anchor hands the fragment to the
+          // browser, which resolves it once. The trade-off is a full page load
+          // instead of a client transition, which is the right cost here: the
+          // destination is a different route that reads its own JSON anyway.
+          const href = m.anchor ? `${ctaHref}#${m.anchor}` : ctaHref;
 
-        {preview && hasRealBio(preview.member.bio) && (
-          <div
-            // Sits a full tile-gap above the rail; the wrapper spans that gap so
-            // the pointer can still cross from tile to card without the card
-            // being treated as left.
-            className="pointer-events-none absolute z-40 hidden w-[21rem] md:block"
-            style={{ left: preview.left, bottom: "100%", paddingBottom: PREVIEW_GAP }}
-            onMouseEnter={clearClose}
-            onMouseLeave={hide}
-          >
-            <div
-              role="dialog"
-              aria-label={`${preview.member.name} profile preview`}
-              className="pointer-events-auto rounded-2xl border border-border bg-card p-4 shadow-xl shadow-primary/10"
-            >
-              <div className="flex gap-3">
-                {preview.member.imagePath ? (
-                  <span className="relative block h-16 w-16 shrink-0 overflow-hidden rounded-full bg-muted">
+          return (
+            <li key={`${m.name}-${i}`}>
+              <a
+                href={getAssetPath(href)}
+                className="group/member flex items-center gap-7 border-b border-border py-7 transition-colors hover:bg-muted/30 focus-visible:bg-muted/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 sm:gap-9 sm:py-8"
+              >
+                <span className="relative block size-24 shrink-0 overflow-hidden rounded-full bg-muted">
+                  {m.imagePath ? (
                     <Image
-                      src={getImageUrl(preview.member.imagePath)}
+                      src={getImageUrl(m.imagePath)}
                       alt=""
                       fill
-                      sizes="64px"
+                      sizes="96px"
                       className="object-cover"
                     />
-                  </span>
-                ) : (
-                  <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-muted">
-                    <span className="font-mono text-[13px] uppercase tracking-[0.12em] text-muted-foreground">
-                      {initialsOf(preview.member.name)}
+                  ) : (
+                    <span className="flex h-full w-full items-center justify-center font-mono text-[17px] uppercase tracking-[0.12em] text-muted-foreground">
+                      {initialsOf(m.name)}
                     </span>
+                  )}
+                </span>
+
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[30px] font-semibold leading-tight tracking-[-0.025em] text-foreground transition-colors group-hover/member:text-primary">
+                    {m.name}
                   </span>
-                )}
-                <div className="min-w-0 pt-0.5">
-                  {/* Native anchor, for the same reason as the tile: Next's
-                      client router can double the fragment on a
-                      back-then-click-again navigation. */}
-                  <a
-                    href={getAssetPath(
-                      preview.member.anchor
-                        ? `${ctaHref}#${preview.member.anchor}`
-                        : ctaHref,
-                    )}
-                    className="text-[15px] font-semibold leading-snug text-foreground transition-colors hover:text-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    onMouseEnter={clearClose}
-                  >
-                    {preview.member.name}
-                  </a>
-                  <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.16em] text-primary">
-                    {preview.member.role}
-                  </p>
-                </div>
-              </div>
+                  <span className="mt-3 block font-mono text-[13px] uppercase tracking-[0.2em] text-primary">
+                    {m.role}
+                  </span>
+                </span>
 
-              {hasRealBio(preview.member.bio) && (
-                <p className="mt-3 text-[13.5px] leading-relaxed text-muted-foreground line-clamp-4">
-                  {preview.member.bio}
-                </p>
-              )}
-
-              {(preview.member.areasOfInterest?.length ?? 0) > 0 && (
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {preview.member.areasOfInterest!.slice(0, 3).map((a) => (
-                    <span
-                      key={a}
-                      className="rounded-full bg-muted px-2 py-0.5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-muted-foreground"
-                    >
-                      {a}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              {preview.member.website && (
-                <a
-                  href={preview.member.website}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-3 inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.16em] text-primary transition-colors hover:text-primary/70 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  onMouseEnter={clearClose}
-                >
-                  {preview.member.websiteLabel}
-                  <ArrowUpRight className="size-2.5" />
-                </a>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
+                <ArrowRight
+                  aria-hidden
+                  className="size-4 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover/member:opacity-100"
+                />
+              </a>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

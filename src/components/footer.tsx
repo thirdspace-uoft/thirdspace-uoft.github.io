@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { BrandMark } from "./brand-mark";
-import { Mail, MapPin, ExternalLink, ArrowUpRight } from "lucide-react";
+import { Mail, MapPin, ExternalLink } from "lucide-react";
 import {
   HoverCard,
   HoverCardContent,
@@ -8,15 +8,15 @@ import {
 } from "@/components/ui/hover-card";
 import { getContent } from "@/lib/content";
 
-const { location, brand, researchLabs, campuses, socials } = getContent();
+const { location, brand, socials } = getContent();
 
 export function Footer() {
   return (
     <footer className="border-t border-border bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-card/40">
       <div className="mx-auto max-w-6xl px-6 py-12 md:py-16">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-12 md:gap-8">
-          {/* Column 1: Brand (4 cols) */}
-          <div className="space-y-6 md:col-span-4">
+          {/* Column 1: Brand (5 cols) */}
+          <div className="space-y-6 md:col-span-5">
             <Link
               href="/"
               className="flex items-center"
@@ -59,59 +59,13 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Affiliations / Research (3 cols) */}
-          <div className="space-y-4 md:col-span-3">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-primary/80">
-              {researchLabs.title}
-            </h3>
-            <ul className="space-y-2.5 text-sm text-muted-foreground">
-              {researchLabs.items.map((item, index) => (
-                <li key={index}>
-                  {item.url ? (
-                    <a
-                      href={item.url}
-                      target={item.isExternal ? "_blank" : undefined}
-                      rel={item.isExternal ? "noreferrer" : undefined}
-                      className="group flex items-center hover:text-primary transition-colors"
-                    >
-                      {item.name}
-                      {item.isExternal && (
-                        <ArrowUpRight className="ml-1 h-3 w-3 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" />
-                      )}
-                    </a>
-                  ) : (
-                    <span className="hover:text-foreground transition-colors">
-                      {item.name}
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 3: Campuses (2 cols) */}
-          <div className="space-y-4 md:col-span-2">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-primary/80">
-              {campuses.title}
-            </h3>
-            <ul className="space-y-2.5 text-sm text-muted-foreground">
-              {campuses.items.map((campus, index) => (
-                <li key={index}>
-                  <a
-                    href={campus.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-primary transition-colors"
-                  >
-                    {campus.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-           {/* Column 4: Location Info (3 cols) */}
-           <div className="space-y-4 md:col-span-3">
+           {/* Location Info. Sized against the brand column rather than to fill
+               whatever the removed lists left behind: at 8 columns the card was
+               725px wide holding a two-line address, twice the brand block's
+               width and enough empty space to read as an unfinished gap. 5/7
+               keeps the row full at 12 while letting the address sit closer to
+               its content. */}
+           <div className="space-y-4 md:col-span-7">
              <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-primary/80">
                {location.locationHeading}
              </h3>
@@ -123,30 +77,30 @@ export function Footer() {
                    href={`https://maps.google.com/?q=${location.mapsQuery}`}
                    target="_blank"
                    rel="noreferrer"
-                   className="group block relative rounded-2xl border border-dashed border-border bg-muted/30 p-4 transition-all duration-300 hover:bg-card hover:shadow-sm hover:border-accent/40 focus:outline-none focus:ring-2 focus:ring-accent/40 overflow-hidden"
+                   className="group relative inline-block max-w-full rounded-xl border border-dashed border-border bg-muted/30 px-4 py-3 text-left transition-all duration-300 hover:bg-card hover:shadow-sm hover:border-accent/40 focus:outline-none focus:ring-2 focus:ring-accent/40"
                  >
-                   <div className="absolute top-0 right-0 h-16 w-16 bg-accent/5 rounded-full blur-xl transition-all group-hover:bg-accent/10" />
+                   {/* Decorative glow, clipped to the card. Hidden from
+                       assistive tech — it carries no information. */}
+                   <div aria-hidden className="pointer-events-none absolute right-0 top-0 size-16 rounded-full bg-accent/5 blur-xl transition-all group-hover:bg-accent/10" />
 
-                   <div className="relative space-y-3.5">
-                     <div className="flex items-center gap-2">
-                       <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10 text-accent-foreground transition-transform duration-300 group-hover:scale-110">
-                         <span className="absolute inline-flex h-full w-full rounded-lg bg-accent/20 opacity-0 group-hover:animate-ping group-hover:opacity-100" />
-                         <MapPin className="h-4.5 w-4.5 text-accent-foreground relative z-10" />
-                       </div>
-                       <div>
-                         <div className="flex items-center gap-1.5">
-                           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                           <span className="text-[12px] font-semibold tracking-wider uppercase text-muted-foreground">
-                             {location.title}
-                           </span>
-                         </div>
-                       </div>
+                   {/* Single row: pin, venue name, then the address on the same
+                       baseline run. The stacked icon-above-text layout needed
+                       ~130px of height for two lines of content; this is ~60px
+                       and reads the same at a glance. */}
+                   <div className="relative flex flex-wrap items-center gap-x-3 gap-y-1">
+                     <div className="relative flex size-7 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent-foreground transition-transform duration-300 group-hover:scale-110">
+                       <span className="absolute inline-flex h-full w-full rounded-lg bg-accent/20 opacity-0 group-hover:animate-ping group-hover:opacity-100" />
+                       <MapPin className="size-4 text-accent-foreground relative z-10" />
                      </div>
-
-                     <div className="text-sm text-muted-foreground leading-relaxed pt-1 border-t border-border/40">
-                        <p className="mt-0.5">{location.street}</p>
-                        <p>{location.cityCountry}</p>
-                      </div>
+                     <span className="flex shrink-0 items-center gap-1.5">
+                       <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                       <span className="text-[12px] font-semibold tracking-wider uppercase text-muted-foreground">
+                         {location.title}
+                       </span>
+                     </span>
+                     <span className="min-w-0 text-[13px] leading-snug text-muted-foreground">
+                       {[location.street, location.cityCountry].filter(Boolean).join(", ")}
+                     </span>
                    </div>
                  </a>
                </HoverCardTrigger>

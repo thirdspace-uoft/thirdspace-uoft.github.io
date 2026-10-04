@@ -33,6 +33,8 @@ type Member = {
 type AlumniMember = {
   name: string;
   role?: string;
+  /** Tenure span, e.g. "Fall 2022 – Winter 2023". */
+  years?: string;
   currentPosition?: string;
   currentAffiliation?: string;
 };
@@ -345,7 +347,11 @@ export default function PeoplePage() {
               {team.emptyAlumniMessage}
             </p>
           ) : (
-            <ul className="border-t border-border">
+            <ul>
+              {/* No top border: the header row above already draws the rule
+                  that separates the heading from the list. Drawing one here
+                  too put a second 1px line 24px below it, reading as a double
+                  rule. */}
               {((team.alumni.members ?? []) as AlumniMember[]).map((m, i) => (
                 <li
                   key={`${m.name}-${i}`}
@@ -361,7 +367,15 @@ export default function PeoplePage() {
                       </p>
                     )}
                   </div>
-                  <p className="col-span-12 type-body text-muted-foreground sm:col-span-6">
+                  {/* Tenure in the middle column. Proportional type rather than
+                      mono at this size: a mono uppercase span like "JANUARY 2019
+                      – DECEMBER 2020" is wide enough to wrap on two lines in a
+                      2-column track, and the ragged wrap read as a layout fault
+                      rather than a date. */}
+                  <p className="col-span-12 text-[13px] tabular-nums text-muted-foreground/80 sm:col-span-3">
+                    {m.years}
+                  </p>
+                  <p className="col-span-12 type-body text-muted-foreground sm:col-span-4">
                     {[m.currentPosition, m.currentAffiliation]
                       .filter(Boolean)
                       .join(" \u00B7 ")}

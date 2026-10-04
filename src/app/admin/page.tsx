@@ -392,7 +392,7 @@ function SignedInView({
 
   const handleAlumniAdd = () => {
     setContent((prev: any) => {
-      const members = [...(prev.team.alumni.members ?? []), { name: "", role: "", currentPosition: "", currentAffiliation: "" }];
+      const members = [...(prev.team.alumni.members ?? []), { name: "", role: "", years: "", currentPosition: "", currentAffiliation: "" }];
       return { ...prev, team: { ...prev.team, alumni: { ...prev.team.alumni, members } } };
     });
   };
@@ -1669,6 +1669,7 @@ function SignedInView({
                           <div className="grid grid-cols-2 gap-2">
                             <Input value={alum.name ?? ""} onChange={(e) => handleAlumniChange(idx, "name", e.target.value)} placeholder="Name" className="font-mono text-xs" />
                             <Input value={alum.role ?? ""} onChange={(e) => handleAlumniChange(idx, "role", e.target.value)} placeholder="Role (e.g. PhD)" className="font-mono text-xs" />
+                            <Input value={alum.years ?? ""} onChange={(e) => handleAlumniChange(idx, "years", e.target.value)} placeholder="Years (e.g. Fall 2022 – Winter 2023)" className="font-mono text-xs" />
                           </div>
                           <div className="grid grid-cols-2 gap-2">
                             <Input value={alum.currentPosition ?? ""} onChange={(e) => handleAlumniChange(idx, "currentPosition", e.target.value)} placeholder="Current position" className="font-mono text-xs" />

@@ -23,7 +23,6 @@ const contentData = getContent();
 const {
   hero,
   home,
-  groupOverview,
   professor,
   researchDomains,
 } = contentData;
@@ -57,7 +56,9 @@ export default function Home() {
         <div className="mx-auto w-full max-w-6xl px-5 pt-10 pb-12 sm:px-8 sm:pt-14 sm:pb-16">
           {/* Headline + lede */}
           <div className="grid gap-8 md:gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
-            <div className="min-w-0 lg:col-span-8">
+            {/* Lifted so its first line reads level with the lede's — see the
+                note on the aside below. */}
+            <div className="min-w-0 lg:col-span-8 lg:[translate:0_-3px]">
               <h1 className="type-display text-foreground">
                 <span className="block">{hero.headlineLine1}</span>
                 <span className="block font-semibold text-muted-foreground">
@@ -67,26 +68,21 @@ export default function Home() {
               </h1>
             </div>
 
-            {/* Optical centring. The grid box-centres these columns, but their
-                ink doesn't centre with them: the h1's cap-height sits high in
-                its 60px line box, so its visible text starts lower than the box
-                top. Measured on real glyph bounds, the top gap came out ~7px
-                wider than the bottom. The 2px lift below equalises them. Inline
-                style rather than a `translate-y-*` utility because the negative
-                fractional variant isn't emitted by this Tailwind build. Applied
-                via a media query so the stacked layout below `lg` is untouched. */}
-            <aside className="space-y-5 lg:col-span-4 lg:[translate:0_-2px]">
+            {/* Optical alignment. `lg:items-center` box-centres the two columns,
+                but their ink does not centre with them: the h1's cap-height sits
+                low inside its 60px line box, so its first line reads lower than
+                the lede's even though their boxes agree to within 1px. Measured
+                on real glyph bounds at the desktop breakpoint, the h1's cap-top
+                sat 2.3px below the paragraph's — hence the 3px lift on the
+                headline column, which puts the two first lines within half a
+                pixel of level, the closest they can sit on a whole-pixel grid.
+                Below `lg` the columns stack, so the offset is scoped to the
+                breakpoint where it applies. */}
+            <aside className="space-y-5 lg:col-span-4">
               <p className="type-body text-pretty text-muted-foreground">
                 {hero.subParagraph}
               </p>
               <div className="flex flex-wrap items-center gap-3">
-                <Link
-                  href="#about-group"
-                  className="inline-flex items-center gap-2 rounded-md bg-foreground px-4 py-2.5 type-body font-medium text-background transition-colors hover:bg-foreground/90"
-                >
-                  {hero.primaryActionText}
-                  <ArrowRight className="size-3.5" />
-                </Link>
                 <Link
                   href="/people"
                   className="inline-flex items-center gap-2 px-1 py-2.5 font-mono text-[17px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
@@ -118,8 +114,9 @@ export default function Home() {
       <section id="about-group" data-section="people" data-section-label="People" className="border-b border-border">
         <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
           <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-14">
-            {/* PI — portrait and credentials centred as one block */}
-            <div className="lg:col-span-5">
+            {/* PI — portrait and credentials. Alone in the grid since the
+                focus cards were removed, so it runs the full 12 columns. */}
+            <div className="lg:col-span-12">
               <div className="mx-auto flex max-w-md flex-col items-center gap-7 text-center lg:max-w-none lg:flex-row lg:items-center lg:gap-9 lg:text-left">
                 <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-full sm:h-48 sm:w-48">
                   <Image
@@ -152,35 +149,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
-            {/* Focus areas — three columns, vertically centred on the PI block */}
-            <div className="lg:col-span-6 lg:col-start-7">
-              <ul className="grid gap-x-8 gap-y-6 sm:grid-cols-3">
-                {groupOverview.focusCards.map((item) => {
-                  const Icon =
-                    iconMap[item.icon as keyof typeof iconMap] || Globe;
-
-                  return (
-                    <li key={item.title}>
-                      <Icon className="size-4 text-primary" />
-                      <h3 className="mt-3 text-[17px] font-medium leading-snug text-foreground">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1.5 text-[14px] leading-relaxed text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
           </div>
 
           <ResearcherRail
             members={(() => {
               // PhD students only. The PI heads this section directly above,
-              // and the postdocs / undergrads / collaborators have their own
-              // rows on the people page.
+              // and the postdocs / MSc / undergrads have their own rows on the
+              // people page.
               const piName = professor?.name ?? "";
               const phds = (contentData.team?.sections ?? [])
                 .filter((s: any) => s.role === "PhD Students")
@@ -189,17 +164,13 @@ export default function Home() {
                     .filter((m: any) => m.name !== piName)
                     .map((m: any) => ({
                       name: m.name,
-                      // Singular: the tile names one person, while the section
+                      // Singular: the row names one person, while the section
                       // heading on /people stays plural.
                       role: contentData.latestPublications?.railPhdRoleLabel ?? "PhD Student",
                       // Addresses this person's row on /people. Minted here with
                       // the same helper the page uses, so the two can't drift.
                       anchor: memberAnchor(s.role, m.name),
                       imagePath: m.imagePath,
-                      bio: m.bio,
-                      areasOfInterest: m.areasOfInterest,
-                      website: m.links?.find((l: any) => l.url)?.url,
-                      websiteLabel: m.links?.find((l: any) => l.url)?.label,
                     })),
                 );
 
@@ -245,11 +216,53 @@ export default function Home() {
           <section data-section="research" data-section-label="Research" className="border-b border-border">
             <div className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
               <div>
+                  {/* Research domains — leads the section; the reading it
+                      sets up is what the paper list below then answers. */}
+                  <section
+                    id="research-domains"
+                    aria-labelledby="research-domains-heading"
+                    className="scroll-mt-24"
+                  >
+                    <div className="mb-8 border-b border-border pb-4">
+                      <h2
+                        id="research-domains-heading"
+                        className="inline-flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.22em] text-foreground"
+                      >
+                        <Cpu className="size-3.5 text-primary" />
+                        {researchDomains.sectionLabel}
+                      </h2>
+                    </div>
+
+                    <ul className="grid gap-x-12 sm:grid-cols-2 md:gap-x-16">
+                      {researchDomains.items.map((item: any) => {
+                        const Icon = iconMap[item.icon as IconName] ?? iconMap.Globe;
+                        return (
+                          <li
+                            key={item.title}
+                            className="border-b border-border py-7 sm:py-8"
+                          >
+                            <div className="flex items-start gap-3">
+                              <Icon className="mt-1 size-4 shrink-0 text-primary" />
+                              <div>
+                                <h3 className="type-body font-medium text-foreground">
+                                  {item.title}
+                                </h3>
+                                <p className="mt-2 max-w-md type-body text-muted-foreground">
+                                  {item.description}
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </section>
+
                   {/* Latest research */}
                   <section
                     id="latest-research"
                     aria-labelledby="latest-research-heading"
-                    className="scroll-mt-24"
+                    className="mt-16 scroll-mt-24"
                   >
                     <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b border-border pb-4">
                       <h2
@@ -314,47 +327,6 @@ export default function Home() {
                         </article>
                       ))}
                     </div>
-                  </section>
-
-                  {/* Research domains */}
-                  <section
-                    id="research-domains"
-                    aria-labelledby="research-domains-heading"
-                    className="mt-16 scroll-mt-24"
-                  >
-                    <div className="mb-8 border-b border-border pb-4">
-                      <h2
-                        id="research-domains-heading"
-                        className="inline-flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.22em] text-foreground"
-                      >
-                        <Cpu className="size-3.5 text-primary" />
-                        {researchDomains.sectionLabel}
-                      </h2>
-                    </div>
-
-                    <ul className="grid gap-x-12 sm:grid-cols-2 md:gap-x-16">
-                      {researchDomains.items.map((item: any) => {
-                        const Icon = iconMap[item.icon as IconName] ?? iconMap.Globe;
-                        return (
-                          <li
-                            key={item.title}
-                            className="border-b border-border py-7 sm:py-8"
-                          >
-                            <div className="flex items-start gap-3">
-                              <Icon className="mt-1 size-4 shrink-0 text-primary" />
-                              <div>
-                                <h3 className="type-body font-medium text-foreground">
-                                  {item.title}
-                                </h3>
-                                <p className="mt-2 max-w-md type-body text-muted-foreground">
-                                  {item.description}
-                                </p>
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
                   </section>
               </div>
             </div>
