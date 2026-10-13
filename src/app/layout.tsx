@@ -11,6 +11,11 @@ const content = getContent();
 export const metadata: Metadata = {
   title: content.layout.pageTitle,
   description: content.layout.pageDescription,
+  icons: {
+    icon: "/square_logo.webp",
+    shortcut: "/square_logo.webp",
+    apple: "/square_logo.webp",
+  },
 };
 
 export const viewport = {
