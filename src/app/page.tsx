@@ -51,102 +51,131 @@ const iconMap: Record<IconName, React.ComponentType<{ className?: string }>> = {
 export default function Home() {
   return (
     <main className="bg-background">
-      {/* HERO — editorial split, generous whitespace */}
+      {/* HERO — editorial side-by-side layout: mission text on left, full uncropped lab photo on right */}
       <section data-section="hero" data-section-label="Home" className="border-b border-border">
-        <div className="mx-auto w-full max-w-6xl px-5 pt-10 pb-12 sm:px-8 sm:pt-14 sm:pb-16">
-          {/* Headline + lede */}
-          <div className="grid gap-8 md:gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
-            {/* Lifted so its first line reads level with the lede's — see the
-                note on the aside below. */}
-            <div className="min-w-0 lg:col-span-8 lg:[translate:0_-3px]">
-              <h1 className="type-display text-foreground">
+        <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14 lg:py-16">
+          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+            {/* Mission & Headline column — below image on phone (order-2), left side on desktop (lg:order-1) */}
+            <div className="order-2 min-w-0 lg:order-1 lg:col-span-5">
+              <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-[2.65rem] lg:leading-[1.14]">
                 <span className="block">{hero.headlineLine1}</span>
-                <span className="block font-semibold text-muted-foreground">
-                  {hero.headlineLine2}
-                </span>
-                <span className="block">{hero.headlineLine3}</span>
+                <span className="block text-primary">{hero.headlineLine2}</span>
+                <span className="block text-foreground/90">{hero.headlineLine3}</span>
               </h1>
-            </div>
 
-            {/* Optical alignment. `lg:items-center` box-centres the two columns,
-                but their ink does not centre with them: the h1's cap-height sits
-                low inside its 60px line box, so its first line reads lower than
-                the lede's even though their boxes agree to within 1px. Measured
-                on real glyph bounds at the desktop breakpoint, the h1's cap-top
-                sat 2.3px below the paragraph's — hence the 3px lift on the
-                headline column, which puts the two first lines within half a
-                pixel of level, the closest they can sit on a whole-pixel grid.
-                Below `lg` the columns stack, so the offset is scoped to the
-                breakpoint where it applies. */}
-            <aside className="space-y-5 lg:col-span-4">
-              <p className="type-body text-pretty text-muted-foreground">
+              <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
                 {hero.subParagraph}
               </p>
-              <div className="flex flex-wrap items-center gap-3">
+
+              <div className="mt-7 flex flex-wrap items-center gap-3">
                 <Link
                   href="/people"
-                  className="inline-flex items-center gap-2 px-1 py-2.5 font-mono text-[17px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+                  className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm transition-all hover:bg-primary/90"
                 >
-                  {hero.secondaryActionText}
-                  <ArrowUpRight className="size-3" />
+                  <Users className="size-4" />
+                  {hero.secondaryActionText || "Research Group"}
+                  <ArrowRight className="size-3.5" />
+                </Link>
+                <Link
+                  href="/publications"
+                  className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition-all hover:bg-muted/60"
+                >
+                  Publications
+                  <ArrowUpRight className="size-3.5 text-muted-foreground" />
                 </Link>
               </div>
-            </aside>
-          </div>
-
-          {/* Plate — single photograph, no chrome */}
-          <figure className="mt-10 sm:mt-12">
-            <div className="relative aspect-[4/3] w-full overflow-hidden">
-              <Image
-                src={getImageUrl(hero.groupPhotoPath)}
-                alt={hero.groupPhotoAlt}
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover grayscale-[8%]"
-              />
             </div>
-          </figure>
+
+            {/* Lab group photo column — on top on phone (order-1), right side on desktop (lg:order-2) */}
+            <div className="order-1 min-w-0 lg:order-2 lg:col-span-7">
+              <figure className="relative aspect-[1478/802] w-full overflow-hidden rounded-2xl shadow-lg transition-shadow hover:shadow-xl">
+                <Image
+                  src={getImageUrl(hero.groupPhotoPath)}
+                  alt={hero.groupPhotoAlt}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 680px"
+                  className="h-full w-full object-cover"
+                />
+              </figure>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* GROUP OVERVIEW — PI card + focus cards, then the researcher rail */}
+      {/* GROUP OVERVIEW — PI card on top + Researcher Grid below */}
       <section id="about-group" data-section="people" data-section-label="People" className="border-b border-border">
-        <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-          <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-14">
-            {/* PI — portrait and credentials. Alone in the grid since the
-                focus cards were removed, so it runs the full 12 columns. */}
-            <div className="lg:col-span-12">
-              <div className="mx-auto flex max-w-md flex-col items-center gap-7 text-center lg:max-w-none lg:flex-row lg:items-center lg:gap-9 lg:text-left">
-                <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-full sm:h-48 sm:w-48">
-                  <Image
-                    src={getImageUrl(professor.imagePath)}
-                    alt={professor.name}
-                    fill
-                    sizes="192px"
-                    className="object-cover"
-                  />
+        <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+          {/* Section Header */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              Our People
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground sm:text-base">
+              Faculty, researchers, and students driving human-centered computing and responsible AI.
+            </p>
+          </div>
+
+          {/* Featured PI Card — compact on mobile, rich on desktop */}
+          <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-card p-4 shadow-xs transition-all sm:p-8">
+            <div className="flex items-center gap-4 sm:items-start sm:gap-8 lg:gap-10">
+              <div className="relative size-20 shrink-0 overflow-hidden rounded-xl border border-border/70 bg-muted shadow-xs sm:size-36 sm:rounded-2xl lg:size-40">
+                <Image
+                  src={getImageUrl(professor.imagePath)}
+                  alt={professor.name}
+                  fill
+                  sizes="(max-width: 640px) 80px, 160px"
+                  className="object-cover"
+                />
+              </div>
+
+              <div className="min-w-0 flex-1 text-left">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold text-primary sm:text-xs">
+                    {home.groupOverviewFigLabel || "Principal Investigator"}
+                  </span>
+                  <span className="hidden text-xs text-muted-foreground sm:inline">
+                    {professor.institution}
+                  </span>
                 </div>
-                <div className="min-w-0 flex-1">
+
+                <div className="mt-1 sm:mt-2.5">
                   <a
                     href={professor.website}
                     target="_blank"
                     rel="noreferrer"
-                    className="group/name inline-flex items-start gap-1.5 text-[30px] font-semibold leading-tight tracking-tight text-foreground transition-colors hover:text-primary lg:inline"
+                    className="group/name inline-flex items-center gap-1.5 text-lg font-bold tracking-tight text-foreground transition-colors hover:text-primary sm:text-2xl lg:text-3xl"
                   >
                     <span>{professor.name}</span>
-                    <ArrowUpRight className="mt-1 size-5 shrink-0 text-primary lg:ml-1.5 lg:mt-0 lg:inline" />
+                    <ArrowUpRight className="size-4 text-primary transition-transform group-hover/name:translate-x-0.5 group-hover/name:-translate-y-0.5 sm:size-5" />
                   </a>
-                  <p className="mt-3 font-mono text-[13px] uppercase tracking-[0.2em] text-primary">
-                    {home.groupOverviewFigLabel}
-                  </p>
-                  <p className="mt-5 text-[17px] leading-relaxed text-muted-foreground">
-                    <span className="text-foreground">
-                      {professor.title}
-                    </span>
-                    , {professor.institution}. {professor.role}.
-                  </p>
                 </div>
+
+                <p className="mt-0.5 text-xs text-muted-foreground sm:mt-1.5 sm:text-sm sm:font-medium sm:text-foreground/85">
+                  {professor.title}, {professor.department}
+                </p>
+                <p className="hidden text-xs text-muted-foreground sm:block sm:mt-0.5 sm:text-sm">
+                  {professor.role}
+                </p>
+
+                {professor.bio && (
+                  <p className="mt-3.5 hidden line-clamp-3 text-sm leading-relaxed text-muted-foreground sm:block">
+                    {professor.bio}
+                  </p>
+                )}
+
+                {professor.areasOfInterest && professor.areasOfInterest.length > 0 && (
+                  <div className="mt-4 hidden flex-wrap items-center gap-2 sm:flex">
+                    {professor.areasOfInterest.map((area: string) => (
+                      <span
+                        key={area}
+                        className="rounded-lg bg-muted/60 px-2.5 py-1 text-xs font-medium text-muted-foreground"
+                      >
+                        {area}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -218,7 +247,7 @@ export default function Home() {
               <div>
                   {/* Research domains — leads the section; the reading it
                       sets up is what the paper list below then answers. */}
-                  <section
+          <section
                     id="research-domains"
                     aria-labelledby="research-domains-heading"
                     className="scroll-mt-24"
@@ -226,11 +255,11 @@ export default function Home() {
                     <div className="mb-8 border-b border-border pb-4">
                       <h2
                         id="research-domains-heading"
-                        className="inline-flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.22em] text-foreground"
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-foreground"
                       >
                         <Cpu className="size-3.5 text-primary" />
                         {researchDomains.sectionLabel}
-                      </h2>
+                  </h2>
                     </div>
 
                     <ul className="grid gap-x-12 sm:grid-cols-2 md:gap-x-16">
@@ -249,8 +278,8 @@ export default function Home() {
                                 </h3>
                                 <p className="mt-2 max-w-md type-body text-muted-foreground">
                                   {item.description}
-                                </p>
-                              </div>
+                  </p>
+                </div>
                             </div>
                           </li>
                         );
@@ -267,60 +296,60 @@ export default function Home() {
                     <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b border-border pb-4">
                       <h2
                         id="latest-research-heading"
-                        className="font-mono text-[14px] uppercase tracking-[0.22em] text-foreground"
+                        className="text-sm font-semibold text-foreground"
                       >
                         {contentData.latestPublications?.eyebrow}
                       </h2>
                       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                        <span className="font-mono text-[14px] uppercase tracking-[0.22em] text-primary">
+                        <span className="text-sm font-medium text-primary">
                           {yearLabel}
                         </span>
                         <span aria-hidden className="h-3 w-px bg-border" />
-                        <Link
-                          href={contentData.latestPublications?.viewAllHref ?? "/publications"}
-                          className="inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
-                        >
+                <Link
+                  href={contentData.latestPublications?.viewAllHref ?? "/publications"}
+                          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
                           {contentData.latestPublications?.viewAllLabel}
                           <ArrowRight className="size-3" />
-                        </Link>
+                </Link>
                       </div>
-                    </div>
+              </div>
 
                     <div className="grid gap-px bg-border sm:grid-cols-2">
-                      {latest.map((pub: any, i: number) => (
-                        <article
-                          key={pub.id ?? `latest-${i}`}
+                {latest.map((pub: any, i: number) => (
+                  <article
+                    key={pub.id ?? `latest-${i}`}
                           className="bg-background p-6 transition-colors hover:bg-muted/20 sm:p-7"
                         >
-                          {pub.award && (
-                            <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/8 px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-[0.15em] text-accent-foreground">
+                        {pub.award && (
+                            <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/8 px-2.5 py-0.5 text-xs font-semibold text-accent-foreground">
                               <svg viewBox="0 0 24 24" className="size-2.5 fill-accent" aria-hidden>
                                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                               </svg>
-                              {pub.award}
-                            </span>
-                          )}
+                            {pub.award}
+                          </span>
+                        )}
                           <h3 className="text-[16px] font-medium leading-snug text-foreground">
-                            {pub.url ? (
+                        {pub.url ? (
                               <Link
-                                href={pub.url}
-                                target="_blank"
-                                rel="noreferrer"
+                            href={pub.url}
+                            target="_blank"
+                            rel="noreferrer"
                                 className="underline decoration-primary/25 underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
-                              >
+                          >
                                 {pub.title}
                               </Link>
-                            ) : (
-                              pub.title
-                            )}
-                          </h3>
-                          {pub.authors && (
+                        ) : (
+                          pub.title
+                        )}
+                      </h3>
+                      {pub.authors && (
                             <p className="mt-1 text-[14px] leading-relaxed text-muted-foreground line-clamp-1">
-                              {pub.authors}
-                            </p>
-                          )}
+                          {pub.authors}
+                        </p>
+                      )}
                           {pub.venue && (
-                            <p className="mt-1.5 font-mono text-[14px] uppercase tracking-[0.1em] text-primary/80">
+                            <p className="mt-1.5 text-sm font-medium text-primary/80">
                               {pub.venue}
                             </p>
                           )}

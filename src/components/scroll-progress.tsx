@@ -1,14 +1,18 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { NavigationItem } from "@/components/navigation-item";
 import { useSectionContext } from "@/components/section-observer";
+import { getContent } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 const DOT_CENTER = 13;
 
 export function ScrollProgress() {
+  const pathname = usePathname() ?? "/";
+  const { navbar } = getContent();
   const { activeSection, sections, scrollTo, scrollProgress } = useSectionContext();
   const [isMobile, setIsMobile] = useState(false);
 
@@ -19,12 +23,25 @@ export function ScrollProgress() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  const isEnabled = useMemo(() => {
+    if (pathname === "/") {
+      return (navbar as any).showSideMenuHome ?? false;
+    }
+    if (pathname.startsWith("/people")) {
+      return (navbar as any).showSideMenuPeople ?? false;
+    }
+    if (pathname.startsWith("/publications")) {
+      return (navbar as any).showSideMenuPublications ?? true;
+    }
+    return false;
+  }, [pathname, navbar]);
+
   const activeIndex = useMemo(
     () => (activeSection ? sections.findIndex((s) => s.id === activeSection) : -1),
     [activeSection, sections]
   );
 
-  if (sections.length === 0) return null;
+  if (!isEnabled || sections.length === 0) return null;
 
   const ITEM_GAP = 36;
   const lineTop = DOT_CENTER + 4;
@@ -81,39 +98,6 @@ export function ScrollProgress() {
           })}
         </div>
       </nav>
-
-      {/* Mobile progress indicator */}
-      <div className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 md:hidden">
-        <div className="flex items-center gap-1.5 rounded-full border border-border/60 bg-background/80 px-3 py-1.5 backdrop-blur-sm">
-          {sections.map(({ id }, index) => {
-            const isActive = id === activeSection;
-            const isCompleted = activeIndex >= 0 && index < activeIndex;
-            return (
-              <button
-                key={id}
-                onClick={() => scrollTo(id)}
-                aria-label={`Scroll to ${id}`}
-                className="flex items-center justify-center"
-                type="button"
-              >
-                <motion.div
-                  className={cn(
-                    "rounded-full transition-colors",
-                    isActive && "bg-primary",
-                    isCompleted && "bg-primary/60",
-                    !isActive && !isCompleted && "bg-border"
-                  )}
-                  animate={{
-                    width: isActive ? 8 : 5,
-                    height: isActive ? 8 : 5,
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                />
-              </button>
-            );
-          })}
-        </div>
-      </div>
     </>
   );
 }

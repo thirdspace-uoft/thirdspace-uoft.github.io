@@ -47,72 +47,61 @@ export function ResearcherRail({
   ctaHref,
 }: ResearcherRailProps) {
   return (
-    <div className="mt-14 border-t border-border pt-8">
-      <div className="mb-2 flex flex-wrap items-center justify-between gap-4">
-        <h3 className="font-mono text-[14px] uppercase tracking-[0.22em] text-muted-foreground">
-          {label}
-        </h3>
+    <div className="mt-12">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h3 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+            {label}
+          </h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Doctoral researchers and scholars in the ThirdSpace group.
+          </p>
+        </div>
         <Link
           href={ctaHref}
-          className="group/cta inline-flex items-center gap-1.5 font-mono text-[14px] uppercase tracking-[0.18em] text-primary transition-colors hover:text-primary/70"
+          className="group/cta inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-primary/80"
         >
           {ctaLabel}
-          <ArrowRight className="size-3 transition-transform group-hover/cta:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover/cta:translate-x-0" />
+          <ArrowRight className="size-3.5 transition-transform group-hover/cta:translate-x-0.5" />
         </Link>
       </div>
 
-      <ul className="border-t border-border">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 sm:gap-6">
         {members.map((m, i) => {
-          // Plain <a>, not next/link. Next's client router re-applies the
-          // fragment on top of the one it already restored from history, so
-          // arriving at /people, going back, and clicking the same row again
-          // lands on `/people#a/b#a/b` — a fragment no element matches, and the
-          // profile never opens. A native anchor hands the fragment to the
-          // browser, which resolves it once. The trade-off is a full page load
-          // instead of a client transition, which is the right cost here: the
-          // destination is a different route that reads its own JSON anyway.
           const href = m.anchor ? `${ctaHref}#${m.anchor}` : ctaHref;
 
           return (
-            <li key={`${m.name}-${i}`}>
-              <a
-                href={getAssetPath(href)}
-                className="group/member flex items-center gap-7 border-b border-border py-7 transition-colors hover:bg-muted/30 focus-visible:bg-muted/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 sm:gap-9 sm:py-8"
-              >
-                <span className="relative block size-24 shrink-0 overflow-hidden rounded-full bg-muted">
-                  {m.imagePath ? (
-                    <Image
-                      src={getImageUrl(m.imagePath)}
-                      alt=""
-                      fill
-                      sizes="96px"
-                      className="object-cover"
-                    />
-                  ) : (
-                    <span className="flex h-full w-full items-center justify-center font-mono text-[17px] uppercase tracking-[0.12em] text-muted-foreground">
-                      {initialsOf(m.name)}
-                    </span>
-                  )}
-                </span>
-
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[30px] font-semibold leading-tight tracking-[-0.025em] text-foreground transition-colors group-hover/member:text-primary">
-                    {m.name}
+            <a
+              key={`${m.name}-${i}`}
+              href={getAssetPath(href)}
+              className="group flex flex-col items-center rounded-2xl border border-border/70 bg-card p-4 sm:p-5 text-center shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+            >
+              <div className="relative mb-3 size-20 shrink-0 overflow-hidden rounded-full bg-muted ring-2 ring-border/50 transition-all group-hover:ring-primary/40 sm:mb-3.5 sm:size-28">
+                {m.imagePath ? (
+                  <Image
+                    src={getImageUrl(m.imagePath)}
+                    alt={m.name}
+                    fill
+                    sizes="(max-width: 640px) 80px, 112px"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                ) : (
+                  <span className="flex h-full w-full items-center justify-center text-base font-bold text-muted-foreground sm:text-lg">
+                    {initialsOf(m.name)}
                   </span>
-                  <span className="mt-3 block font-mono text-[13px] uppercase tracking-[0.2em] text-primary">
-                    {m.role}
-                  </span>
-                </span>
+                )}
+              </div>
 
-                <ArrowRight
-                  aria-hidden
-                  className="size-4 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover/member:opacity-100"
-                />
-              </a>
-            </li>
+              <h4 className="w-full text-sm font-semibold leading-snug text-foreground transition-colors group-hover:text-primary sm:text-base break-words">
+                {m.name}
+              </h4>
+              <p className="mt-1 text-xs font-medium text-muted-foreground">
+                {m.role}
+              </p>
+            </a>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 }

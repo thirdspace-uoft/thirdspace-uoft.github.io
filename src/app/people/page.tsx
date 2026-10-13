@@ -1,11 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-
-import { getImageUrl } from "@/lib/utils";
 import { getContent } from "@/lib/content";
 import { memberAnchor, sectionSlug } from "@/lib/people";
-import { MemberRowClickable } from "@/components/team/member-row-clickable";
+import { PiCardClickable } from "@/components/team/pi-card-clickable";
+import { MemberCardClickable } from "@/components/team/member-card-clickable";
+import { AlumniCardClickable, type AlumniData } from "@/components/team/alumni-card-clickable";
 
 const contentData = getContent();
 const { team, professor } = contentData;
@@ -27,115 +24,9 @@ type Member = {
   areasOfInterest?: string[];
   researchInterests?: string;
   website?: string;
+  awards?: string[];
   profileDetailEyebrow?: string;
 };
-
-type AlumniMember = {
-  name: string;
-  role?: string;
-  /** Tenure span, e.g. "Fall 2022 – Winter 2023". */
-  years?: string;
-  currentPosition?: string;
-  currentAffiliation?: string;
-};
-
-/**
- * Editorial member index: portrait + numbered name + role + focus +
- * outbound links. No card chrome — each member is a hairline-divided
- * row inside a role section, reading like a journal masthead.
- */
-function MemberRow({
-  index,
-  member,
-  anchor,
-}: {
-  index: number;
-  member: Member;
-  anchor?: string;
-}) {
-  const homepage = member.links?.find((l) => l.url);
-  const otherLinks = member.links?.filter((l) => l.url).slice(1) ?? [];
-  const hasImage = !!member.imagePath;
-
-  return (
-    <article
-      id={anchor}
-      className="grid scroll-mt-24 grid-cols-12 items-center gap-x-6 gap-y-3 border-t border-border py-7 sm:py-8"
-    >
-      <div className="col-span-12 sm:col-span-2">
-        {hasImage ? (
-          <div className="relative aspect-square w-24 overflow-hidden bg-muted sm:w-28">
-            <Image
-              src={getImageUrl(member.imagePath!)}
-              alt={member.name}
-              fill
-              sizes="112px"
-              className="object-cover"
-            />
-          </div>
-        ) : (
-          <div className="flex aspect-square w-24 items-center justify-center rounded-full border border-border bg-muted sm:w-28">
-            <span className="font-mono text-[13px] uppercase tracking-[0.12em] text-muted-foreground">
-              {member.name.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0]).join("")}
-            </span>
-          </div>
-        )}
-      </div>
-
-      <div className="col-span-12 sm:col-span-7">
-        {homepage ? (
-          <Link
-            href={homepage.url}
-            target="_blank"
-            rel="noreferrer"
-            className="group inline-flex items-baseline gap-1.5 type-body font-medium text-foreground transition-colors hover:text-primary"
-          >
-            {member.name}
-            <ArrowUpRight className="size-3.5 opacity-0 transition-opacity group-hover:opacity-100" />
-          </Link>
-        ) : (
-          <p className="type-body font-medium text-foreground">
-            {member.name}
-          </p>
-        )}
-        {(member.title || member.role) && (
-          <p className="mt-1 type-meta uppercase tracking-[0.22em] text-muted-foreground">
-            {member.title || member.role}
-          </p>
-        )}
-        {member.focus && (
-          <p className="mt-3 type-body max-w-prose text-muted-foreground">
-            {member.focus}
-          </p>
-        )}
-      </div>
-
-      <div
-        className={
-          "col-span-12 " + (hasImage ? "sm:col-span-3" : "sm:col-span-4")
-        }
-      >
-        {otherLinks.length > 0 && (
-          <ul className="flex flex-wrap gap-x-4 gap-y-1.5">
-            {otherLinks.map((link, idx) => (
-              <li key={`${link.label}-${idx}`}>
-                <Link
-                  href={link.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1 type-meta uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
-                >
-                  {link.label}
-                  <ArrowUpRight className="size-2.5" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </article>
-  );
-}
 
 type RoleSectionCopy = {
   membersDash: string;
@@ -155,7 +46,6 @@ type ProfileLabels = {
 };
 
 function RoleSection({
-  index,
   role,
   members,
   copy,
@@ -174,53 +64,64 @@ function RoleSection({
   sectionLabel: string;
 }) {
   return (
-    <section data-section={sectionId} data-section-label={sectionLabel} className="border-t border-border">
-      <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-        <div className="mb-6 flex items-baseline justify-between gap-6 border-b border-border pb-4">
-          <h2 className="type-subhead text-foreground">
-            {role}
-          </h2>
-          <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
+    <section
+      data-section={sectionId}
+      data-section-label={sectionLabel}
+      className="border-t border-border"
+    >
+      <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+        <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-border pb-4">
+          <div>
+            <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+              {role}
+            </h2>
+          </div>
+          <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
             {members.length === 0
               ? copy.membersDash
-              : `${members.length} ${members.length === 1 ? copy.membersCountSingular : copy.membersCountPlural}`}
+              : `${members.length} ${
+                  members.length === 1
+                    ? copy.membersCountSingular
+                    : copy.membersCountPlural
+                }`}
           </span>
         </div>
 
         {members.length === 0 ? (
-                  <p className="py-8 type-meta uppercase tracking-[0.18em] text-muted-foreground">
-            {copy.emptyRoleMessage}
-          </p>
+          <div className="rounded-2xl border border-dashed border-border/80 bg-muted/20 p-8 text-center">
+            <p className="text-sm font-medium text-muted-foreground">
+              {copy.emptyRoleMessage}
+            </p>
+          </div>
         ) : (
-          <div>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 sm:gap-6">
             {members.map((m, i) => {
-              const hasProfile = !!m.bio;
               const glance = m.bioGlance ?? m.focus;
               const anchor = memberAnchor(role, m.name);
-              if (hasProfile) {
-                return (
-                  <MemberRowClickable
-                    key={`${m.name}-${i}`}
-                    index={i}
-                    member={{
-                      name: m.name,
-                      title: m.title,
-                      imagePath: m.imagePath,
-                    }}
-                    profile={{
-                      eyebrow: m.profileDetailEyebrow ?? defaultProfileEyebrow,
-                      bio: m.bio,
-                      areasOfInterest: m.areasOfInterest,
-                      researchInterests: m.researchInterests,
-                      website: m.website,
-                    }}
-                    labels={profileLabels}
-                    bioGlance={glance}
-                    anchor={anchor}
-                  />
-                );
-              }
-              return <MemberRow key={`${m.name}-${i}`} index={i} member={m} anchor={anchor} />;
+              return (
+                <MemberCardClickable
+                  key={`${m.name}-${i}`}
+                  member={{
+                    name: m.name,
+                    title: m.title,
+                    role: m.role,
+                    focus: m.focus,
+                    imagePath: m.imagePath,
+                    links: m.links,
+                    bioGlance: glance,
+                  }}
+                  profile={{
+                    eyebrow: m.profileDetailEyebrow ?? defaultProfileEyebrow,
+                    bio: m.bio,
+                    areasOfInterest: m.areasOfInterest,
+                    researchInterests: m.researchInterests,
+                    website: m.website,
+                    awards: m.awards,
+                  }}
+                  labels={profileLabels}
+                  anchor={anchor}
+                />
+              );
             })}
           </div>
         )}
@@ -230,62 +131,46 @@ function RoleSection({
 }
 
 export default function PeoplePage() {
-  // Lift the PI from the existing professor block into the unified member shape
-  const pi: Member = {
-    name: professor.name,
-    title: professor.title,
-    focus: `${professor.department} \u00B7 ${professor.institution}`,
-    imagePath: professor.imagePath,
-    links: professor.website
-      ? [{ label: team.homepageLinkLabel, url: professor.website }]
-      : [],
-  };
-
   const sectionId = (role: string) => sectionSlug(role);
 
   return (
     <main className="bg-background">
-      {/* Hero — meta strip + headline */}
-      <section data-section="team" data-section-label="People" className="border-b border-border">
-        <div className="mx-auto w-full max-w-6xl px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-20">
-          <div className="grid gap-10 lg:grid-cols-12">
-            <h1 className="type-display min-w-0 text-foreground lg:col-span-8">
+      {/* Hero — headline & description */}
+      <section
+        data-section="team"
+        data-section-label="People"
+        className="border-b border-border"
+      >
+        <div className="mx-auto w-full max-w-6xl px-5 pt-12 pb-12 sm:px-8 sm:pt-16 sm:pb-16">
+          <div className="max-w-3xl">
+            <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
               {team.pageHeadline}
             </h1>
-            <p className="type-body min-w-0 max-w-prose text-pretty text-muted-foreground lg:col-span-4 lg:pt-3">
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
               {team.pageBody}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Principal Investigator — opens detail dialog on click */}
-      <section data-section="team-pi" data-section-label="PI" className="border-t border-border">
-        <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-          <div className="mb-6 flex items-baseline justify-between gap-6 border-b border-border pb-4">
-            <h2 className="type-subhead text-foreground">
+      {/* Principal Investigator Section */}
+      <section
+        data-section="team-pi"
+        data-section-label="PI"
+        className="border-b border-border"
+      >
+        <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+          <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-border pb-4">
+            <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
               {team.principalInvestigatorRole}
             </h2>
-            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
               {`1 ${team.membersCountSingular}`}
             </span>
           </div>
 
-          <MemberRowClickable
-            index={0}
-            member={{
-              name: pi.name,
-              title: pi.title,
-              imagePath: pi.imagePath,
-            }}
-            anchor={memberAnchor(team.principalInvestigatorRole, pi.name)}
-            profile={{
-              eyebrow: professor.profileDetailEyebrow,
-              bio: professor.bio,
-              areasOfInterest: professor.areasOfInterest,
-              researchInterests: professor.researchInterests,
-              website: professor.website,
-            }}
+          <PiCardClickable
+            professor={professor}
             labels={{
               open: team.profileOpenLabel,
               name: team.profileDetailNameLabel,
@@ -295,12 +180,13 @@ export default function PeoplePage() {
               website: team.profileDetailWebsiteLabel,
               close: team.profileCloseLabel,
             }}
-            bioGlance={team.piRowBioGlance}
+            eyebrowBadge={team.principalInvestigatorRole}
+            anchor={memberAnchor(team.principalInvestigatorRole, professor.name)}
           />
         </div>
       </section>
 
-      {/* Other role sections */}
+      {/* Active Role Sections (Postdocs, PhD Students, MSc, Undergraduates) */}
       {team.sections.map((section, idx) => (
         <RoleSection
           key={section.role}
@@ -328,61 +214,53 @@ export default function PeoplePage() {
         />
       ))}
 
-      {/* Alumni */}
-      <section data-section="team-alumni" data-section-label="Alumni" className="border-t border-border">
-        <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-          <div className="mb-6 flex items-baseline justify-between gap-6 border-b border-border pb-4">
-            <h2 className="type-subhead text-foreground">
+      {/* Alumni Section */}
+      <section
+        data-section="team-alumni"
+        data-section-label="Alumni"
+        className="border-t border-border"
+      >
+        <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+          <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-border pb-4">
+            <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
               {team.alumni.title}
             </h2>
-            <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
-              {((team.alumni.members ?? []) as AlumniMember[]).length === 0
+            <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+              {((team.alumni.members ?? []) as AlumniData[]).length === 0
                 ? team.membersDash
-                : `${(team.alumni.members ?? []).length} ${(team.alumni.members ?? []).length === 1 ? team.alumniCountSingular : team.alumniCountPlural}`}
+                : `${(team.alumni.members ?? []).length} ${
+                    (team.alumni.members ?? []).length === 1
+                      ? team.alumniCountSingular
+                      : team.alumniCountPlural
+                  }`}
             </span>
           </div>
 
-          {((team.alumni.members ?? []) as AlumniMember[]).length === 0 ? (
-            <p className="py-8 font-mono text-[13px] uppercase tracking-[0.18em] text-muted-foreground">
-              {team.emptyAlumniMessage}
-            </p>
+          {((team.alumni.members ?? []) as AlumniData[]).length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-border/80 bg-muted/20 p-8 text-center">
+              <p className="text-sm font-medium text-muted-foreground">
+                {team.emptyAlumniMessage}
+              </p>
+            </div>
           ) : (
-            <ul>
-              {/* No top border: the header row above already draws the rule
-                  that separates the heading from the list. Drawing one here
-                  too put a second 1px line 24px below it, reading as a double
-                  rule. */}
-              {((team.alumni.members ?? []) as AlumniMember[]).map((m, i) => (
-                <li
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-5">
+              {((team.alumni.members ?? []) as AlumniData[]).map((m, i) => (
+                <AlumniCardClickable
                   key={`${m.name}-${i}`}
-                  className="grid grid-cols-12 items-baseline gap-x-4 gap-y-1 border-b border-border py-5 sm:py-6"
-                >
-                  <div className="col-span-12 sm:col-span-5">
-                    <p className="type-body font-medium text-foreground">
-                      {m.name}
-                    </p>
-                    {m.role && (
-                      <p className="mt-0.5 type-meta uppercase tracking-[0.22em] text-muted-foreground">
-                        {m.role}
-                      </p>
-                    )}
-                  </div>
-                  {/* Tenure in the middle column. Proportional type rather than
-                      mono at this size: a mono uppercase span like "JANUARY 2019
-                      – DECEMBER 2020" is wide enough to wrap on two lines in a
-                      2-column track, and the ragged wrap read as a layout fault
-                      rather than a date. */}
-                  <p className="col-span-12 text-[13px] tabular-nums text-muted-foreground/80 sm:col-span-3">
-                    {m.years}
-                  </p>
-                  <p className="col-span-12 type-body text-muted-foreground sm:col-span-4">
-                    {[m.currentPosition, m.currentAffiliation]
-                      .filter(Boolean)
-                      .join(" \u00B7 ")}
-                  </p>
-                </li>
+                  alumni={m}
+                  labels={{
+                    open: team.profileOpenLabel,
+                    name: team.profileDetailNameLabel,
+                    bio: team.profileDetailBioLabel,
+                    areas: team.profileDetailAreasLabel,
+                    research: team.profileDetailResearchLabel,
+                    website: team.profileDetailWebsiteLabel,
+                    close: team.profileCloseLabel,
+                  }}
+                  anchor={memberAnchor("alumni", m.name)}
+                />
               ))}
-            </ul>
+            </div>
           )}
         </div>
       </section>

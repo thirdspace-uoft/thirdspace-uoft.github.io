@@ -49,54 +49,50 @@
 }
 
 :root {
-  /* UofT brand anchor: U of T Blue (Pantone 655 / #1E3765). The single source
-     of truth — change this and the whole site re-derives. Slight twist: a
-     warm gold accent sits beside the institutional blue for character. */
-  --brand-hue: 265;
+  /* ThirdSpace brand anchor: #B21F2D (Crimson Red). */
+  --brand-hue: 20;
 
-  /* UofT Blue is #1E3765. Primary is set explicitly to that hex, neutrals
-     are still tinted off the brand-hue so the palette stays cohesive. */
-  --background: oklch(0.985 0.012 var(--brand-hue));
-  --foreground: oklch(0.18 0.03 var(--brand-hue));
-  --card: oklch(1 0.008 var(--brand-hue));
-  --card-foreground: oklch(0.18 0.03 var(--brand-hue));
-  --popover: oklch(1 0.008 var(--brand-hue));
-  --popover-foreground: oklch(0.18 0.03 var(--brand-hue));
+  --background: oklch(0.99 0.004 var(--brand-hue));
+  --foreground: oklch(0.18 0.02 var(--brand-hue));
+  --card: #ffffff;
+  --card-foreground: oklch(0.18 0.02 var(--brand-hue));
+  --popover: #ffffff;
+  --popover-foreground: oklch(0.18 0.02 var(--brand-hue));
 
-  /* Primary = U of T Blue (#002A5C). */
-  --primary: oklch(0.26 0.08 265);
-  --primary-foreground: oklch(0.99 0.005 var(--brand-hue));
-  --secondary: oklch(0.96 0.015 var(--brand-hue));
-  --secondary-foreground: oklch(0.28 0.06 var(--brand-hue));
+  /* Primary = #B21F2D */
+  --primary: #B21F2D;
+  --primary-foreground: #ffffff;
+  --secondary: oklch(0.96 0.01 var(--brand-hue));
+  --secondary-foreground: oklch(0.28 0.04 var(--brand-hue));
 
-  /* Accent = warm gold. The "twist" on the UofT palette. */
+  /* Accent */
   --accent: oklch(0.88 0.13 80);
   --accent-foreground: oklch(0.32 0.1 60);
-  --muted: oklch(0.96 0.012 var(--brand-hue));
-  --muted-foreground: oklch(0.48 0.03 var(--brand-hue));
+  --muted: oklch(0.965 0.008 var(--brand-hue));
+  --muted-foreground: oklch(0.48 0.02 var(--brand-hue));
 
   --destructive: oklch(0.577 0.18 27);
-  --border: oklch(0.9 0.02 var(--brand-hue));
-  --input: oklch(0.9 0.02 var(--brand-hue));
-  --ring: oklch(0.35 0.08 265);
+  --border: oklch(0.92 0.01 var(--brand-hue));
+  --input: oklch(0.92 0.01 var(--brand-hue));
+  --ring: #B21F2D;
 
-  /* Charts: UofT blue family + gold + accents. */
-  --chart-1: oklch(0.292 0.085 265);        /* U of T Blue */
-  --chart-2: oklch(0.55 0.13 220);           /* Boundless Blue */
-  --chart-3: oklch(0.78 0.14 80);            /* Gold */
-  --chart-4: oklch(0.45 0.08 200);           /* Slate */
-  --chart-5: oklch(0.65 0.05 265);           /* Light blue */
+  /* Charts */
+  --chart-1: #B21F2D;
+  --chart-2: oklch(0.55 0.13 220);
+  --chart-3: oklch(0.78 0.14 80);
+  --chart-4: oklch(0.45 0.08 200);
+  --chart-5: oklch(0.65 0.05 265);
 
   --radius: 0.625rem;
 
-  --sidebar: oklch(0.97 0.012 var(--brand-hue));
-  --sidebar-foreground: oklch(0.18 0.03 var(--brand-hue));
-  --sidebar-primary: oklch(0.292 0.085 265);
-  --sidebar-primary-foreground: oklch(0.99 0.005 var(--brand-hue));
-  --sidebar-accent: oklch(0.88 0.13 80);
-  --sidebar-accent-foreground: oklch(0.32 0.1 60);
-  --sidebar-border: oklch(0.9 0.02 var(--brand-hue));
-  --sidebar-ring: oklch(0.4 0.1 265);
+  --sidebar: oklch(0.98 0.008 var(--brand-hue));
+  --sidebar-foreground: oklch(0.18 0.02 var(--brand-hue));
+  --sidebar-primary: #B21F2D;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: oklch(0.94 0.01 var(--brand-hue));
+  --sidebar-accent-foreground: #B21F2D;
+  --sidebar-border: oklch(0.92 0.01 var(--brand-hue));
+  --sidebar-ring: #B21F2D;
 
   --font-sans: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
