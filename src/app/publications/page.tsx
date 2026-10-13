@@ -107,7 +107,7 @@ function PubCard({
         {/* Award badge — prominent, warm gold */}
         {pub.award && (
           <div className="flex">
-            <span className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-accent/10 px-3 py-1 font-mono text-[12px] uppercase tracking-[0.18em] text-accent-foreground">
+            <span className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent-foreground">
               <svg viewBox="0 0 24 24" className="size-3 fill-accent" aria-hidden>
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
               </svg>
@@ -127,7 +127,7 @@ function PubCard({
         {/* Venue + meta chips */}
         <div className="flex flex-wrap items-center gap-2">
           {pub.venue && (
-            <span className="inline-flex min-w-0 items-center gap-1.5 rounded-md bg-muted/80 px-2.5 py-1 font-mono text-[12px] uppercase tracking-[0.15em] text-muted-foreground">
+            <span className="inline-flex min-w-0 items-center gap-1.5 rounded-md bg-muted/80 px-2.5 py-1 text-xs font-medium text-muted-foreground">
               <FileText className="size-2.5" />
               {pub.venue}
             </span>
@@ -224,7 +224,7 @@ function PubSubsection({
 function BookRow({ book, index, bookCoverPlaceholder }: { book: Book; index: number; bookCoverPlaceholder: string }) {
   return (
     <article className="grid grid-cols-12 items-start gap-x-6 gap-y-3 border-t border-border py-7 sm:py-8">
-      <span className="col-span-2 font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground sm:col-span-1">
+      <span className="col-span-2 text-xs font-medium text-muted-foreground sm:col-span-1">
         {pad2(index + 1)}
       </span>
 
@@ -243,7 +243,7 @@ function BookRow({ book, index, bookCoverPlaceholder }: { book: Book; index: num
       ) : (
         <div className="col-span-10 sm:col-span-2">
           <div className="flex aspect-[3/4] w-20 items-center justify-center bg-muted sm:w-24">
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="text-xs font-medium text-muted-foreground">
               {bookCoverPlaceholder}
             </span>
           </div>
@@ -270,7 +270,7 @@ function BookRow({ book, index, bookCoverPlaceholder }: { book: Book; index: num
             </p>
           ))}
         {book.authors && (
-          <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground">
+          <p className="mt-1 text-xs text-muted-foreground">
             {book.authors}
             {book.year ? ` \u00B7 ${book.year}` : ""}
           </p>
@@ -376,7 +376,7 @@ export default function PublicationsPage() {
                   <h2 className="font-heading text-4xl font-medium tabular-nums tracking-[-0.03em] text-foreground sm:text-6xl">
                     {bucket.label ?? year}
                   </h2>
-                  <span className="mb-1 font-mono text-[12px] uppercase tracking-[0.22em] text-muted-foreground sm:mb-2">
+                  <span className="mb-1 text-xs font-medium text-muted-foreground sm:mb-2">
                     {publications.sectionTitleTemplate}
                   </span>
                 </div>
@@ -437,7 +437,7 @@ export default function PublicationsPage() {
       {/* ── Empty state ── */}
       {books.length === 0 && yearKeys.length === 0 && (
         <section className="mx-auto w-full max-w-4xl px-6 pb-24 pt-12">
-          <p className="font-mono text-[13px] uppercase tracking-[0.18em] text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             {publications.emptyMessage}
           </p>
         </section>

@@ -29,6 +29,7 @@ import { Button } from "@/components/ui/button";
 import { ImageUploader } from "@/components/image-uploader";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { auth, db } from "@/lib/firebase";
 import {
   signInWithEmailAndPassword,
@@ -291,7 +292,7 @@ function SignedInView({
       });
   }, []);
 
-  const handleFieldChange = (section: string, field: string, value: string) => {
+  const handleFieldChange = (section: string, field: string, value: any) => {
     setContent((prev: any) => ({
       ...prev,
       [section]: {
@@ -963,6 +964,30 @@ function SignedInView({
                       <h3 className="text-sm font-bold text-foreground font-mono uppercase">Header wordmarks</h3>
                     </div>
 
+                    {/* Wordmarks Enable / Disable Switch */}
+                    <div className="mb-6 flex flex-col gap-3 rounded border border-border/80 bg-muted/40 p-4 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="nav-showWordmarks" className="text-xs font-mono uppercase text-foreground font-semibold cursor-pointer">
+                          Display Wordmarks in Navbar
+                        </Label>
+                        <p className="text-[11px] font-mono text-muted-foreground">
+                          Toggle brand name and institutional tagline text next to the header logo in the navbar.
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[11px] font-mono uppercase font-semibold text-muted-foreground">
+                          {content.navbar.showWordmarks ? "Enabled" : "Disabled"}
+                        </span>
+                        <Switch
+                          id="nav-showWordmarks"
+                          checked={content.navbar.showWordmarks ?? false}
+                          onCheckedChange={(checked) =>
+                            handleFieldChange("navbar", "showWordmarks", checked)
+                          }
+                        />
+                      </div>
+                    </div>
+
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div className="space-y-1">
                         <Label htmlFor="nav-brandName" className="text-[12px] font-mono uppercase text-muted-foreground">Primary Brand Title</Label>
@@ -981,6 +1006,95 @@ function SignedInView({
                           onChange={(e) => handleFieldChange("navbar", "brandTagline", e.target.value)}
                           className="font-mono text-xs"
                         />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Side Menu (Section Navigation) Card */}
+                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
+                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">
+                      N02
+                    </div>
+
+                    <div className="mb-2">
+                      <span className="text-[12px] font-mono uppercase text-muted-foreground">Module Scope</span>
+                      <h3 className="text-sm font-bold text-foreground font-mono uppercase">Side Menu (Section Navigation)</h3>
+                      <p className="text-[12px] font-mono text-muted-foreground mt-0.5">
+                        Configure which pages display the floating vertical side navigation rail and section progress dots.
+                      </p>
+                    </div>
+
+                    <div className="space-y-3 pt-2">
+                      {/* Home Page Side Menu Toggle */}
+                      <div className="flex flex-col gap-2 rounded border border-border/80 bg-muted/40 p-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="space-y-0.5">
+                          <Label htmlFor="nav-sideMenuHome" className="text-xs font-mono uppercase text-foreground font-semibold cursor-pointer">
+                            Home Page Side Menu
+                          </Label>
+                          <p className="text-[11px] font-mono text-muted-foreground">
+                            Show floating section navigation (Home, People, Research) on the home page.
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-[11px] font-mono uppercase font-semibold text-muted-foreground">
+                            {content.navbar.showSideMenuHome ? "Enabled" : "Disabled"}
+                          </span>
+                          <Switch
+                            id="nav-sideMenuHome"
+                            checked={content.navbar.showSideMenuHome ?? false}
+                            onCheckedChange={(checked) =>
+                              handleFieldChange("navbar", "showSideMenuHome", checked)
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      {/* People Page Side Menu Toggle */}
+                      <div className="flex flex-col gap-2 rounded border border-border/80 bg-muted/40 p-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="space-y-0.5">
+                          <Label htmlFor="nav-sideMenuPeople" className="text-xs font-mono uppercase text-foreground font-semibold cursor-pointer">
+                            People Page Side Menu
+                          </Label>
+                          <p className="text-[11px] font-mono text-muted-foreground">
+                            Show floating section navigation (People, PI, Alumni) on the people page.
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-[11px] font-mono uppercase font-semibold text-muted-foreground">
+                            {content.navbar.showSideMenuPeople ? "Enabled" : "Disabled"}
+                          </span>
+                          <Switch
+                            id="nav-sideMenuPeople"
+                            checked={content.navbar.showSideMenuPeople ?? false}
+                            onCheckedChange={(checked) =>
+                              handleFieldChange("navbar", "showSideMenuPeople", checked)
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      {/* Publications Page Side Menu Toggle */}
+                      <div className="flex flex-col gap-2 rounded border border-border/80 bg-muted/40 p-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="space-y-0.5">
+                          <Label htmlFor="nav-sideMenuPublications" className="text-xs font-mono uppercase text-foreground font-semibold cursor-pointer">
+                            Publications Page Side Menu
+                          </Label>
+                          <p className="text-[11px] font-mono text-muted-foreground">
+                            Show floating section navigation (Publications, Books, Year anchors) on the publications page.
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-[11px] font-mono uppercase font-semibold text-muted-foreground">
+                            {content.navbar.showSideMenuPublications ?? true ? "Enabled" : "Disabled"}
+                          </span>
+                          <Switch
+                            id="nav-sideMenuPublications"
+                            checked={content.navbar.showSideMenuPublications ?? true}
+                            onCheckedChange={(checked) =>
+                              handleFieldChange("navbar", "showSideMenuPublications", checked)
+                            }
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

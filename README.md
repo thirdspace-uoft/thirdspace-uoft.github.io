@@ -123,12 +123,12 @@ npm run lint    # eslint (next + ts config)
 
 ## Useful Commands
 
-| Goal                          | Command                                       |
-| ----------------------------- | --------------------------------------------- |
-| List available components     | `npx shadcn@latest add`                       |
-| Add a single component        | `npx shadcn@latest add dialog`                |
-| Re-run init non-interactively | `npx shadcn@latest init --preset nova --yes`   |
-| Type-check                    | `npx tsc --noEmit`                            |
+| Goal                          | Command                                        |
+| ----------------------------- | ---------------------------------------------- |
+| List available components     | `npx shadcn@latest add`                      |
+| Add a single component        | `npx shadcn@latest add dialog`               |
+| Re-run init non-interactively | `npx shadcn@latest init --preset nova --yes` |
+| Type-check                    | `npx tsc --noEmit`                           |
 
 ## Content Sync with Firebase
 
@@ -159,6 +159,7 @@ You can also publish directly from `/admin` — sign in, edit fields, and click 
 ### Prerequisites
 
 Both scripts require Firebase admin credentials from `.env`:
+
 - `FIREBASE_SERVICE_ACCOUNT_KEY` — inline JSON string, or
 - `FIREBASE_SERVICE_ACCOUNT_KEY_PATH` — path to a `.json` key file
 

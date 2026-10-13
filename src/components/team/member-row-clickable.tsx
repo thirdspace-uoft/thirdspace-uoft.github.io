@@ -141,7 +141,7 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance, 
               </div>
             ) : (
               <div className="flex aspect-square w-36 shrink-0 items-center justify-center rounded-full border border-border bg-muted sm:w-48">
-                <span className="font-mono text-[17px] uppercase tracking-[0.12em] text-muted-foreground sm:text-lg">
+                <span className="text-base font-semibold text-muted-foreground sm:text-lg">
                   {member.name.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0]).join("")}
                 </span>
               </div>
@@ -153,7 +153,7 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance, 
               {member.name}
             </p>
             {member.title && (
-              <p className="mt-1 type-meta uppercase tracking-[0.22em] text-muted-foreground">
+              <p className="mt-1 text-sm text-muted-foreground">
                 {member.title}
               </p>
             )}
@@ -162,7 +162,7 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance, 
                 {bioGlance}
               </p>
             )}
-            <p className="mt-3 inline-flex items-center gap-1.5 type-meta uppercase tracking-[0.22em] text-primary">
+            <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
               {labels.open}
               <ArrowUpRight className="size-3" />
             </p>
@@ -190,21 +190,21 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance, 
               </div>
             ) : (
               <div className="flex aspect-square w-44 shrink-0 items-center justify-center rounded-full border border-border bg-muted shadow-sm sm:w-52">
-                <span className="font-mono text-lg uppercase tracking-[0.12em] text-muted-foreground sm:text-xl">
+                <span className="text-lg font-semibold text-muted-foreground sm:text-xl">
                   {member.name.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0]).join("")}
                 </span>
               </div>
             )}
 
             <div className="flex w-full flex-1 flex-col items-center text-center sm:items-start sm:text-left">
-              <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-muted/60 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
+              <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-muted/60 px-3 py-1 text-xs font-medium text-muted-foreground">
                 {profile.eyebrow}
               </span>
               <h2 className="type-subhead text-foreground">
                 {member.name}
               </h2>
               {member.title && (
-                <p className="mt-1 type-meta uppercase tracking-[0.22em] text-muted-foreground">
+                <p className="mt-1 text-sm text-muted-foreground">
                   {member.title}
                 </p>
               )}
@@ -233,7 +233,7 @@ export function MemberRowClickable({ index, member, profile, labels, bioGlance, 
                   {profile.areasOfInterest.map((area, i) => (
                     <li
                       key={`${area}-${i}`}
-                      className="inline-flex items-center rounded-full border border-border bg-muted/60 px-3 py-1 type-meta uppercase tracking-[0.18em] text-muted-foreground"
+                      className="inline-flex items-center rounded-full border border-border bg-muted/60 px-3 py-1 text-xs font-medium text-foreground"
                     >
                       {area}
                     </li>
@@ -279,7 +279,7 @@ function ProfileSection({
 }) {
   return (
     <div>
-      <h3 className="mb-2 type-meta uppercase tracking-[0.22em] text-muted-foreground">
+      <h3 className="mb-2 text-xs font-semibold text-muted-foreground">
         {label}
       </h3>
       {children}
