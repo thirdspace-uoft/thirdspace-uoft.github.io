@@ -24,6 +24,7 @@ import {
   Plus,
   Trash2,
   Image,
+  Newspaper,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageUploader } from "@/components/image-uploader";
@@ -241,7 +242,7 @@ function SignedInView({
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Form tab selection
-  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications">("layout");
+  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "news">("layout");
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const IMAGEKIT_URL_ENDPOINT = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
@@ -501,6 +502,44 @@ function SignedInView({
     });
   };
 
+  const handleNewsItemChange = (index: number, field: string, value: string) => {
+    setContent((prev: any) => {
+      const news = { ...(prev.news ?? { items: [] }) };
+      const items = [...(news.items ?? [])];
+      items[index] = { ...items[index], [field]: value };
+      return { ...prev, news: { ...news, items } };
+    });
+  };
+
+  const handleNewsItemAdd = () => {
+    setContent((prev: any) => {
+      const news = { ...(prev.news ?? { items: [] }) };
+      const items = [
+        ...(news.items ?? []),
+        {
+          id: `news-${Date.now()}`,
+          title: "",
+          excerpt: "",
+          date: new Date().toISOString().slice(0, 10),
+          tag: "",
+          imagePath: "",
+          imageAlt: "",
+          url: "",
+        },
+      ];
+      return { ...prev, news: { ...news, items } };
+    });
+  };
+
+  const handleNewsItemRemove = (index: number) => {
+    setContent((prev: any) => {
+      const news = { ...(prev.news ?? { items: [] }) };
+      const items = [...(news.items ?? [])];
+      items.splice(index, 1);
+      return { ...prev, news: { ...news, items } };
+    });
+  };
+
   const handleAreasOfInterestChange = (value: string) => {
     setContent((prev: any) => ({
       ...prev,
@@ -603,12 +642,13 @@ function SignedInView({
     { id: "groupOverview" as const, label: "04. Group Overview", icon: Layout },
     { id: "professor" as const, label: "05. Professor", icon: ShieldCheck },
     { id: "researchDomains" as const, label: "06. Research Domains", icon: Database },
-    { id: "about" as const, label: "07. Latest Research", icon: FileCode },
-    { id: "team" as const, label: "08. People", icon: Users },
-    { id: "publications" as const, label: "09. Publications", icon: BookOpenCheck },
-    { id: "navbar" as const, label: "10. Nav Settings", icon: Compass },
-    { id: "footerLabs" as const, label: "11. Lab & Campuses", icon: Database },
-    { id: "location" as const, label: "12. Campus Location", icon: MapPin },
+    { id: "news" as const, label: "07. News", icon: Newspaper },
+    { id: "about" as const, label: "08. Latest Research", icon: FileCode },
+    { id: "team" as const, label: "09. People", icon: Users },
+    { id: "publications" as const, label: "10. Publications", icon: BookOpenCheck },
+    { id: "navbar" as const, label: "11. Nav Settings", icon: Compass },
+    { id: "footerLabs" as const, label: "12. Lab & Campuses", icon: Database },
+    { id: "location" as const, label: "13. Campus Location", icon: MapPin },
   ];
 
   if (loading) {
@@ -1587,6 +1627,104 @@ function SignedInView({
                           <Label className="text-[12px] font-mono uppercase text-muted-foreground">Accent (primary | accent)</Label>
                           <Input value={item.accent ?? ""} onChange={(e) => handleResearchDomainAccentChange(index, e.target.value)} placeholder="primary" className="font-mono text-xs text-muted-foreground" />
                         </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {activeTab === "news" && (
+                <div className="space-y-4">
+                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
+                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">N01</div>
+                    <div className="mb-2">
+                      <span className="text-[12px] font-mono uppercase tracking-widest text-muted-foreground">Draft Sheet</span>
+                      <h3 className="text-base font-bold text-foreground font-serif">News Section</h3>
+                      <p className="text-[13px] text-muted-foreground">Shown on the home page directly after the hero. Images are optional.</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Eyebrow</Label>
+                        <Input value={content?.news?.eyebrow ?? ""} onChange={(e) => handleFieldChange("news", "eyebrow", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Headline</Label>
+                        <Input value={content?.news?.headline ?? ""} onChange={(e) => handleFieldChange("news", "headline", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1 sm:col-span-2">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Subhead</Label>
+                        <Input value={content?.news?.subhead ?? ""} onChange={(e) => handleFieldChange("news", "subhead", e.target.value)} className="text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Max To Show</Label>
+                        <Input type="number" value={content?.news?.maxToShow ?? 3} onChange={(e) => handleFieldChange("news", "maxToShow", Number(e.target.value))} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Empty Label</Label>
+                        <Input value={content?.news?.emptyLabel ?? ""} onChange={(e) => handleFieldChange("news", "emptyLabel", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[12px] font-mono uppercase text-muted-foreground tracking-wider">News Items</span>
+                    <Button size="xs" variant="outline" onClick={handleNewsItemAdd}>
+                      <Plus className="h-3 w-3" /> Add News
+                    </Button>
+                  </div>
+                  {(content?.news?.items ?? []).map((item: any, index: number) => (
+                    <div key={item.id ?? index} className="relative bg-card border border-border rounded p-5 shadow-sm">
+                      <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">N0{index + 1}</div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1 sm:col-span-2">
+                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Title</Label>
+                          <Input value={item.title ?? ""} onChange={(e) => handleNewsItemChange(index, "title", e.target.value)} className="font-mono text-xs" />
+                        </div>
+                        <div className="space-y-1 sm:col-span-2">
+                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Excerpt</Label>
+                          <textarea
+                            rows={3}
+                            value={item.excerpt ?? ""}
+                            onChange={(e) => handleNewsItemChange(index, "excerpt", e.target.value)}
+                            className="w-full text-xs p-2 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Date (YYYY-MM-DD)</Label>
+                          <Input value={item.date ?? ""} onChange={(e) => handleNewsItemChange(index, "date", e.target.value)} placeholder="2026-04-15" className="font-mono text-xs" />
+                        </div>
+                        <div className="space-y-1">
+                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Tag</Label>
+                          <Input value={item.tag ?? ""} onChange={(e) => handleNewsItemChange(index, "tag", e.target.value)} placeholder="Award / People / Research" className="font-mono text-xs" />
+                        </div>
+                        <div className="space-y-1 sm:col-span-2">
+                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Image Path (optional, from /public/news or ImageKit)</Label>
+                          <div className="flex gap-2">
+                            <Input value={item.imagePath ?? ""} onChange={(e) => handleNewsItemChange(index, "imagePath", e.target.value)} className="font-mono text-xs flex-1" placeholder="/news/example.webp" />
+                            <ImageUploader
+                              currentPath={item.imagePath ?? ""}
+                              folder="/news"
+                              onUpload={(p) => handleNewsItemChange(index, "imagePath", p)}
+                              onDelete={() => deleteFromImageKit(item.imagePath ?? "")}
+                            />
+                          </div>
+                        </div>
+                        <div className="space-y-1 sm:col-span-2">
+                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Image Alt</Label>
+                          <Input value={item.imageAlt ?? ""} onChange={(e) => handleNewsItemChange(index, "imageAlt", e.target.value)} className="font-mono text-xs" />
+                        </div>
+                        <div className="space-y-1">
+                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Link URL (optional)</Label>
+                          <Input value={item.url ?? ""} onChange={(e) => handleNewsItemChange(index, "url", e.target.value)} placeholder="https://... or /people" className="font-mono text-xs" />
+                        </div>
+                        <div className="space-y-1">
+                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">ID</Label>
+                          <Input value={item.id ?? ""} onChange={(e) => handleNewsItemChange(index, "id", e.target.value)} className="font-mono text-xs text-muted-foreground" />
+                        </div>
+                      </div>
+                      <div className="mt-4 flex justify-end">
+                        <Button size="xs" variant="ghost" onClick={() => handleNewsItemRemove(index)}>
+                          <Trash2 className="h-3 w-3" /> Remove
+                        </Button>
                       </div>
                     </div>
                   ))}
