@@ -9,6 +9,7 @@ import {
   Globe,
   HeartHandshake,
   Microscope,
+  Newspaper,
   Scale,
   Sparkles,
   Users,
@@ -25,7 +26,26 @@ const {
   home,
   professor,
   researchDomains,
-} = contentData;
+  news,
+} = contentData as typeof contentData & {
+  news?: {
+    eyebrow?: string;
+    headline?: string;
+    subhead?: string;
+    maxToShow?: number;
+    emptyLabel?: string;
+    items?: {
+      id?: string;
+      title?: string;
+      excerpt?: string;
+      date?: string;
+      tag?: string;
+      imagePath?: string;
+      imageAlt?: string;
+      url?: string;
+    }[];
+  };
+};
 
 type IconName =
   | "Users"
@@ -102,6 +122,106 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* NEWS & HIGHLIGHTS — directly after hero */}
+      {(() => {
+        const items = (news?.items ?? []) as NonNullable<typeof news>["items"];
+        if (!news || (items ?? []).length === 0) return null;
+        const maxShow = news?.maxToShow ?? 3;
+        const visible = (items ?? []).slice(0, maxShow);
+        return (
+          <section data-section="news" data-section-label="News" className="border-b border-border">
+            <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+              <div className="mb-8 border-b border-border pb-4">
+                <h2 className="inline-flex items-center gap-2 text-sm font-semibold text-foreground">
+                  <Newspaper className="size-3.5 text-primary" />
+                  {news?.eyebrow ?? "Latest news"}
+                </h2>
+                <p className="mt-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                  {news?.headline ?? "News & Highlights"}
+                </p>
+                {news?.subhead && (
+                  <p className="mt-1 text-sm text-muted-foreground sm:text-base">
+                    {news.subhead}
+                  </p>
+                )}
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-3 sm:gap-6">
+                {visible.map((item: any, i: number) => (
+                  <article
+                    key={item.id ?? `news-${i}`}
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
+                  >
+                    {item.imagePath ? (
+                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted">
+                        <Image
+                          src={getImageUrl(item.imagePath)}
+                          alt={item.imageAlt ?? item.title ?? "News image"}
+                          fill
+                          sizes="(max-width: 640px) 100vw, 360px"
+                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </div>
+                    ) : (
+                      <div className="flex aspect-[16/9] w-full items-center justify-center bg-muted">
+                        <span className="text-lg font-bold text-muted-foreground">
+                          {(item.title ?? "N")
+                            .split(" ")
+                            .filter(Boolean)
+                            .slice(0, 2)
+                            .map((w: string) => w[0])
+                            .join("")}
+                        </span>
+                      </div>
+                    )}
+                    <div className="flex flex-1 flex-col p-5 sm:p-6">
+                      <div className="flex flex-wrap items-center gap-2">
+                        {item.tag && (
+                          <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold text-primary">
+                            {item.tag}
+                          </span>
+                        )}
+                        {item.date && (
+                          <span className="inline-flex items-center gap-1 font-mono text-xs text-muted-foreground">
+                            <Calendar className="size-3" />
+                            {item.date}
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="mt-3 text-base font-semibold leading-snug tracking-tight text-foreground">
+                        {item.url ? (
+                          <a
+                            href={item.url}
+                            target={item.url.startsWith("/") ? undefined : "_blank"}
+                            rel={item.url.startsWith("/") ? undefined : "noreferrer"}
+                            className="underline decoration-primary/25 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary"
+                          >
+                            {item.title}
+                          </a>
+                        ) : (
+                          item.title
+                        )}
+                      </h3>
+                      {item.excerpt && (
+                        <p className="mt-2 text-sm leading-relaxed text-muted-foreground line-clamp-3">
+                          {item.excerpt}
+                        </p>
+                      )}
+                      {item.url && (
+                        <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                          Read more
+                          <ArrowUpRight className="size-3.5" />
+                        </span>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* GROUP OVERVIEW — PI card on top + Researcher Grid below */}
       <section id="about-group" data-section="people" data-section-label="People" className="border-b border-border">
