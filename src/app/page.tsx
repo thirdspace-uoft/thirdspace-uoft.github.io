@@ -17,8 +17,8 @@ import {
 import { getImageUrl } from "@/lib/utils";
 import { getContent } from "@/lib/content";
 import { memberAnchor } from "@/lib/people";
-import { getNews, sortNews } from "@/lib/news";
-import { NewsList } from "@/components/news-list";
+import { getNews, pickHomeNews } from "@/lib/news";
+import { NewsShowMore } from "@/components/news-show-more";
 import { ResearcherRail, type RailMember } from "@/components/researcher-rail";
 
 const contentData = getContent();
@@ -108,9 +108,11 @@ export default function Home() {
 
       {/* NEWS — directly after hero; one line per item, details on hover */}
       {(() => {
-        const items = sortNews(news.items ?? []);
-        if (items.length === 0) return null;
-        const visible = items.slice(0, news.maxToShow ?? items.length);
+        const initialCount = news.initialToShow ?? 10;
+        const initial = pickHomeNews(news.items ?? [], { years: news.homeYears, min: initialCount, max: initialCount });
+        if (initial.length === 0) return null;
+        // Everything eligible across all years, capped at maxToShow, for "Show more".
+        const expanded = pickHomeNews(news.items ?? [], { years: Infinity, max: news.maxToShow });
         return (
           <section data-section="news" data-section-label="News" className="border-b border-border">
             <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
@@ -136,10 +138,12 @@ export default function Home() {
                 )}
               </div>
 
-              <NewsList
-                items={visible}
-                placeholderImagePath={news.placeholderImagePath}
+              <NewsShowMore
+                initial={initial}
+                expanded={expanded}
                 openLinkLabel={news.openLinkLabel}
+                showMoreLabel={news.showMoreLabel}
+                showLessLabel={news.showLessLabel}
               />
             </div>
           </section>

@@ -520,7 +520,7 @@ function SignedInView({
     });
   };
 
-  const handleNewsFiltersChange = (field: string, value: string | string[]) => {
+  const handleNewsFiltersChange = (field: string, value: string | string[] | boolean) => {
     setContent((prev: any) => {
       const news = prev.news ?? { items: [] };
       return { ...prev, news: { ...news, filters: { ...(news.filters ?? {}), [field]: value } } };
@@ -1692,6 +1692,14 @@ function SignedInView({
                         <Input value={content?.news?.headline ?? ""} onChange={(e) => handleFieldChange("news", "headline", e.target.value)} className="font-mono text-xs" />
                       </div>
                       <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Home: Years To Include</Label>
+                        <Input type="number" value={content?.news?.homeYears ?? 2} onChange={(e) => handleFieldChange("news", "homeYears", Number(e.target.value))} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Home: Shown Before Show More</Label>
+                        <Input type="number" value={content?.news?.initialToShow ?? 10} onChange={(e) => handleFieldChange("news", "initialToShow", Number(e.target.value))} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1">
                         <Label className="text-[12px] font-mono uppercase text-muted-foreground">Max On Home Page</Label>
                         <Input type="number" value={content?.news?.maxToShow ?? 8} onChange={(e) => handleFieldChange("news", "maxToShow", Number(e.target.value))} className="font-mono text-xs" />
                       </div>
@@ -1704,12 +1712,16 @@ function SignedInView({
                         <Input value={content?.news?.seeAllLabel ?? ""} onChange={(e) => handleFieldChange("news", "seeAllLabel", e.target.value)} className="font-mono text-xs" />
                       </div>
                       <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Detail Card Link Label</Label>
-                        <Input value={content?.news?.openLinkLabel ?? ""} onChange={(e) => handleFieldChange("news", "openLinkLabel", e.target.value)} className="font-mono text-xs" />
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Show More Button</Label>
+                        <Input value={content?.news?.showMoreLabel ?? ""} onChange={(e) => handleFieldChange("news", "showMoreLabel", e.target.value)} className="font-mono text-xs" />
                       </div>
                       <div className="space-y-1">
-                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Placeholder Image (public path)</Label>
-                        <Input value={content?.news?.placeholderImagePath ?? ""} onChange={(e) => handleFieldChange("news", "placeholderImagePath", e.target.value)} placeholder="/square_logo.webp" className="font-mono text-xs" />
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Show Less Button</Label>
+                        <Input value={content?.news?.showLessLabel ?? ""} onChange={(e) => handleFieldChange("news", "showLessLabel", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Detail Card Link Label</Label>
+                        <Input value={content?.news?.openLinkLabel ?? ""} onChange={(e) => handleFieldChange("news", "openLinkLabel", e.target.value)} className="font-mono text-xs" />
                       </div>
                       <div className="space-y-1">
                         <Label className="text-[12px] font-mono uppercase text-muted-foreground">Empty Label</Label>
@@ -1747,6 +1759,24 @@ function SignedInView({
                     <div className="mb-2">
                       <h3 className="text-base font-bold text-foreground font-serif">/news Filter Bar</h3>
                       <p className="text-[13px] text-muted-foreground">Search, year and source filters, the award toggle (shows highlighted items) and quick keyword chips.</p>
+                    </div>
+                    <div className="flex items-center justify-between gap-3 rounded border border-border/80 bg-muted/40 p-4">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="news-filters-show" className="text-xs font-mono uppercase text-foreground font-semibold cursor-pointer">
+                          Show Filter Bar
+                        </Label>
+                        <p className="text-[11px] font-mono text-muted-foreground">Hidden by default. The labels below only apply when this is on.</p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[11px] font-mono uppercase font-semibold text-muted-foreground">
+                          {content?.news?.filters?.show ? "Enabled" : "Disabled"}
+                        </span>
+                        <Switch
+                          id="news-filters-show"
+                          checked={content?.news?.filters?.show ?? false}
+                          onCheckedChange={(checked) => handleNewsFiltersChange("show", checked)}
+                        />
+                      </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       {([
@@ -1845,7 +1875,7 @@ function SignedInView({
                           <Input value={item.tag ?? ""} onChange={(e) => handleNewsItemChange(index, "tag", e.target.value)} placeholder="In the press / NPR / Award" className="font-mono text-xs" />
                         </div>
                         <div className="space-y-1 sm:col-span-2">
-                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Image (optional — upload to ImageKit; placeholder shown if empty)</Label>
+                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">Image (optional — upload to ImageKit; card shows text only if empty)</Label>
                           <div className="flex gap-2">
                             <Input value={item.imagePath ?? ""} onChange={(e) => handleNewsItemChange(index, "imagePath", e.target.value)} className="font-mono text-xs flex-1" placeholder="/news/example.webp" />
                             <ImageUploader

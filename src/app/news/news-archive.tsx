@@ -115,167 +115,170 @@ export function NewsArchive({ news }: { news: NewsContent }) {
 
   return (
     <>
-      {/* ── FILTER BAR ── mirrors /publications: sticky, collapsible on mobile */}
-      <section className="sticky top-16 z-30 border-b border-border bg-background/95 backdrop-blur-md">
-        <div className="mx-auto w-full max-w-6xl px-4 py-2.5 sm:px-8 sm:py-3.5">
-          <div className="flex flex-col gap-2.5">
-            <div className="flex items-center gap-2">
-              <div className="relative flex-1">
-                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder={labels.searchPlaceholder}
-                  aria-label={labels.searchPlaceholder}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-9 w-full rounded-lg border border-input bg-card pl-9 pr-8 text-sm text-foreground transition-all placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:h-10"
-                />
-                {searchQuery && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchQuery("")}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    aria-label={labels.resetLabel}
-                  >
-                    <X className="size-3.5" />
-                  </button>
-                )}
-              </div>
+      {/* ── FILTER BAR ── mirrors /publications: sticky, collapsible on mobile.
+          Off unless news.filters.show is set (admin → News → Filter Bar). */}
+      {labels.show && (
+        <section className="sticky top-16 z-30 border-b border-border bg-background/95 backdrop-blur-md">
+          <div className="mx-auto w-full max-w-6xl px-4 py-2.5 sm:px-8 sm:py-3.5">
+            <div className="flex flex-col gap-2.5">
+              <div className="flex items-center gap-2">
+                <div className="relative flex-1">
+                  <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                  <input
+                    type="text"
+                    placeholder={labels.searchPlaceholder}
+                    aria-label={labels.searchPlaceholder}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="h-9 w-full rounded-lg border border-input bg-card pl-9 pr-8 text-sm text-foreground transition-all placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:h-10"
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      aria-label={labels.resetLabel}
+                    >
+                      <X className="size-3.5" />
+                    </button>
+                  )}
+                </div>
 
-              <button
-                type="button"
-                onClick={() => setMobileFiltersExpanded(!mobileFiltersExpanded)}
-                className={`inline-flex h-9 items-center gap-1.5 rounded-lg border px-3 text-xs font-medium transition-all sm:hidden ${
-                  mobileFiltersExpanded || activeFilterCount > 0
-                    ? "border-primary bg-primary/10 text-primary font-semibold"
-                    : "border-input bg-card text-muted-foreground hover:text-foreground"
-                }`}
-                aria-expanded={mobileFiltersExpanded}
-              >
-                <Filter className="size-3.5" />
-                <span>{labels.filtersLabel}</span>
-                {activeFilterCount > 0 && (
-                  <span className="flex size-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
-                    {activeFilterCount}
-                  </span>
-                )}
-              </button>
-
-              <div className="relative hidden w-32 shrink-0 sm:block lg:w-36">
-                <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  aria-label={labels.yearLabel}
-                  className={selectClass}
+                <button
+                  type="button"
+                  onClick={() => setMobileFiltersExpanded(!mobileFiltersExpanded)}
+                  className={`inline-flex h-9 items-center gap-1.5 rounded-lg border px-3 text-xs font-medium transition-all sm:hidden ${
+                    mobileFiltersExpanded || activeFilterCount > 0
+                      ? "border-primary bg-primary/10 text-primary font-semibold"
+                      : "border-input bg-card text-muted-foreground hover:text-foreground"
+                  }`}
+                  aria-expanded={mobileFiltersExpanded}
                 >
-                  <option value="all">{labels.allYearsLabel}</option>
-                  {yearOptions.map((yr) => (
-                    <option key={yr} value={yr}>
-                      {yr}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
-              </div>
+                  <Filter className="size-3.5" />
+                  <span>{labels.filtersLabel}</span>
+                  {activeFilterCount > 0 && (
+                    <span className="flex size-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+                      {activeFilterCount}
+                    </span>
+                  )}
+                </button>
 
-              {sourceOptions.length > 0 && (
-                <div className="relative hidden w-44 shrink-0 sm:block lg:w-56">
+                <div className="relative hidden w-32 shrink-0 sm:block lg:w-36">
                   <select
-                    value={selectedSource}
-                    onChange={(e) => setSelectedSource(e.target.value)}
-                    aria-label={labels.sourceLabel}
+                    value={selectedYear}
+                    onChange={(e) => setSelectedYear(e.target.value)}
+                    aria-label={labels.yearLabel}
                     className={selectClass}
                   >
-                    <option value="all">{labels.allSourcesLabel}</option>
-                    {sourceOptions.map(([source, count]) => (
-                      <option key={source} value={source}>
-                        {source} ({count})
+                    <option value="all">{labels.allYearsLabel}</option>
+                    {yearOptions.map((yr) => (
+                      <option key={yr} value={yr}>
+                        {yr}
                       </option>
                     ))}
                   </select>
                   <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
                 </div>
-              )}
-            </div>
 
-            {mobileFiltersExpanded && (
-              <div className="grid grid-cols-1 gap-2 border-t border-border/60 pt-2.5 sm:hidden">
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="relative">
-                    <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                      {labels.yearLabel}
-                    </label>
-                    <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} className={mobileSelectClass}>
-                      <option value="all">{labels.allYearsLabel}</option>
-                      {yearOptions.map((yr) => (
-                        <option key={yr} value={yr}>
-                          {yr}
+                {sourceOptions.length > 0 && (
+                  <div className="relative hidden w-44 shrink-0 sm:block lg:w-56">
+                    <select
+                      value={selectedSource}
+                      onChange={(e) => setSelectedSource(e.target.value)}
+                      aria-label={labels.sourceLabel}
+                      className={selectClass}
+                    >
+                      <option value="all">{labels.allSourcesLabel}</option>
+                      {sourceOptions.map(([source, count]) => (
+                        <option key={source} value={source}>
+                          {source} ({count})
                         </option>
                       ))}
                     </select>
-                    <ChevronDown className="pointer-events-none absolute bottom-2.5 right-2 size-3 text-muted-foreground" />
+                    <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
                   </div>
-                  {sourceOptions.length > 0 && (
+                )}
+              </div>
+
+              {mobileFiltersExpanded && (
+                <div className="grid grid-cols-1 gap-2 border-t border-border/60 pt-2.5 sm:hidden">
+                  <div className="grid grid-cols-2 gap-2">
                     <div className="relative">
                       <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                        {labels.sourceLabel}
+                        {labels.yearLabel}
                       </label>
-                      <select value={selectedSource} onChange={(e) => setSelectedSource(e.target.value)} className={mobileSelectClass}>
-                        <option value="all">{labels.allSourcesLabel}</option>
-                        {sourceOptions.map(([source, count]) => (
-                          <option key={source} value={source}>
-                            {source} ({count})
+                      <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} className={mobileSelectClass}>
+                        <option value="all">{labels.allYearsLabel}</option>
+                        {yearOptions.map((yr) => (
+                          <option key={yr} value={yr}>
+                            {yr}
                           </option>
                         ))}
                       </select>
                       <ChevronDown className="pointer-events-none absolute bottom-2.5 right-2 size-3 text-muted-foreground" />
                     </div>
+                    {sourceOptions.length > 0 && (
+                      <div className="relative">
+                        <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                          {labels.sourceLabel}
+                        </label>
+                        <select value={selectedSource} onChange={(e) => setSelectedSource(e.target.value)} className={mobileSelectClass}>
+                          <option value="all">{labels.allSourcesLabel}</option>
+                          {sourceOptions.map(([source, count]) => (
+                            <option key={source} value={source}>
+                              {source} ({count})
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute bottom-2.5 right-2 size-3 text-muted-foreground" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    {highlightToggle}
+                    {quickChips}
+                  </div>
+                </div>
+              )}
+
+              <div className="hidden flex-wrap items-center justify-between gap-2 text-xs sm:flex">
+                <div className="flex flex-wrap items-center gap-2">
+                  {highlightToggle}
+                  {quickChips.length > 0 && (
+                    <>
+                      <span className="text-muted-foreground/60">|</span>
+                      <span className="font-mono text-[11px] text-muted-foreground/70">{labels.quickLabel}</span>
+                      {quickChips}
+                    </>
                   )}
                 </div>
-                <div className="flex flex-wrap items-center gap-2 pt-1">
-                  {highlightToggle}
-                  {quickChips}
+                <div className="flex items-center gap-3 text-muted-foreground">
+                  {counter}
+                  {isFiltered && (
+                    <button
+                      type="button"
+                      onClick={resetFilters}
+                      className="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 font-medium text-primary transition-colors hover:bg-primary/10"
+                    >
+                      <RotateCcw className="size-3" />
+                      <span>{labels.resetLabel}</span>
+                    </button>
+                  )}
                 </div>
               </div>
-            )}
 
-            <div className="hidden flex-wrap items-center justify-between gap-2 text-xs sm:flex">
-              <div className="flex flex-wrap items-center gap-2">
-                {highlightToggle}
-                {quickChips.length > 0 && (
-                  <>
-                    <span className="text-muted-foreground/60">|</span>
-                    <span className="font-mono text-[11px] text-muted-foreground/70">{labels.quickLabel}</span>
-                    {quickChips}
-                  </>
-                )}
-              </div>
-              <div className="flex items-center gap-3 text-muted-foreground">
+              <div className="flex items-center justify-between text-[11px] text-muted-foreground sm:hidden">
                 {counter}
                 {isFiltered && (
-                  <button
-                    type="button"
-                    onClick={resetFilters}
-                    className="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 font-medium text-primary transition-colors hover:bg-primary/10"
-                  >
-                    <RotateCcw className="size-3" />
-                    <span>{labels.resetLabel}</span>
+                  <button type="button" onClick={resetFilters} className="font-medium text-primary">
+                    {labels.resetLabel}
                   </button>
                 )}
               </div>
             </div>
-
-            <div className="flex items-center justify-between text-[11px] text-muted-foreground sm:hidden">
-              {counter}
-              {isFiltered && (
-                <button type="button" onClick={resetFilters} className="font-medium text-primary">
-                  {labels.resetLabel}
-                </button>
-              )}
-            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {years.map(([year, items]) => (
         <section
@@ -288,7 +291,6 @@ export function NewsArchive({ news }: { news: NewsContent }) {
             <h2 className="mb-6 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{year}</h2>
             <NewsList
               items={items}
-              placeholderImagePath={news.placeholderImagePath}
               openLinkLabel={news.openLinkLabel}
             />
           </div>

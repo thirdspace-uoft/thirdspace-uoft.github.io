@@ -19,10 +19,16 @@ export type NewsContent = {
   headline?: string;
   subhead?: string;
   maxToShow?: number;
+  /** Home page shows linked/illustrated items from this many most recent years. Default 2. */
+  homeYears?: number;
+  /** Home list shows at least this many items before "Show more". Default 10. */
+  initialToShow?: number;
+  /** "Show more" / "Show less" buttons on the home list. */
+  showMoreLabel?: string;
+  showLessLabel?: string;
   emptyLabel?: string;
   seeAllLabel?: string;
   openLinkLabel?: string;
-  placeholderImagePath?: string;
   page?: {
     title?: string;
     subhead?: string;
@@ -35,6 +41,8 @@ export type NewsContent = {
 
 /** Copy for the /news filter bar. */
 export type NewsFilterLabels = {
+  /** Show the filter bar on /news. Off when unset. */
+  show?: boolean;
   searchPlaceholder?: string;
   allYearsLabel?: string;
   allSourcesLabel?: string;
@@ -88,6 +96,33 @@ export function sortNews(items: NewsItem[]): NewsItem[] {
     .map((item, index) => ({ item, index, key: String(item.date ?? "") }))
     .sort((a, b) => (a.key === b.key ? a.index - b.index : a.key < b.key ? 1 : -1))
     .map(({ item }) => item);
+}
+
+/**
+ * What the home page lists: items with a "Read more" link or an image, from the
+ * newest `years` calendar years (counted back from the newest dated item), newest
+ * first. Falls back to the newest items if nothing qualifies, so the section never
+ * goes empty.
+ */
+export function pickHomeNews(
+  items: NewsItem[],
+  { years = 2, min = 0, max }: { years?: number; min?: number; max?: number } = {},
+): NewsItem[] {
+  const sorted = sortNews(items);
+  const newest = parseNewsDate(sorted[0]?.date)?.year;
+  const eligible = sorted.filter((item) => item.url || item.imagePath);
+  const inWindow = (item: NewsItem) => {
+    const year = parseNewsDate(item.date)?.year;
+    return newest !== undefined && year !== undefined && year > newest - years;
+  };
+  // Window first, then top up with the next-newest eligible items until `min`.
+  const picked = eligible.filter(inWindow);
+  for (const item of eligible) {
+    if (picked.length >= min) break;
+    if (!picked.includes(item)) picked.push(item);
+  }
+  const result = picked.length ? sortNews(picked) : sorted;
+  return result.slice(0, max ?? result.length);
 }
 
 /** Sorted items grouped under their year, newest year first. Undated items are dropped. */

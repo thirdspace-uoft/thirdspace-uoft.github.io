@@ -19,6 +19,9 @@ export function getAssetPath(path: string): string {
 }
 
 export function getImageUrl(path: string): string {
+  // Full web addresses (e.g. a news item's image taken from its source page) are
+  // used as-is; only uploaded paths are prefixed with the ImageKit endpoint.
+  if (/^https?:\/\//i.test(path)) return path;
   const endpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
   if (!endpoint) return path;
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
