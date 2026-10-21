@@ -229,28 +229,35 @@ export default function Home() {
 
           <ResearcherRail
             members={(() => {
-              // PhD students only. The PI heads this section directly above,
-              // and the postdocs / MSc / undergrads have their own rows on the
-              // people page.
+              // Postdocs, then PhD students, in one list. The PI heads this
+              // section directly above, and MSc / undergrads have their own
+              // rows on the people page.
               const piName = professor?.name ?? "";
-              const phds = (contentData.team?.sections ?? [])
-                .filter((s: any) => s.role === "PhD Students")
-                .flatMap((s: any) =>
-                  (s.members ?? [])
-                    .filter((m: any) => m.name !== piName)
-                    .map((m: any) => ({
-                      name: m.name,
-                      // Singular: the row names one person, while the section
-                      // heading on /people stays plural.
-                      role: contentData.latestPublications?.railPhdRoleLabel ?? "PhD Student",
-                      // Addresses this person's row on /people. Minted here with
-                      // the same helper the page uses, so the two can't drift.
-                      anchor: memberAnchor(s.role, m.name),
-                      imagePath: m.imagePath,
-                    })),
-                );
+              const labels = contentData.latestPublications as any;
+              // Section role on /people → singular label shown on the rail.
+              const railRoles: [string, string][] = [
+                ["Postdoctoral Fellow", labels?.railPostdocRoleLabel ?? "Postdoctoral Fellow"],
+                ["PhD Students", labels?.railPhdRoleLabel ?? "PhD Student"],
+              ];
+              const sections = contentData.team?.sections ?? [];
+              const researchers = railRoles.flatMap(([sectionRole, label]) =>
+                sections
+                  .filter((s: any) => s.role === sectionRole)
+                  .flatMap((s: any) =>
+                    (s.members ?? [])
+                      .filter((m: any) => m.name !== piName)
+                      .map((m: any) => ({
+                        name: m.name,
+                        role: label,
+                        // Addresses this person's row on /people. Minted here with
+                        // the same helper the page uses, so the two can't drift.
+                        anchor: memberAnchor(s.role, m.name),
+                        imagePath: m.imagePath,
+                      })),
+                  ),
+              );
 
-              return phds as RailMember[];
+              return researchers as RailMember[];
             })()}
             label={contentData.latestPublications?.researchersLabel ?? "Researchers"}
             ctaLabel={contentData.latestPublications?.allMembersLabel ?? "View all people"}

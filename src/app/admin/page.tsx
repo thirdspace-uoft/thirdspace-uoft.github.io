@@ -561,6 +561,9 @@ function SignedInView({
       const items = [...(news.items ?? [])];
       items.splice(index, 1);
       return { ...prev, news: { ...news, items } };
+    });
+  };
+
   // ── Research page ─────────────────────────────────────────────────────────
   const [openTopic, setOpenTopic] = useState<number | null>(null);
 
@@ -1998,6 +2001,9 @@ function SignedInView({
                       </div>
                     </div>
                   ))}
+                </div>
+              )}
+
               {activeTab === "research" && content && (
                 <div className="space-y-4">
                   <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
@@ -2242,6 +2248,10 @@ function SignedInView({
                     <div className="space-y-1">
                       <Label className="text-[12px] font-mono uppercase text-muted-foreground">Rail PhD Role Label (singular)</Label>
                       <Input value={content.latestPublications.railPhdRoleLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "railPhdRoleLabel", e.target.value)} className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[12px] font-mono uppercase text-muted-foreground">Rail Postdoc Role Label (singular)</Label>
+                      <Input value={content.latestPublications.railPostdocRoleLabel ?? ""} onChange={(e) => handleFieldChange("latestPublications", "railPostdocRoleLabel", e.target.value)} className="font-mono text-xs" />
                     </div>
                     <div className="space-y-1">
                       <Label className="text-[12px] font-mono uppercase text-muted-foreground">All Members Label</Label>
