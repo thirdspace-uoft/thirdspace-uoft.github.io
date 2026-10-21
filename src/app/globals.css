@@ -112,6 +112,10 @@
        horizontal scrollbar. `clip` also suppresses the scroll container that
        would otherwise appear. */
     overflow-x: clip;
+    /* Always reserve the vertical scrollbar's width. Filters on /news and
+       /publications can shrink a page below the viewport height; without this
+       the scrollbar disappears and the centred layout jumps sideways. */
+    scrollbar-gutter: stable;
   }
   body {
     /* `body` is a flex column, so it is a flex item of `html` and defaults to

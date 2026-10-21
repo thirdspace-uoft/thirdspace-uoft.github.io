@@ -17,6 +17,8 @@ import {
 import { getImageUrl } from "@/lib/utils";
 import { getContent } from "@/lib/content";
 import { memberAnchor } from "@/lib/people";
+import { getNews, pickHomeNews } from "@/lib/news";
+import { NewsShowMore } from "@/components/news-show-more";
 import { ResearcherRail, type RailMember } from "@/components/researcher-rail";
 
 const contentData = getContent();
@@ -26,6 +28,7 @@ const {
   professor,
   researchDomains,
 } = contentData;
+const news = getNews();
 
 type IconName =
   | "Users"
@@ -102,6 +105,50 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* NEWS — directly after hero; one line per item, details on hover */}
+      {(() => {
+        const initialCount = news.initialToShow ?? 10;
+        const initial = pickHomeNews(news.items ?? [], { years: news.homeYears, min: initialCount, max: initialCount });
+        if (initial.length === 0) return null;
+        // Everything eligible across all years, capped at maxToShow, for "Show more".
+        const expanded = pickHomeNews(news.items ?? [], { years: Infinity, max: news.maxToShow });
+        return (
+          <section data-section="news" data-section-label="News" className="border-b border-border">
+            <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+              <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+                <div>
+                  <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                    {news.headline}
+                  </h2>
+                  {news.subhead && (
+                    <p className="mt-1 text-sm text-muted-foreground sm:text-base">
+                      {news.subhead}
+                    </p>
+                  )}
+                </div>
+                {news.seeAllLabel && (
+                  <Link
+                    href="/news"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 transition-colors hover:underline"
+                  >
+                    {news.seeAllLabel}
+                    <ArrowRight className="size-3" />
+                  </Link>
+                )}
+              </div>
+
+              <NewsShowMore
+                initial={initial}
+                expanded={expanded}
+                openLinkLabel={news.openLinkLabel}
+                showMoreLabel={news.showMoreLabel}
+                showLessLabel={news.showLessLabel}
+              />
+            </div>
+          </section>
+        );
+      })()}
 
       {/* GROUP OVERVIEW — PI card on top + Researcher Grid below */}
       <section id="about-group" data-section="people" data-section-label="People" className="border-b border-border">
@@ -307,7 +354,7 @@ export default function Home() {
                         <span aria-hidden className="h-3 w-px bg-border" />
                 <Link
                   href={contentData.latestPublications?.viewAllHref ?? "/publications"}
-                          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 transition-colors hover:underline"
                 >
                           {contentData.latestPublications?.viewAllLabel}
                           <ArrowRight className="size-3" />

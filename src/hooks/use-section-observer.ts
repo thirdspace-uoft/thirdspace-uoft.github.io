@@ -21,8 +21,10 @@ export function useSectionObserver() {
 
     let observer: IntersectionObserver | null = null;
     let scrollHandler: (() => void) | null = null;
+    let signature = "";
+    let rescanRaf = 0;
 
-    const raf = requestAnimationFrame(() => {
+    const scan = () => {
       const els = document.querySelectorAll<HTMLElement>("[data-section]");
       const list: SectionInfo[] = [];
 
@@ -31,6 +33,18 @@ export function useSectionObserver() {
         const label = el.getAttribute("data-section-label") || id;
         list.push({ id, label });
       });
+
+      // Filters on /publications and /news add and remove year sections; only
+      // rebuild when the set actually changed, since hover cards and other
+      // portals mutate the DOM constantly.
+      const next = list.map((s) => s.id).join("|");
+      if (next === signature) return;
+      signature = next;
+
+      observer?.disconnect();
+      observer = null;
+      if (scrollHandler) window.removeEventListener("scroll", scrollHandler);
+      scrollHandler = null;
 
       setSections(list);
       if (list.length === 0) return;
@@ -71,10 +85,20 @@ export function useSectionObserver() {
 
       scrollHandler();
       window.addEventListener("scroll", scrollHandler, { passive: true });
+    };
+
+    const raf = requestAnimationFrame(scan);
+
+    const mutations = new MutationObserver(() => {
+      cancelAnimationFrame(rescanRaf);
+      rescanRaf = requestAnimationFrame(scan);
     });
+    mutations.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(rescanRaf);
+      mutations.disconnect();
       if (observer) observer.disconnect();
       if (scrollHandler) window.removeEventListener("scroll", scrollHandler);
     };

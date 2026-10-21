@@ -33,6 +33,9 @@ export function ScrollProgress() {
     if (pathname.startsWith("/publications")) {
       return (navbar as any).showSideMenuPublications ?? true;
     }
+    if (pathname.startsWith("/news")) {
+      return (navbar as { showSideMenuNews?: boolean }).showSideMenuNews ?? true;
+    }
     return false;
   }, [pathname, navbar]);
 
