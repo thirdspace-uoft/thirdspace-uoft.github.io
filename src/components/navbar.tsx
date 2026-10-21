@@ -14,10 +14,24 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { getContent } from "@/lib/content";
+import { getResearch } from "@/lib/research";
 
 type NavLink = { label: string; href: string };
 
 const { navbar, layout } = getContent();
+const research = getResearch();
+
+/**
+ * The Research link comes from the research section's own settings rather than
+ * `navbar.links`, so turning the section off in the admin also removes its link.
+ * It sits right after Home.
+ */
+function withResearchLink(links: NavLink[]): NavLink[] {
+  if (!research.enabled || !research.navLabel) return links;
+  const link = { label: research.navLabel, href: "/research" };
+  const home = links.findIndex((l) => l.href === "/");
+  return [...links.slice(0, home + 1), link, ...links.slice(home + 1)];
+}
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -110,7 +124,7 @@ function MobileDrawer({
 }
 
 export function Navbar() {
-  const links = (navbar.links ?? []) as NavLink[];
+  const links = withResearchLink((navbar.links ?? []) as NavLink[]);
   const pathname = usePathname() ?? "/";
   const [open, setOpen] = React.useState(false);
 

@@ -25,6 +25,7 @@ import {
   Trash2,
   Image,
   Newspaper,
+  Microscope,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageUploader } from "@/components/image-uploader";
@@ -33,6 +34,8 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { auth, db } from "@/lib/firebase";
 import type { NewsItem } from "@/lib/news";
+import { topicSlug, type ResearchContent, type ResearchPaper, type ResearchSection, type ResearchTopic } from "@/lib/research";
+import { MediaListEditor } from "@/components/admin/media-list-editor";
 import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
@@ -243,7 +246,8 @@ function SignedInView({
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Form tab selection
-  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "news">("layout");
+  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "news" | "research">("layout");
+  //const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "research">("layout");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [newsFilter, setNewsFilter] = useState("");
 
@@ -557,6 +561,93 @@ function SignedInView({
       const items = [...(news.items ?? [])];
       items.splice(index, 1);
       return { ...prev, news: { ...news, items } };
+  // ── Research page ─────────────────────────────────────────────────────────
+  const [openTopic, setOpenTopic] = useState<number | null>(null);
+
+  const updateResearch = (fn: (research: ResearchContent) => ResearchContent) => {
+    setContent((prev: any) => ({ ...prev, research: fn({ topics: [], ...(prev.research ?? {}) }) }));
+  };
+
+  const handleResearchField = (field: string, value: string | boolean) => {
+    updateResearch((r) => ({ ...r, [field]: value }));
+  };
+
+  const handleResearchGroupField = (group: "page" | "labels", field: string, value: string) => {
+    updateResearch((r) => ({ ...r, [group]: { ...(r[group] ?? {}), [field]: value } }));
+  };
+
+  const updateTopic = (index: number, patch: Partial<ResearchTopic>) => {
+    updateResearch((r) => ({
+      ...r,
+      topics: (r.topics ?? []).map((t, i) => (i === index ? { ...t, ...patch } : t)),
+    }));
+  };
+
+  const updateSection = (topicIndex: number, sectionIndex: number, patch: Partial<ResearchSection>) => {
+    updateResearch((r) => ({
+      ...r,
+      topics: (r.topics ?? []).map((t, i) =>
+        i === topicIndex
+          ? { ...t, sections: (t.sections ?? []).map((s, j) => (j === sectionIndex ? { ...s, ...patch } : s)) }
+          : t,
+      ),
+    }));
+  };
+
+  /** Moves item `index` by `delta` within a list; out-of-range moves are ignored. */
+  const moved = <T,>(list: T[], index: number, delta: number): T[] => {
+    const target = index + delta;
+    if (target < 0 || target >= list.length) return list;
+    const next = [...list];
+    [next[index], next[target]] = [next[target], next[index]];
+    return next;
+  };
+
+  const handleTopicAdd = () => {
+    updateResearch((r) => ({
+      ...r,
+      topics: [
+        ...(r.topics ?? []),
+        { id: `topic-${Date.now()}`, slug: "", title: "", summary: "", metaDescription: "", intro: "", hero: { media: [], caption: "" }, sections: [] },
+      ],
+    }));
+    setOpenTopic((content?.research?.topics ?? []).length);
+  };
+
+  const handleTopicRemove = (index: number) => {
+    updateResearch((r) => ({ ...r, topics: (r.topics ?? []).filter((_, i) => i !== index) }));
+    setOpenTopic(null);
+  };
+
+  const handleTopicMove = (index: number, delta: number) => {
+    updateResearch((r) => ({ ...r, topics: moved(r.topics ?? [], index, delta) }));
+    setOpenTopic(null);
+  };
+
+  const handleSectionAdd = (topicIndex: number) => {
+    const topic = (content?.research?.topics ?? [])[topicIndex] as ResearchTopic | undefined;
+    updateTopic(topicIndex, {
+      sections: [
+        ...(topic?.sections ?? []),
+        { id: `section-${Date.now()}`, heading: "", body: "", figure: { media: [], caption: "" }, papers: [] },
+      ],
+    });
+  };
+
+  const handleSectionRemove = (topicIndex: number, sectionIndex: number) => {
+    const topic = (content?.research?.topics ?? [])[topicIndex] as ResearchTopic | undefined;
+    updateTopic(topicIndex, { sections: (topic?.sections ?? []).filter((_, j) => j !== sectionIndex) });
+  };
+
+  const handleSectionMove = (topicIndex: number, sectionIndex: number, delta: number) => {
+    const topic = (content?.research?.topics ?? [])[topicIndex] as ResearchTopic | undefined;
+    updateTopic(topicIndex, { sections: moved(topic?.sections ?? [], sectionIndex, delta) });
+  };
+
+  const updatePaper = (topicIndex: number, sectionIndex: number, paperIndex: number, patch: Partial<ResearchPaper>) => {
+    const section = ((content?.research?.topics ?? [])[topicIndex] as ResearchTopic | undefined)?.sections?.[sectionIndex];
+    updateSection(topicIndex, sectionIndex, {
+      papers: (section?.papers ?? []).map((p, k) => (k === paperIndex ? { ...p, ...patch } : p)),
     });
   };
 
@@ -669,6 +760,7 @@ function SignedInView({
     { id: "navbar" as const, label: "11. Nav Settings", icon: Compass },
     { id: "footerLabs" as const, label: "12. Lab & Campuses", icon: Database },
     { id: "location" as const, label: "13. Campus Location", icon: MapPin },
+    { id: "research" as const, label: "14. Research Page", icon: Microscope },
   ];
 
   if (loading) {
@@ -1906,6 +1998,215 @@ function SignedInView({
                       </div>
                     </div>
                   ))}
+              {activeTab === "research" && content && (
+                <div className="space-y-4">
+                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
+                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">RP1</div>
+                    <div className="mb-2">
+                      <span className="text-[12px] font-mono uppercase tracking-widest text-muted-foreground">Draft Sheet</span>
+                      <h3 className="text-base font-bold text-foreground font-serif">Research Page</h3>
+                      <p className="text-[13px] text-muted-foreground">/research lists every topic in one row; each topic has its own page at /research/&lt;slug&gt;. Turning the section off removes the pages and the nav link (placed after Home).</p>
+                    </div>
+                    <div className="flex items-center justify-between gap-3 rounded border border-border/80 bg-muted/40 p-4">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="research-enabled" className="text-xs font-mono uppercase text-foreground font-semibold cursor-pointer">Show Research Section</Label>
+                        <p className="text-[11px] font-mono text-muted-foreground">Shows /research, the topic pages and the nav link.</p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[11px] font-mono uppercase font-semibold text-muted-foreground">{content.research?.enabled ? "Enabled" : "Disabled"}</span>
+                        <Switch id="research-enabled" checked={content.research?.enabled ?? false} onCheckedChange={(checked) => handleResearchField("enabled", checked)} />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Nav Label</Label>
+                        <Input value={content.research?.navLabel ?? ""} onChange={(e) => handleResearchField("navLabel", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Page Title</Label>
+                        <Input value={content.research?.page?.title ?? ""} onChange={(e) => handleResearchGroupField("page", "title", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1 col-span-2">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Intro ([text](url) makes a link)</Label>
+                        <textarea rows={4} value={content.research?.page?.intro ?? ""} onChange={(e) => handleResearchGroupField("page", "intro", e.target.value)} className="w-full text-xs p-2 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Browser Tab Title</Label>
+                        <Input value={content.research?.page?.metaTitle ?? ""} onChange={(e) => handleResearchGroupField("page", "metaTitle", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Search Description</Label>
+                        <Input value={content.research?.page?.metaDescription ?? ""} onChange={(e) => handleResearchGroupField("page", "metaDescription", e.target.value)} className="text-xs" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
+                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">RP2</div>
+                    <div className="mb-2">
+                      <h3 className="text-base font-bold text-foreground font-serif">Labels</h3>
+                      <p className="text-[13px] text-muted-foreground">&quot;Related Papers&quot; heads each section&apos;s paper list; the rest are read by screen readers. In &quot;Go To Image&quot;, {"{n}"} becomes the image number.</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      {([
+                        ["relatedPapers", "Related Papers Heading"],
+                        ["topicsNav", "Topic Row Name"],
+                        ["previous", "Previous Image"],
+                        ["next", "Next Image"],
+                        ["goToSlide", "Go To Image"],
+                      ] as const).map(([field, label]) => (
+                        <div key={field} className="space-y-1">
+                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">{label}</Label>
+                          <Input value={content.research?.labels?.[field] ?? ""} onChange={(e) => handleResearchGroupField("labels", field, e.target.value)} className="font-mono text-xs" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-[12px] font-mono uppercase text-muted-foreground tracking-wider">Topics ({(content.research?.topics ?? []).length}) — shown in this order</span>
+                    <Button size="xs" variant="outline" onClick={handleTopicAdd}>
+                      <Plus className="h-3 w-3" /> Add Topic
+                    </Button>
+                  </div>
+
+                  {((content.research?.topics ?? []) as ResearchTopic[]).map((topic, ti) => {
+                    const open = openTopic === ti;
+                    const topicCount = (content.research?.topics ?? []).length;
+                    const textarea = "w-full text-xs p-2 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed";
+                    return (
+                      <div key={topic.id ?? ti} className="relative bg-card border border-border rounded shadow-sm">
+                        <div className="flex flex-wrap items-center justify-between gap-2 p-4">
+                          <button type="button" onClick={() => setOpenTopic(open ? null : ti)} className="flex min-w-0 items-center gap-3 text-left">
+                            <span className="font-mono text-[13px] text-muted-foreground">T{String(ti + 1).padStart(2, "0")}</span>
+                            <span className="truncate text-sm font-semibold text-foreground">{topic.title || "Untitled topic"}</span>
+                            <span className="truncate font-mono text-[11px] text-muted-foreground">/research/{topic.slug || "…"}</span>
+                            <ChevronRight className={`h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform ${open ? "rotate-90" : ""}`} />
+                          </button>
+                          <div className="flex gap-1">
+                            <Button size="xs" variant="ghost" disabled={ti === 0} onClick={() => handleTopicMove(ti, -1)}>Up</Button>
+                            <Button size="xs" variant="ghost" disabled={ti === topicCount - 1} onClick={() => handleTopicMove(ti, 1)}>Down</Button>
+                            <Button size="xs" variant="ghost" onClick={() => handleTopicRemove(ti)}>
+                              <Trash2 className="h-3 w-3" /> Remove
+                            </Button>
+                          </div>
+                        </div>
+
+                        {open && (
+                          <div className="space-y-5 border-t border-border p-5">
+                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                              <div className="space-y-1">
+                                <Label className="text-[12px] font-mono uppercase text-muted-foreground">Title</Label>
+                                <Input
+                                  value={topic.title ?? ""}
+                                  onChange={(e) => {
+                                    const title = e.target.value;
+                                    // Keep the slug following the title until it is edited by hand.
+                                    const followSlug = !topic.slug || topic.slug === topicSlug(topic.title ?? "");
+                                    updateTopic(ti, followSlug ? { title, slug: topicSlug(title) } : { title });
+                                  }}
+                                  className="font-mono text-xs"
+                                />
+                              </div>
+                              <div className="space-y-1">
+                                <Label className="text-[12px] font-mono uppercase text-muted-foreground">Slug (changing it changes the URL)</Label>
+                                <Input value={topic.slug ?? ""} onChange={(e) => updateTopic(ti, { slug: topicSlug(e.target.value) })} className="font-mono text-xs" />
+                              </div>
+                              <div className="space-y-1">
+                                <Label className="text-[12px] font-mono uppercase text-muted-foreground">Summary</Label>
+                                <Input value={topic.summary ?? ""} onChange={(e) => updateTopic(ti, { summary: e.target.value })} className="text-xs" />
+                              </div>
+                              <div className="space-y-1">
+                                <Label className="text-[12px] font-mono uppercase text-muted-foreground">Search Description</Label>
+                                <Input value={topic.metaDescription ?? ""} onChange={(e) => updateTopic(ti, { metaDescription: e.target.value })} className="text-xs" />
+                              </div>
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label className="text-[12px] font-mono uppercase text-muted-foreground">Card Cover (image, GIF, video or YouTube)</Label>
+                              <MediaListEditor
+                                single
+                                media={topic.cover ? [topic.cover] : []}
+                                onChange={(list) => updateTopic(ti, { cover: list[0] })}
+                                folder={`/research/${topic.slug || "topic"}`}
+                                onDeleteFile={deleteFromImageKit}
+                              />
+                            </div>
+
+                            <div className="space-y-2 rounded border border-border/80 bg-muted/30 p-3">
+                              <Label className="text-[12px] font-mono uppercase text-muted-foreground">Hero Figure (1 = full width, 2–3 = row, 4+ = slider)</Label>
+                              <MediaListEditor
+                                media={topic.hero?.media ?? []}
+                                onChange={(media) => updateTopic(ti, { hero: { ...topic.hero, media } })}
+                                folder={`/research/${topic.slug || "topic"}`}
+                                onDeleteFile={deleteFromImageKit}
+                              />
+                              <Input value={topic.hero?.caption ?? ""} onChange={(e) => updateTopic(ti, { hero: { ...topic.hero, caption: e.target.value } })} placeholder="Caption ([text](url) makes a link)" className="text-xs" />
+                            </div>
+
+                            <div className="space-y-1">
+                              <Label className="text-[12px] font-mono uppercase text-muted-foreground">Intro (blank line = new paragraph, [text](url) = link)</Label>
+                              <textarea rows={6} value={topic.intro ?? ""} onChange={(e) => updateTopic(ti, { intro: e.target.value })} className={textarea} />
+                            </div>
+
+                            <div className="space-y-3">
+                              <div className="flex items-center justify-between">
+                                <span className="text-[12px] font-mono uppercase text-muted-foreground">Sections ({(topic.sections ?? []).length})</span>
+                                <Button size="xs" variant="outline" onClick={() => handleSectionAdd(ti)}>
+                                  <Plus className="h-3 w-3" /> Add Section
+                                </Button>
+                              </div>
+                              {(topic.sections ?? []).map((section, si) => (
+                                <div key={section.id ?? si} className="space-y-3 rounded border border-border bg-background p-4">
+                                  <div className="flex items-center justify-between gap-2">
+                                    <span className="font-mono text-[12px] text-muted-foreground">S{si + 1}</span>
+                                    <div className="flex gap-1">
+                                      <Button size="xs" variant="ghost" disabled={si === 0} onClick={() => handleSectionMove(ti, si, -1)}>Up</Button>
+                                      <Button size="xs" variant="ghost" disabled={si === (topic.sections ?? []).length - 1} onClick={() => handleSectionMove(ti, si, 1)}>Down</Button>
+                                      <Button size="xs" variant="ghost" onClick={() => handleSectionRemove(ti, si)}>
+                                        <Trash2 className="h-3 w-3" /> Remove
+                                      </Button>
+                                    </div>
+                                  </div>
+                                  <Input value={section.heading ?? ""} onChange={(e) => updateSection(ti, si, { heading: e.target.value })} placeholder="Section heading" className="text-xs font-semibold" />
+                                  <div className="space-y-2 rounded border border-border/80 bg-muted/30 p-3">
+                                    <Label className="text-[12px] font-mono uppercase text-muted-foreground">Figure</Label>
+                                    <MediaListEditor
+                                      media={section.figure?.media ?? []}
+                                      onChange={(media) => updateSection(ti, si, { figure: { ...section.figure, media } })}
+                                      folder={`/research/${topic.slug || "topic"}`}
+                                      onDeleteFile={deleteFromImageKit}
+                                    />
+                                    <Input value={section.figure?.caption ?? ""} onChange={(e) => updateSection(ti, si, { figure: { ...section.figure, caption: e.target.value } })} placeholder="Caption ([text](url) makes a link)" className="text-xs" />
+                                  </div>
+                                  <textarea rows={7} value={section.body ?? ""} onChange={(e) => updateSection(ti, si, { body: e.target.value })} placeholder="Body — blank line = new paragraph, [text](url) = link" className={textarea} />
+                                  <div className="space-y-2">
+                                    <div className="flex items-center justify-between">
+                                      <span className="text-[12px] font-mono uppercase text-muted-foreground">Related Papers ({(section.papers ?? []).length})</span>
+                                      <Button size="xs" variant="outline" onClick={() => updateSection(ti, si, { papers: [...(section.papers ?? []), { title: "", venue: "", year: "", url: "" }] })}>
+                                        <Plus className="h-3 w-3" /> Add Paper
+                                      </Button>
+                                    </div>
+                                    {(section.papers ?? []).map((paper, pi) => (
+                                      <div key={pi} className="grid grid-cols-1 gap-2 sm:grid-cols-[2fr_1fr_70px_2fr_auto]">
+                                        <Input value={paper.title ?? ""} onChange={(e) => updatePaper(ti, si, pi, { title: e.target.value })} placeholder="Title" className="h-8 text-xs" />
+                                        <Input value={paper.venue ?? ""} onChange={(e) => updatePaper(ti, si, pi, { venue: e.target.value })} placeholder="Venue" className="h-8 text-xs" />
+                                        <Input value={paper.year ?? ""} onChange={(e) => updatePaper(ti, si, pi, { year: e.target.value })} placeholder="Year" className="h-8 font-mono text-xs" />
+                                        <Input value={paper.url ?? ""} onChange={(e) => updatePaper(ti, si, pi, { url: e.target.value })} placeholder="https://doi.org/…" className="h-8 font-mono text-xs" />
+                                        <Button size="xs" variant="ghost" onClick={() => updateSection(ti, si, { papers: (section.papers ?? []).filter((_, k) => k !== pi) })}>
+                                          <Trash2 className="h-3 w-3" />
+                                        </Button>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 
