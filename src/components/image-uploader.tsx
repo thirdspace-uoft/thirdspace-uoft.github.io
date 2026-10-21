@@ -7,22 +7,39 @@ import { Button } from "@/components/ui/button";
 const IMAGEKIT_PRIVATE_KEY = process.env.NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY ?? "";
 const UPLOAD_URL = "https://upload.imagekit.io/api/v1/files/upload";
 
+/** ImageKit free-plan upload limits. */
+const MAX_BYTES = { image: 25 * 1024 * 1024, video: 100 * 1024 * 1024 } as const;
+
+export type UploadKind = "image" | "video";
+
 interface ImageUploaderProps {
   currentPath: string;
   folder: string;
-  onUpload: (path: string) => void;
+  onUpload: (path: string, kind: UploadKind) => void;
   onDelete?: () => Promise<void>;
+  /** Also accept video files (mp4, webm, mov). Off by default. */
+  allowVideo?: boolean;
 }
 
-export function ImageUploader({ currentPath, folder, onUpload, onDelete }: ImageUploaderProps) {
+export function ImageUploader({ currentPath, folder, onUpload, onDelete, allowVideo = false }: ImageUploaderProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [status, setStatus] = useState<"idle" | "uploading" | "deleting" | "success" | "error">("idle");
   const [msg, setMsg] = useState("");
 
   async function handleFile(file: File) {
-    if (!file.type.startsWith("image/")) {
+    const kind: UploadKind | null = file.type.startsWith("image/")
+      ? "image"
+      : allowVideo && file.type.startsWith("video/")
+        ? "video"
+        : null;
+    if (!kind) {
       setStatus("error");
-      setMsg("Only image files are supported");
+      setMsg(allowVideo ? "Only image or video files are supported" : "Only image files are supported");
+      return;
+    }
+    if (file.size > MAX_BYTES[kind]) {
+      setStatus("error");
+      setMsg(`Too large: ${kind}s can be up to ${MAX_BYTES[kind] / 1024 / 1024} MB`);
       return;
     }
 
@@ -59,7 +76,7 @@ export function ImageUploader({ currentPath, folder, onUpload, onDelete }: Image
       }
 
       const uploadedPath = "/" + data.filePath;
-      onUpload(uploadedPath);
+      onUpload(uploadedPath, kind);
       setStatus("success");
       setMsg(`Uploaded: ${data.name}`);
     } catch {
@@ -87,7 +104,7 @@ export function ImageUploader({ currentPath, folder, onUpload, onDelete }: Image
       <input
         ref={inputRef}
         type="file"
-        accept="image/*"
+        accept={allowVideo ? "image/*,video/*" : "image/*"}
         className="hidden"
         onChange={(e) => {
           const f = e.target.files?.[0];
