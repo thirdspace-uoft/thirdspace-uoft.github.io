@@ -69,6 +69,8 @@ export type PostResource = {
   speakers?: string[];
   /** ImageKit path or URL; else the provider's thumbnail. */
   thumbnail?: string;
+  /** YouTube/Vimeo channel name, filled at build time. */
+  channel?: string;
   transcriptUrl?: string;
 
   // kind = "code" (filled at build time; never typed in admin)
@@ -190,7 +192,7 @@ export function getPostsByTag(slug: string): Post[] {
 
 export function getPostsByAuthor(name: string): Post[] {
   const key = personKey(name);
-  return POSTS.filter((p) => p.authors.some((a) => personKey(a.name) === key));
+  return POSTS.filter((p) => p.authors.some((a) => personKey(resolveAuthor(a).name) === key));
 }
 
 export function getPostsByTopic(topicSlug: string): Post[] {
@@ -286,8 +288,24 @@ function peopleDirectory(): Directory {
   return map;
 }
 
+/**
+ * Exact match first; then a full name that ends with a listed name of at least
+ * two words, so a paper's "Syed Ishtiaque Ahmed" finds the People page's
+ * "Ishtiaque Ahmed". One-word names never match this way ("Ahmed" is common).
+ */
+function findPerson(name: string) {
+  const key = personKey(name);
+  const dir = peopleDirectory();
+  const exact = dir.get(key);
+  if (exact) return exact;
+  for (const [listed, person] of dir) {
+    if (listed.includes("-") && key.endsWith(`-${listed}`)) return person;
+  }
+  return undefined;
+}
+
 export function resolveAuthor(author: PostAuthor): ResolvedAuthor {
-  const found = peopleDirectory().get(personKey(author.name));
+  const found = findPerson(author.name);
   if (!found) {
     return { name: author.name, href: author.url, links: author.url ? [author.url] : [], isMember: false };
   }

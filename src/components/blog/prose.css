@@ -2,90 +2,102 @@
  * Post body typography. Plain on purpose (docs/plans/client-research.md):
  * system sans, bold for emphasis, a few sizes, no decoration.
  */
-.blog-prose {
-  font-size: 1.0625rem;
-  line-height: 1.75;
-  color: color-mix(in oklab, var(--foreground) 88%, transparent);
-  overflow-wrap: break-word;
+/*
+ * In the components layer, so Tailwind utilities on cards embedded in a post
+ * (::resource shortcodes) still win over these element styles.
+ */
+@layer components {
+  .blog-prose {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: color-mix(in oklab, var(--foreground) 88%, transparent);
+    overflow-wrap: break-word;
+  }
+  .blog-prose > * + * { margin-top: 1.25em; }
+  .blog-prose h2,
+  .blog-prose h3,
+  .blog-prose h4 {
+    color: var(--foreground);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    scroll-margin-top: 6rem;
+  }
+  .blog-prose h2 { font-size: 1.5rem; margin-top: 2.25em; }
+  .blog-prose h3 { font-size: 1.2rem; margin-top: 1.75em; }
+  .blog-prose h4 { font-size: 1.0625rem; margin-top: 1.5em; }
+  .blog-prose .blog-heading-link { color: inherit; text-decoration: none; }
+  .blog-prose .blog-heading-link:hover { text-decoration: underline; text-decoration-color: color-mix(in oklab, var(--primary) 40%, transparent); }
+  .blog-prose a:not(.blog-heading-link) {
+    color: var(--primary);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--primary) 30%, transparent);
+    text-underline-offset: 2px;
+  }
+  .blog-prose a:not(.blog-heading-link):hover { text-decoration-color: var(--primary); }
+  .blog-prose strong { color: var(--foreground); font-weight: 700; }
+  /* The design guidance avoids italics; emphasis reads as bold instead. */
+  .blog-prose em { font-style: normal; font-weight: 600; }
+  .blog-prose ul,
+  .blog-prose ol { padding-left: 1.4em; }
+  .blog-prose ul { list-style: disc; }
+  .blog-prose ol { list-style: decimal; }
+  .blog-prose li + li { margin-top: 0.4em; }
+  .blog-prose li::marker { color: var(--muted-foreground); }
+  .blog-prose ul.contains-task-list { list-style: none; padding-left: 0; }
+  .blog-prose blockquote {
+    border-left: 3px solid var(--border);
+    padding-left: 1em;
+    color: var(--muted-foreground);
+  }
+  .blog-prose hr { border: 0; border-top: 1px solid var(--border); margin: 2.5em 0; }
+  .blog-prose :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--muted);
+    border-radius: 0.3em;
+    padding: 0.1em 0.35em;
+  }
+  .blog-prose .blog-code { position: relative; }
+  .blog-prose .blog-code pre {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    background: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    overflow-x: auto;
+  }
+  .blog-prose .blog-code-lang {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted-foreground);
+    text-transform: lowercase;
+  }
+  .blog-prose .blog-table { overflow-x: auto; }
+  .blog-prose table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+  .blog-prose th,
+  .blog-prose td { border-bottom: 1px solid var(--border); padding: 0.5em 0.75em; text-align: left; }
+  .blog-prose th { color: var(--foreground); font-weight: 700; }
+  .blog-prose figure img,
+  .blog-prose p img { max-width: 100%; height: auto; border-radius: var(--radius); }
+  .blog-prose figcaption { margin-top: 0.6em; font-size: 0.875rem; color: var(--muted-foreground); }
+  .blog-prose .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.25em 0; }
+  .blog-prose section[data-footnotes] {
+    margin-top: 3em;
+    border-top: 1px solid var(--border);
+    padding-top: 1em;
+    font-size: 0.9rem;
+  }
+  .blog-prose :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
+  /* Cards placed inside the body keep their own look. */
+  .blog-prose .not-prose a { color: inherit; text-decoration: none; }
+  .blog-prose .not-prose ul { list-style: none; padding-left: 0; }
+  .blog-prose .not-prose li + li { margin-top: 0; }
+  .blog-prose .not-prose h4 { font-size: inherit; margin-top: 0; letter-spacing: normal; }
 }
-.blog-prose > * + * { margin-top: 1.25em; }
-.blog-prose h2,
-.blog-prose h3,
-.blog-prose h4 {
-  color: var(--foreground);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
-  scroll-margin-top: 6rem;
-}
-.blog-prose h2 { font-size: 1.5rem; margin-top: 2.25em; }
-.blog-prose h3 { font-size: 1.2rem; margin-top: 1.75em; }
-.blog-prose h4 { font-size: 1.0625rem; margin-top: 1.5em; }
-.blog-prose .blog-heading-link { color: inherit; text-decoration: none; }
-.blog-prose .blog-heading-link:hover { text-decoration: underline; text-decoration-color: color-mix(in oklab, var(--primary) 40%, transparent); }
-.blog-prose a:not(.blog-heading-link) {
-  color: var(--primary);
-  text-decoration: underline;
-  text-decoration-color: color-mix(in oklab, var(--primary) 30%, transparent);
-  text-underline-offset: 2px;
-}
-.blog-prose a:not(.blog-heading-link):hover { text-decoration-color: var(--primary); }
-.blog-prose strong { color: var(--foreground); font-weight: 700; }
-/* The design guidance avoids italics; emphasis reads as bold instead. */
-.blog-prose em { font-style: normal; font-weight: 600; }
-.blog-prose ul,
-.blog-prose ol { padding-left: 1.4em; }
-.blog-prose ul { list-style: disc; }
-.blog-prose ol { list-style: decimal; }
-.blog-prose li + li { margin-top: 0.4em; }
-.blog-prose li::marker { color: var(--muted-foreground); }
-.blog-prose ul.contains-task-list { list-style: none; padding-left: 0; }
-.blog-prose blockquote {
-  border-left: 3px solid var(--border);
-  padding-left: 1em;
-  color: var(--muted-foreground);
-}
-.blog-prose hr { border: 0; border-top: 1px solid var(--border); margin: 2.5em 0; }
-.blog-prose :not(pre) > code {
-  font-family: var(--font-mono);
-  font-size: 0.875em;
-  background: var(--muted);
-  border-radius: 0.3em;
-  padding: 0.1em 0.35em;
-}
-.blog-prose .blog-code { position: relative; }
-.blog-prose .blog-code pre {
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  line-height: 1.6;
-  background: var(--muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem 1.1rem;
-  overflow-x: auto;
-}
-.blog-prose .blog-code-lang {
-  position: absolute;
-  top: 0.4rem;
-  right: 0.6rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--muted-foreground);
-  text-transform: lowercase;
-}
-.blog-prose .blog-table { overflow-x: auto; }
-.blog-prose table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-.blog-prose th,
-.blog-prose td { border-bottom: 1px solid var(--border); padding: 0.5em 0.75em; text-align: left; }
-.blog-prose th { color: var(--foreground); font-weight: 700; }
-.blog-prose figure img,
-.blog-prose p img { max-width: 100%; height: auto; border-radius: var(--radius); }
-.blog-prose figcaption { margin-top: 0.6em; font-size: 0.875rem; color: var(--muted-foreground); }
-.blog-prose .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.25em 0; }
-.blog-prose section[data-footnotes] {
-  margin-top: 3em;
-  border-top: 1px solid var(--border);
-  padding-top: 1em;
-  font-size: 0.9rem;
-}
-.blog-prose :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }

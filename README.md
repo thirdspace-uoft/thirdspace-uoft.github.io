@@ -188,6 +188,20 @@ the real `config/site`; without them it keeps an existing
 resource kind, math, code, a guest author, a renamed slug, a scheduled post and
 a draft (the last two must not appear in `out/`).
 
+### Resources (papers, code, videos, data)
+
+At build time `fetch-content` fills in what the editor didn't type: GitHub
+stars, language and license for code links, YouTube/Vimeo titles and
+thumbnails, paper titles/authors/venue from Crossref (DOI) or arXiv, and
+BibTeX. Lookups are cached in `.cache/resources.json` (kept between CI runs);
+if an API is down the last cached answer is used, and the build never fails
+over it. `SKIP_ENRICHMENT=1` uses the cache only and makes no requests.
+Tests: `npm test`.
+
+In a post body, `::resource{id="…"}` on its own line places that resource's
+card or player there, and a bare YouTube, Vimeo, GitHub or arXiv link on its
+own line becomes a card.
+
 ### When posts go live
 
 The deploy workflow checks Firestore every 5 minutes and rebuilds when the

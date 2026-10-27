@@ -105,11 +105,31 @@ jobs:
         run: echo "No Firestore changes since last deploy — skipping"
 
       # ── Build only on cron/workflow_dispatch if content changed ──
+      # Blog resource lookups (GitHub stars, video titles, paper metadata) are
+      # cached between builds, so a down API falls back to the last answer.
+      # Same per-run key scheme as the content version above.
+      - name: Restore resource lookups
+        if: steps.check.outputs.skip != 'true'
+        uses: actions/cache/restore@v5
+        with:
+          path: .cache
+          key: resources-${{ github.run_id }}
+          restore-keys: resources-
+
       - name: Build
         if: steps.check.outputs.skip != 'true'
         env:
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+          # Raises the GitHub API rate limit for repo details on blog code cards.
+          GITHUB_TOKEN: ${{ github.token }}
         run: npm run build
+
+      - name: Cache resource lookups
+        if: steps.check.outputs.skip != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: .cache
+          key: resources-${{ github.run_id }}
 
       - name: Save content version
         if: steps.check.outputs.skip != 'true'

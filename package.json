@@ -12,7 +12,8 @@
     "upload-content": "node --env-file=.env scripts/upload-content.mjs",
     "sync-publications": "node --env-file=.env scripts/sync-publications.mjs",
     "sync-publications:dry": "node --env-file=.env scripts/sync-publications.mjs --dry-run",
-    "test:publications": "node --test \"scripts/lib/*.test.mjs\""
+    "test:publications": "node --test \"scripts/lib/*.test.mjs\"",
+    "test": "node --test \"scripts/lib/*.test.mjs\""
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

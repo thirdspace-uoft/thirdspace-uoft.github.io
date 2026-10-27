@@ -7,6 +7,9 @@ import { AuthorCards } from "@/components/blog/author-cards";
 import { AuthorNames } from "@/components/blog/byline";
 import { Markdown } from "@/components/blog/markdown";
 import { PostCard } from "@/components/blog/post-card";
+import { ResourceBar } from "@/components/blog/resources/resource-bar";
+import { ResourcesSection } from "@/components/blog/resources/resources-section";
+import { VideoTile } from "@/components/blog/resources/video-tile";
 import { ShareLinks } from "@/components/blog/share-links";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import {
@@ -35,6 +38,7 @@ import {
   type Post,
 } from "@/lib/blog";
 import { postHeadings } from "@/lib/blog-headings";
+import { featuredVideo } from "@/lib/blog-resources";
 import { getContent } from "@/lib/content";
 import { getResearch, getTopic } from "@/lib/research";
 import { absoluteUrl, defaultShareImage, shareImageUrl } from "@/lib/site";
@@ -140,7 +144,12 @@ export default async function PostPage({ params }: Props) {
 
   const { socials } = getContent();
   const authors = resolveAuthors(post);
-  const headings = postHeadings(post.body);
+  const resources = post.resources ?? [];
+  const featured = featuredVideo(resources);
+  // The featured video already plays above the body; listing it again below would repeat it.
+  const listed = resources.filter((r) => r !== featured);
+  // The resources section is part of the page outline, so it's in the table of contents too.
+  const headings = [...postHeadings(post.body), ...(listed.length > 0 ? [{ id: "resources", text: labels.resources }] : [])];
   const tagPages = new Set(getTagPages().map((t) => t.slug));
   const research = getResearch();
   const topic = research.enabled && post.researchTopicSlug ? getTopic(post.researchTopicSlug) : undefined;
@@ -192,6 +201,7 @@ export default async function PostPage({ params }: Props) {
             <span aria-hidden> · </span>
             {fill(labels.readingTime, { n: readingTime(post.body) })}
           </p>
+          <ResourceBar resources={resources} />
         </header>
 
         {post.cover?.path && (
@@ -224,6 +234,12 @@ export default async function PostPage({ params }: Props) {
           )}
         </section>
 
+        {featured && (
+          <div className="mt-8 max-w-4xl">
+            <VideoTile resource={featured} featured />
+          </div>
+        )}
+
         <div className="mt-10 lg:grid lg:grid-cols-[minmax(0,48rem)_14rem] lg:justify-between lg:gap-12">
           <Markdown body={post.body} resources={post.resources} />
           {headings.length >= 3 && (
@@ -234,6 +250,8 @@ export default async function PostPage({ params }: Props) {
             </aside>
           )}
         </div>
+
+        <ResourcesSection resources={listed} label={labels.resources} />
 
         <footer className="mt-16 max-w-3xl space-y-10 border-t border-border pt-10">
           {(post.tags ?? []).length > 0 && (

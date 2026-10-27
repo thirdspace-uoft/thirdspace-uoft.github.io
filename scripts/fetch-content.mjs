@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { initializeApp, cert, getApps } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
+import { enrichPosts } from "./lib/resources-enrich.mjs";
 
 // Writes the two files the build reads:
 //   public/config/content.json — the config/site document (site settings)
@@ -51,9 +52,17 @@ function logCounts(posts, now = Date.now()) {
   console.log(`posts: ${published} published, ${scheduled} scheduled, ${drafts} draft`);
 }
 
-/** Fills in repo details, thumbnails and paper metadata. Added in the resources phase. */
+/** Repo details, video thumbnails and paper metadata; see scripts/lib/resources-enrich.mjs. */
 async function enrich(posts) {
-  return posts;
+  if (!posts.some((p) => p.resources?.length)) return posts;
+  const offline = process.env.SKIP_ENRICHMENT === "1";
+  console.log(`resources: enriching${offline ? " from cache only (SKIP_ENRICHMENT=1)" : ""}`);
+  return enrichPosts(posts, {
+    cachePath: join(root, ".cache", "resources.json"),
+    // GITHUB_TOKEN in Actions, a personal token locally; both just raise the rate limit.
+    githubToken: process.env.GITHUB_TOKEN || process.env.GITHUB_PAT_TOKEN,
+    offline,
+  });
 }
 
 const serviceAccount = loadServiceAccount();
