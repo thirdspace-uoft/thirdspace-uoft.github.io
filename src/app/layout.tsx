@@ -5,6 +5,8 @@ import { SectionObserver } from "@/components/section-observer";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { getContent } from "@/lib/content";
 import { SITE_URL, defaultShareImage } from "@/lib/site";
+import { JsonLd } from "@/components/json-ld";
+import { organizationLd, websiteLd } from "@/lib/structured-data";
 import "./globals.css";
 
 const content = getContent();
@@ -42,6 +44,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        {/* Who runs the site, once for every page; posts and people refer back to it. */}
+        <JsonLd data={[organizationLd(), websiteLd()]} />
         <SectionObserver>
           <Navbar />
           <ScrollProgress />

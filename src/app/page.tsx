@@ -24,6 +24,9 @@ import { ResourceKinds } from "@/components/blog/resource-kinds";
 import { getBlog, getPosts, toCardData } from "@/lib/blog";
 import { ResearcherRail, type RailMember } from "@/components/researcher-rail";
 
+/** The home page's own address; every page names its canonical URL. */
+export const metadata = { alternates: { canonical: "/" } };
+
 const contentData = getContent();
 const {
   hero,

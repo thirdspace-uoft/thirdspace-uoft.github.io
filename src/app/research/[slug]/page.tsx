@@ -6,6 +6,8 @@ import { ResearchTopicRow } from "@/components/research/research-topic-row";
 import { RichText } from "@/components/research/rich-text";
 import { getResearch, getTopic, getTopics } from "@/lib/research";
 import { PostCard } from "@/components/blog/post-card";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbLd } from "@/lib/structured-data";
 import { ResourceKinds } from "@/components/blog/resource-kinds";
 import { getBlog, getBlogLabels, getPostsByTopic, toCardData } from "@/lib/blog";
 
@@ -30,6 +32,7 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: [topic.title, research.page?.metaTitle].filter(Boolean).join(" — "),
     description: topic.metaDescription ?? topic.summary,
+    alternates: { canonical: `/research/${topic.slug}` },
   };
 }
 
@@ -46,6 +49,13 @@ export default async function ResearchTopicPage({ params }: Props) {
 
   return (
     <main className="bg-background">
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "Home", path: "/" },
+          { name: research.navLabel ?? "Research", path: "/research" },
+          { name: topic.title ?? "", path: `/research/${topic.slug}` },
+        ])}
+      />
       <div className="mx-auto w-full max-w-6xl px-5 pt-8 sm:px-8 sm:pt-10">
         <ResearchTopicRow topics={getTopics()} activeSlug={topic.slug} label={research.labels?.topicsNav} />
       </div>

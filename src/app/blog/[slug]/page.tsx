@@ -38,10 +38,12 @@ import {
   type Post,
 } from "@/lib/blog";
 import { postHeadings } from "@/lib/blog-headings";
-import { featuredVideo } from "@/lib/blog-resources";
+import { featuredVideo, primaryOf } from "@/lib/blog-resources";
+import { blogPostingLd, breadcrumbLd } from "@/lib/structured-data";
+import { JsonLd } from "@/components/json-ld";
 import { getContent } from "@/lib/content";
 import { getResearch, getTopic } from "@/lib/research";
-import { absoluteUrl, defaultShareImage, shareImageUrl } from "@/lib/site";
+import { absoluteUrl, shareImageUrl } from "@/lib/site";
 import { getImageUrl } from "@/lib/utils";
 
 /** Static export: only posts that exist at build time get a page. */
@@ -64,10 +66,34 @@ export function generateStaticParams() {
 
 type Props = { params: Promise<{ slug: string }> };
 
+/**
+ * The share card: the editor's share image if there is one (cropped by
+ * ImageKit to 1200×630 JPEG), else the title card generated at build.
+ */
 function shareImage(post: Post) {
-  const image = post.ogImage?.path ? post.ogImage : post.cover?.path ? post.cover : undefined;
-  if (!image) return defaultShareImage();
-  return { url: shareImageUrl(getImageUrl(image.path)), width: 1200, height: 630, alt: image.alt ?? "" };
+  if (post.ogImage?.path) {
+    return { url: shareImageUrl(getImageUrl(post.ogImage.path)), width: 1200, height: 630, alt: post.ogImage.alt ?? "" };
+  }
+  return { url: absoluteUrl(`/blog/${post.slug}/og.png`), width: 1200, height: 630, alt: post.title };
+}
+
+/**
+ * Google Scholar's tags, from the post's primary paper. They describe the
+ * paper the post is about, so Scholar can link the two.
+ */
+function citationTags(post: Post): Record<string, string | string[]> {
+  const paper = primaryOf(post.resources ?? [], "paper");
+  if (!paper?.title) return {};
+  const conference = /\b(conference|proceedings|symposium|workshop|chi|cscw|acl|emnlp|naacl|facct|aaai|www|ictd)\b/i.test(paper.venue ?? "");
+  const tags: Record<string, string | string[]> = { citation_title: paper.title };
+  const authors = (paper.authors ?? "").split(/,\s*/).filter(Boolean);
+  if (authors.length) tags.citation_author = authors;
+  if (paper.year) tags.citation_publication_date = paper.year;
+  if (paper.venue) tags[conference ? "citation_conference_title" : "citation_journal_title"] = paper.venue;
+  if (paper.doi) tags.citation_doi = paper.doi;
+  if (paper.pdfUrl) tags.citation_pdf_url = paper.pdfUrl;
+  if (paper.arxivId) tags.citation_arxiv_id = paper.arxivId;
+  return tags;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -88,10 +114,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { socials } = getContent();
   const image = shareImage(post);
   const authors = resolveAuthors(post);
+  const topic = post.researchTopicSlug ? getTopic(post.researchTopicSlug) : undefined;
   return {
     title: post.title,
     description: post.summary,
-    alternates: { canonical: `/blog/${post.slug}` },
+    alternates: {
+      canonical: `/blog/${post.slug}`,
+      types: {
+        // The same post as plain Markdown, for tools that read text rather than HTML.
+        "text/markdown": `/blog/${post.slug}/index.md`,
+        "application/rss+xml": "/blog/rss.xml",
+      },
+    },
     openGraph: {
       type: "article",
       url: `/blog/${post.slug}`,
@@ -101,15 +135,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       modifiedTime: post.updatedAt,
       authors: authors.map((a) => a.name),
       tags: post.tags,
-      images: image ? [image] : undefined,
+      section: topic?.title,
+      images: [image],
     },
     twitter: {
       card: "summary_large_image",
       site: socials?.xHandle,
       title: post.title,
       description: post.summary,
-      images: image ? [image] : undefined,
+      images: [image],
     },
+    other: citationTags(post),
   };
 }
 
@@ -159,6 +195,16 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <main className="bg-background">
+      <JsonLd
+        data={[
+          blogPostingLd(post, shareImage(post).url),
+          breadcrumbLd([
+            { name: "Home", path: "/" },
+            { name: blogTitle, path: "/blog" },
+            { name: post.title, path: `/blog/${post.slug}` },
+          ]),
+        ]}
+      />
       <article className="mx-auto w-full max-w-6xl px-5 pt-8 pb-16 sm:px-8 sm:pt-10 sm:pb-24">
         <Breadcrumb>
           <BreadcrumbList>

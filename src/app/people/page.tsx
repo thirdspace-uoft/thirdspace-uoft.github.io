@@ -4,6 +4,8 @@ import { PiCardClickable } from "@/components/team/pi-card-clickable";
 import { MemberCardClickable } from "@/components/team/member-card-clickable";
 import { AlumniCardClickable, type AlumniData } from "@/components/team/alumni-card-clickable";
 import type { MemberPost } from "@/components/team/member-posts";
+import { JsonLd } from "@/components/json-ld";
+import { peopleLd } from "@/lib/structured-data";
 import { formatPostDate, getBlog, getPostsByAuthor } from "@/lib/blog";
 
 const contentData = getContent();
@@ -20,6 +22,7 @@ const postsLabel = blog.navLabel;
 export const metadata = {
   title: team.pageTitle,
   description: team.pageBody,
+  alternates: { canonical: "/people" },
 };
 
 type Member = {
@@ -147,6 +150,7 @@ export default function PeoplePage() {
 
   return (
     <main className="bg-background">
+      <JsonLd data={peopleLd()} />
       {/* Hero — headline & description */}
       <section
         data-section="team"

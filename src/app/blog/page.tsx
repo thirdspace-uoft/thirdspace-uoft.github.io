@@ -2,15 +2,21 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { BlogIndex } from "@/components/blog/blog-index";
+import { JsonLd } from "@/components/json-ld";
 import { RichText } from "@/components/research/rich-text";
+import { blogLd } from "@/lib/structured-data";
 import { getAllTags, getBlog, getBlogLabels, getPosts, toCardData } from "@/lib/blog";
 
 const blog = getBlog();
 
+const shareCard = { url: "/blog/og.png", width: 1200, height: 630, alt: blog.page?.title ?? "Blog" };
+
 export const metadata: Metadata = {
   title: blog.page?.metaTitle ?? blog.page?.title,
   description: blog.page?.metaDescription,
-  alternates: { canonical: "/blog" },
+  alternates: { canonical: "/blog", types: { "application/rss+xml": "/blog/rss.xml" } },
+  openGraph: { type: "website", url: "/blog", title: blog.page?.metaTitle ?? blog.page?.title, description: blog.page?.metaDescription, images: [shareCard] },
+  twitter: { card: "summary_large_image", images: [shareCard] },
 };
 
 export default function BlogPage() {
@@ -22,6 +28,7 @@ export default function BlogPage() {
 
   return (
     <main className="bg-background">
+      <JsonLd data={blogLd(getPosts())} />
       <section data-section="blog" data-section-label={blog.navLabel}>
         <div className="mx-auto w-full max-w-5xl px-5 pt-12 sm:px-8 sm:pt-16">
           <div className="max-w-3xl">

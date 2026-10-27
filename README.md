@@ -208,6 +208,30 @@ The deploy workflow checks Firestore every 5 minutes and rebuilds when the
 settings are saved, any post is saved, or a scheduled post's time arrives. A
 post is usually live 5–10 minutes after it is saved or becomes due.
 
+### Search engines and AI search
+
+The build writes `sitemap.xml` (with video entries), `robots.txt` (AI
+crawlers explicitly allowed, `/admin` excluded), `llms.txt`,
+`blog/rss.xml`, `blog/feed.json`, a Markdown copy of each post at
+`/blog/<slug>/index.md`, a 1200×630 share card per post at
+`/blog/<slug>/og.png`, and schema.org data on every page (lab, people,
+posts with their papers, code, data and videos).
+
+One-time manual steps after launch:
+
+1. Verify the site in [Google Search Console](https://search.google.com/search-console)
+   and [Bing Webmaster Tools](https://www.bing.com/webmasters) (HTML-file
+   verification: put the file they give you in `public/`). Submit
+   `https://thirdspace-uoft.github.io/sitemap.xml` in both.
+2. Check a post with Google's [Rich Results Test](https://search.google.com/test/rich-results)
+   and the [Schema.org validator](https://validator.schema.org/), and its share
+   card with LinkedIn's [Post Inspector](https://www.linkedin.com/post-inspector/).
+
+If the lab moves to a university subdomain, change `SITE_URL` in
+`src/lib/site.ts` and add `public/CNAME`; canonical URLs, feeds and the
+sitemap all follow. Do it before sharing many posts, since shared links would
+otherwise point at the old address.
+
 ### Firestore rules
 
 `firestore.rules` only lets the listed admin emails write. Fill in the list,

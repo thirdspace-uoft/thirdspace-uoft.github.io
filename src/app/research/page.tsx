@@ -9,6 +9,7 @@ const research = getResearch();
 export const metadata = {
   title: research.page?.metaTitle,
   description: research.page?.metaDescription,
+  alternates: { canonical: "/research" },
 };
 
 export default function ResearchPage() {

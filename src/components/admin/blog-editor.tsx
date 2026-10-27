@@ -334,7 +334,8 @@ function PostForm({
   const warnings = postWarnings({ ...post, slug });
   const xCopy = post.social?.xText ?? "";
   const xCount = xLength(xCopy.trim() || defaultXText(post));
-  const shareImage = post.ogImage?.path || post.cover?.path;
+  // Same rule as the post page: the share image override, else a title card generated at build.
+  const shareImage = post.ogImage?.path;
   const shareImageSrc = shareImage ? shareImageUrl(getImageUrl(shareImage)) : undefined;
   const folder = `/blog/${slug || post.id}`;
 
@@ -715,7 +716,7 @@ function PostForm({
             <h3 className="text-sm font-bold">LinkedIn</h3>
             <p className="line-clamp-4 whitespace-pre-wrap text-xs">{(post.social?.linkedinText ?? "").trim() || defaultLinkedinText(post)}</p>
             <SharePreviewCard image={shareImageSrc} title={post.title} domain="thirdspace-uoft.github.io" />
-            {!shareImageSrc && <p className={help}>No cover or share image: the generated title card is used.</p>}
+            {!shareImageSrc && <p className={help}>No share image set: a title card in the lab&apos;s colours is generated at build (shown roughly here).</p>}
           </div>
         </aside>
       </div>

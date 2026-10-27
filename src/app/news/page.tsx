@@ -6,6 +6,7 @@ const news = getNews();
 export const metadata = {
   title: news.page?.metaTitle,
   description: news.page?.metaDescription,
+  alternates: { canonical: "/news" },
 };
 
 export default function NewsPage() {
