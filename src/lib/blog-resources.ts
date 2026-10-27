@@ -22,6 +22,21 @@ export function videoProvider(r: Pick<PostResource, "provider" | "url">): VideoP
   return "other";
 }
 
+/** Best guess at a resource's kind from its URL; the editor can override it. Same rules as the build script. */
+export function detectKind(url: string): ResourceKind {
+  const u = url.toLowerCase();
+  if (/huggingface\.co\/spaces\//.test(u)) return "demo";
+  if (/huggingface\.co\/datasets\/|zenodo\.org|osf\.io|kaggle\.com\/datasets|dataverse/.test(u)) return "dataset";
+  if (/github\.com\/|gitlab\.com\/|huggingface\.co\//.test(u)) return "code";
+  if (/doi\.org\/|arxiv\.org\/|aclanthology\.org\/|dl\.acm\.org\/|ieeexplore\.ieee\.org|openreview\.net/.test(u)) return "paper";
+  if (YOUTUBE.test(url) || VIMEO.test(url) || /\.(mp4|webm|mov)(\?|$)/.test(u)) return "video";
+  if (/\.pdf(\?|$)/.test(u)) return "paper";
+  return "link";
+}
+
+export const arxivIdFrom = (url = "") => url.match(ARXIV)?.[1] ?? null;
+export const doiFrom = (value = "") => value.match(/(?:doi\.org\/|^)(10\.\d{4,9}\/[^\s?#]+)/i)?.[1]?.replace(/[.,;]+$/, "") ?? null;
+
 /** Videos, plus demos that are videos rather than web apps. */
 export function isVideo(r: PostResource): boolean {
   if (r.kind === "video") return true;

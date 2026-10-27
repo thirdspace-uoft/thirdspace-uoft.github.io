@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
+import dynamic from "next/dynamic";
 import {
   Lock,
   Mail,
@@ -27,6 +28,7 @@ import {
   Newspaper,
   Microscope,
   PenLine,
+  FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageUploader } from "@/components/image-uploader";
@@ -45,6 +47,13 @@ import {
   type User,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+
+// The post editor brings the Markdown renderer and KaTeX with it; load them
+// only when someone opens the Blog Posts tab.
+const BlogEditor = dynamic(() => import("@/components/admin/blog-editor").then((m) => m.BlogEditor), {
+  ssr: false,
+  loading: () => <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />,
+});
 
 export default function AdminPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -248,7 +257,7 @@ function SignedInView({
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Form tab selection
-  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "news" | "research" | "blog">("layout");
+  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "news" | "research" | "blog" | "posts">("layout");
   //const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "research">("layout");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [newsFilter, setNewsFilter] = useState("");
@@ -779,7 +788,8 @@ function SignedInView({
     { id: "footerLabs" as const, label: "12. Lab & Campuses", icon: Database },
     { id: "location" as const, label: "13. Campus Location", icon: MapPin },
     { id: "research" as const, label: "14. Research Page", icon: Microscope },
-    { id: "blog" as const, label: "15. Blog", icon: PenLine },
+    { id: "blog" as const, label: "15. Blog Settings", icon: PenLine },
+    { id: "posts" as const, label: "16. Blog Posts", icon: FileText },
   ];
 
   if (loading) {
@@ -2019,6 +2029,9 @@ function SignedInView({
                   ))}
                 </div>
               )}
+
+              {/* Posts are their own Firestore documents, saved from inside the editor. */}
+              {activeTab === "posts" && content && <BlogEditor content={content} />}
 
               {activeTab === "blog" && content && (
                 <div className="space-y-4">

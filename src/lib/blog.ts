@@ -106,6 +106,8 @@ export type Post = {
   status: PostStatus;
   /** ISO. Future date = scheduled. */
   publishedAt?: string;
+  /** ISO, set the first time the post is saved as published. Locks the slug. */
+  firstPublishedAt?: string;
   /** ISO, set on every save. */
   updatedAt: string;
   title: string;
@@ -126,6 +128,8 @@ export type Post = {
     autoShare: boolean;
     xText?: string;
     linkedinText?: string;
+    /** Set by "Share now" in admin: share even if the post is older than the 7-day window. */
+    shareNow?: boolean;
   };
   shared?: {
     x?: ShareState;
