@@ -46,14 +46,23 @@ jobs:
           EOF
 
       # ── Skip build if Firestore content hasn't changed ──
-      - name: Cache last deployed timestamp
-        id: cache-ts
-        uses: actions/cache@v5
+      # A cache entry can't be overwritten once saved, so each build saves under
+      # its own key and later runs restore the newest one by prefix. With a
+      # fixed key the first saved version stuck forever and every tick rebuilt.
+      # Restore and save are split so skipped ticks don't save anything.
+      - name: Restore last deployed version
+        uses: actions/cache/restore@v5
         with:
           path: .last-deployed-ts
-          key: last-deployed-ts
+          key: last-deployed-ts-${{ github.run_id }}
+          restore-keys: last-deployed-ts-
 
-      - name: Fetch lastModified from Firestore
+      # The content version changes when the site settings are saved, when any
+      # post is saved, and when a scheduled post's time arrives (the count of
+      # live posts goes up), so scheduled posts go live without anyone saving.
+      # select() reads only three small fields per post, keeping each tick to a
+      # handful of reads (Firestore free tier: 50,000/day).
+      - name: Fetch content version from Firestore
         id: firestore
         env:
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
@@ -63,8 +72,18 @@ jobs:
             import { getFirestore } from 'firebase-admin/firestore';
             const key = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
             if (!getApps().length) initializeApp({ credential: cert(key) });
-            const doc = await getFirestore().doc('config/site').get();
-            console.log(doc.data()?.lastModified || '0');
+            const db = getFirestore();
+            const site = await db.doc('config/site').get();
+            const posts = await db.collection('posts').select('updatedAt', 'status', 'publishedAt').get();
+            const now = Date.now();
+            let latest = '';
+            let live = 0;
+            for (const d of posts.docs) {
+              const p = d.data();
+              if ((p.updatedAt || '') > latest) latest = p.updatedAt;
+              if (p.status === 'published' && p.publishedAt && Date.parse(p.publishedAt) <= now) live++;
+            }
+            console.log([site.data()?.lastModified || '0', latest || '0', live].join('|'));
           ")
           CACHED_TS=$(cat .last-deployed-ts 2>/dev/null || echo "0")
           echo "CURRENT_TS=$CURRENT_TS" >> $GITHUB_OUTPUT
@@ -92,9 +111,16 @@ jobs:
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
         run: npm run build
 
-      - name: Save timestamp
+      - name: Save content version
         if: steps.check.outputs.skip != 'true'
         run: echo "${{ steps.firestore.outputs.CURRENT_TS }}" > .last-deployed-ts
+
+      - name: Cache content version
+        if: steps.check.outputs.skip != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: .last-deployed-ts
+          key: last-deployed-ts-${{ github.run_id }}
 
       - name: Touch .nojekyll
         if: steps.check.outputs.skip != 'true'

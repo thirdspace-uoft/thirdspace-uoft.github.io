@@ -1,0 +1,172 @@
+[
+  {
+    "id": "fixture-full",
+    "slug": "sample-post-with-every-resource",
+    "previousSlugs": ["sample-post-old-url"],
+    "status": "published",
+    "publishedAt": "2026-09-15T14:00:00.000Z",
+    "updatedAt": "2026-09-20T10:30:00.000Z",
+    "title": "Sample post: a paper with code, talks and data",
+    "summary": "This sample post exercises every part of the blog layout: a paper, a code repository, a project page, videos, a dataset and slides. It also uses math, a code block and an inline resource card.",
+    "keyFindings": [
+      "The resource bar shows one button per kind of resource.",
+      "Videos load only after a reader clicks play.",
+      "Inline shortcodes place a resource card inside the body."
+    ],
+    "body": "This is a **sample post** used to test the blog. It is never published on the live site; it only appears in builds run with `BLOG_FIXTURES=1`.\n\n## What does the post layout include?\n\nA title, a byline with linked authors, an \"In short\" box, the body and a resources section. Headings get stable anchors so an answer engine can link straight to a section.\n\n## How is math rendered?\n\nInline math like $E = mc^2$ and display math are rendered to HTML at build time:\n\n$$\n\\sum_{i=1}^{n} x_i = \\frac{n(n+1)}{2}\n$$\n\n## How is code shown?\n\n```python\ndef greet(name: str) -> str:\n    return f\"Hello, {name}\"\n```\n\n## Can resources appear inside the text?\n\nYes. The shortcode below places the discussion video here:\n\n::resource{id=\"video-discussion\"}\n\nA bare link on its own line is upgraded to a card too:\n\nhttps://github.com/thirdspace-uoft/thirdspace-uoft.github.io\n\n| Feature | Where |\n| --- | --- |\n| Tables | GitHub-flavoured Markdown |\n| Footnotes | Supported[^1] |\n\n![The lab's logo](/square_logo.webp \"An image with a caption\")\n\n[^1]: Footnotes render at the end of the post.",
+    "authors": [{ "name": "Ishtiaque Ahmed" }, { "name": "Salman Sayeed" }],
+    "tags": ["Human-AI interaction", "Interfaith"],
+    "researchTopicSlug": "faith-culture-knowledge",
+    "resources": [
+      {
+        "id": "paper-cohabitant",
+        "kind": "paper",
+        "primary": true,
+        "title": "Cohabitant: The Design, Implementation, and Evaluation of a Virtual Reality Application for Interfaith Learning and Empathy Building",
+        "url": "https://doi.org/10.1145/3613904.3642821",
+        "doi": "10.1145/3613904.3642821",
+        "venue": "CHI 2024",
+        "year": "2024"
+      },
+      {
+        "id": "paper-arxiv",
+        "kind": "paper",
+        "title": "",
+        "url": "https://arxiv.org/abs/2608.30084",
+        "arxivId": "2608.30084"
+      },
+      {
+        "id": "code-site",
+        "kind": "code",
+        "primary": true,
+        "title": "thirdspace-uoft.github.io",
+        "url": "https://github.com/thirdspace-uoft/thirdspace-uoft.github.io"
+      },
+      {
+        "id": "project-site",
+        "kind": "project",
+        "primary": true,
+        "title": "ThirdSpace research",
+        "description": "Our research areas, with papers for each.",
+        "url": "https://thirdspace-uoft.github.io/research"
+      },
+      {
+        "id": "demo-web",
+        "kind": "demo",
+        "title": "Try the sample demo",
+        "description": "A placeholder web demo.",
+        "url": "https://example.org/demo"
+      },
+      {
+        "id": "video-talk",
+        "kind": "video",
+        "primary": true,
+        "videoType": "talk",
+        "title": "Lecture on AI value alignment",
+        "url": "https://www.youtube.com/watch?v=jLpOB2Q9KzI",
+        "event": "Centre for Ethics, University of Toronto",
+        "recordedAt": "2025-11-12",
+        "durationSeconds": 3725,
+        "speakers": ["Ishtiaque Ahmed"]
+      },
+      {
+        "id": "video-discussion",
+        "kind": "video",
+        "videoType": "discussion",
+        "title": "",
+        "url": "https://www.youtube.com/watch?v=-bNtAoLtV3U",
+        "event": "CHIWORK",
+        "recordedAt": "2022-01-20",
+        "speakers": ["Ishtiaque Ahmed", "A Guest Panellist"]
+      },
+      {
+        "id": "dataset-sample",
+        "kind": "dataset",
+        "title": "Sample annotated dataset",
+        "description": "Placeholder dataset entry.",
+        "url": "https://example.org/datasets/sample",
+        "license": "CC BY 4.0",
+        "size": "12k annotated posts"
+      },
+      {
+        "id": "slides-sample",
+        "kind": "slides",
+        "title": "Talk slides",
+        "url": "https://example.org/slides.pdf"
+      },
+      {
+        "id": "poster-sample",
+        "kind": "poster",
+        "title": "Conference poster",
+        "url": "https://example.org/poster.pdf"
+      },
+      {
+        "id": "press-sample",
+        "kind": "press",
+        "title": "Example outlet covers the work",
+        "description": "Example Outlet",
+        "url": "https://example.org/press",
+        "recordedAt": "2026-09-18"
+      }
+    ],
+    "social": { "autoShare": true }
+  },
+  {
+    "id": "fixture-plain",
+    "slug": "sample-plain-post",
+    "status": "published",
+    "publishedAt": "2026-08-01T13:00:00.000Z",
+    "updatedAt": "2026-08-01T13:00:00.000Z",
+    "title": "Sample post with no resources",
+    "summary": "A plain sample post with only text. It checks that pages without resources show no empty sections or headers.",
+    "body": "This sample post has no resources, so the resource bar, featured video and resources section should all be absent.\n\n## A short section\n\nPlain paragraphs with a [link to the People page](/people) and an [external link](https://www.utoronto.ca).\n\n- A bullet\n- Another bullet\n\n> A quotation.",
+    "authors": [{ "name": "Maryam Mokhberi" }],
+    "tags": ["Human-AI interaction"],
+    "social": { "autoShare": true }
+  },
+  {
+    "id": "fixture-guest",
+    "slug": "sample-guest-post-with-video",
+    "status": "published",
+    "publishedAt": "2026-07-10T15:00:00.000Z",
+    "updatedAt": "2026-07-10T15:00:00.000Z",
+    "title": "Sample guest post with one video",
+    "summary": "A sample post by a guest author who is not on the People page, with a single video as its only resource.",
+    "body": "Guest authors link to their own site instead of the People page.\n\n## Watch the interview\n\nThe featured video above plays in place once you press play.",
+    "authors": [{ "name": "Sample Guest", "url": "https://example.org/guest" }],
+    "tags": ["Interfaith"],
+    "resources": [
+      {
+        "id": "video-interview",
+        "kind": "video",
+        "videoType": "interview",
+        "primary": true,
+        "title": "Interview with the Canada School of Public Service",
+        "url": "https://www.youtube.com/watch?v=ReSbgRSJ4WY",
+        "recordedAt": "2022-02-01"
+      }
+    ],
+    "social": { "autoShare": false }
+  },
+  {
+    "id": "fixture-scheduled",
+    "slug": "sample-scheduled-post",
+    "status": "published",
+    "publishedAt": "2099-01-01T00:00:00.000Z",
+    "updatedAt": "2026-09-01T00:00:00.000Z",
+    "title": "Sample scheduled post (must not appear)",
+    "summary": "Scheduled far in the future; the build must leave it out.",
+    "body": "If you can read this on a built page, scheduling is broken.",
+    "authors": [{ "name": "Ishtiaque Ahmed" }]
+  },
+  {
+    "id": "fixture-draft",
+    "slug": "sample-draft-post",
+    "status": "draft",
+    "updatedAt": "2026-09-01T00:00:00.000Z",
+    "title": "Sample draft (must not appear)",
+    "summary": "A draft; the build must leave it out.",
+    "body": "If you can read this on a built page, drafts are leaking.",
+    "authors": [{ "name": "Ishtiaque Ahmed" }]
+  }
+]

@@ -1,9 +1,36 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Only these accounts can edit the site. "Signed in" alone is not enough:
+    // if Email/Password sign-up is open in Firebase Auth, anyone can create an
+    // account through the Auth API. Also keep sign-up disabled in the console.
+    //
+    // TODO: fill in the lab's admin emails before deploying these rules
+    // (firebase deploy --only firestore:rules). With the list empty, nobody
+    // can save from /admin.
+    function isAdmin() {
+      // email_verified isn't required: accounts made in the Firebase console
+      // are usually unverified, and requiring it would lock the admins out.
+      return request.auth != null
+        && request.auth.token.email in [
+          // "someone@utoronto.ca",
+        ];
+    }
+
     match /config/site {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    match /posts/{id} {
+      // Drafts must not be readable by the public. The build uses the Admin
+      // SDK, which bypasses these rules.
+      allow read, write: if isAdmin();
+    }
+
+    match /private/{doc} {
+      // Social tokens. Only the Admin SDK (GitHub Actions) touches these.
+      allow read, write: if false;
     }
   }
 }

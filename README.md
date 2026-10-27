@@ -163,6 +163,44 @@ Both scripts require Firebase admin credentials from `.env`:
 - `FIREBASE_SERVICE_ACCOUNT_KEY` — inline JSON string, or
 - `FIREBASE_SERVICE_ACCOUNT_KEY_PATH` — path to a `.json` key file
 
+## Blog
+
+Posts live in the Firestore collection `posts` (one document per post); the
+blog's settings (on/off, nav label, page text) live in `config/site` under
+`blog`, edited with the rest of the site settings.
+
+`npm run fetch-content` writes the posts that are **published and due** to
+`src/generated/posts.json` (gitignored). Drafts and posts scheduled for later
+never reach the build; the log line `posts: N published, N scheduled, N draft`
+shows why a post didn't appear.
+
+### Building without Firebase credentials
+
+```bash
+npm run build:fixtures   # same as BLOG_FIXTURES=1 npm run build
+```
+
+`BLOG_FIXTURES=1` uses `scripts/fixtures/posts.sample.json` instead of
+Firestore and turns the blog on. With credentials in `.env` it still fetches
+the real `config/site`; without them it keeps an existing
+`public/config/content.json`, or copies `scripts/fixtures/site.sample.json`
+(a snapshot of the public site settings). The sample posts cover every
+resource kind, math, code, a guest author, a renamed slug, a scheduled post and
+a draft (the last two must not appear in `out/`).
+
+### When posts go live
+
+The deploy workflow checks Firestore every 5 minutes and rebuilds when the
+settings are saved, any post is saved, or a scheduled post's time arrives. A
+post is usually live 5–10 minutes after it is saved or becomes due.
+
+### Firestore rules
+
+`firestore.rules` only lets the listed admin emails write. Fill in the list,
+then deploy with `firebase deploy --only firestore:rules`. Also disable new
+account sign-up for Email/Password in the Firebase console (Authentication →
+Settings → User actions), so nobody can create an account through the Auth API.
+
 ## Notes on Tailwind v4
 
 There is no `tailwind.config.js` in this project. Tailwind v4 is configured

@@ -46,8 +46,13 @@ yarn-error.log*
 # service account key (sensitive credentials)
 thirdspace-uoft-firebase-adminsdk-fbsvc-d10559b9db.json
 
-# build artifact — regenerated from Firestore by scripts/fetch-content.mjs
+# build artifacts — regenerated from Firestore by scripts/fetch-content.mjs
 /public/config/content.json
+/src/generated/
+
+# build-time lookups (GitHub repos, video thumbnails, paper metadata), kept
+# between CI runs with actions/cache
+/.cache/
 
 # publication sync report — written by scripts/sync-publications.mjs and
 # published as a workflow artifact, not committed
