@@ -5,6 +5,9 @@ import { ResearchFigure } from "@/components/research/research-figure";
 import { ResearchTopicRow } from "@/components/research/research-topic-row";
 import { RichText } from "@/components/research/rich-text";
 import { getResearch, getTopic, getTopics } from "@/lib/research";
+import { PostCard } from "@/components/blog/post-card";
+import { ResourceKinds } from "@/components/blog/resource-kinds";
+import { getBlog, getBlogLabels, getPostsByTopic, toCardData } from "@/lib/blog";
 
 /** Static export: only the topics that exist at build time get a page. */
 export const dynamicParams = false;
@@ -37,6 +40,9 @@ export default async function ResearchTopicPage({ params }: Props) {
   if (!research.enabled || !topic) notFound();
 
   const sections = topic.sections ?? [];
+  // Posts linked to this topic in the blog editor; none while the blog is off.
+  const posts = getBlog().enabled ? getPostsByTopic(topic.slug as string).map(toCardData) : [];
+  const blogLabels = getBlogLabels();
 
   return (
     <main className="bg-background">
@@ -100,6 +106,23 @@ export default async function ResearchTopicPage({ params }: Props) {
             )}
           </section>
         ))}
+
+        {posts.length > 0 && (
+          <section
+            data-section={`research-${topic.slug}-blog`}
+            data-section-label={blogLabels.fromTheBlog}
+            className="mt-14 space-y-6 border-t border-border pt-10 sm:mt-16"
+          >
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{blogLabels.fromTheBlog}</h2>
+            <ul className="space-y-8">
+              {posts.map((post) => (
+                <li key={post.slug}>
+                  <PostCard post={post} kindsSlot={<ResourceKinds kinds={post.kinds} />} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </article>
     </main>
   );

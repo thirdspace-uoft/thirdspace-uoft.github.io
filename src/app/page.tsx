@@ -19,6 +19,9 @@ import { getContent } from "@/lib/content";
 import { memberAnchor } from "@/lib/people";
 import { getNews, pickHomeNews } from "@/lib/news";
 import { NewsShowMore } from "@/components/news-show-more";
+import { PostCard } from "@/components/blog/post-card";
+import { ResourceKinds } from "@/components/blog/resource-kinds";
+import { getBlog, getPosts, toCardData } from "@/lib/blog";
 import { ResearcherRail, type RailMember } from "@/components/researcher-rail";
 
 const contentData = getContent();
@@ -29,6 +32,7 @@ const {
   researchDomains,
 } = contentData;
 const news = getNews();
+const blog = getBlog();
 
 type IconName =
   | "Users"
@@ -105,6 +109,40 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* FROM THE BLOG — latest 3 posts, before news; on/off and heading in admin → Blog */}
+      {(() => {
+        if (!blog.enabled || !blog.home?.enabled) return null;
+        const posts = getPosts().slice(0, 3).map(toCardData);
+        if (posts.length === 0) return null;
+        return (
+          <section data-section="blog" data-section-label={blog.navLabel ?? "Blog"} className="border-b border-border">
+            <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+              <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+                <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                  {blog.home.headline || blog.navLabel}
+                </h2>
+                {blog.home.seeAllLabel && (
+                  <Link
+                    href="/blog"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 transition-colors hover:underline"
+                  >
+                    {blog.home.seeAllLabel}
+                    <ArrowRight className="size-3" />
+                  </Link>
+                )}
+              </div>
+              <ul className="grid gap-8 md:grid-cols-3">
+                {posts.map((post) => (
+                  <li key={post.slug}>
+                    <PostCard post={post} kindsSlot={<ResourceKinds kinds={post.kinds} />} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* NEWS — directly after hero; one line per item, details on hover */}
       {(() => {

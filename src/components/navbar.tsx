@@ -15,22 +15,26 @@ import {
 import { cn } from "@/lib/utils";
 import { getContent } from "@/lib/content";
 import { getResearch } from "@/lib/research";
+import { getBlog } from "@/lib/blog-settings";
 
 type NavLink = { label: string; href: string };
 
 const { navbar, layout } = getContent();
 const research = getResearch();
+const blog = getBlog();
 
 /**
- * The Research link comes from the research section's own settings rather than
- * `navbar.links`, so turning the section off in the admin also removes its link.
- * It sits right after Home.
+ * The Research and Blog links come from those sections' own settings rather
+ * than `navbar.links`, so turning a section off in the admin also removes its
+ * link. They sit right after Home, Research first.
  */
-function withResearchLink(links: NavLink[]): NavLink[] {
-  if (!research.enabled || !research.navLabel) return links;
-  const link = { label: research.navLabel, href: "/research" };
+function withSectionLinks(links: NavLink[]): NavLink[] {
+  const extra = [
+    research.enabled && research.navLabel ? { label: research.navLabel, href: "/research" } : null,
+    blog.enabled && blog.navLabel ? { label: blog.navLabel, href: "/blog" } : null,
+  ].filter((l): l is NavLink => l !== null);
   const home = links.findIndex((l) => l.href === "/");
-  return [...links.slice(0, home + 1), link, ...links.slice(home + 1)];
+  return [...links.slice(0, home + 1), ...extra, ...links.slice(home + 1)];
 }
 
 function isActive(pathname: string, href: string) {
@@ -124,7 +128,7 @@ function MobileDrawer({
 }
 
 export function Navbar() {
-  const links = withResearchLink((navbar.links ?? []) as NavLink[]);
+  const links = withSectionLinks((navbar.links ?? []) as NavLink[]);
   const pathname = usePathname() ?? "/";
   const [open, setOpen] = React.useState(false);
 

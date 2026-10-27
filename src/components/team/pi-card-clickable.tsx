@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { MemberPosts, type MemberPost } from "@/components/team/member-posts";
 import { getImageUrl } from "@/lib/utils";
 import { currentAnchor } from "@/lib/people";
 
@@ -40,6 +41,9 @@ type PiCardClickableProps = {
   };
   eyebrowBadge?: string;
   anchor?: string;
+  /** The PI's blog posts, listed under their profile. */
+  posts?: MemberPost[];
+  postsLabel?: string;
 };
 
 const HIGHLIGHT_MS = 1800;
@@ -49,6 +53,8 @@ export function PiCardClickable({
   labels,
   eyebrowBadge = "Principal Investigator",
   anchor,
+  posts,
+  postsLabel,
 }: PiCardClickableProps) {
   const [open, setOpen] = React.useState(false);
   const [highlighted, setHighlighted] = React.useState(false);
@@ -315,6 +321,8 @@ export function PiCardClickable({
                 </Link>
               </div>
             )}
+
+            <MemberPosts posts={posts} label={postsLabel} />
           </div>
         </div>
       </DialogContent>

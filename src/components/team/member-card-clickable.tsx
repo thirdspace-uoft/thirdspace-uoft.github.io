@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { MemberPosts, type MemberPost } from "@/components/team/member-posts";
 import { getImageUrl } from "@/lib/utils";
 import { currentAnchor } from "@/lib/people";
 
@@ -49,6 +50,9 @@ type Props = {
   profile?: MemberProfile;
   labels: MemberCardLabels;
   anchor?: string;
+  /** The member's blog posts, listed under their profile. */
+  posts?: MemberPost[];
+  postsLabel?: string;
 };
 
 const HIGHLIGHT_MS = 1800;
@@ -67,6 +71,8 @@ export function MemberCardClickable({
   profile,
   labels,
   anchor,
+  posts,
+  postsLabel,
 }: Props) {
   const hasImage = !!member.imagePath;
   const [open, setOpen] = React.useState(false);
@@ -308,6 +314,8 @@ export function MemberCardClickable({
                   </Link>
                 </div>
               )}
+
+              <MemberPosts posts={posts} label={postsLabel} />
             </div>
           </div>
         </DialogContent>

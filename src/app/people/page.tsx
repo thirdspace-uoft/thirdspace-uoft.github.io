@@ -3,9 +3,19 @@ import { memberAnchor, sectionSlug } from "@/lib/people";
 import { PiCardClickable } from "@/components/team/pi-card-clickable";
 import { MemberCardClickable } from "@/components/team/member-card-clickable";
 import { AlumniCardClickable, type AlumniData } from "@/components/team/alumni-card-clickable";
+import type { MemberPost } from "@/components/team/member-posts";
+import { formatPostDate, getBlog, getPostsByAuthor } from "@/lib/blog";
 
 const contentData = getContent();
 const { team, professor } = contentData;
+const blog = getBlog();
+
+/** A person's blog posts for their profile dialog; none while the blog is off. */
+function postsBy(name: string): MemberPost[] {
+  if (!blog.enabled) return [];
+  return getPostsByAuthor(name).map((p) => ({ slug: p.slug, title: p.title, date: formatPostDate(p.publishedAt) }));
+}
+const postsLabel = blog.navLabel;
 
 export const metadata = {
   title: team.pageTitle,
@@ -120,6 +130,8 @@ function RoleSection({
                   }}
                   labels={profileLabels}
                   anchor={anchor}
+                  posts={postsBy(m.name)}
+                  postsLabel={postsLabel}
                 />
               );
             })}
@@ -182,6 +194,8 @@ export default function PeoplePage() {
             }}
             eyebrowBadge={team.principalInvestigatorRole}
             anchor={memberAnchor(team.principalInvestigatorRole, professor.name)}
+            posts={postsBy(professor.name)}
+            postsLabel={postsLabel}
           />
         </div>
       </section>

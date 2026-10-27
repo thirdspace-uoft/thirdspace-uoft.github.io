@@ -4,25 +4,15 @@ import { Footer } from "@/components/footer";
 import { SectionObserver } from "@/components/section-observer";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { getContent } from "@/lib/content";
-import { getImageUrl } from "@/lib/utils";
+import { SITE_URL, defaultShareImage } from "@/lib/site";
 import "./globals.css";
 
 const content = getContent();
 
-// Link previews use the home page's hero photo, so changing it in admin
-// changes the preview too. ImageKit crops it to the 1200×630 size social
-// sites expect and serves a JPEG, since some sites don't accept WebP.
-const ogImage = content.hero?.groupPhotoPath
-  ? {
-      url: `${getImageUrl(content.hero.groupPhotoPath)}?tr=w-1200,h-630,fo-auto,f-jpg`,
-      width: 1200,
-      height: 630,
-      alt: content.hero.groupPhotoAlt ?? "",
-    }
-  : undefined;
+const ogImage = defaultShareImage();
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://thirdspace-uoft.github.io"),
+  metadataBase: new URL(SITE_URL),
   title: content.layout.pageTitle,
   description: content.layout.pageDescription,
   // Only the image is set here: each page's own title and description are

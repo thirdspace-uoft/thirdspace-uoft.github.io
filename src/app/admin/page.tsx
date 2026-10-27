@@ -26,6 +26,7 @@ import {
   Image,
   Newspaper,
   Microscope,
+  PenLine,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageUploader } from "@/components/image-uploader";
@@ -36,6 +37,7 @@ import { auth, db } from "@/lib/firebase";
 import type { NewsItem } from "@/lib/news";
 import { topicSlug, type ResearchContent, type ResearchPaper, type ResearchSection, type ResearchTopic } from "@/lib/research";
 import { MediaListEditor } from "@/components/admin/media-list-editor";
+import { DEFAULT_BLOG_LABELS, type BlogContent, type BlogLabels } from "@/lib/blog-settings";
 import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
@@ -246,7 +248,7 @@ function SignedInView({
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Form tab selection
-  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "news" | "research">("layout");
+  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "news" | "research" | "blog">("layout");
   //const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "research">("layout");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [newsFilter, setNewsFilter] = useState("");
@@ -564,6 +566,19 @@ function SignedInView({
     });
   };
 
+  // ── Blog settings (posts themselves are separate Firestore documents) ──────
+  const updateBlog = (fn: (blog: BlogContent) => BlogContent) => {
+    setContent((prev: { blog?: BlogContent }) => ({ ...prev, blog: fn({ ...(prev.blog ?? {}) }) }));
+  };
+
+  const handleBlogField = (field: "enabled" | "navLabel", value: string | boolean) => {
+    updateBlog((b) => ({ ...b, [field]: value }));
+  };
+
+  const handleBlogGroupField = (group: "page" | "home" | "labels", field: string, value: string | boolean) => {
+    updateBlog((b) => ({ ...b, [group]: { ...(b[group] ?? {}), [field]: value } }));
+  };
+
   // ── Research page ─────────────────────────────────────────────────────────
   const [openTopic, setOpenTopic] = useState<number | null>(null);
 
@@ -764,6 +779,7 @@ function SignedInView({
     { id: "footerLabs" as const, label: "12. Lab & Campuses", icon: Database },
     { id: "location" as const, label: "13. Campus Location", icon: MapPin },
     { id: "research" as const, label: "14. Research Page", icon: Microscope },
+    { id: "blog" as const, label: "15. Blog", icon: PenLine },
   ];
 
   if (loading) {
@@ -2001,6 +2017,92 @@ function SignedInView({
                       </div>
                     </div>
                   ))}
+                </div>
+              )}
+
+              {activeTab === "blog" && content && (
+                <div className="space-y-4">
+                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
+                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">BL1</div>
+                    <div className="mb-2">
+                      <span className="text-[12px] font-mono uppercase tracking-widest text-muted-foreground">Draft Sheet</span>
+                      <h3 className="text-base font-bold text-foreground font-serif">Blog</h3>
+                      <p className="text-[13px] text-muted-foreground">/blog lists every published post; each post has its own page at /blog/&lt;slug&gt;. Turning the blog off removes the pages, the nav link (placed after Research) and the home page section. Posts are written in their own editor (coming next); these are the blog&apos;s settings.</p>
+                    </div>
+                    <div className="flex items-center justify-between gap-3 rounded border border-border/80 bg-muted/40 p-4">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="blog-enabled" className="text-xs font-mono uppercase text-foreground font-semibold cursor-pointer">Show Blog</Label>
+                        <p className="text-[11px] font-mono text-muted-foreground">Shows /blog, the post pages and the nav link.</p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[11px] font-mono uppercase font-semibold text-muted-foreground">{content.blog?.enabled ? "Enabled" : "Disabled"}</span>
+                        <Switch id="blog-enabled" checked={content.blog?.enabled ?? false} onCheckedChange={(checked) => handleBlogField("enabled", checked)} />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Nav Label</Label>
+                        <Input value={content.blog?.navLabel ?? ""} onChange={(e) => handleBlogField("navLabel", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Page Title</Label>
+                        <Input value={content.blog?.page?.title ?? ""} onChange={(e) => handleBlogGroupField("page", "title", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1 col-span-2">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Intro ([text](url) makes a link)</Label>
+                        <textarea rows={3} value={content.blog?.page?.intro ?? ""} onChange={(e) => handleBlogGroupField("page", "intro", e.target.value)} className="w-full text-xs p-2 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Browser Tab Title</Label>
+                        <Input value={content.blog?.page?.metaTitle ?? ""} onChange={(e) => handleBlogGroupField("page", "metaTitle", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Search Description</Label>
+                        <Input value={content.blog?.page?.metaDescription ?? ""} onChange={(e) => handleBlogGroupField("page", "metaDescription", e.target.value)} className="text-xs" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
+                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">BL2</div>
+                    <div className="mb-2">
+                      <h3 className="text-base font-bold text-foreground font-serif">Home Page Section</h3>
+                      <p className="text-[13px] text-muted-foreground">The latest three posts, shown above News. Hidden while there are no posts.</p>
+                    </div>
+                    <div className="flex items-center justify-between gap-3 rounded border border-border/80 bg-muted/40 p-4">
+                      <Label htmlFor="blog-home-enabled" className="text-xs font-mono uppercase text-foreground font-semibold cursor-pointer">Show on Home Page</Label>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[11px] font-mono uppercase font-semibold text-muted-foreground">{content.blog?.home?.enabled ? "Enabled" : "Disabled"}</span>
+                        <Switch id="blog-home-enabled" checked={content.blog?.home?.enabled ?? false} onCheckedChange={(checked) => handleBlogGroupField("home", "enabled", checked)} />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Heading</Label>
+                        <Input value={content.blog?.home?.headline ?? ""} onChange={(e) => handleBlogGroupField("home", "headline", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">&quot;See All&quot; Link</Label>
+                        <Input value={content.blog?.home?.seeAllLabel ?? ""} onChange={(e) => handleBlogGroupField("home", "seeAllLabel", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
+                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">BL3</div>
+                    <div className="mb-2">
+                      <h3 className="text-base font-bold text-foreground font-serif">Labels</h3>
+                      <p className="text-[13px] text-muted-foreground">Text used on the blog pages. Leave a field empty to use the default shown in grey. {"{n}"} becomes the minutes; {"{tag}"} becomes the tag.</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      {(Object.keys(DEFAULT_BLOG_LABELS) as (keyof BlogLabels)[]).map((field) => (
+                        <div key={field} className="space-y-1">
+                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">{field.replace(/([A-Z])/g, " $1")}</Label>
+                          <Input value={content.blog?.labels?.[field] ?? ""} placeholder={DEFAULT_BLOG_LABELS[field]} onChange={(e) => handleBlogGroupField("labels", field, e.target.value)} className="font-mono text-xs" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
 
