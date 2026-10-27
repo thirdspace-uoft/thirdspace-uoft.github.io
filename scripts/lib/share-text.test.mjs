@@ -73,3 +73,8 @@ test("LinkedIn text ends with the link and stays under the limit", () => {
   assert.ok(text.length <= 3000);
   assert.equal(buildLinkedinText({ title: "T", summary: "S", social: { autoShare: true, linkedinText: "Custom" } }, url), `Custom\n\n${url}`);
 });
+
+test("escapes LinkedIn markup but keeps hashtags", async () => {
+  const { escapeLinkedin } = await import("./share-text.mjs");
+  assert.equal(escapeLinkedin("Study (2026) @lab #HCI # x_y"), "Study \\(2026\\) \\@lab #HCI \\# x\\_y");
+});

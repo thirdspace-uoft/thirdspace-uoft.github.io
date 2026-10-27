@@ -1,0 +1,59 @@
+name: Share blog posts
+
+# Posts newly published blog posts to X and LinkedIn and pings IndexNow.
+#
+# Separate from deploy.yml because:
+#   - it needs the social secrets, which the build never should
+#   - deploy.yml cancels in-progress runs when a new one starts; that must
+#     never happen halfway through posting to a social network
+#
+# deploy.yml starts this after each real deploy (`gh workflow run`), rather
+# than this listening for workflow_run: the deploy cron ticks every 5
+# minutes and most ticks build nothing, so workflow_run would start a runner
+# ~288 times a day for nothing. It can also be run by hand, with a dry run.
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only print what would be posted"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# One run at a time, and never cancelled: the Firestore claim already stops
+# double posts, this just keeps runs from racing each other.
+concurrency:
+  group: share-posts
+  cancel-in-progress: false
+
+jobs:
+  share:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Share
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+          # Only to build ImageKit URLs for share-image overrides.
+          NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT: ${{ secrets.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
+          LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
+          LINKEDIN_ORG_ID: ${{ secrets.LINKEDIN_ORG_ID }}
+          # Optional override of the LinkedIn API version (YYYYMM).
+          LINKEDIN_API_VERSION: ${{ vars.LINKEDIN_API_VERSION }}
+        run: node scripts/share-posts.mjs ${{ inputs.dry_run && '--dry-run' || '' }}

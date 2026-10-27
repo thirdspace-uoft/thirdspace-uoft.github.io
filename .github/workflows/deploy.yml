@@ -161,9 +161,22 @@ jobs:
     needs: build
     if: needs.build.outputs.skip != 'true'
     runs-on: ubuntu-latest
+    # Job-level permissions replace the workflow's, so Pages' two are repeated.
+    # actions: write lets this job start the share workflow.
+    permissions:
+      pages: write
+      id-token: write
+      actions: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v5
+
+      # Share any newly live posts to X and LinkedIn. A separate workflow, so
+      # this run's cancel-in-progress can never interrupt a half-sent post.
+      - name: Start share workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run share-posts.yml --repo "${{ github.repository }}" --ref "${{ github.ref_name }}"

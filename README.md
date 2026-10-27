@@ -232,6 +232,51 @@ If the lab moves to a university subdomain, change `SITE_URL` in
 sitemap all follow. Do it before sharing many posts, since shared links would
 otherwise point at the old address.
 
+### Automatic sharing to X and LinkedIn
+
+After each deploy, `.github/workflows/share-posts.yml` posts newly live posts
+(published in the last 7 days, auto-share on) to X and LinkedIn, then pings
+IndexNow. Each platform is claimed in Firestore before posting, so a post is
+never shared twice; failures retry up to 3 times. Status shows in admin →
+Blog Posts. A platform without credentials is skipped and its posts are
+picked up once it's configured (within the 7-day window, or use **Share now**).
+
+```bash
+npm run share-posts:dry   # what would be posted, no posts and no writes
+npm run share-posts       # for real (normally CI does this)
+```
+
+The workflow can also be run by hand from the Actions tab, with a dry-run box.
+
+**X (@SpaceUoft):** in the X Developer Console create an app with Read and
+write permission, generate the access token and secret for @SpaceUoft, and
+add credits (posts with links cost more than plain posts; check current
+pricing in the console). Add repo secrets `X_API_KEY`, `X_API_SECRET`,
+`X_ACCESS_TOKEN`, `X_ACCESS_SECRET`.
+
+**LinkedIn:** needs a LinkedIn Page for the lab with a lab member as admin.
+Create an app in the LinkedIn Developer Portal, link it to the Page, request
+the **Community Management API** product (reviewed by LinkedIn, usually 1–2
+weeks), and add `http://localhost:8723/callback` as a redirect URL. Then add
+repo secrets `LINKEDIN_CLIENT_ID`, `LINKEDIN_CLIENT_SECRET`, `LINKEDIN_ORG_ID`
+(the number in the Page's admin URL), put the same three in `.env`, and as the
+Page admin run:
+
+```bash
+npm run linkedin-auth
+```
+
+This stores tokens in Firestore (`private/linkedin`, unreadable from the
+browser). The workflow refreshes them; authorisation lasts a year, and admin
+shows a banner when it's time to run `linkedin-auth` again. LinkedIn retires
+API versions after about a year: set the repo variable `LINKEDIN_API_VERSION`
+(YYYYMM) to move to a newer one. Until LinkedIn approves the app, each post in
+admin has **Open LinkedIn share** and **Copy LinkedIn text** for posting by
+hand. (Alternatively, Buffer, Zapier or Make can watch `/blog/rss.xml`.)
+
+**IndexNow** needs no setup: the key file is `public/<key>.txt`, matching
+`scripts/lib/indexnow.mjs`.
+
 ### Firestore rules
 
 `firestore.rules` only lets the listed admin emails write. Fill in the list,

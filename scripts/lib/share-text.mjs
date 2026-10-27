@@ -85,3 +85,12 @@ export function buildLinkedinText(post, url) {
   const fitted = copy.length > room ? `${copy.slice(0, room - 1).trimEnd()}…` : copy;
   return `${fitted}\n\n${url}`;
 }
+
+/**
+ * LinkedIn reads post text as its "little" format, where | { } @ [ ] ( ) < >
+ * \ * _ ~ are markup and must be escaped. `#` is left alone before a word so
+ * hashtags still work.
+ */
+export function escapeLinkedin(text) {
+  return text.replace(/[\\|{}@[\]()<>*_~]/g, (c) => `\\${c}`).replace(/#(?![\p{L}\p{N}])/gu, "\\#");
+}
