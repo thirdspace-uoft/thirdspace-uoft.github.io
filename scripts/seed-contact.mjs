@@ -123,6 +123,11 @@ export const DEFAULTS = {
       bookMeeting: "Book a meeting",
       conferenceSite: "Conference site",
       photos: "Photos",
+      researchFigures: "From our research",
+      researchFiguresNote:
+        "These are figures from our research behind the papers we presented here, not photos from the event. See more on {topics}.",
+      showMore: "Show more",
+      showLess: "Show less",
       close: "Close",
       previous: "Previous photo",
       next: "Next photo",

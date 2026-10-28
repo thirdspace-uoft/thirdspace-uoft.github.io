@@ -8,7 +8,15 @@ import { getContact } from "@/lib/contact";
 import { getHiring } from "@/lib/hiring";
 import { HiringSection } from "@/components/hiring/hiring-section";
 import { FindUsSection } from "@/components/find-us/find-us-section";
-import { getFindUs, peopleOptions, splitConferences, todayNumber } from "@/lib/find-us";
+import {
+  getFindUs,
+  peopleOptions,
+  researchFigures,
+  splitConferences,
+  todayNumber,
+  type ResearchFigures,
+} from "@/lib/find-us";
+import { getResearch } from "@/lib/research";
 
 const contact = getContact();
 const hiring = getHiring();
@@ -16,6 +24,15 @@ const findUs = getFindUs();
 // Split at build time; deploy.yml rebuilds every few minutes, so a conference
 // moves to "past" the day after it ends.
 const conferences = splitConferences(findUs.conferences ?? [], todayNumber());
+// Past conferences without uploaded photos show figures from the lab's research
+// on the papers presented there (labelled as such, not as event photos).
+const research = getResearch();
+const pastFigures: Record<string, ResearchFigures> = Object.fromEntries(
+  conferences.past
+    .filter((c) => !(c.photos ?? []).some((p) => p.path))
+    .map((c) => [c.id ?? c.slug ?? "", researchFigures(c, research)] as const)
+    .filter(([, f]) => f.media.length > 0),
+);
 // The same address and channels the footer shows.
 const { location, socials } = getContent();
 
@@ -103,7 +120,9 @@ export default function ContactPage() {
 
       {hiring.enabled && <HiringSection hiring={hiring} />}
 
-      {findUs.enabled && <FindUsSection findUs={findUs} {...conferences} people={peopleOptions()} />}
+      {findUs.enabled && (
+        <FindUsSection findUs={findUs} {...conferences} people={peopleOptions()} figures={pastFigures} />
+      )}
     </main>
   );
 }

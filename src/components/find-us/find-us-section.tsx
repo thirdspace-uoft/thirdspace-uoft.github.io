@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, CalendarCheck, Images, MapPin, X } from "lucide-react";
+import { ArrowUpRight, CalendarCheck, ChevronDown, ChevronUp, Images, MapPin, X } from "lucide-react";
 
 import { RichText } from "@/components/research/rich-text";
 import { ResearchSlider } from "@/components/research/research-media";
@@ -20,6 +20,7 @@ import {
   type Conference,
   type FindUsContent,
   type Person,
+  type ResearchFigures,
 } from "@/lib/find-us";
 import { cn, getImageUrl } from "@/lib/utils";
 
@@ -132,24 +133,47 @@ function UpcomingCard({ conference, findUs, people }: { conference: Conference; 
   );
 }
 
+/** Past conferences shown at first, and added per "Show more". */
+const PAGE = 6;
+
+const confId = (c: Conference) => c.id ?? c.slug ?? "";
+
+/** Uploaded photos win; otherwise figures from the lab's research (if any). */
+function imagesFor(conference: Conference, figures: Record<string, ResearchFigures>) {
+  const photos = (conference.photos ?? []).filter((p) => p.path);
+  if (photos.length > 0) return { kind: "photos" as const, media: photos, topics: [] as ResearchFigures["topics"] };
+  const f = figures[confId(conference)];
+  return f && f.media.length > 0 ? { kind: "figures" as const, media: f.media, topics: f.topics } : null;
+}
+
 export function FindUsSection({
   findUs,
   upcoming,
   past,
   people,
+  figures = {},
 }: {
   findUs: FindUsContent;
   upcoming: Conference[];
   past: Conference[];
   people: Person[];
+  /** Research figures for past conferences without photos, keyed by conference id. */
+  figures?: Record<string, ResearchFigures>;
 }) {
   const labels = findUs.labels ?? {};
   const years = [...new Set(past.map(conferenceYear).filter((y): y is number => y !== null))];
   const [year, setYear] = React.useState<number | "all">("all");
+  const [visible, setVisible] = React.useState(PAGE);
   const [galleryId, setGalleryId] = React.useState<string | null>(null);
-  const shownPast = year === "all" ? past : past.filter((c) => conferenceYear(c) === year);
-  const gallery = past.find((c) => (c.id ?? c.slug) === galleryId);
+  const filteredPast = year === "all" ? past : past.filter((c) => conferenceYear(c) === year);
+  const shownPast = filteredPast.slice(0, visible);
+  const gallery = past.find((c) => confId(c) === galleryId);
+  const galleryImages = gallery ? imagesFor(gallery, figures) : null;
   const labBooking = bookingUrl(undefined, findUs);
+  const pickYear = (y: number | "all") => {
+    setYear(y);
+    setVisible(PAGE);
+  };
 
   return (
     <section id="find-us" data-section="find-us" data-section-label={findUs.heading} className="border-t border-border">
@@ -197,7 +221,7 @@ export function FindUsSection({
                       key={y}
                       type="button"
                       aria-pressed={year === y}
-                      onClick={() => setYear(y)}
+                      onClick={() => pickYear(y)}
                       className={cn(
                         "rounded-full border px-3 py-1 text-xs font-semibold transition-colors",
                         year === y
@@ -213,14 +237,39 @@ export function FindUsSection({
             </div>
             <ul className="mt-4 grid border-t border-border md:grid-cols-2 md:gap-x-10">
               {shownPast.map((conference) => {
-                const photos = (conference.photos ?? []).filter((p) => p.path);
+                const images = imagesFor(conference, figures);
                 const attendees = [...resolveAttendees(conference, people).map((p) => p.name), ...guestNames(conference)];
+                const open = () => setGalleryId(confId(conference) || null);
                 return (
                   <li
-                    key={conference.id ?? conference.slug}
+                    key={confId(conference)}
                     id={conference.slug ? `conference-${conference.slug}` : undefined}
-                    className="flex flex-col gap-3 border-b border-border py-4 sm:flex-row sm:items-center sm:gap-6 sm:px-3"
+                    className="flex gap-4 border-b border-border py-4 sm:px-3"
                   >
+                    {images && (
+                      <button
+                        type="button"
+                        onClick={open}
+                        aria-label={`${images.kind === "photos" ? labels.photos : labels.researchFigures}: ${conference.name}`}
+                        className="group relative h-20 w-28 shrink-0 overflow-hidden rounded-xl border border-border bg-card sm:h-24 sm:w-32"
+                      >
+                        <Image
+                          src={getImageUrl(images.media[0].path!)}
+                          alt=""
+                          fill
+                          sizes="128px"
+                          className={cn(
+                            "transition-transform duration-300 group-hover:scale-105",
+                            images.kind === "photos" ? "object-cover" : "object-contain p-1",
+                          )}
+                        />
+                        {images.media.length > 1 && (
+                          <span className="absolute right-1.5 bottom-1.5 rounded-full bg-foreground/70 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-background">
+                            +{images.media.length - 1}
+                          </span>
+                        )}
+                      </button>
+                    )}
                     <div className="min-w-0 flex-1">
                       <p className="font-semibold text-foreground">{conference.name}</p>
                       <p className="mt-0.5 text-sm text-muted-foreground">
@@ -234,26 +283,36 @@ export function FindUsSection({
                           {attendees.join(", ")}
                         </p>
                       )}
+                      {images && (
+                        <button
+                          type="button"
+                          onClick={open}
+                          className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-primary underline-offset-4 hover:underline"
+                        >
+                          <Images className="size-3.5" aria-hidden="true" />
+                          {images.kind === "photos" ? labels.photos : labels.researchFigures} ({images.media.length})
+                        </button>
+                      )}
                     </div>
-                    {photos.length > 0 && (
-                      <div className="flex shrink-0 items-center gap-3">
-                        <div className="flex -space-x-2" aria-hidden="true">
-                          {photos.slice(0, 3).map((photo, i) => (
-                            <span key={i} className="relative size-10 overflow-hidden rounded-lg border-2 border-card bg-muted">
-                              <Image src={getImageUrl(photo.path!)} alt="" fill sizes="40px" className="object-cover" />
-                            </span>
-                          ))}
-                        </div>
-                        <Button size="sm" variant="outline" onClick={() => setGalleryId(conference.id ?? conference.slug ?? null)}>
-                          <Images aria-hidden="true" />
-                          {labels.photos} ({photos.length})
-                        </Button>
-                      </div>
-                    )}
                   </li>
                 );
               })}
             </ul>
+            {filteredPast.length > PAGE && (labels.showMore || labels.showLess) && (
+              <div className="mt-5 flex justify-center">
+                {visible < filteredPast.length ? (
+                  <Button variant="outline" size="sm" onClick={() => setVisible((v) => v + PAGE)}>
+                    <ChevronDown aria-hidden="true" />
+                    {labels.showMore} ({filteredPast.length - visible})
+                  </Button>
+                ) : (
+                  <Button variant="outline" size="sm" onClick={() => setVisible(PAGE)}>
+                    <ChevronUp aria-hidden="true" />
+                    {labels.showLess}
+                  </Button>
+                )}
+              </div>
+            )}
           </div>
         )}
         {past.length === 0 && labels.emptyPast && (
@@ -281,11 +340,29 @@ export function FindUsSection({
               </div>
               <div className="relative aspect-[4/3] w-full bg-muted">
                 <ResearchSlider
-                  media={(gallery.photos ?? []).filter((p) => p.path)}
+                  media={galleryImages?.media ?? []}
                   labels={{ previous: labels.previous, next: labels.next, goToSlide: labels.goToSlide }}
                   sizes="(max-width: 768px) 100vw, 768px"
                 />
               </div>
+              {galleryImages?.kind === "figures" && labels.researchFiguresNote && (
+                <p className="border-t border-border px-5 py-3 text-xs leading-relaxed text-muted-foreground">
+                  {labels.researchFiguresNote.split("{topics}").map((part, i, parts) => (
+                    <React.Fragment key={i}>
+                      {part}
+                      {i < parts.length - 1 &&
+                        galleryImages.topics.map((t, j) => (
+                          <React.Fragment key={t.slug}>
+                            {j > 0 && ", "}
+                            <Link href={`/research/${t.slug}`} className="font-medium text-primary underline-offset-4 hover:underline">
+                              {t.title}
+                            </Link>
+                          </React.Fragment>
+                        ))}
+                    </React.Fragment>
+                  ))}
+                </p>
+              )}
             </>
           )}
         </DialogContent>

@@ -45,6 +45,12 @@ export type FindUsLabels = {
   bookMeeting?: string;
   conferenceSite?: string;
   photos?: string;
+  /** Button for a past conference that only has figures from our research (no uploaded photos). */
+  researchFigures?: string;
+  /** Shown in the gallery for research figures; {topics} becomes links to the research topics. */
+  researchFiguresNote?: string;
+  showMore?: string;
+  showLess?: string;
   close?: string;
   previous?: string;
   next?: string;
@@ -188,6 +194,55 @@ export function peopleOptions(content = getContent() as Record<string, unknown>)
 export function resolveAttendees(conference: Conference, people: Person[]): Person[] {
   const byKey = new Map(people.map((p) => [p.key, p]));
   return (conference.attendees ?? []).map((key) => byKey.get(key)).filter((p): p is Person => !!p);
+}
+
+// ── Images from the lab's research ──────────────────────────────────────────
+
+/** "EMNLP 2026 (Findings)" → "EMNLP 2026" (same rule as scripts/lib/conferences-source.mjs). */
+export const venueKey = (venue?: string) =>
+  String(venue ?? "")
+    .replace(/\([^)]*\)/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+export type ResearchFigures = {
+  media: ResearchMedia[];
+  /** The research topics the figures come from, for "from our research on …" links. */
+  topics: { slug: string; title: string }[];
+};
+
+type ResearchLike = {
+  topics?: {
+    slug?: string;
+    title?: string;
+    sections?: { figure?: { media?: ResearchMedia[] }; papers?: { venue?: string }[] }[];
+  }[];
+};
+
+/**
+ * Figures from the Research pages that sit next to a lab paper presented at
+ * this conference: every research section citing a paper whose venue is the
+ * conference contributes its figure images (deduplicated, at most `limit`).
+ * These are research figures, not photos of the event, and are labelled so.
+ */
+export function researchFigures(conference: Conference, research: ResearchLike, limit = 6): ResearchFigures {
+  const name = conference.name?.trim().toLowerCase();
+  const media: ResearchMedia[] = [];
+  const seen = new Set<string>();
+  const topics = new Map<string, string>();
+  if (!name) return { media, topics: [] };
+  for (const topic of research.topics ?? []) {
+    for (const section of topic.sections ?? []) {
+      if (!(section.papers ?? []).some((p) => venueKey(p.venue).toLowerCase() === name)) continue;
+      for (const m of section.figure?.media ?? []) {
+        if ((m.type ?? "image") !== "image" || !m.path || seen.has(m.path) || media.length >= limit) continue;
+        seen.add(m.path);
+        media.push(m);
+        if (topic.slug) topics.set(topic.slug, topic.title ?? topic.slug);
+      }
+    }
+  }
+  return { media, topics: [...topics].map(([slug, title]) => ({ slug, title })) };
 }
 
 export function guestNames(conference: Conference): string[] {
