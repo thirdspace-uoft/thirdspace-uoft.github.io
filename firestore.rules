@@ -5,5 +5,29 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth != null;
     }
+
+    // Job applications from the hiring section on /contact. Anyone may submit
+    // one; only signed-in admins can read or manage them. The mailer
+    // (scripts/send-applications.mjs) uses the Admin SDK, which bypasses rules.
+    // Size limits match APPLICATION_LIMITS in src/lib/hiring.ts.
+    match /applications/{applicationId} {
+      allow create: if isValidApplication(request.resource.data);
+      allow read, update, delete: if request.auth != null;
+    }
+
+    function isValidApplication(d) {
+      let fields = ['listingId', 'listingTitle', 'name', 'email', 'cvUrl', 'message', 'status', 'createdAt'];
+      return d.keys().hasOnly(fields)
+        && d.keys().hasAll(fields)
+        && d.status == 'new'
+        && d.createdAt == request.time
+        && d.listingId is string && d.listingId.size() > 0 && d.listingId.size() <= 100
+        && d.listingTitle is string && d.listingTitle.size() <= 300
+        && d.name is string && d.name.size() > 0 && d.name.size() <= 200
+        && d.email is string && d.email.size() <= 254
+        && d.email.matches('[A-Za-z0-9_%+-]+(\\.[A-Za-z0-9_%+-]+)*@([A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z]{2,}')
+        && d.cvUrl is string && d.cvUrl.size() <= 500 && d.cvUrl.matches('(?i)https?://\\S+')
+        && d.message is string && d.message.size() > 0 && d.message.size() <= 4000;
+    }
   }
 }
