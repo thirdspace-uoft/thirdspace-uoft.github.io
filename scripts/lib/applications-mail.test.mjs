@@ -179,6 +179,37 @@ test("safeName keeps accented names and caps the length", async () => {
   assert.equal(safeName("x".repeat(100)).length, 60);
 });
 
+test("safeName drops dots, so a bare domain cannot survive as a 'name'", async () => {
+  const { safeName } = await import("./applications-mail.mjs");
+  assert.equal(safeName("evil.com"), "evilcom");
+  assert.equal(safeName("Md. Arid Hasan"), "Md Arid Hasan");
+  const mail = assignmentEmail({ app: { ...app, name: "Visit evil.com now" }, listing: hiring.listings[0], hiring, from: "f@example.com" });
+  assert.doesNotMatch(mail.text + mail.html + mail.subject, /evil\.com/);
+});
+
+test("normalizeEmail folds +tags, case, trailing dots and Gmail dots", async () => {
+  const { normalizeEmail } = await import("./applications-mail.mjs");
+  assert.equal(normalizeEmail(" J.Doe+jobs@GMAIL.com. "), "jdoe@gmail.com");
+  assert.equal(normalizeEmail("j.doe@googlemail.com"), "jdoe@gmail.com");
+  assert.equal(normalizeEmail("J.Doe+x@uni.edu"), "j.doe@uni.edu"); // dots matter outside Gmail
+});
+
+test("repeatReason matches the resolved listing and caps applications per day", async () => {
+  const { repeatReason, MAX_PER_ADDRESS_PER_DAY } = await import("./applications-mail.mjs");
+  const listing = hiring.listings[0]; // id ra-1, slug research-assistant
+  const now = new Date("2026-10-29T12:00:00Z");
+  const hoursAgo = (h) => new Date(now.getTime() - h * 3600_000);
+  assert.equal(repeatReason([], listing, hiring, now), null);
+  // Same listing applied for by slug earlier: still a repeat.
+  assert.match(repeatReason([{ listingId: "research-assistant", notifiedAt: hoursAgo(1) }], listing, hiring, now), /repeat/);
+  // Different listings, but the daily cap is reached.
+  const others = Array.from({ length: MAX_PER_ADDRESS_PER_DAY }, () => ({ listingId: "pd-1", listingKey: `x-${Math.random()}`, notifiedAt: hoursAgo(2) }));
+  assert.match(repeatReason(others, listing, hiring, now), /too many/);
+  // Older than a day no longer counts toward the cap.
+  const old = others.map((o) => ({ ...o, notifiedAt: hoursAgo(30) }));
+  assert.equal(repeatReason(old, listing, hiring, now), null);
+});
+
 test("fillTemplate leaves unknown braces alone", () => {
   assert.equal(fillTemplate("{name} / {other}", app, hiring.listings[0]), "Sam Lee / {other}");
 });

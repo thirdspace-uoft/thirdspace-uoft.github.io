@@ -36,8 +36,10 @@ import {
   logoAttachment,
   assignmentEmail,
   findListing,
+  listingKey,
   normalizeEmail,
   notificationEmail,
+  repeatReason,
   skipReason,
 } from "./lib/applications-mail.mjs";
 
@@ -170,17 +172,26 @@ async function main() {
     // Without this the form could make the lab's account email the assignment
     // to one (unverified) address over and over.
     const emailKey = normalizeEmail(app.email);
-    const repeat =
-      !reason &&
-      !app.notifiedAt &&
-      !(await db
+    // Earlier applications from this address that were mailed (any position):
+    // blocks repeats for the same position and caps how many one address can
+    // trigger per day.
+    let limitReason = null;
+    if (!reason && !app.notifiedAt) {
+      const earlier = await db
         .collection("applications")
         .where("emailKey", "==", emailKey)
-        .where("listingId", "==", app.listingId)
         .where("status", "==", "sent")
-        .limit(1)
-        .get()).empty;
-    const finalReason = reason ?? (repeat ? "repeat application from the same email" : null);
+        .limit(50)
+        .get();
+      const previous = earlier.docs
+        .filter((d) => d.id !== ref.id)
+        .map((d) => {
+          const p = d.data();
+          return { listingId: p.listingId, listingKey: p.listingKey, notifiedAt: p.notifiedAt?.toDate?.() };
+        });
+      limitReason = repeatReason(previous, listing, hiring);
+    }
+    const finalReason = reason ?? limitReason;
 
     if (finalReason) {
       console.log(`  skipped: ${finalReason}`);
@@ -215,7 +226,12 @@ async function main() {
       const fresh = await tx.get(ref);
       const status = fresh.data()?.status;
       if (status !== "new" && status !== "failed") return false;
-      tx.update(ref, { status: "sending", emailKey, updatedAt: FieldValue.serverTimestamp() });
+      tx.update(ref, {
+        status: "sending",
+        emailKey,
+        listingKey: listingKey(listing),
+        updatedAt: FieldValue.serverTimestamp(),
+      });
       return true;
     });
     if (!claimed) {

@@ -43,8 +43,42 @@ export function skipReason(app, listing, hiring) {
   return null;
 }
 
-/** Lower-cased, trimmed address, for spotting repeat applications. */
-export const normalizeEmail = (email) => String(email ?? "").trim().toLowerCase();
+/**
+ * A canonical form of an address, for spotting repeat applications: lower-case,
+ * no trailing dot, no `+tag`, and for Gmail no dots in the local part (Gmail
+ * ignores them), so `J.Doe+x@GMAIL.com` and `jdoe@gmail.com` count as one.
+ */
+export function normalizeEmail(email) {
+  const value = String(email ?? "").trim().toLowerCase().replace(/\.+$/, "");
+  const at = value.lastIndexOf("@");
+  if (at < 1) return value;
+  let local = value.slice(0, at).replace(/\+.*$/, "");
+  const domain = value.slice(at + 1).replace(/\.+$/, "");
+  if (domain === "gmail.com" || domain === "googlemail.com") local = local.replace(/\./g, "");
+  return `${local}@${domain === "googlemail.com" ? "gmail.com" : domain}`;
+}
+
+/** Most applications one address can trigger mail for in 24 hours, across all positions. */
+export const MAX_PER_ADDRESS_PER_DAY = 3;
+
+/** The stable key of a listing: its id, or its slug for listings without one. */
+export const listingKey = (listing) => listing?.id ?? listing?.slug ?? "";
+
+/**
+ * Why an application must not be mailed because of earlier ones from the same
+ * (normalized) address, or null. `previous` are applications already sent for
+ * that address: { listingKey?, listingId, notifiedAt: Date }. Matching is on the
+ * resolved listing, so applying once by id and once by slug is still a repeat.
+ */
+export function repeatReason(previous, listing, hiring, now = new Date()) {
+  const key = listingKey(listing);
+  const resolved = (p) => p.listingKey || listingKey(findListing(p, hiring)) || p.listingId;
+  if (previous.some((p) => resolved(p) === key)) return "repeat application from the same email";
+  const dayAgo = now.getTime() - 24 * 60 * 60 * 1000;
+  const recent = previous.filter((p) => p.notifiedAt && p.notifiedAt.getTime() >= dayAgo).length;
+  if (recent >= MAX_PER_ADDRESS_PER_DAY) return "too many applications from this email in 24 hours";
+  return null;
+}
 
 /** Removes CR/LF so a value can't add headers when used in a subject. */
 const oneLine = (s) => String(s ?? "").replace(/[\r\n]+/g, " ").trim();
@@ -57,15 +91,17 @@ const escapeHtml = (s) =>
     .replace(/"/g, "&quot;");
 
 /**
- * The applicant's name, reduced to letters, spaces and . ' - (60 chars max).
- * The assignment email goes to an address nobody has verified, so anything
- * the applicant typed must not be able to carry a link or other payload into
- * mail sent from the lab's account.
+ * The applicant's name, reduced to letters, spaces, apostrophes and hyphens
+ * (60 chars max). The assignment email goes to an address nobody has verified,
+ * so anything the applicant typed must not be able to carry a link or other
+ * payload into mail sent from the lab's account. Dots are dropped too: with
+ * them a "name" like `evil.com` would survive, and mail clients link bare
+ * domains on their own.
  */
 export function safeName(name) {
   return String(name ?? "")
     .normalize("NFC")
-    .replace(/[^\p{L}\p{M} .'-]/gu, "")
+    .replace(/[^\p{L}\p{M} '-]/gu, "")
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 60);
