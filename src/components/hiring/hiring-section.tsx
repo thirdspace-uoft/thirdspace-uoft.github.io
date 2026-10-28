@@ -24,9 +24,13 @@ export function HiringSection({ hiring }: { hiring: HiringContent }) {
   React.useEffect(() => {
     const fromHash = () => {
       const hash = window.location.hash;
-      if (!hash.startsWith(HASH_PREFIX)) return;
+      // Any other fragment (e.g. #find-us, or Back to plain /contact) closes the dialog.
+      if (!hash.startsWith(HASH_PREFIX)) {
+        setOpenSlug(null);
+        return;
+      }
       const slug = decodeURIComponent(hash.slice(HASH_PREFIX.length));
-      if (listings.some((l) => l.slug === slug)) setOpenSlug(slug);
+      setOpenSlug(listings.some((l) => l.slug === slug) ? slug : null);
     };
     fromHash();
     window.addEventListener("hashchange", fromHash);

@@ -1,14 +1,14 @@
 /**
  * Seeds the copy for the /contact page in Firestore `config/site`: the
- * `contact` section and the `hiring` section (open positions) shown on it.
+ * `contact`, `hiring` (open positions) and `findUs` (conferences) sections.
  *
  *   node --env-file=.env scripts/seed-contact.mjs           report only (default)
  *   node --env-file=.env scripts/seed-contact.mjs --apply   write what is missing
  *
  * Only fields that are missing or empty are written, so anything already edited
  * in /admin wins and re-running is safe. Lists (`hiring.process`,
- * `hiring.listings`) are written only when absent. No job listings are seeded:
- * those are added in /admin → Hiring. The address, email and X handle are not
+ * `hiring.listings`, `findUs.conferences`) are written only when absent. No listings or conferences are seeded:
+ * those are added in /admin → Hiring and Find Us. The address, email and X handle are not
  * part of `contact`: the page reads `location` and `socials`, like the footer.
  *
  * The write is a transaction scoped to these two sections: /admin overwrites the
@@ -103,6 +103,35 @@ export const DEFAULTS = {
       },
     },
     listings: [],
+  },
+  findUs: {
+    enabled: true,
+    heading: "Find us",
+    intro:
+      "Members of ThirdSpace travel to conferences across HCI, AI, and computing for development. If you will be there too, come say hello — book a time to meet us, or catch whoever is listed below.",
+    // "Meet ThirdSpace" event (30 min, Google Meet or in person at a conference;
+    // weekdays 9–5 Toronto time) on the lab's Calendly, thirdspace-uoft-cs.
+    calendlyUrl: "https://calendly.com/thirdspace-uoft-cs/meet",
+    labels: {
+      upcomingHeading: "Upcoming conferences",
+      pastHeading: "Past conferences",
+      emptyUpcoming: "No conferences are scheduled right now. You can still book a meeting with us any time.",
+      emptyPast: "",
+      allYears: "All",
+      attendees: "Who's going",
+      pastAttendees: "Who went",
+      bookMeeting: "Book a meeting",
+      conferenceSite: "Conference site",
+      photos: "Photos",
+      close: "Close",
+      previous: "Previous photo",
+      next: "Next photo",
+      goToSlide: "Show photo {n}",
+      shareEyebrow: "Find us at",
+      shareCta: "Book a meeting with us",
+      shareScan: "Scan to pick a time",
+    },
+    conferences: [],
   },
 };
 

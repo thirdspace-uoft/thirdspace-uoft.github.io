@@ -7,9 +7,15 @@ import { getContent } from "@/lib/content";
 import { getContact } from "@/lib/contact";
 import { getHiring } from "@/lib/hiring";
 import { HiringSection } from "@/components/hiring/hiring-section";
+import { FindUsSection } from "@/components/find-us/find-us-section";
+import { getFindUs, peopleOptions, splitConferences, todayNumber } from "@/lib/find-us";
 
 const contact = getContact();
 const hiring = getHiring();
+const findUs = getFindUs();
+// Split at build time; deploy.yml rebuilds every few minutes, so a conference
+// moves to "past" the day after it ends.
+const conferences = splitConferences(findUs.conferences ?? [], todayNumber());
 // The same address and channels the footer shows.
 const { location, socials } = getContent();
 
@@ -96,6 +102,8 @@ export default function ContactPage() {
       </section>
 
       {hiring.enabled && <HiringSection hiring={hiring} />}
+
+      {findUs.enabled && <FindUsSection findUs={findUs} {...conferences} people={peopleOptions()} />}
     </main>
   );
 }

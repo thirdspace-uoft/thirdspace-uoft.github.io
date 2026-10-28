@@ -27,6 +27,7 @@ import {
   Newspaper,
   Microscope,
   Briefcase,
+  CalendarDays,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageUploader } from "@/components/image-uploader";
@@ -38,6 +39,8 @@ import type { NewsItem } from "@/lib/news";
 import type { ContactContent } from "@/lib/contact";
 import type { HiringContent } from "@/lib/hiring";
 import { HiringEditor } from "@/components/admin/hiring-editor";
+import { FindUsEditor } from "@/components/admin/find-us-editor";
+import { peopleOptions, type FindUsContent } from "@/lib/find-us";
 import { topicSlug, type ResearchContent, type ResearchPaper, type ResearchSection, type ResearchTopic } from "@/lib/research";
 import { MediaListEditor } from "@/components/admin/media-list-editor";
 import {
@@ -250,7 +253,7 @@ function SignedInView({
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Form tab selection
-  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "news" | "research" | "contact" | "hiring">("layout");
+  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "news" | "research" | "contact" | "hiring" | "findUs">("layout");
   //const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "research">("layout");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [newsFilter, setNewsFilter] = useState("");
@@ -601,6 +604,11 @@ function SignedInView({
     setContent((prev: any) => ({ ...prev, hiring: fn(prev.hiring ?? {}) }));
   };
 
+  // ── Find us (conferences on /contact) ─────────────────────────────────────
+  const updateFindUs = (fn: (findUs: FindUsContent) => FindUsContent) => {
+    setContent((prev: any) => ({ ...prev, findUs: fn(prev.findUs ?? {}) }));
+  };
+
   const updateTopic = (index: number, patch: Partial<ResearchTopic>) => {
     updateResearch((r) => ({
       ...r,
@@ -788,6 +796,7 @@ function SignedInView({
     { id: "research" as const, label: "14. Research Page", icon: Microscope },
     { id: "contact" as const, label: "15. Contact Page", icon: Mail },
     { id: "hiring" as const, label: "16. Hiring", icon: Briefcase },
+    { id: "findUs" as const, label: "17. Find Us", icon: CalendarDays },
   ];
 
   if (loading) {
@@ -2306,6 +2315,16 @@ function SignedInView({
 
               {activeTab === "hiring" && content && (
                 <HiringEditor hiring={(content.hiring ?? {}) as HiringContent} update={updateHiring} />
+              )}
+
+              {activeTab === "findUs" && content && (
+                <FindUsEditor
+                  findUs={(content.findUs ?? {}) as FindUsContent}
+                  update={updateFindUs}
+                  people={peopleOptions(content)}
+                  brandLine={[content.brand?.name, content.navbar?.mobileDrawerUniversity].filter(Boolean).join(" · ")}
+                  onDeleteFile={deleteFromImageKit}
+                />
               )}
 
               {activeTab === "about" && content?.latestPublications && (
