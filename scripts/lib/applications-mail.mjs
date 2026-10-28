@@ -12,7 +12,15 @@ import { DEFAULT_THEME } from "./email-theme.mjs";
 /** Same numbers as APPLICATION_LIMITS in src/lib/hiring.ts and firestore.rules. */
 export const LIMITS = { name: 200, email: 254, cvUrl: 500, message: 4000 };
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/**
+ * Plain addresses only: dot-separated atoms of letters, digits and `_ % + -`,
+ * at a normal hostname. No quotes, comments `( )`, backslashes or trailing
+ * dots: with those, the key used to spot repeats (normalizeEmail) and the
+ * mailbox that actually receives the mail could differ. Same pattern as
+ * EMAIL_PATTERN in src/lib/hiring.ts and the `applications` rule.
+ */
+export const EMAIL =
+  /^[A-Za-z0-9_%+-]+(?:\.[A-Za-z0-9_%+-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}$/;
 const URL = /^https?:\/\/\S+$/i;
 
 /** The listing's own contact, or the section default. */

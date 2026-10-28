@@ -194,6 +194,16 @@ test("normalizeEmail folds +tags, case, trailing dots and Gmail dots", async () 
   assert.equal(normalizeEmail("J.Doe+x@uni.edu"), "j.doe@uni.edu"); // dots matter outside Gmail
 });
 
+test("only plain addresses pass, so the repeat key and the real mailbox cannot differ", async () => {
+  const { EMAIL } = await import("./applications-mail.mjs");
+  for (const ok of ["sam@example.com", "j.doe+jobs@gmail.com", "a_b-c%d@sub.uni.edu"]) assert.ok(EMAIL.test(ok), ok);
+  for (const bad of ['"j doe"@gmail.com', "jdoe(1)@gmail.com", "j\\doe@gmail.com", "jdoe@gmail.com.", ".jdoe@gmail.com", "j..doe@gmail.com", "jdoe@-gmail.com", "jdoe@localhost"]) {
+    assert.ok(!EMAIL.test(bad), bad);
+  }
+  const listing = hiring.listings[0];
+  assert.equal(skipReason({ ...app, email: "jdoe(1)@gmail.com" }, listing, hiring), "invalid email");
+});
+
 test("repeatReason matches the resolved listing and caps applications per day", async () => {
   const { repeatReason, MAX_PER_ADDRESS_PER_DAY } = await import("./applications-mail.mjs");
   const listing = hiring.listings[0]; // id ra-1, slug research-assistant

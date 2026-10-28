@@ -143,5 +143,7 @@ export function isPastDeadline(deadline: string | undefined, now = new Date()): 
   return now > endOfDay;
 }
 
-export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/** Plain addresses only (no quotes, comments or trailing dots); matches firestore.rules and the mailer. */
+export const EMAIL_PATTERN =
+  /^[A-Za-z0-9_%+-]+(?:\.[A-Za-z0-9_%+-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}$/;
 export const URL_PATTERN = /^https?:\/\/\S+$/i;
