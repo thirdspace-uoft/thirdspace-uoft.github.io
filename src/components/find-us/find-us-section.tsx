@@ -211,7 +211,7 @@ export function FindUsSection({
                 </div>
               )}
             </div>
-            <ul className="mt-4 divide-y divide-border border-y border-border">
+            <ul className="mt-4 grid border-t border-border md:grid-cols-2 md:gap-x-10">
               {shownPast.map((conference) => {
                 const photos = (conference.photos ?? []).filter((p) => p.path);
                 const attendees = [...resolveAttendees(conference, people).map((p) => p.name), ...guestNames(conference)];
@@ -219,13 +219,14 @@ export function FindUsSection({
                   <li
                     key={conference.id ?? conference.slug}
                     id={conference.slug ? `conference-${conference.slug}` : undefined}
-                    className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-6 sm:px-3"
+                    className="flex flex-col gap-3 border-b border-border py-4 sm:flex-row sm:items-center sm:gap-6 sm:px-3"
                   >
                     <div className="min-w-0 flex-1">
                       <p className="font-semibold text-foreground">{conference.name}</p>
                       <p className="mt-0.5 text-sm text-muted-foreground">
                         {formatDateRange(conference.startDate, conference.endDate)}
                         {conference.location && <> · {conference.location}</>}
+                        {conference.note && <> · {conference.note}</>}
                       </p>
                       {attendees.length > 0 && (
                         <p className="mt-1 text-[13px] text-foreground/75">
