@@ -1,10 +1,27 @@
 import Link from "next/link";
 import { BrandMark } from "./brand-mark";
 import { XIcon } from "./x-icon";
-import { Mail } from "lucide-react";
+import { Briefcase, CalendarDays, Mail } from "lucide-react";
 import { getContent } from "@/lib/content";
+import { getContact } from "@/lib/contact";
+import { getFindUs } from "@/lib/find-us";
+import { getHiring } from "@/lib/hiring";
+import { getAssetPath } from "@/lib/utils";
 
 const { location, brand, socials } = getContent();
+
+// "Join us" and "Find us" live on /contact, so they only link when that page
+// and the section are both on.
+const contactOn = !!getContact().enabled;
+const hiring = getHiring();
+const findUs = getFindUs();
+// Plain <a> rather than next/link: client-side hash navigation from a URL that
+// already has a fragment leaves a doubled one (#find-us#positions). getAssetPath
+// adds the basePath that <Link> would otherwise add.
+const contactSections = [
+  { on: hiring.enabled, label: hiring.heading, href: getAssetPath("/contact#positions"), Icon: Briefcase },
+  { on: findUs.enabled, label: findUs.heading, href: getAssetPath("/contact#find-us"), Icon: CalendarDays },
+].filter((s) => contactOn && s.on && s.label);
 
 export function Footer() {
   return (
@@ -61,6 +78,15 @@ export function Footer() {
                     </a>
                   </li>
                 )}
+                {/* Sections of /contact; labels are their own headings, shown only when switched on. */}
+                {contactSections.map(({ href, label, Icon }) => (
+                  <li key={href}>
+                    <a href={href} className="inline-flex items-center gap-1.5 transition-colors hover:text-primary">
+                      <Icon className="size-4" aria-hidden="true" />
+                      <span>{label}</span>
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

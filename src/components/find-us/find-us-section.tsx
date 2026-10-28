@@ -176,7 +176,7 @@ export function FindUsSection({
   };
 
   return (
-    <section id="find-us" data-section="find-us" data-section-label={findUs.heading} className="border-t border-border">
+    <section id="find-us" data-section="find-us" data-section-label={findUs.heading} className="scroll-mt-16 border-t border-border">
       <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">

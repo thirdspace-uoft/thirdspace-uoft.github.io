@@ -52,7 +52,7 @@ export function HiringSection({ hiring }: { hiring: HiringContent }) {
       id="positions"
       data-section="hiring"
       data-section-label={hiring.heading}
-      className="border-t border-border"
+      className="scroll-mt-16 border-t border-border"
     >
       <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <div className="max-w-2xl">
