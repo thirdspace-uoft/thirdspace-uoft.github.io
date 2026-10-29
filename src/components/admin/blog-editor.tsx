@@ -189,7 +189,7 @@ export function BlogEditor({ content }: { content: any }) {
       const msg = err instanceof Error ? err.message : String(err);
       setLoadError(
         /permission/i.test(msg)
-          ? "Firestore refused to read posts. Deploy firestore.rules with your email in the admin list (see README → Firestore rules)."
+          ? "Firestore refused to read posts. The rules that allow blog posts haven't been deployed yet: run firebase deploy --only firestore:rules (see README → Firestore rules)."
           : msg,
       );
     }

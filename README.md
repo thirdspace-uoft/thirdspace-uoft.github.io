@@ -279,10 +279,15 @@ hand. (Alternatively, Buffer, Zapier or Make can watch `/blog/rss.xml`.)
 
 ### Firestore rules
 
-`firestore.rules` only lets the listed admin emails write. Fill in the list,
-then deploy with `firebase deploy --only firestore:rules`. Also disable new
-account sign-up for Email/Password in the Firebase console (Authentication →
-Settings → User actions), so nobody can create an account through the Auth API.
+Anyone signed in to `/admin` can edit the site settings and posts, as before
+the blog (the lab shares one admin account). Drafts are readable only when
+signed in; social tokens in `private/` are closed to every browser. Deploy
+with `firebase deploy --only firestore:rules`; until then the Blog Posts tab
+can't read or save posts, because the old rules only covered `config/site`.
+
+Keep new-account sign-up disabled for Email/Password in the Firebase console
+(Authentication → Settings → User actions): since any signed-in account can
+edit, open sign-up would let anyone create one through the Auth API.
 
 ## Notes on Tailwind v4
 
