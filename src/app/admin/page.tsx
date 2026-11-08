@@ -26,6 +26,8 @@ import {
   Image,
   Newspaper,
   Microscope,
+  Briefcase,
+  CalendarDays,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageUploader } from "@/components/image-uploader";
@@ -34,6 +36,11 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { auth, db } from "@/lib/firebase";
 import type { NewsItem } from "@/lib/news";
+import type { ContactContent } from "@/lib/contact";
+import type { HiringContent } from "@/lib/hiring";
+import { HiringEditor } from "@/components/admin/hiring-editor";
+import { FindUsEditor } from "@/components/admin/find-us-editor";
+import { peopleOptions, type FindUsContent } from "@/lib/find-us";
 import { topicSlug, type ResearchContent, type ResearchPaper, type ResearchSection, type ResearchTopic } from "@/lib/research";
 import { MediaListEditor } from "@/components/admin/media-list-editor";
 import {
@@ -246,7 +253,7 @@ function SignedInView({
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Form tab selection
-  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "news" | "research">("layout");
+  const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "news" | "research" | "contact" | "hiring" | "findUs">("layout");
   //const [activeTab, setActiveTab] = useState<"layout" | "hero" | "home" | "navbar" | "footerLabs" | "location" | "groupOverview" | "professor" | "researchDomains" | "about" | "team" | "publications" | "research">("layout");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [newsFilter, setNewsFilter] = useState("");
@@ -579,6 +586,29 @@ function SignedInView({
     updateResearch((r) => ({ ...r, [group]: { ...(r[group] ?? {}), [field]: value } }));
   };
 
+  // ── Contact page ──────────────────────────────────────────────────────────
+  const updateContact = (fn: (contact: ContactContent) => ContactContent) => {
+    setContent((prev: any) => ({ ...prev, contact: fn(prev.contact ?? {}) }));
+  };
+
+  const handleContactField = (field: "enabled" | "navLabel", value: string | boolean) => {
+    updateContact((c) => ({ ...c, [field]: value }));
+  };
+
+  const handleContactGroupField = (group: "page" | "labels", field: string, value: string) => {
+    updateContact((c) => ({ ...c, [group]: { ...(c[group] ?? {}), [field]: value } }));
+  };
+
+  // ── Hiring (open positions on /contact) ───────────────────────────────────
+  const updateHiring = (fn: (hiring: HiringContent) => HiringContent) => {
+    setContent((prev: any) => ({ ...prev, hiring: fn(prev.hiring ?? {}) }));
+  };
+
+  // ── Find us (conferences on /contact) ─────────────────────────────────────
+  const updateFindUs = (fn: (findUs: FindUsContent) => FindUsContent) => {
+    setContent((prev: any) => ({ ...prev, findUs: fn(prev.findUs ?? {}) }));
+  };
+
   const updateTopic = (index: number, patch: Partial<ResearchTopic>) => {
     updateResearch((r) => ({
       ...r,
@@ -764,6 +794,9 @@ function SignedInView({
     { id: "footerLabs" as const, label: "12. Lab & Campuses", icon: Database },
     { id: "location" as const, label: "13. Campus Location", icon: MapPin },
     { id: "research" as const, label: "14. Research Page", icon: Microscope },
+    { id: "contact" as const, label: "15. Contact Page", icon: Mail },
+    { id: "hiring" as const, label: "16. Hiring", icon: Briefcase },
+    { id: "findUs" as const, label: "17. Find Us", icon: CalendarDays },
   ];
 
   if (loading) {
@@ -2214,6 +2247,84 @@ function SignedInView({
                     );
                   })}
                 </div>
+              )}
+
+              {activeTab === "contact" && content && (
+                <div className="space-y-4">
+                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
+                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">CP1</div>
+                    <div className="mb-2">
+                      <span className="text-[12px] font-mono uppercase tracking-widest text-muted-foreground">Draft Sheet</span>
+                      <h3 className="text-base font-bold text-foreground font-serif">Contact Page</h3>
+                      <p className="text-[13px] text-muted-foreground">/contact shows the address (with an &quot;Open in Google Maps&quot; link), the email and X in the top-right corner. Those values are shared with the footer: edit them under &quot;12. Lab &amp; Campuses&quot; (email, X) and &quot;13. Campus Location&quot; (address, location heading, map query). Turning the page off removes it and its nav link (placed last).</p>
+                    </div>
+                    <div className="flex items-center justify-between gap-3 rounded border border-border/80 bg-muted/40 p-4">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="contact-enabled" className="text-xs font-mono uppercase text-foreground font-semibold cursor-pointer">Show Contact Page</Label>
+                        <p className="text-[11px] font-mono text-muted-foreground">Shows /contact and the nav link.</p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[11px] font-mono uppercase font-semibold text-muted-foreground">{content.contact?.enabled ? "Enabled" : "Disabled"}</span>
+                        <Switch id="contact-enabled" checked={content.contact?.enabled ?? false} onCheckedChange={(checked) => handleContactField("enabled", checked)} />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Nav Label</Label>
+                        <Input value={content.contact?.navLabel ?? ""} onChange={(e) => handleContactField("navLabel", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Page Title</Label>
+                        <Input value={content.contact?.page?.title ?? ""} onChange={(e) => handleContactGroupField("page", "title", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1 col-span-2">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Intro (blank line = new paragraph; [text](url) makes a link)</Label>
+                        <textarea rows={5} value={content.contact?.page?.intro ?? ""} onChange={(e) => handleContactGroupField("page", "intro", e.target.value)} className="w-full text-xs p-2 rounded border border-input bg-background text-foreground focus:outline-none focus:border-ring font-sans leading-relaxed" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Browser Tab Title</Label>
+                        <Input value={content.contact?.page?.metaTitle ?? ""} onChange={(e) => handleContactGroupField("page", "metaTitle", e.target.value)} className="font-mono text-xs" />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[12px] font-mono uppercase text-muted-foreground">Search Description</Label>
+                        <Input value={content.contact?.page?.metaDescription ?? ""} onChange={(e) => handleContactGroupField("page", "metaDescription", e.target.value)} className="text-xs" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative bg-card border border-border rounded p-6 shadow-sm space-y-4">
+                    <div className="absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l border-border bg-muted font-mono text-[13px] text-muted-foreground">CP2</div>
+                    <div className="mb-2">
+                      <h3 className="text-base font-bold text-foreground font-serif">Labels</h3>
+                      <p className="text-[13px] text-muted-foreground">Headings and link text in the top-right contact column.</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      {([
+                        ["connectHeading", "Connect Heading"],
+                        ["openMapLabel", "Open Map Link"],
+                      ] as const).map(([field, label]) => (
+                        <div key={field} className="space-y-1">
+                          <Label className="text-[12px] font-mono uppercase text-muted-foreground">{label}</Label>
+                          <Input value={content.contact?.labels?.[field] ?? ""} onChange={(e) => handleContactGroupField("labels", field, e.target.value)} className="font-mono text-xs" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "hiring" && content && (
+                <HiringEditor hiring={(content.hiring ?? {}) as HiringContent} update={updateHiring} />
+              )}
+
+              {activeTab === "findUs" && content && (
+                <FindUsEditor
+                  findUs={(content.findUs ?? {}) as FindUsContent}
+                  update={updateFindUs}
+                  people={peopleOptions(content)}
+                  brandLine={[content.brand?.name, content.navbar?.mobileDrawerUniversity].filter(Boolean).join(" · ")}
+                  onDeleteFile={deleteFromImageKit}
+                />
               )}
 
               {activeTab === "about" && content?.latestPublications && (

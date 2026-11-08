@@ -9,6 +9,10 @@
     "lint": "eslint",
     "fetch-content": "node --env-file=.env scripts/fetch-content.mjs",
     "upload-content": "node --env-file=.env scripts/upload-content.mjs",
+    "import-conferences": "node --env-file=.env scripts/import-conferences.mjs",
+    "seed-contact":"node --env-file=.env scripts/seed-contact.mjs",
+    "send-applications": "node --env-file=.env scripts/send-applications.mjs",
+    "send-applications:dry": "node --env-file=.env scripts/send-applications.mjs --dry-run",
     "sync-publications": "node --env-file=.env scripts/sync-publications.mjs",
     "sync-publications:dry": "node --env-file=.env scripts/sync-publications.mjs --dry-run",
     "test:publications": "node --test \"scripts/lib/*.test.mjs\""
@@ -40,6 +44,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0",
     "tw-animate-css": "^1.4.0",
+    "uqr": "^0.1.3",
     "vaul": "^1.1.2"
   },
   "devDependencies": {
@@ -49,6 +54,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "resend": "^6.35.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

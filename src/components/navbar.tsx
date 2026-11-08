@@ -14,12 +14,14 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { getContent } from "@/lib/content";
+import { getContact } from "@/lib/contact";
 import { getResearch } from "@/lib/research";
 
 type NavLink = { label: string; href: string };
 
 const { navbar, layout } = getContent();
 const research = getResearch();
+const contact = getContact();
 
 /**
  * The Research link comes from the research section's own settings rather than
@@ -31,6 +33,12 @@ function withResearchLink(links: NavLink[]): NavLink[] {
   const link = { label: research.navLabel, href: "/research" };
   const home = links.findIndex((l) => l.href === "/");
   return [...links.slice(0, home + 1), link, ...links.slice(home + 1)];
+}
+
+/** Same idea for Contact, which always goes last. */
+function withContactLink(links: NavLink[]): NavLink[] {
+  if (!contact.enabled || !contact.navLabel) return links;
+  return [...links, { label: contact.navLabel, href: "/contact" }];
 }
 
 function isActive(pathname: string, href: string) {
@@ -124,7 +132,7 @@ function MobileDrawer({
 }
 
 export function Navbar() {
-  const links = withResearchLink((navbar.links ?? []) as NavLink[]);
+  const links = withContactLink(withResearchLink((navbar.links ?? []) as NavLink[]));
   const pathname = usePathname() ?? "/";
   const [open, setOpen] = React.useState(false);
 

@@ -1,0 +1,51 @@
+name: Send job applications
+
+# Emails applications submitted from the hiring section on /contact to each
+# listing's contact person, and sends the listing's assignment to the applicant
+# when auto-send is on. The form writes to Firestore `applications`; this job is
+# the only thing that sends mail (scripts/send-applications.mjs).
+#
+# Kept separate from `deploy.yml` for the same reasons as the publication sync:
+# it needs only `contents: read`, and the deploy's `cancel-in-progress` group
+# must never kill a run halfway through sending.
+#
+# Scheduled workflows run only on the default branch, so this starts after the
+# hiring work is merged to `main`. Before that, run `npm run send-applications`
+# locally.
+
+on:
+  schedule:
+    # GitHub's minimum; runs are often a few minutes late under load.
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: send-applications
+  # Never interrupt a run that is sending; the next one picks up the rest.
+  cancel-in-progress: false
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Send applications
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+          # Resend API key (resend.com/api-keys) and the sender address, which
+          # must be on a domain verified at resend.com/domains.
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+        run: node scripts/send-applications.mjs
