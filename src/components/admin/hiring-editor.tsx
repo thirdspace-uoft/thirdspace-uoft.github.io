@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Plus, Trash2 } from "lucide-react";
+import { ChevronRight, Eye, EyeOff, Plus, Trash2 } from "lucide-react";
 
 import { ApplicationsPanel } from "@/components/admin/applications-panel";
 import { Button } from "@/components/ui/button";
@@ -243,7 +243,7 @@ export function HiringEditor({ hiring, update }: { hiring: HiringContent; update
       {/* Listings */}
       <div className="flex items-center justify-between">
         <span className="text-[12px] font-mono uppercase text-muted-foreground tracking-wider">
-          Positions ({listings.length}, {listings.filter((l) => l.open !== false).length} open) — shown in this order
+          Positions ({listings.length}, {listings.filter((l) => l.open === false).length} hidden) — shown in this order
         </span>
         <Button size="xs" variant="outline" onClick={addListing}>
           <Plus className="h-3 w-3" /> Add Position
@@ -257,18 +257,26 @@ export function HiringEditor({ hiring, update }: { hiring: HiringContent; update
         const setAssignment = (patch: Partial<NonNullable<HiringListing["assignment"]>>) =>
           updateListing(li, { assignment: { ...assignment, ...patch } });
         return (
-          <div key={key} className="relative bg-card border border-border rounded shadow-sm">
+          <div key={key} className={`relative bg-card border border-border rounded shadow-sm ${listing.open === false ? "opacity-70" : ""}`}>
             <div className="flex flex-wrap items-center justify-between gap-2 p-4">
               <button type="button" onClick={() => setOpenListing(open ? null : key)} className="flex min-w-0 items-center gap-3 text-left">
                 <span className="font-mono text-[13px] text-muted-foreground">J{String(li + 1).padStart(2, "0")}</span>
                 <span className="truncate text-sm font-semibold text-foreground">{listing.title || "Untitled position"}</span>
                 <span className={`rounded px-1.5 py-0.5 font-mono text-[10px] uppercase ${listing.open === false ? "bg-muted text-muted-foreground" : "bg-primary/10 text-primary"}`}>
-                  {listing.open === false ? "Hidden" : "Open"}
+                  {listing.open === false ? "Hidden" : "Shown"}
                 </span>
                 {assignment.autoSend && <span className="rounded bg-accent/15 px-1.5 py-0.5 font-mono text-[10px] uppercase text-accent-foreground">Auto-assignment</span>}
                 <ChevronRight className={`h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform ${open ? "rotate-90" : ""}`} />
               </button>
               <div className="flex gap-1">
+                <Button
+                  size="xs"
+                  variant="ghost"
+                  title={listing.open === false ? "Show this position on the website" : "Keep it here but leave it off the website"}
+                  onClick={() => updateListing(li, { open: listing.open === false })}
+                >
+                  {listing.open === false ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />} {listing.open === false ? "Show" : "Hide"}
+                </Button>
                 <Button size="xs" variant="ghost" disabled={li === 0} onClick={() => setListings((l) => moved(l, li, -1))}>Up</Button>
                 <Button size="xs" variant="ghost" disabled={li === listings.length - 1} onClick={() => setListings((l) => moved(l, li, 1))}>Down</Button>
                 <Button
@@ -289,8 +297,8 @@ export function HiringEditor({ hiring, update }: { hiring: HiringContent; update
               <div className="space-y-5 border-t border-border p-5">
                 <div className="flex items-center justify-between gap-3 rounded border border-border/80 bg-muted/40 p-3">
                   <div className="space-y-0.5">
-                    <Label htmlFor={`listing-open-${key}`} className="text-xs font-mono uppercase text-foreground font-semibold cursor-pointer">Open (shown on the site)</Label>
-                    <p className="text-[11px] font-mono text-muted-foreground">Off hides it and the mailer skips new applications for it.</p>
+                    <Label htmlFor={`listing-open-${key}`} className="text-xs font-mono uppercase text-foreground font-semibold cursor-pointer">Show on the website</Label>
+                    <p className="text-[11px] font-mono text-muted-foreground">Off keeps the position here and in the database but leaves it off /contact, and the mailer skips new applications for it. Its past applications stay.</p>
                   </div>
                   <Switch id={`listing-open-${key}`} checked={listing.open !== false} onCheckedChange={(checked) => updateListing(li, { open: checked })} />
                 </div>

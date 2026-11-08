@@ -114,6 +114,16 @@ export function openListings(hiring: HiringContent): HiringListing[] {
   return (hiring.listings ?? []).filter((l) => l.open !== false && l.title && l.slug);
 }
 
+/**
+ * What the public /contact page may ship to the browser: only the shown
+ * listings, without their assignment (that goes to applicants by email only).
+ * Hidden listings stay in Firestore and the admin but never reach the page.
+ */
+export function publicHiring(hiring: HiringContent): HiringContent {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  return { ...hiring, listings: openListings(hiring).map(({ assignment, ...listing }) => listing) };
+}
+
 /** The listing's own contact, or the section default. */
 export function listingContact(listing: HiringListing, hiring: HiringContent) {
   return {

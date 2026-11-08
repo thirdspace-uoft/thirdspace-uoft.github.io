@@ -30,6 +30,8 @@ export type Conference = {
   /** Comma-separated names of guests, alumni or collaborators. */
   guests?: string;
   photos?: ResearchMedia[];
+  /** Kept in Firestore and in admin, but left off the site. */
+  hidden?: boolean;
 };
 
 export type FindUsLabels = {
@@ -140,9 +142,9 @@ const startKey = (c: Conference) => {
   return s ? ymdNumber(s) : 99999999;
 };
 
-/** Upcoming soonest first, past most recent first. */
+/** Upcoming soonest first, past most recent first. Hidden conferences are left out. */
 export function splitConferences(conferences: Conference[], today: number) {
-  const listed = conferences.filter((c) => c.name?.trim());
+  const listed = conferences.filter((c) => !c.hidden && c.name?.trim());
   const upcoming = listed.filter((c) => !isPast(c, today)).sort((a, b) => startKey(a) - startKey(b));
   const past = listed.filter((c) => isPast(c, today)).sort((a, b) => startKey(b) - startKey(a));
   return { upcoming, past };

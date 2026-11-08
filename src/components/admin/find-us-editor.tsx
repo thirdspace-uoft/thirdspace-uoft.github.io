@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, ImageDown, Plus, Trash2 } from "lucide-react";
+import { ChevronRight, Eye, EyeOff, ImageDown, Plus, Trash2 } from "lucide-react";
 
 import { MediaListEditor } from "@/components/admin/media-list-editor";
 import { ShareImageDialog } from "@/components/admin/share-image";
@@ -169,7 +169,7 @@ export function FindUsEditor({
       {/* Conferences */}
       <div className="flex items-center justify-between">
         <span className="text-[12px] font-mono uppercase text-muted-foreground tracking-wider">
-          Conferences ({conferences.length}) — the site sorts them by date
+          Conferences ({conferences.length}{conferences.some((c) => c.hidden) ? `, ${conferences.filter((c) => c.hidden).length} hidden` : ""}) — the site sorts them by date
         </span>
         <Button size="xs" variant="outline" onClick={addConference}>
           <Plus className="h-3 w-3" /> Add Conference
@@ -188,7 +188,7 @@ export function FindUsEditor({
               : [...(conference.attendees ?? []), personKey],
           });
         return (
-          <div key={key} className="relative bg-card border border-border rounded shadow-sm">
+          <div key={key} className={`relative bg-card border border-border rounded shadow-sm ${conference.hidden ? "opacity-70" : ""}`}>
             <div className="flex flex-wrap items-center justify-between gap-2 p-4">
               <button type="button" onClick={() => setOpenId(open ? null : key)} className="flex min-w-0 items-center gap-3 text-left">
                 <span className="font-mono text-[13px] text-muted-foreground">C{String(ci + 1).padStart(2, "0")}</span>
@@ -197,11 +197,22 @@ export function FindUsEditor({
                 <span className={`rounded px-1.5 py-0.5 font-mono text-[10px] uppercase ${past ? "bg-muted text-muted-foreground" : "bg-primary/10 text-primary"}`}>
                   {past ? "Past" : "Upcoming"}
                 </span>
+                {conference.hidden && (
+                  <span className="rounded border border-dashed border-border px-1.5 py-0.5 font-mono text-[10px] uppercase text-muted-foreground">Hidden</span>
+                )}
                 <ChevronRight className={`h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform ${open ? "rotate-90" : ""}`} />
               </button>
               <div className="flex gap-1">
                 <Button size="xs" variant="outline" onClick={() => setShareId(conference.id ?? null)} disabled={!conference.id || !conference.name}>
                   <ImageDown className="h-3 w-3" /> Share Image
+                </Button>
+                <Button
+                  size="xs"
+                  variant="ghost"
+                  title={conference.hidden ? "Show this conference on the website" : "Keep it here but leave it off the website"}
+                  onClick={() => updateConference(ci, { hidden: !conference.hidden })}
+                >
+                  {conference.hidden ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />} {conference.hidden ? "Show" : "Hide"}
                 </Button>
                 <Button size="xs" variant="ghost" disabled={ci === 0} onClick={() => setConferences((l) => moved(l, ci, -1))}>Up</Button>
                 <Button size="xs" variant="ghost" disabled={ci === conferences.length - 1} onClick={() => setConferences((l) => moved(l, ci, 1))}>Down</Button>
@@ -221,6 +232,14 @@ export function FindUsEditor({
 
             {open && (
               <div className="space-y-5 border-t border-border p-5">
+                <div className="flex items-center justify-between gap-3 rounded border border-border/80 bg-muted/40 p-3">
+                  <div className="space-y-0.5">
+                    <Label htmlFor={`conference-shown-${key}`} className="text-xs font-mono uppercase text-foreground font-semibold cursor-pointer">Show on the website</Label>
+                    <p className="text-[11px] font-mono text-muted-foreground">Off keeps the conference here and in the database but leaves it off /contact.</p>
+                  </div>
+                  <Switch id={`conference-shown-${key}`} checked={!conference.hidden} onCheckedChange={(checked) => updateConference(ci, { hidden: !checked })} />
+                </div>
+
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-1">
                     <Label className={label}>Short Name (e.g. CHI 2027)</Label>

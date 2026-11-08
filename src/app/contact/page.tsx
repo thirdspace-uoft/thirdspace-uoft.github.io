@@ -5,7 +5,7 @@ import { RichText } from "@/components/research/rich-text";
 import { XIcon } from "@/components/x-icon";
 import { getContent } from "@/lib/content";
 import { getContact } from "@/lib/contact";
-import { getHiring } from "@/lib/hiring";
+import { getHiring, publicHiring } from "@/lib/hiring";
 import { HiringSection } from "@/components/hiring/hiring-section";
 import { FindUsSection } from "@/components/find-us/find-us-section";
 import {
@@ -24,6 +24,8 @@ const findUs = getFindUs();
 // Split at build time; deploy.yml rebuilds every few minutes, so a conference
 // moves to "past" the day after it ends.
 const conferences = splitConferences(findUs.conferences ?? [], todayNumber());
+// The client section gets the split lists above, never the raw `conferences`,
+// so hidden ones stay out of the page source. Likewise publicHiring() below.
 // Past conferences without uploaded photos show figures from the lab's research
 // on the papers presented there (labelled as such, not as event photos).
 const research = getResearch();
@@ -118,10 +120,10 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {hiring.enabled && <HiringSection hiring={hiring} />}
+      {hiring.enabled && <HiringSection hiring={publicHiring(hiring)} />}
 
       {findUs.enabled && (
-        <FindUsSection findUs={findUs} {...conferences} people={peopleOptions()} figures={pastFigures} />
+        <FindUsSection findUs={{ ...findUs, conferences: [] }} {...conferences} people={peopleOptions()} figures={pastFigures} />
       )}
     </main>
   );

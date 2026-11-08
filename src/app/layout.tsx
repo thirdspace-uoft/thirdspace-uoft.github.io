@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { HideOnAdmin } from "@/components/hide-on-admin";
 import { SectionObserver } from "@/components/section-observer";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { getContent } from "@/lib/content";
@@ -56,7 +57,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Navbar />
           <ScrollProgress />
           <div className="flex-1">{children}</div>
-          <Footer />
+          <HideOnAdmin>
+            <Footer />
+          </HideOnAdmin>
         </SectionObserver>
       </body>
     </html>
